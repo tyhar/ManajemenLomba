@@ -1,2 +1,2 @@
 # ManagemenLomba
-Websote Management Lomba - Proyek PBL
+Website Management Lomba - Proyek PBL
