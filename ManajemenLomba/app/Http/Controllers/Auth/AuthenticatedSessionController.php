@@ -47,6 +47,23 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        //redirecting login request based on role of the user
+        $userRole = Auth::user()->role;
+
+        switch($userRole) 
+        {
+            //the route('admin') it means defined name on route especially on web.php
+            case 1:
+                return redirect()->intended(route('admin', absolute: false));
+                break;
+            case 2:
+                return redirect()->intended(route('eventadmin', absolute: false));
+                break;
+            case 3:
+                return redirect()->intended(route('dashboard', absolute: false));
+                break;
+            default;
+                return redirect('/');
+        }
     }
 }

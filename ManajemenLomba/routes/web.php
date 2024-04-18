@@ -14,9 +14,18 @@ Route::get('/', function () {
     ]);
 });
 
+//multi auth roles
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified', 'user'])->name('dashboard');
+
+Route::get('/admin', function () {
+    return Inertia::render('Roles/Admin/Admin');
+})->middleware(['auth', 'verified', 'admin'])->name('admin');
+
+Route::get('/eventadmin', function () {
+    return Inertia::render('Roles/EventAdmin/EventAdmin');
+})->middleware(['auth', 'verified', 'eventadmin'])->name('eventadmin');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

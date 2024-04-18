@@ -3,6 +3,10 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+//importing the roles middleware 
+use App\Http\Middleware\Admin;
+use App\Http\Middleware\EventAdmin;
+use App\Http\Middleware\User;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -14,6 +18,13 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
+        ])
+        //adding multi roles authentication (below are middleware class not model)
+        //these key('admin', etc) are passed into web.php or routes
+        ->alias([
+            'admin' => Admin::class,
+            'eventadmin' => EventAdmin::class,
+            'user' => User::class,
         ]);
 
         //
