@@ -5,6 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+//default breeze
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -27,6 +28,7 @@ Route::get('/eventadmin', function () {
     return Inertia::render('Roles/EventAdmin/EventAdmin');
 })->middleware(['auth', 'verified', 'eventadmin'])->name('eventadmin');
 
+//default breeze
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
