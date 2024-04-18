@@ -49,6 +49,8 @@ class AuthenticatedSessionController extends Controller
 
         //redirecting login request based on role of the user
 
+        $userRole = Auth::user()->role;
+
         switch($userRole) 
         {
             //the route('admin') it means defined name on route especially on web.php
