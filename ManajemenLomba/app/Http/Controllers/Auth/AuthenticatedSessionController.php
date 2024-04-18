@@ -48,7 +48,6 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         //redirecting login request based on role of the user
-        $userRole = Auth::user()->role;
 
         switch($userRole) 
         {
