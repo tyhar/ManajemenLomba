@@ -1,2 +1,2 @@
-# ManagemenLomba
-Website Management Lomba - Proyek PBL
+# ManajemenLomba
+Website Manajemen Lomba - Proyek PBL
