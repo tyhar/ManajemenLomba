@@ -20,7 +20,7 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified', 'user'])->name('dashboard');
 
-Route::get('/admin', function () {
+Route::get('/superadmin', function () {
     return Inertia::render('Roles/Admin/Admin');
 })->middleware(['auth', 'verified', 'admin'])->name('admin');
 
@@ -36,3 +36,7 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::get('/kontak', function() {
+    return inertia::render('kontak');
+});

@@ -36,7 +36,7 @@ class Admin
         {
             return redirect()->route('eventadmin');
         }
-
+        
         if($userRole==3)
         {
             return redirect()->route('dashboard');

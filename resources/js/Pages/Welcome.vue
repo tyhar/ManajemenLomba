@@ -11,7 +11,7 @@ defineProps({
     laravelVersion: {
         type: String,
         required: true,
-    },
+    }, 
     phpVersion: {
         type: String,
         required: true,
@@ -33,7 +33,7 @@ function handleImageError() {
     <nav class="navbar navbar-expand-lg main_menu">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <img src="../../../public/bootstrap/images/logo.png" alt="Olinas" class="img-fluid w-100">
+                <img src="bootstrap/images/logo.png" alt="Olinas" class="img-fluid w-100">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -332,5 +332,14 @@ function handleImageError() {
             </div>
         </div>
     </section>
-        
+
+    <!-- footer -->
+    <footer class="tf__footer mt_100">
+        <div class="text-center p-4" style="background-color: #191e24f5; color: white;">
+            Copyright ©2024 Tim Website OLINAS
+        </div>
+    </footer>
+
+    <!-- scroll button  -->
+    <div class="tf__scroll_btn" href="#"> go to top </div>
 </template>
