@@ -38,5 +38,5 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::get('/kontak', function() {
-    return inertia::render('kontak');
+    return inertia::render('Kontak');
 });

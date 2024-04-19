@@ -63,35 +63,7 @@ function handleImageError() {
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/kontak">Kontak</a>
-                    </li>
-                    <!-- <li class="nav-item">
-                        <nav v-if="canLogin" class="nav-item">
-                            <Link
-                                v-if="$page.props.auth.user"
-                                :href="route('dashboard')"
-                                class="nav-link common_btn"
-                            >
-                                Dashboard
-                            </Link>
-
-                            <template v-else>
-                                <Link
-                                    :href="route('login')"
-                                    class="nav-link common_btn"
-                                >
-                                    Log in
-                                </Link>
-
-                                <Link
-                                    v-if="canRegister"
-                                    :href="route('register')"
-                                    class="nav-link common_btn"
-                                >
-                                    Register
-                                </Link>
-                            </template>
-                        </nav>
-                    </li> -->
+                    </li> 
                     <li class="nav-item">
                         <template v-if="!$page.props.auth.user">
                             <div class="row">
@@ -102,8 +74,8 @@ function handleImageError() {
                                 <a class="nav-link common_btn" href="/register">Register</a>
                             </div>
                             </div>
-                            </template>
-                            <template v-else>
+                        </template>
+                        <template v-else>
                             <a class="nav-link common_btn" href="/dashboard">Dashboard</a>
                         </template>
                     </li>

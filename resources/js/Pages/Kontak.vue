@@ -26,9 +26,8 @@ function handleImageError() {
 }
 </script>
 
-
 <template>
-    <Head title="Kontak" />
+    <Head title="Welcome" />
 
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg main_menu">
@@ -42,57 +41,29 @@ function handleImageError() {
                 <i class="far fa-times close_icon"></i>
             </button>
             
-            <div class="" id="navbarNav">
+            <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Beranda</a>
+                        <a class="nav-link active" href="/#">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#tentang-section">Tentang</a>
+                        <a class="nav-link" href="/#tentang-section">Tentang</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#lomba-section">Lomba</a>
+                        <a class="nav-link" href="/#lomba-section">Lomba</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#timeline-section">Timeline</a>
+                        <a class="nav-link" href="/#timeline-section">Timeline</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#berita-section">Berita</a>
+                        <a class="nav-link" href="/#berita-section">Berita</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#sponsor-section">Sponsor</a>
+                        <a class="nav-link" href="/#sponsor-section">Sponsor</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/kontak">Kontak</a>
-                    </li>
-                    <!-- <li class="nav-item">
-                        <nav v-if="canLogin" class="nav-item">
-                            <Link
-                                v-if="$page.props.auth.user"
-                                :href="route('dashboard')"
-                                class="nav-link common_btn"
-                            >
-                                Dashboard
-                            </Link>
-
-                            <template v-else>
-                                <Link
-                                    :href="route('login')"
-                                    class="nav-link common_btn"
-                                >
-                                    Log in
-                                </Link>
-
-                                <Link
-                                    v-if="canRegister"
-                                    :href="route('register')"
-                                    class="nav-link common_btn"
-                                >
-                                    Register
-                                </Link>
-                            </template>
-                        </nav>
-                    </li> -->
+                    </li> 
                     <li class="nav-item">
                         <template v-if="!$page.props.auth.user">
                             <div class="row">
@@ -103,8 +74,8 @@ function handleImageError() {
                                 <a class="nav-link common_btn" href="/register">Register</a>
                             </div>
                             </div>
-                            </template>
-                            <template v-else>
+                        </template>
+                        <template v-else>
                             <a class="nav-link common_btn" href="/dashboard">Dashboard</a>
                         </template>
                     </li>
@@ -112,7 +83,8 @@ function handleImageError() {
             </div>
         </div>
     </nav>
-   
+
+
     <!--=================================
         BREADCRUMB START
     ==================================-->

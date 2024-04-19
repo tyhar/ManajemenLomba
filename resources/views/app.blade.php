@@ -54,7 +54,6 @@
     <body class="font-sans antialiased">
     {{-- file vue.js inertia --}}
     @inertia
-
         {{-- Dari frontend --}}
         <script src="./bootstrap/js/jquery-3.6.3.min.js"></script>
         <!--bootstrap js-->
