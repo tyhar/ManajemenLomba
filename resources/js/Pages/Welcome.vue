@@ -41,7 +41,7 @@ function handleImageError() {
                 <i class="far fa-times close_icon"></i>
             </button>
             
-            <div class="" id="navbarNav">
+            <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link active" href="#">Beranda</a>
@@ -125,9 +125,7 @@ function handleImageError() {
             </div>
         </div>
     </section>
-
     <br>
-
     <!-- about 2 start -->
     <section id="tentang-section" class="tf__home_2_about pt_100 pb_100" style="background: url(bootstrap/images/about_2_bg.jpg);">
         <div class="container">
