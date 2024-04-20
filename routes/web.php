@@ -1,9 +1,16 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
+// use App\Http\Controllers\Controller;
+
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+
+//controller
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PanelisController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\EventAdminController;
 
 //default breeze
 Route::get('/', function () {
@@ -16,21 +23,28 @@ Route::get('/', function () {
 });
 
 //multi auth roles
+// -> user
+// Route::middleware('auth','verified','user')->group(function () {
+//     Route::get('/dashboard', [UserController::class, 'index'])->name('dashboard');
+// });
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified', 'user'])->name('dashboard');
 
-Route::get('/superadmin', function () {
-    return Inertia::render('Roles/Admin/Admin');
-})->middleware(['auth', 'verified', 'admin'])->name('admin');
+// -> admin
+Route::middleware('auth','verified','admin')->group(function () {
+    Route::get('/superadmin', [AdminController::class, 'index'])->name('admin');
+});
 
-Route::get('/eventadmin', function () {
-    return Inertia::render('Roles/EventAdmin/EventAdmin');
-})->middleware(['auth', 'verified', 'eventadmin'])->name('eventadmin');
+// -> eventadmin atau petugas
+Route::middleware('auth','verified','eventadmin')->group(function () {
+    Route::get('/eventadmin', [EventAdminController::class, 'index'])->name('eventadmin');
+});
 
-Route::get('/panelis', function () {
-    return Inertia::render('Roles/Panelis/Panelis');
-})->middleware(['auth', 'verified', 'panelis'])->name('panelis');
+// ->panelis atau juri
+Route::middleware('auth','verified','panelis')->group(function () {
+    Route::get('/panelis', [PanelisController::class, 'index'])->name('panelis');
+});
 
 //default breeze
 Route::middleware('auth')->group(function () {
@@ -41,6 +55,16 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
+//landing page
 Route::get('/kontak', function() {
-    return inertia::render('Kontak');
+    return inertia::render('LandingPage/Kontak');
 });
+Route::get('/berita', function() {
+    return inertia::render('LandingPage/InformasiBerita');
+});
+
+// -- masih dalam progress --
+
+// Route::get('/superadmin', function () {
+//     return Inertia::render('Roles/Admin/Admin');
+// })->middleware(['auth', 'verified', 'admin'])->name('admin');
