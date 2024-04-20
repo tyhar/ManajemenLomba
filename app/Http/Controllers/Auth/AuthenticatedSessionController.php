@@ -48,6 +48,9 @@ class AuthenticatedSessionController extends Controller
             case 3:
                 return redirect()->intended(route('dashboard', absolute: false));
                 break;
+            case 4:
+                return redirect()->intended(route('panelis', absolute: false));
+                break;
             default;
                 return redirect('/');
         }

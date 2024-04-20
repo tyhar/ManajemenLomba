@@ -27,7 +27,7 @@ function handleImageError() {
 </script>
 
 <template>
-    <Head title="Welcome" />
+    <Head title="Kontak" />
 
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg main_menu">

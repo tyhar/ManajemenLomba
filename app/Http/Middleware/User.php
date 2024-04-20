@@ -41,5 +41,10 @@ class User
         {
             return $next($request);
         }
+        
+        if($userRole==4)
+        {
+            return redirect()->route('panelis');
+        }
     }
 }

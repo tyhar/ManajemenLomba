@@ -28,6 +28,10 @@ Route::get('/eventadmin', function () {
     return Inertia::render('Roles/EventAdmin/EventAdmin');
 })->middleware(['auth', 'verified', 'eventadmin'])->name('eventadmin');
 
+Route::get('/panelis', function () {
+    return Inertia::render('Roles/Panelis/Panelis');
+})->middleware(['auth', 'verified', 'panelis'])->name('panelis');
+
 //default breeze
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
