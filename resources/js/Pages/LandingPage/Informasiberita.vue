@@ -1,3 +1,31 @@
+<script setup>
+import { Head, Link } from '@inertiajs/vue3';
+
+defineProps({
+    canLogin: {
+        type: Boolean,
+    },
+    canRegister: {
+        type: Boolean,
+    },
+    laravelVersion: {
+        type: String,
+        required: true,
+    }, 
+    phpVersion: {
+        type: String,
+        required: true,
+    },
+});
+
+function handleImageError() {
+    document.getElementById('screenshot-container')?.classList.add('!hidden');
+    document.getElementById('docs-card')?.classList.add('!row-span-1');
+    document.getElementById('docs-card-content')?.classList.add('!flex-row');
+    document.getElementById('background')?.classList.add('!hidden');
+}
+</script>
+
 <template>
     <!--=================================
        MAIN MENU START
@@ -15,29 +43,41 @@
            <div class="collapse navbar-collapse" id="navbarNav">
                <ul class="navbar-nav ms-auto">
                    <li class="nav-item">
-                       <a class="nav-link active" href="#">Beranda</a>
+                       <a class="nav-link active" href="/#">Beranda</a>
                    </li>
                    <li class="nav-item">
-                       <a class="nav-link" href="#tentang-section">Tentang</a>
+                       <a class="nav-link" href="/#tentang-section">Tentang</a>
                    </li>
                    <li class="nav-item">
-                       <a class="nav-link" href="#lomba-section">Lomba</a>
+                       <a class="nav-link" href="/#lomba-section">Lomba</a>
                    </li>
                    <li class="nav-item">
-                       <a class="nav-link" href="#timeline-section">Timeline</a>
+                       <a class="nav-link" href="/#timeline-section">Timeline</a>
                    </li>
                    <li class="nav-item">
-                       <a class="nav-link" href="#berita-section">Berita</a>
+                       <a class="nav-link" href="/#berita-section">Berita</a>
                    </li>
                    <li class="nav-item">
-                       <a class="nav-link" href="#sponsor-section">Sponsor</a>
+                       <a class="nav-link" href="/#sponsor-section">Sponsor</a>
                    </li>
                    <li class="nav-item">
                        <a class="nav-link" href="/kontak">Kontak</a>
                    </li>
                    <li class="nav-item">
-                       <a class="nav-link common_btn" href="/login">Login</a>
-                   </li>
+                        <template v-if="!$page.props.auth.user">
+                            <div class="row">
+                            <div class="col">
+                                <a class="nav-link common_btn" href="/login">Login</a>
+                            </div>
+                            <div class="col">
+                                <a class="nav-link common_btn" href="/register">Register</a>
+                            </div>
+                            </div>
+                        </template>
+                        <template v-else>
+                            <a class="nav-link common_btn" href="/dashboard">Dashboard</a>
+                        </template>
+                    </li>
                </ul>
            </div>
        </div>

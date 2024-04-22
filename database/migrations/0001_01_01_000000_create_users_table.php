@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            //username
+            $table->string('username');
             $table->string('email')->unique();
             //create roles authentication types
             $table->tinyInteger('role')->default(3); // Users: 1-superadmin, 2-event_admin, 3-user

@@ -12,7 +12,7 @@ import { router } from '@inertiajs/vue3'
 
 const form = useForm({
     name: '',
-    username: '',
+    // username: '',
     email: '',
     password: '',
     password_confirmation: '',
@@ -48,7 +48,7 @@ $(document).ready(function () {
 			<div class="section-authentication-signin d-flex justify-content-center my-5 my-lg-1">
 				<div class="container-fluid jarak-top-lebih10">
 					<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
-						<div class="col mx-auto" style="padding-top: 30px;">
+						<div class="col mx-auto" style="padding-top: 65px;">
 							<div class="card">
 								<div class="card-body">
 									<div class="border p-4 rounded">
@@ -71,17 +71,10 @@ $(document).ready(function () {
                                                     >
                                                     <InputError class="mt-2" :message="form.errors.name" />
 												</div>
-												<div class="col-12 jarak-top-lebih6">
+												<!-- <div class="col-12 jarak-top-lebih6">
 													<label for="username" value="Username" class="form-label">Username</label>
-													<input 
-                                                        id="username" 
-                                                        v-model="form.username"
-                                                        required 
-                                                        type="text" 
-                                                        class="form-control" 
-                                                        placeholder="Enter Username" 
-                                                        autofocus autocomplete="username">
-												</div>
+													<input id="username" v-model="form.username" type="text" class="form-control" placeholder="Enter Username" autofocus autocomplete="username">
+												</div> -->
 												<div class="col-12 jarak-top-lebih6">
 													<label for="email" value="Email" class="form-label">Email</label>
 													<input 

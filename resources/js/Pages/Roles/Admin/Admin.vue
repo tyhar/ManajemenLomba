@@ -1,4 +1,5 @@
 <script setup>
+
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 
@@ -62,7 +63,6 @@ document.addEventListener("DOMContentLoaded", function () {
       },
     })).render();
   });
-
 </script>
 
 <template>
@@ -79,7 +79,9 @@ document.addEventListener("DOMContentLoaded", function () {
             <div class="sidebar-wrapper" data-simplebar="true">
                 <div class="sidebar-header">
                     <div>
-                        <img src="bootstrap/images/logocb.png" class="logo-icon" alt="logo icon">
+                        <a href="/"> 
+                            <img src="bootstrap/images/logocb.png" class="logo-icon" alt="logo icon">
+                        </a>
                     </div>
                     <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
                     </div>
@@ -87,7 +89,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 <!--navigation-->
                 <ul class="metismenu" id="menu">
                     <li>
-                        <a href="/index2">
+                        <!-- nama route dari web.php  -->
+                        <a href="/superadmin">
                             <div class="parent-icon"><i class='bx bx-home-circle'></i>
                             </div>
                             <div class="menu-title">Dashboard</div>

@@ -1,0 +1,2 @@
+1. panggil halaman di PanelisController.php 
+2. buat route di web.php bagian Panelis
