@@ -8,7 +8,7 @@
                 <div class="col-xl-6 m-auto wow fadeInUp" data-wow-duration="1.5s">
                     <div class="tf__error_text">
                         <div class="img">
-                            <img src="../../../public/bootstrap/images/error_img.png" alt="error" class="img-fluid w-100">
+                            <img src="bootstrap/images/error_img.png" alt="error" class="img-fluid w-100">
                         </div>
                         <h4>Page not found</h4>
                         <p>SABAR YAKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK</p>
