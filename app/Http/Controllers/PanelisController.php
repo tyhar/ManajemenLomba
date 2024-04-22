@@ -11,4 +11,18 @@ class PanelisController extends Controller
     {
         return Inertia::render('Roles/Panelis/Panelis');
     }
+    public function dashboardjuri()
+    {
+        return Inertia::render('Roles/Panelis/Dashboardjuri');
+    }
+
+    //RANKING
+    public function rangking()
+    {
+        return Inertia::render('Roles/Admin/Adminrangking');
+    }
+    public function tabelrangking()
+    {
+        return Inertia::render('Roles/Admin/Rangking/Tabelrangking');
+    }
 }

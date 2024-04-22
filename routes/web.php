@@ -38,16 +38,46 @@ Route::get('/dashboard', function () {
 // -> admin
 Route::middleware('auth','verified','admin')->group(function () {
     Route::get('/superadmin', [AdminController::class, 'index'])->name('admin');
+    Route::get('/partisipan', [AdminController::class, 'partisipan']);
+    Route::get('/pesan', [AdminController::class, 'pesan']);
+    Route::get('/lomba', [AdminController::class, 'lomba']);
+    Route::get('tambahlomba', [AdminController::class, 'tambahlomba']);
+    Route::get('/editlomba', [AdminController::class, 'editlomba']);
+    Route::get('/detaillomba', [AdminController::class, 'detaillomba']);
+    Route::get('/administrator', [AdminController::class, 'administrator'])->name('administrator');
+    Route::get('/tambahadministrator', [AdminController::class, 'tambahadministrator']);
+    Route::post('/tambahadministrator', [UsersController::class, 'store'])->name('daftar.store');
+    Route::get('/editadministrator', [AdminController::class, 'editadministrator']);
+    Route::get('/detailadministrator', [AdminController::class, 'detailadministrator']);
+    Route::get('/tim', [AdminController::class, 'tim']);
+    Route::get('/detailtim', [AdminController::class, 'detailtim']);
+    Route::get('/sponsor', [AdminController::class, 'sponsor']);
+    Route::get('/tambahsponsor', [AdminController::class, 'tambahsponsor']);
+    Route::get('/editsponsor', [AdminController::class, 'editsponsor']);
+    Route::get('/detailsponsor', [AdminController::class, 'detailsponsor']);
+    Route::get('/berita', [AdminController::class, 'berita']);
+    Route::get('/tambahberita', [AdminController::class, 'tambahberita']);
+    Route::get('/editberita', [AdminController::class, 'editberita']);
+    Route::get('/detailberita', [AdminController::class, 'detailberita']);
+    Route::get('/setting', [AdminController::class, 'setting']);
+    Route::get('/editsetting', [AdminController::class, 'editsetting']);
+    Route::get('/tambahsetting', [AdminController::class, 'tambahsetting']);
+    Route::get('/rangking', [AdminController::class, 'rangking']);
+    Route::get('/tabelrangking', [AdminController::class, 'tabelrangking']);
 });
 
 // -> eventadmin atau petugas
 Route::middleware('auth','verified','eventadmin')->group(function () {
     Route::get('/eventadmin', [EventAdminController::class, 'index'])->name('eventadmin');
+    Route::get('/dashboardpetugas', [EventAdminController::class, 'dashboardpetugas'])->name('dashboardpetugas');
 });
 
 // -> panelis atau juri
 Route::middleware('auth','verified','panelis')->group(function () {
     Route::get('/panelis', [PanelisController::class, 'index'])->name('panelis');
+    Route::get('/dashboardjuri', [PanelisController::class, 'dashboardjuri'])->name('dashboardjuri');
+    Route::get('/rangking', [PanelisControllerController::class, 'rangking']);
+    Route::get('/tabelrangking', [PanelisController::class, 'tabelrangking']);
 });
 
 // -- landing page --

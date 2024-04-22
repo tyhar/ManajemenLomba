@@ -11,4 +11,9 @@ class EventAdminController extends Controller
     {
         return Inertia::render('Roles/EventAdmin/EventAdmin');
     }
+
+    public function dashboardpetugas()
+    {
+        return Inertia::render('Petugas/Dashboardpetugas');
+    }
 }
