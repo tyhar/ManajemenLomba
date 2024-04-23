@@ -76,9 +76,11 @@ Route::middleware('auth','verified','eventadmin')->group(function () {
 Route::middleware('auth','verified','panelis')->group(function () {
     Route::get('/panelis', [PanelisController::class, 'index'])->name('panelis');
     Route::get('/dashboardjuri', [PanelisController::class, 'dashboardjuri'])->name('dashboardjuri');
-    Route::get('/rangking', [PanelisControllerController::class, 'rangking']);
-    Route::get('/tabelrangking', [PanelisController::class, 'tabelrangking']);
+    // Route::get('/rangking', [PanelisControllerController::class, 'rangking']);
+    // Route::get('/tabelrangking', [PanelisController::class, 'tabelrangking']);
 });
+
+// -> akses double (bisa admin atau juri)
 
 // -- landing page --
 Route::get('/kontak', function() {

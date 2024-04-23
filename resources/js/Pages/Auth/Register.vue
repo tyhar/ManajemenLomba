@@ -110,7 +110,7 @@ $(document).ready(function () {
 													</div>
 												</div>
                                                 <div class="col-12 jarak-top-lebih6">
-													<label for="password" value="Password" class="form-label">Password</label>
+													<label for="password" value="Password" class="form-label">Confirm Password</label>
 													<div class="input-group" id="show_hide_password">
 														<input 
                                                             id="password_confirmation" 

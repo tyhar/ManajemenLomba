@@ -1,9 +1,7 @@
 <script setup>
+import { Link } from '@inertiajs/vue3';
 
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
-
-document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("DOMContentLoaded", function () {
     window.ApexCharts && (new ApexCharts(document.getElementById('bi-weekly-visit'), {
       chart: {
         type: "bar",
@@ -64,214 +62,222 @@ document.addEventListener("DOMContentLoaded", function () {
     })).render();
   });
 </script>
-
+<script></script>
 <template>
-    <Head title="Admin" />
-
-    <AuthenticatedLayout>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Admin Dashboard</h2>
-        </template>
-
-        <!--wrapper-->
-        <div class="wrapper">
-            <!--sidebar wrapper -->
-            <div class="sidebar-wrapper" data-simplebar="true">
-                <div class="sidebar-header">
-                    <div>
-                        <a href="/"> 
-                            <img src="bootstrap/images/logocb.png" class="logo-icon" alt="logo icon">
-                        </a>
-                    </div>
-                    <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
-                    </div>
+    <!--wrapper-->
+    <div class="wrapper">
+        <!--sidebar wrapper -->
+        <div class="sidebar-wrapper" data-simplebar="true">
+            <div class="sidebar-header">
+                <div>
+                    <a href="/">
+                        <img src="bootstrap/images/logocb.png" class="logo-icon" alt="logo icon" >
+                    </a>
                 </div>
-                <!--navigation-->
-                <ul class="metismenu" id="menu">
-                    <li>
-                        <!-- nama route dari web.php  -->
-                        <a href="/superadmin">
-                            <div class="parent-icon"><i class='bx bx-home-circle'></i>
-                            </div>
-                            <div class="menu-title">Dashboard</div>
-                        </a>
-                        </li>
-                        <li>
-                        <a href="javascript:;" class="has-arrow">
-                            <div class="parent-icon"><i class="fadeIn animated bx bx-plus-circle"></i>
-                            </div>
-                            <div class="menu-title">Event</div>
-                        </a>
-                        <ul>
-                            <li style="padding-left: 35px;"> <a href="/lomba">Lomba</a>
-                            </li>
-                            <li style="padding-left: 35px;"> <a href="/administrator">Administrator</a>
-                            </li>
-                            <li style="padding-left: 35px;"> <a href="/tim">Tim</a>
-                            </li>
-                            <li style="padding-left: 35px;"> <a href="/sponsor">Sponsor</a>
-                            </li>
-                            <li style="padding-left: 35px;"> <a href="/berita">Berita</a>
-                            </li>
-                            <li style="padding-left: 35px;"> <a href="/setting">Setting</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                    <a href="/partisipan">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-street-view"></i>
+                <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
+                </div>
+            </div>
+            <!--navigation-->
+            <ul class="metismenu" id="menu">
+                <li>
+                    <a href="/superadmin">
+                        <div class="parent-icon"><i class='bx bx-home-circle'></i>
                         </div>
-                        <div class="menu-title">Partisipan</div>
+                        <div class="menu-title">Dashboard</div>
                     </a>
                     </li>
                     <li>
-                        <a href="/pesan">
-                            <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i>
+                    <a href="javascript:;" class="has-arrow">
+                        <div class="parent-icon"><i class="fadeIn animated bx bx-plus-circle"></i>
+                        </div>
+                        <div class="menu-title">Event</div>
+                    </a>
+                    <ul>
+                        <li class="jarak-dropdown"> <a href="/lomba">Lomba</a>
+                        </li>
+                        <li class="jarak-dropdown"> <a href="/administrator">Administrator</a>
+                        </li>
+                        <li class="jarak-dropdown"> <a href="/tim">Tim</a>
+                        </li>
+                        <li class="jarak-dropdown"> <a href="/sponsor">Sponsor</a>
+                        </li>
+                        <li class="jarak-dropdown"> <a href="/berita">Berita</a>
+                        </li>
+                        <li class="jarak-dropdown"> <a href="/setting">Setting</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                <a href="/partisipan">
+                    <div class="parent-icon"><i class="fadeIn animated bx bx-street-view"></i>
+                    </div>
+                    <div class="menu-title">Partisipan</div>
+                </a>
+                </li>
+                <li>
+                    <a href="/pesan">
+                        <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i>
+                        </div>
+                        <div class="menu-title">Pesan <span class="alert-count">1</span></div>
+                    </a>
+                </li>
+                <li>
+                    <a href="/rangking">
+                        <div class="parent-icon"><i class="fadeIn animated bx bx-trophy"></i>
+                        </div>
+                        <div class="menu-title">Rangking</div>
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
+                        </div>
+                        <div class="menu-title">
+                            <Link class="menu-title"
+                                :href="route('logout')"
+                                method="post"
+                                as="button"
+                            >
+                                Logout
+                            </Link>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" class="has-arrow">
+                        <div class="parent-icon"><i class="fadeIn animated bx bx-plus-circle"></i>
+                        </div>
+                        <div class="menu-title">SEMENTARA</div>
+                    </a>
+                    <ul>
+                        <li class="jarak-dropdown"> <a href="/dashboardjuri">JURI</a>
+                        </li>
+                        <li class="jarak-dropdown"> <a href="/dashboardpetugas">PETUGAS</a>
+                        </li>
+                        <li class="jarak-dropdown"> <a href="/overviewpeserta">PESERTA</a>
+                        </li>
+                        <li class="jarak-dropdown"> <a href="/index2">ADMIN</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <!--end navigation-->
+            
+        </div>
+        <!--end sidebar wrapper -->
+
+        <!--start header -->
+        <header>
+            <div class="topbar d-flex align-items-center">
+                <nav class="navbar navbar-expand">
+                    <div class="mobile-toggle-menu"><i class='bx bx-menu'></i>
+                    </div>
+                    <div class="search-bar flex-grow-1">
+                    </div>
+                    <div class="top-menu ms-auto">
+                        <ul class="navbar-nav align-items-center">
+                            <div class="user-info ps-3">
+                                <p class="user-name mb-0">Habib Shohiburrotib</p>			
+                                <p class="user-role">habib</p>							
                             </div>
-                            <div class="menu-title">Pesan <span class="alert-count">1</span></div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/">
-                            <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
+                            <div class="parent-icon posisi-icon"><i class="bx bxs-user me-1"></i>
                             </div>
-                            <div class="menu-title" >Logout</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:;" class="has-arrow">
-                            <div class="parent-icon"><i class="fadeIn animated bx bx-plus-circle"></i>
-                            </div>
-                            <div class="menu-title">SEMENTARA</div>
-                        </a>
-                        <ul>
-                            <li style="padding-left: 35px;"> <a href="/dashboardjuri">JURI</a>
+                            <li class="nav-item dropdown dropdown-large">
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <div class="header-notifications-list">
+                                    </div>
+                                </div>
                             </li>
-                            <li style="padding-left: 35px;"> <a href="/dashboardpetugas">PETUGAS</a>
-                            </li>
-                            <li style="padding-left: 35px;"> <a href="/overviewpeserta">PESERTA</a>
-                            </li>
-                            <li style="padding-left: 35px;"> <a href="/index2">ADMIN</a>
+                            <li class="nav-item dropdown dropdown-large">	
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <div class="header-message-list">
+                                    </div>
+                                </div>
                             </li>
                         </ul>
-                    </li>
-                </ul>
-                <!--end navigation-->
+                    </div>		
+                </nav>
             </div>
-            <!--end sidebar wrapper -->
-            <!--start header -->
-            <header>
-                <div class="topbar d-flex align-items-center">
-                    <nav class="navbar navbar-expand">
-                        <div class="mobile-toggle-menu"><i class='bx bx-menu'></i>
-                        </div>
-                        <div class="search-bar flex-grow-1">
-                        </div>
-                        <div class="top-menu ms-auto">
-                            <ul class="navbar-nav align-items-center">
-                                <div class="user-info ps-3">
-                                    <p class="user-name mb-0">Habib</p>						
-                                </div>
-                                <div class="parent-icon" style="font-size: 30px; margin-left: 10px; "><i class="bx bxs-user me-1"></i>
-                                </div>
-                                <li class="nav-item dropdown dropdown-large">
-                                    <div class="dropdown-menu dropdown-menu-end">
-                                        <div class="header-notifications-list">
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="nav-item dropdown dropdown-large">	
-                                    <div class="dropdown-menu dropdown-menu-end">
-                                        <div class="header-message-list">
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>		
-                    </nav>
-                </div>
-            </header>
-            <!--end header -->
-            <!--start page wrapper -->
-            <div class="page-wrapper">
-                <div class="page-content">
-                    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
-                        <div class="col">
-                            <div class="card radius-10 border-start border-0 border-3 border-info">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center">
-                                        <div>
-                                            <h5 class="mb-0"><b>1265 Partisipan</b></h5>
-                                            <br>
-                                            <p class="mb-0 font-13">1250 Verified</p>
-                                        </div>
+        </header>
+        <!--end header -->
+        <!--start page wrapper -->
+        <div class="page-wrapper">
+            <div class="page-content">
+                <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
+                    <div class="col">
+                        <div class="card radius-10 border-start border-0 border-3 border-info">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <h5 class="mb-0"><b>1265 Partisipan</b></h5>
+                                        <br>
+                                        <p class="mb-0 font-13">1250 Verified</p>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col">
-                            <div class="card radius-10 border-start border-0 border-3 border-success">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center">
-                                        <div>
-                                            <h5 class="mb-0"><b>987 Tim</b></h5>
-                                            <br>
-                                            <p class="mb-0 font-13">Semua Lomba</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card radius-10 border-start border-0 border-3 border-danger">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center">
-                                        <div>
-                                            <h5 class="mb-0"><b>987 Tim</b></h5>
-                                            <br>
-                                            <p class="mb-0 font-13">-</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>	  
-                        <div class="col">
-                            <div class="card radius-10 border-start border-0 border-3 border-warning">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center">
-                                        <div>
-                                            <h5 class="mb-0"><b>987 Tim</b></h5>
-                                            <br>
-                                            <p class="mb-0 font-13">-</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>             
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <h3 class="card-title" style="text-align: center;"><b>Jumlah Pengunjung Setiap Bulan</b></h3>
-                            <br><br>
-                            <div id="bi-weekly-visit" class="chart-lg"></div>
                         </div>
                     </div>
-                    <!--end row-->
+                    <div class="col">
+                        <div class="card radius-10 border-start border-0 border-3 border-success">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <h5 class="mb-0"><b>987 Tim</b></h5>
+                                        <br>
+                                        <p class="mb-0 font-13">Semua Lomba</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card radius-10 border-start border-0 border-3 border-danger">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <h5 class="mb-0"><b>50 Pesan</b></h5>
+                                        <br>
+                                        <p class="mb-0 font-13">5 Pesan Belum di Buka</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>	  
+                    <div class="col">
+                        <div class="card radius-10 border-start border-0 border-3 border-warning">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <h5 class="mb-0"><b>30 Akun Adminis</b></h5>
+                                        <br>
+                                        <p class="mb-0 font-13">1 Akun Admin</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>             
                 </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title btn-crud"><b>Jumlah Pengunjung Setiap Bulan</b></h3>
+                        <br><br>
+                        <div id="bi-weekly-visit" class="chart-lg"></div>
+                    </div>
+                </div>
+                <!--end row-->
             </div>
-            <!--end page wrapper -->
-            <!--start overlay-->
-            <div class="overlay toggle-icon"></div>
-            <!--end overlay-->
-            <!--Start Back To Top Button-->
-            <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
-            <!--End Back To Top Button-->
-            <footer class="page-footer">
-                <p class="mb-0">Copyright ©2024 Tim Website OLINAS.</p>
-            </footer>
         </div>
-        <!--end wrapper-->
-        <!--start switcher--> 
-        <!--end switcher-->
-    </AuthenticatedLayout>
+        <!--end page wrapper -->
+        <!--start overlay-->
+        <div class="overlay toggle-icon"></div>
+        <!--end overlay-->
+        <!--Start Back To Top Button-->
+        <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
+        <!--End Back To Top Button-->
+    </div>
+    <!--end wrapper-->
+    <!--start switcher--> 
+    <!--end switcher-->
 </template>
+     
+  

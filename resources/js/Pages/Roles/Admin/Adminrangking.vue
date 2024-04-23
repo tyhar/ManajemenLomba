@@ -1,3 +1,6 @@
+<script setup>
+import { Link } from '@inertiajs/vue3';
+</script>
 <template>
     <!--wrapper-->
     <div class="wrapper">
@@ -5,7 +8,9 @@
         <div class="sidebar-wrapper" data-simplebar="true">
             <div class="sidebar-header">
                 <div>
-                    <img src="bootstrap/images/logocb.png" class="logo-icon" alt="logo icon">
+                    <a href="/">
+                        <img src="bootstrap/images/logocb.png" class="logo-icon" alt="logo icon" >
+                    </a>
                 </div>
                 <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
                 </div>
@@ -13,7 +18,7 @@
             <!--navigation-->
             <ul class="metismenu" id="menu">
                 <li>
-                    <a href="/index2">
+                    <a href="/superadmin">
                         <div class="parent-icon"><i class='bx bx-home-circle'></i>
                         </div>
                         <div class="menu-title">Dashboard</div>
@@ -62,10 +67,18 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/">
+                    <a>
                         <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
                         </div>
-                        <div class="menu-title">Logout</div>
+                        <div class="menu-title">
+                            <Link class="menu-title"
+                                :href="route('logout')"
+                                method="post"
+                                as="button"
+                            >
+                                Logout
+                            </Link>
+                        </div>
                     </a>
                 </li>
                 <li>
@@ -87,6 +100,7 @@
                 </li>
             </ul>
             <!--end navigation-->
+            
         </div>
         <!--end sidebar wrapper -->
         <!--start header -->

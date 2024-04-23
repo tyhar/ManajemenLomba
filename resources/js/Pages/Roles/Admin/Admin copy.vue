@@ -1,3 +1,68 @@
+<script setup>
+import { Link } from '@inertiajs/vue3';
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    window.ApexCharts && (new ApexCharts(document.getElementById('bi-weekly-visit'), {
+      chart: {
+        type: "bar",
+        fontFamily: 'inherit',
+        height: 240,
+        parentHeightOffset: 0,
+        toolbar: {
+          show: false,
+        },
+        animations: {
+          enabled: false
+        },
+        stacked: true,
+      },
+      plotOptions: {
+        bar: {
+          columnWidth: '60%',
+        }
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      fill: {
+        opacity: 1,
+      },
+      series: [{
+        name: "Jumlah Kunjungan",
+        data: [500,200,820,500,1000,400,500,223,125,89,260,140]            }],
+      tooltip: {
+        theme: 'dark'
+      },
+      grid: {
+        padding: {
+          top: -20,
+          right: 0,
+          left: -4,
+          bottom: -4
+        },
+        strokeDashArray: 4,
+      },
+      xaxis: {
+        labels: {
+          padding: 0,
+        },
+        tooltip: {
+          enabled: false
+        },
+        axisBorder: {
+          show: false,
+        },
+        categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+      },
+      yaxis: {
+        labels: {
+          padding: 4
+        },
+      },
+    })).render();
+  });
+</script>
 <template>
     <!--wrapper-->
     <div class="wrapper">
@@ -65,7 +130,15 @@
                     <a href="/">
                         <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
                         </div>
-                        <div class="menu-title">Logout</div>
+                        <div class="menu-title">
+                            <Link class="menu-title"
+                                :href="route('logout')"
+                                method="post"
+                                as="button"
+                            >
+                                Logout
+                            </Link>
+                        </div>
                     </a>
                 </li>
                 <li>
@@ -202,69 +275,5 @@
     <!--start switcher--> 
     <!--end switcher-->
 </template>
-  
-  
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    window.ApexCharts && (new ApexCharts(document.getElementById('bi-weekly-visit'), {
-      chart: {
-        type: "bar",
-        fontFamily: 'inherit',
-        height: 240,
-        parentHeightOffset: 0,
-        toolbar: {
-          show: false,
-        },
-        animations: {
-          enabled: false
-        },
-        stacked: true,
-      },
-      plotOptions: {
-        bar: {
-          columnWidth: '60%',
-        }
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      fill: {
-        opacity: 1,
-      },
-      series: [{
-        name: "Jumlah Kunjungan",
-        data: [500,200,820,500,1000,400,500,223,125,89,260,140]            }],
-      tooltip: {
-        theme: 'dark'
-      },
-      grid: {
-        padding: {
-          top: -20,
-          right: 0,
-          left: -4,
-          bottom: -4
-        },
-        strokeDashArray: 4,
-      },
-      xaxis: {
-        labels: {
-          padding: 0,
-        },
-        tooltip: {
-          enabled: false
-        },
-        axisBorder: {
-          show: false,
-        },
-        categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-      },
-      yaxis: {
-        labels: {
-          padding: 4
-        },
-      },
-    })).render();
-  });
-</script>
      
   
