@@ -5,8 +5,6 @@ import InputError from '@/Components/InputError.vue';
 // import PrimaryButton from '@/Components/PrimaryButton.vue';
 // import TextInput from '@/Components/TextInput.vue';
 import { Head, useForm } from '@inertiajs/vue3';
-import { reactive } from 'vue'
-import { router } from '@inertiajs/vue3'
 
 const props = defineProps({
     email: {
@@ -31,22 +29,6 @@ const submit = () => {
         onFinish: () => form.reset('password', 'password_confirmation'),
     });
 };
-
-//frontend
-$(document).ready(function () {
-    $("#show_hide_password a").on('click', function (event) {
-        event.preventDefault();
-        if ($('#show_hide_password input').attr("type") == "text") {
-            $('#show_hide_password input').attr('type', 'password');
-            $('#show_hide_password i').addClass("bx-hide");
-            $('#show_hide_password i').removeClass("bx-show");
-        } else if ($('#show_hide_password input').attr("type") == "password") {
-            $('#show_hide_password input').attr('type', 'text');
-            $('#show_hide_password i').removeClass("bx-hide");
-            $('#show_hide_password i').addClass("bx-show");
-        }
-    });
-});
 </script>
 
 <template>
@@ -55,7 +37,7 @@ $(document).ready(function () {
 			<div class="section-authentication-signin d-flex justify-content-center my-5 my-lg-1">
 				<div class="container-fluid jarak-top-lebih10">
 					<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
-						<div class="col mx-auto" style="padding-top: 130px;">
+						<div class="col mx-auto" style="padding-top: 30px;">
 							<div class="card">
 								<div class="card-body">
 									<div class="border p-4 rounded">

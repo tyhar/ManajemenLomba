@@ -9,7 +9,7 @@ import { Link } from '@inertiajs/vue3';
             <div class="sidebar-header">
                 <div>
                     <a href="/">
-                        <img src="bootstrap/images/logocb.png" class="logo-icon" alt="logo icon" >
+                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon" >
                     </a>
                 </div>
                 <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
@@ -147,42 +147,42 @@ import { Link } from '@inertiajs/vue3';
                         <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
                             <div class="col">
                                 <div class="card radius-15 card-overview">
-                                    <img src="bootstrap/images/desain.jpg" alt="New Image" class="border-radius">
+                                    <img src="/bootstrap/images/desain.jpg" alt="New Image" class="border-radius">
                                     <label class="judul-overview">UI / UX</label>
                                     <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Lihat Peserta</a>
                                 </div>
                             </div>
                             <div class="col">
                                     <div class="card radius-15 card-overview">
-                                        <img src="bootstrap/images/ar-vr.jpg" alt="New Image" class="border-radius">
+                                        <img src="/bootstrap/images/ar-vr.jpg" alt="New Image" class="border-radius">
                                         <label class="judul-overview">AR / VR</label>
                                         <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Detail</a>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="card radius-15 card-overview">
-                                        <img src="bootstrap/images/aplikasi-mobile.jpg" alt="New Image" class="border-radius">
+                                        <img src="/bootstrap/images/aplikasi-mobile.jpg" alt="New Image" class="border-radius">
                                         <label class="judul-overview">APLIKASI MOBILE</label>
                                         <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Detail</a>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="card radius-15 card-overview">
-                                        <img src="bootstrap/images/desain-website.jpg" alt="New Image" class="border-radius">
+                                        <img src="/bootstrap/images/desain-website.jpg" alt="New Image" class="border-radius">
                                         <label class="judul-overview">DESAIN WEBSITE</label>
                                         <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Detail</a>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="card radius-15 card-overview">
-                                        <img src="bootstrap/images/sistem-keamanan-data.jpg" alt="New Image" class="border-radius">
+                                        <img src="/bootstrap/images/sistem-keamanan-data.jpg" alt="New Image" class="border-radius">
                                         <label class="judul-overview">SISTEM KEAMANAN DATA</label>
                                         <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Detail</a>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="card radius-15 card-overview">
-                                        <img src="bootstrap/images/membuat-game.jpg" alt="New Image" class="border-radius">
+                                        <img src="/bootstrap/images/membuat-game.jpg" alt="New Image" class="border-radius">
                                         <label class="judul-overview">UI / UX</label>
                                         <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Detail</a>
                                     </div>

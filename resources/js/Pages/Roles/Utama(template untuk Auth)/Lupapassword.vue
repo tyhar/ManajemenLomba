@@ -29,7 +29,7 @@ const submit = () => {
 			<div class="section-authentication-signin d-flex justify-content-center my-5 my-lg-1">
 				<div class="container-fluid jarak-top-lebih10">
 					<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
-						<div class="col mx-auto" style="padding-top: 70px;">
+						<div class="col mx-auto" style="padding-top: 50px;">
 							<div class="card">
 								<div class="card-body">
 									<div class="border p-4 rounded">

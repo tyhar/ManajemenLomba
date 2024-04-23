@@ -7,7 +7,7 @@
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
                         <div class="navbar-left">
-                            <img src="bootstrap/images/logo.png" alt="Logo">
+                            <img src="/bootstrap/images/logo.png" alt="Logo">
                         </div>
                     </div>
                     <!-- Mobile toggle menu -->
@@ -59,7 +59,7 @@
                             </div>
                             <div class="c-mb10">
                                 <label class="c-mb5-black"><b>Gambar</b></label><br>
-                                <img src="bootstrap/images/about_2_img_3.jpg" alt="Product Image" class="img-fluid btn-posisi2" >
+                                <img src="/bootstrap/images/about_2_img_3.jpg" alt="Product Image" class="img-fluid btn-posisi2" >
                             </div>
                             
                         </div>

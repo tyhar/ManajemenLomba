@@ -6,7 +6,7 @@
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
                         <div class="navbar-left">
-                            <img src="bootstrap/images/logo.png" alt="Logo">
+                            <img src="/bootstrap/images/logo.png" alt="Logo">
                         </div>
                     </div>
                     <!-- Mobile toggle menu -->

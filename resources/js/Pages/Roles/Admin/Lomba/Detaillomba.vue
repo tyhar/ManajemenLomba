@@ -7,7 +7,7 @@
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
                         <div class="navbar-left">
-                            <img src="bootstrap/images/logo.png" alt="Logo">
+                            <img src="/bootstrap/images/logo.png" alt="Logo">
                         </div>
                     </div>
                     <!-- Mobile toggle menu -->
@@ -53,13 +53,13 @@
                                 <div class="col-md-6">
                                     <label class="c-mb5-black"><b>Gambar</b></label>
 									<div class="col-12">
-											<img src="bootstrap/images/desain-website.jpg" width="150" />	
+											<img src="/bootstrap/images/desain-website.jpg" width="150" />	
 									</div>
 								</div>
 								<div class="col-md-6 jarak-sertifikat">
                                     <label class="c-mb5-black"><b>Sertifikat</b></label>
 									<div class="col-12">
-											<img src="bootstrap/images/sertifikat.png" width="150" />	
+											<img src="/bootstrap/images/sertifikat.png" width="150" />	
 									</div>
 								</div>
                             </div>

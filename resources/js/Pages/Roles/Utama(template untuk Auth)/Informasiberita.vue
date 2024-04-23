@@ -1,31 +1,3 @@
-<script setup>
-import { Head, Link } from '@inertiajs/vue3';
-
-defineProps({
-    canLogin: {
-        type: Boolean,
-    },
-    canRegister: {
-        type: Boolean,
-    },
-    laravelVersion: {
-        type: String,
-        required: true,
-    }, 
-    phpVersion: {
-        type: String,
-        required: true,
-    },
-});
-
-function handleImageError() {
-    document.getElementById('screenshot-container')?.classList.add('!hidden');
-    document.getElementById('docs-card')?.classList.add('!row-span-1');
-    document.getElementById('docs-card-content')?.classList.add('!flex-row');
-    document.getElementById('background')?.classList.add('!hidden');
-}
-</script>
-
 <template>
     <!--=================================
        MAIN MENU START
@@ -33,7 +5,7 @@ function handleImageError() {
    <nav class="navbar navbar-expand-lg main_menu">
        <div class="container">
            <a class="navbar-brand" href="#">
-               <img src="/bootstrap/images/logo.png" alt="Olinas" class="img-fluid w-100">
+               <img src="bootstrap/images/logo.png" alt="Olinas" class="img-fluid w-100">
            </a>
            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,7 +15,7 @@ function handleImageError() {
            <div class="collapse navbar-collapse" id="navbarNav">
                <ul class="navbar-nav ms-auto">
                    <li class="nav-item">
-                       <a class="nav-link active" href="/#">Beranda</a>
+                       <a class="nav-link" href="/">Beranda</a>
                    </li>
                    <li class="nav-item">
                        <a class="nav-link" href="/#tentang-section">Tentang</a>
@@ -55,7 +27,7 @@ function handleImageError() {
                        <a class="nav-link" href="/#timeline-section">Timeline</a>
                    </li>
                    <li class="nav-item">
-                       <a class="nav-link" href="/#berita-section">Berita</a>
+                       <a class="nav-link active" href="#berita-section">Berita</a>
                    </li>
                    <li class="nav-item">
                        <a class="nav-link" href="/#sponsor-section">Sponsor</a>
@@ -64,20 +36,8 @@ function handleImageError() {
                        <a class="nav-link" href="/kontak">Kontak</a>
                    </li>
                    <li class="nav-item">
-                        <template v-if="!$page.props.auth.user">
-                            <div class="row">
-                            <div class="col">
-                                <a class="nav-link common_btn" href="/login">Login</a>
-                            </div>
-                            <div class="col">
-                                <a class="nav-link common_btn" href="/register">Register</a>
-                            </div>
-                            </div>
-                        </template>
-                        <template v-else>
-                            <a class="nav-link common_btn" href="/dashboard">Dashboard</a>
-                        </template>
-                    </li>
+                       <a class="nav-link common_btn" href="/login">Login</a>
+                   </li>
                </ul>
            </div>
        </div>
@@ -96,7 +56,7 @@ function handleImageError() {
                 <div class="col-12" style="margin-top: 0px;">
                     <h2 style="text-align: center; margin-bottom: 50px;"><b>Ketua Emailkomp Periode 2024</b> </h2>
                     <div class="tf__event_details_img "> 
-                        <img src="/bootstrap/images/farel.png" alt="event details" class="w-100">
+                        <img src="bootstrap/images/farel.png" alt="event details" class="w-100">
                     </div>
                     <div class="tf__event_details_text mt_35 wow fadeInUp" data-wow-duration="1.5s">
                         <ul class="location d-flex flex-wrap"  style="margin-top: 50px;">

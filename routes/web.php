@@ -35,6 +35,15 @@ Route::middleware('auth')->group(function () {
 // -> user
 Route::middleware('auth','verified','user')->group(function () {
     Route::get('/dashboard', [UserController::class, 'index'])->name('dashboard');
+    Route::get('/detailpeserta', [UserController::class, 'detailpeserta']);
+    Route::get('/profilpeserta', [UserController::class, 'profilpeserta']);
+    Route::get('/notifikasipeserta', [UserController::class, 'notifikasipeserta']);
+    Route::get('/reportpeserta', [UserController::class, 'reportpeserta']);
+    Route::get('/detailtimreport', [UserController::class, 'detailtimreport']);
+    Route::get('/daftarlomba', [UserController::class, 'daftarlomba']);
+    Route::get('/datatim', [UserController::class, 'datatim']);
+    Route::get('/anggotatim', [UserController::class, 'anggotatim']);
+    Route::get('/pengumpulankarya', [UserController::class, 'pengumpulankarya']);
 });
 
 // -> admin
@@ -92,6 +101,7 @@ Route::middleware('auth','verified','panelis')->group(function () {
 });
 
 // -> akses double (bisa admin atau juri)
+// -> akses double (bisa admin atau petugas)
 
 // -- landing page --
 Route::get('/kontak', function() {

@@ -9,7 +9,7 @@ import { Link } from '@inertiajs/vue3';
             <div class="sidebar-header">
                 <div>
                     <a href="/">
-                        <img src="bootstrap/images/logocb.png" class="logo-icon" alt="logo icon" >
+                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon" >
                     </a>
                 </div>
                 <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>

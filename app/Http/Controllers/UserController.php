@@ -18,4 +18,45 @@ class UserController extends Controller
     {
         return Inertia::render('Roles/User/Dashboard');
     }
+
+    public function overviewpeserta()
+    {
+        return Inertia::render('Roles/User/Overviewpeserta');
+    }
+    public function detailpeserta()
+    {
+        return Inertia::render('Roles/User/Detailpeserta');
+    }
+    public function profilpeserta()
+    {
+        return Inertia::render('Roles/User/Profilpeserta');
+    }
+    public function notifikasipeserta()
+    {
+        return Inertia::render('Roles/User/Notifikasipeserta');
+    }
+    public function reportpeserta()
+    {
+        return Inertia::render('Roles/User/Reportpeserta');
+    }
+    public function detailtimreport()
+    {
+        return Inertia::render('Roles/User/Report/Detailtimreport');
+    }
+    public function daftarlomba()
+    {
+        return Inertia::render('Roles/User/Daftarlomba');
+    }
+    public function datatim()
+    {
+        return Inertia::render('Roles/User/Daftar/Datatim');
+    }
+    public function anggotatim()
+    {
+        return Inertia::render('Roles/User/Daftar/Anggotatim');
+    }
+    public function pengumpulankarya()
+    {
+        return Inertia::render('Roles/User/Daftar/Pengumpulankarya');
+    }
 }

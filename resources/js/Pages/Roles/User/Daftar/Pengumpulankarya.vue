@@ -1,3 +1,6 @@
+<script setup>
+import { Link } from '@inertiajs/vue3';
+</script>
 <template>
     <div class="wrapper">
         <!--start header -->
@@ -7,7 +10,9 @@
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
                         <div class="navbar-left">
-                            <img src="bootstrap/images/logo.png" alt="Logo">
+                            <a href="dashboard">
+                                <img src="/bootstrap/images/logo.png" alt="Logo">
+                            </a>
                         </div>
                     </div>
                     <!-- Mobile toggle menu -->
