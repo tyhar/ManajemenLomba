@@ -21,6 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         ]);
         //adding multi roles authentication (below are middleware class not model class)
         //these key('admin', etc) are passed into web.php or routes
@@ -38,11 +39,18 @@ return Application::configure(basePath: dirname(__DIR__))
         //these key('admin', etc) are passed into web.php or routes
         ->alias([
 >>>>>>> parent of b5c8065 (auth google and capcha)
+=======
+        ])
+        //adding multi roles authentication (below are middleware class not model class)
+        //these key('admin', etc) are passed into web.php or routes
+        ->alias([
+>>>>>>> parent of 51a4563 (google.com)
             'admin' => Admin::class,
             'eventadmin' => EventAdmin::class,
             'user' => User::class,
             'panelis' => Panelis::class,
         ]);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         $middleware->group('google', [
@@ -56,6 +64,9 @@ return Application::configure(basePath: dirname(__DIR__))
 =======
 
 >>>>>>> parent of b5c8065 (auth google and capcha)
+=======
+
+>>>>>>> parent of 51a4563 (google.com)
         //
     })
     ->withExceptions(function (Exceptions $exceptions) {

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 use App\Http\Controllers\LoginWithGoogleController;
 =======
 
@@ -12,6 +13,9 @@ use App\Http\Controllers\LoginWithGoogleController;
 =======
 
 >>>>>>> parent of b5c8065 (auth google and capcha)
+=======
+
+>>>>>>> parent of 51a4563 (google.com)
 //controller role
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PanelisController;
@@ -131,16 +135,26 @@ Route::get('/informasiberita', function() {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+//{{--OauthGoogle--}} login menggunakan google
+>>>>>>> parent of 51a4563 (google.com)
 Route::controller(LoginWithGoogleController::class)->group(function(){
     Route::get('authorized/google', 'googlepage')->name('auth.google');
     Route::get('authorized/google/callback', 'handleGoogleCallback');
-
-
-    
 });
 
+<<<<<<< HEAD
 =======
 >>>>>>> parent of b5c8065 (auth google and capcha)
+=======
+
+
+Auth::routes(['verify'=>true]);
+
+
+>>>>>>> parent of 51a4563 (google.com)
 =======
 >>>>>>> parent of b5c8065 (auth google and capcha)
 // -- backup --
