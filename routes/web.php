@@ -130,6 +130,11 @@ Route::controller(LoginWithGoogleController::class)->group(function(){
     Route::get('authorized/google/callback', 'handleGoogleCallback');
 });
 
+
+
+Auth::routes(['verify'=>true]);
+
+
 // -- backup --
 
 // Route::get('/superadmin', function () {
