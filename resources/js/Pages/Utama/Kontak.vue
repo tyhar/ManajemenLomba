@@ -1,9 +1,8 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
-
 import { reactive } from 'vue'
-import { router } from '@inertiajs/vue3'
+import { Head, Link, useForm, router } from '@inertiajs/vue3'
 
+//backend navbar
 defineProps({
     canLogin: {
         type: Boolean,
@@ -21,29 +20,26 @@ defineProps({
     },
 });
 
-const form = reactive({
-  nama: null,
+
+const form = useForm({
+  name: null,
   email: null,
-  nomor: null,
-  pesan: null,
+  phone: null,
+  message: null,
 })
 
 function submit() {
-  router.post('/kontak', form)
+    router.post('/kontak', form)
 }
 
-//frontend
-function handleImageError() {
-    document.getElementById('screenshot-container')?.classList.add('!hidden');
-    document.getElementById('docs-card')?.classList.add('!row-span-1');
-    document.getElementById('docs-card-content')?.classList.add('!flex-row');
-    document.getElementById('background')?.classList.add('!hidden');
-}
+// const submit = () => {
+//     form.post(route('register'), {
+//         onFinish: () => form.reset('password', 'password_confirmation'),
+//     });
+// };
 </script>
 <template>
-    <!--=================================
-        MAIN MENU START
-    ==================================-->
+    <!--MAIN MENU START-->
     <nav class="navbar navbar-expand-lg main_menu">
         <div class="container">
             <a class="navbar-brand" href="/">
@@ -96,14 +92,8 @@ function handleImageError() {
             </div>
         </div>
     </nav>
-    <!--=================================
-        MAIN MENU END
-    ==================================-->
-   
-   
-    <!--=================================
-        BREADCRUMB START
-    ==================================-->
+    <!--MAIN MENU END-->
+    <!--BREADCRUMB START-->
     <section class="tf__breadcrumb" style="background: url(bootstrap/images/home.jpg);">
         <div class="container">
             <div class="row">
@@ -115,14 +105,8 @@ function handleImageError() {
             </div>
         </div>
     </section>
-    <!--=================================
-       BREADCRUMB END
-    ==================================-->
-   
-   
-    <!--=================================
-       CONTACT PAGE START
-    ==================================-->
+    <!--BREADCRUMB END-->
+    <!--CONTACT PAGE START-->
     <section class="tf__contact_page mt_190 xs_mt_95">
         <div class="container">
             <div class="row">
@@ -132,10 +116,10 @@ function handleImageError() {
                            <h5 class="c-mb-13">HUBUNGI KAMI</h5>
                         </div>
                         <form @submit.prevent="submit">
-                            <input id="nama" v-model="form.nama" placeholder="Nama"/>
+                            <input id="name" v-model="form.name" placeholder="Nama"/>
                             <input id="email" v-model="form.email" placeholder="Email" />
-                            <input id="nomor" v-model="form.nomor" placeholder="No. WhatsApp"/>
-                            <input id="pesan" v-model="form.pesan" placeholder="Pesan"/>
+                            <input id="phone" v-model="form.phone" placeholder="No. WhatsApp"/>
+                            <input id="message" v-model="form.message" placeholder="Pesan"/>
                             <button type="submit" class="common_btn_2">Kirim</button>
                         </form>
                     </div>
@@ -150,12 +134,6 @@ function handleImageError() {
             </div>
         </div>
     </section>
-   <!--=================================
-           CONTACT PAGE END
-    ==================================-->
+    <!--CONTACT PAGE END-->   
 </template>
 
-
-<script setup>
-
-</script>

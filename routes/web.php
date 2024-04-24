@@ -4,12 +4,13 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 
-//controller role
+//controller
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PanelisController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EventAdminController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ChatController;
 
 //default breeze
 Route::get('/', function () {
@@ -114,11 +115,12 @@ Route::middleware('auth','verified','panelis')->group(function () {
 // -> akses double (bisa admin atau petugas)
 
 // -- landing page --
-Route::get('/kontak', function() {
-    return inertia::render('LandingPage/Kontak');
-});
+// Route::get('/kontak', function() {
+//     return inertia::render('Utama/Kontak');
+// });
+Route::get('/kontak', [ChatController::class, 'create']);
 Route::get('/informasiberita', function() {
-    return inertia::render('LandingPage/InformasiBerita');
+    return inertia::render('Utama/InformasiBerita');
 });
 
 // -- backup --
@@ -130,3 +132,4 @@ Route::get('/informasiberita', function() {
 // Route::get('/dashboard', function () {
 //     return Inertia::render('Dashboard');
 // })->middleware(['auth', 'verified', 'user'])->name('dashboard');
+
