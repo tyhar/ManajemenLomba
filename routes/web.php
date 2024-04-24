@@ -4,7 +4,11 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 <<<<<<< HEAD
+<<<<<<< HEAD
 use App\Http\Controllers\LoginWithGoogleController;
+=======
+
+>>>>>>> parent of b5c8065 (auth google and capcha)
 =======
 
 >>>>>>> parent of b5c8065 (auth google and capcha)
@@ -126,6 +130,7 @@ Route::get('/informasiberita', function() {
 });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 Route::controller(LoginWithGoogleController::class)->group(function(){
     Route::get('authorized/google', 'googlepage')->name('auth.google');
     Route::get('authorized/google/callback', 'handleGoogleCallback');
@@ -134,6 +139,8 @@ Route::controller(LoginWithGoogleController::class)->group(function(){
     
 });
 
+=======
+>>>>>>> parent of b5c8065 (auth google and capcha)
 =======
 >>>>>>> parent of b5c8065 (auth google and capcha)
 // -- backup --
