@@ -3,7 +3,11 @@
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
+<<<<<<< HEAD
 use App\Http\Controllers\LoginWithGoogleController;
+=======
+
+>>>>>>> parent of b5c8065 (auth google and capcha)
 //controller role
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PanelisController;
@@ -121,6 +125,7 @@ Route::get('/informasiberita', function() {
     return inertia::render('LandingPage/InformasiBerita');
 });
 
+<<<<<<< HEAD
 Route::controller(LoginWithGoogleController::class)->group(function(){
     Route::get('authorized/google', 'googlepage')->name('auth.google');
     Route::get('authorized/google/callback', 'handleGoogleCallback');
@@ -129,6 +134,8 @@ Route::controller(LoginWithGoogleController::class)->group(function(){
     
 });
 
+=======
+>>>>>>> parent of b5c8065 (auth google and capcha)
 // -- backup --
 
 // Route::get('/superadmin', function () {
