@@ -30,12 +30,40 @@ const form = useForm({
     password: '',
     remember: false,
 });
-const submit = () => {
-    form.post(route('login'), {
-        onFinish: () => form.reset('password'),
-    });
-};
 
+const captcha = reactive({
+	question: '',
+	answer: 0 // tambahkan properti untuk menyimpan jawaban CAPTCHA
+  })
+  
+  let captchaInput = ''
+  
+  // Metode untuk menghasilkan CAPTCHA
+  function generateCaptcha() {
+	const num1 = Math.floor(Math.random() * 10) + 1; // Angka acak 1-10
+	const num2 = Math.floor(Math.random() * 10) + 1; // Angka acak 1-10
+	captcha.question = `${num1} x ${num2}?`;
+	captcha.answer = num1 * num2; // Simpan jawaban CAPTCHA
+  }
+  
+  function submit() {
+	// Periksa apakah jawaban CAPTCHA benar
+	if (parseInt(captchaInput) === captcha.answer) {
+	  router.post('/login', form);
+   
+	} else {
+	  alert('Jawaban CAPTCHA salah. Silakan coba lagi.');
+	  generateCaptcha(); // Generate CAPTCHA baru setelah gagal
+	}
+  }
+  
+  function loginWithGoogle() {
+	// Redirect to Google OAuth URL
+	window.location.href = "/authorized/google";
+  }
+
+   // Panggil generateCaptcha saat komponen dimuat
+   generateCaptcha();
 //from frontend
 $(document).ready(function () {
 		$("#show_hide_password a").on('click', function (event) {
@@ -70,6 +98,7 @@ $(document).ready(function () {
                                         <div class="form-body">
                                             <form class="row g-3" @submit.prevent="submit">
                                                 <div class="col-12">
+                                                    <InputError class="mt-2" :message="errors.email" /> <!-- Corrected prop reference -->
                                                     <label for="email" class="form-label">Email</label>
                                                     <input class="form-control"
                                                         id="email"
@@ -80,9 +109,10 @@ $(document).ready(function () {
                                                         autocomplete="username"
                                                         placeholder="Enter Email" 
                                                     />
-                                                    <InputError class="mt-2" :message="errors.email" /> <!-- Corrected prop reference -->
+                                                    
                                                 </div>
                                                 <div class="col-12">
+                                                    <InputError class="mt-2" :message="errors.password" /> <!-- Corrected prop reference -->
                                                     <label for="password" class="form-label">Password</label>
 													<div class="input-group" id="show_hide_password">
 														<input class="form-control border-end-0"
@@ -93,7 +123,6 @@ $(document).ready(function () {
 															placeholder="Enter Password" 
 															autocomplete="current-password"
 														/> 
-														<InputError class="mt-2" :message="errors.password" /> <!-- Corrected prop reference -->
 														<a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
 													</div>
                                                 </div>
@@ -112,11 +141,13 @@ $(document).ready(function () {
                                                         Lupa Password?
                                                     </Link>
                                                 </div>
-                                                <!-- <div class="d-grid jarak-top-lebih10">
-                                                    <a class="btn shadow-sm btn-white" href="javascript:;">
-                                                        <span>Captcha</span>
-                                                    </a>
-                                                </div> -->
+                                                <div class="col-12">
+													<label style="margin-right:5px ;">Hasil Dari</label>
+                                                    <label for="captcha" class="form-label">{{ captcha.question }}</label>
+                                                    <div class="input-group">
+                                                        <input v-model="captchaInput" type="text" class="form-control" id="captcha" placeholder="Enter Captcha">
+                                                    </div>
+                                                </div>
                                                 <div class="col-12">
                                                     <div class="d-grid jarak-top-kurang5">
                                                         <button class="btn btn-primary" :disabled="form.processing">
@@ -129,12 +160,11 @@ $(document).ready(function () {
                                                         <hr/>
                                                     </div>
                                                     <div class="d-grid jarak-top-kurang4">
-                                                        <a class="btn shadow-sm btn-white" href="javascript:;">
-                                                            <span class="d-flex justify-content-center align-items-center">
-                                                                <img class="me-2" src="assets/images/icons/search.svg" width="16" alt="Image Description">
-                                                                <span>Masuk dengan Google</span>
-                                                            </span>
-                                                        </a>
+                                                        <a class="btn shadow-sm btn-white" href="#" @click="loginWithGoogle"> <span class="d-flex justify-content-center align-items-center">
+				                                   				<img class="me-2" src="../../../../public/assets/images/icons/search.svg" width="16" alt="Image Description">
+						                                      		<span >Masuk dengan Google</span>
+						                                      	  </span>
+						                                	</a>
                                                     </div>
                                                     <div class="text-center jarak-top-kurang10">
                                                         <br>
@@ -160,3 +190,5 @@ $(document).ready(function () {
         ==========================-->
     </section>
 </template>
+
+

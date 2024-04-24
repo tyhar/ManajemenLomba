@@ -3,6 +3,8 @@
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
+use App\Http\Controllers\LoginWithGoogleController;
+
 
 //controller role
 use App\Http\Controllers\AdminController;
@@ -119,6 +121,13 @@ Route::get('/kontak', function() {
 });
 Route::get('/informasiberita', function() {
     return inertia::render('LandingPage/InformasiBerita');
+});
+
+
+//{{--OauthGoogle--}} login menggunakan google
+Route::controller(LoginWithGoogleController::class)->group(function(){
+    Route::get('authorized/google', 'googlepage')->name('auth.google');
+    Route::get('authorized/google/callback', 'handleGoogleCallback');
 });
 
 // -- backup --
