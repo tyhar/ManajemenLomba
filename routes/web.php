@@ -3,8 +3,6 @@
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
-use App\Http\Controllers\LoginWithGoogleController;
-
 
 //controller role
 use App\Http\Controllers\AdminController;
@@ -123,6 +121,7 @@ Route::get('/informasiberita', function() {
     return inertia::render('LandingPage/InformasiBerita');
 });
 
+<<<<<<< HEAD
 
 //{{--OauthGoogle--}} login menggunakan google
 Route::controller(LoginWithGoogleController::class)->group(function(){
@@ -135,6 +134,8 @@ Route::controller(LoginWithGoogleController::class)->group(function(){
 Auth::routes(['verify'=>true]);
 
 
+=======
+>>>>>>> parent of b5c8065 (auth google and capcha)
 // -- backup --
 
 // Route::get('/superadmin', function () {
