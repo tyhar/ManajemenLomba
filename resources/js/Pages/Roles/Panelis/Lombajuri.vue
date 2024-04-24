@@ -7,9 +7,9 @@ import { Link } from '@inertiajs/vue3';
         <!--sidebar wrapper -->
         <div class="sidebar-wrapper" data-simplebar="true">
             <div class="sidebar-header">
-                <div>
+                <div> 
                     <a href="/">
-                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon" >
+                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon">
                     </a>
                 </div>
                 <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
@@ -18,56 +18,28 @@ import { Link } from '@inertiajs/vue3';
             <!--navigation-->
             <ul class="metismenu" id="menu">
                 <li>
-                    <a href="/superadmin">
+                    <a href="/panelis">
                         <div class="parent-icon"><i class='bx bx-home-circle'></i>
                         </div>
                         <div class="menu-title">Dashboard</div>
                     </a>
-                    </li>
-                    <li>
-                    <a href="javascript:;" class="has-arrow">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-plus-circle"></i>
-                        </div>
-                        <div class="menu-title">Event</div>
-                    </a>
-                    <ul>
-                        <li class="jarak-dropdown"> <a href="/lomba">Lomba</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/administrator">Administrator</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/tim">Tim</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/sponsor">Sponsor</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/berita">Berita</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/setting">Setting</a>
-                        </li>
-                    </ul>
                 </li>
                 <li>
-                <a href="/partisipan">
-                    <div class="parent-icon"><i class="fadeIn animated bx bx-street-view"></i>
-                    </div>
-                    <div class="menu-title">Partisipan</div>
-                </a>
-                </li>
-                <li>
-                    <a href="/pesan">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i>
+                    <a href="/lombajuri">
+                        <div class="parent-icon"><i class="bx bx-award"></i>
                         </div>
-                        <div class="menu-title">Pesan <span class="alert-count">1</span></div>
+                        <div class="menu-title">Lomba</div>
                     </a>
                 </li>
                 <li>
-                    <a href="/rangking">
+                    <a href="/rangkingjuri">
                         <div class="parent-icon"><i class="fadeIn animated bx bx-trophy"></i>
                         </div>
                         <div class="menu-title">Rangking</div>
                     </a>
                 </li>
                 <li>
-                    <a>
+                    <a href="/">
                         <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
                         </div>
                         <div class="menu-title">
@@ -88,19 +60,18 @@ import { Link } from '@inertiajs/vue3';
                         <div class="menu-title">SEMENTARA</div>
                     </a>
                     <ul>
-                        <li class="jarak-dropdown"> <a href="/dashboardjuri">JURI</a>
+                        <li class="jarak-dropdown"> <a href="/panelis">JURI</a>
                         </li>
                         <li class="jarak-dropdown"> <a href="/dashboardpetugas">PETUGAS</a>
                         </li>
                         <li class="jarak-dropdown"> <a href="/overviewpeserta">PESERTA</a>
                         </li>
-                        <li class="jarak-dropdown"> <a href="/index2">ADMIN</a>
+                        <li class="jarak-dropdown"> <a href="/superadmin">ADMIN</a>
                         </li>
                     </ul>
                 </li>
             </ul>
             <!--end navigation-->
-            
         </div>
         <!--end sidebar wrapper -->
         <!--start header -->
@@ -114,8 +85,7 @@ import { Link } from '@inertiajs/vue3';
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>			
-                                <p class="user-role">habib</p>							
+                                <p class="user-name mb-0">Juri</p>						
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -137,8 +107,9 @@ import { Link } from '@inertiajs/vue3';
             </div>
         </header>
         <!--end header -->
-		<!--start page wrapper -->
-		<div class="page-wrapper">
+
+        <!--start page wrapper -->
+        <div class="page-wrapper">
 			<div class="page-content">
 				<!--breadcrumb-->
 				<div class="tf__activities_slider_area">
@@ -149,42 +120,42 @@ import { Link } from '@inertiajs/vue3';
                                 <div class="card radius-15 card-overview">
                                     <img src="/bootstrap/images/desain.jpg" alt="New Image" class="border-radius">
                                     <label class="judul-overview">UI / UX</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Lihat Peserta</a>
+                                    <a class="btn btn-primary btn-landing-page2" href="/tabellomba">Lihat Peserta</a>
                                 </div>
                             </div>
                             <div class="col">
                                     <div class="card radius-15 card-overview">
                                         <img src="/bootstrap/images/ar-vr.jpg" alt="New Image" class="border-radius">
                                         <label class="judul-overview">AR / VR</label>
-                                        <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Detail</a>
+                                        <a class="btn btn-primary btn-landing-page2" href="/tabellomba">Lihat Peserta</a>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="card radius-15 card-overview">
                                         <img src="/bootstrap/images/aplikasi-mobile.jpg" alt="New Image" class="border-radius">
                                         <label class="judul-overview">APLIKASI MOBILE</label>
-                                        <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Detail</a>
+                                        <a class="btn btn-primary btn-landing-page2" href="/tabellomba">Lihat Peserta</a>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="card radius-15 card-overview">
                                         <img src="/bootstrap/images/desain-website.jpg" alt="New Image" class="border-radius">
                                         <label class="judul-overview">DESAIN WEBSITE</label>
-                                        <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Detail</a>
+                                        <a class="btn btn-primary btn-landing-page2" href="/tabellomba">Lihat Peserta</a>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="card radius-15 card-overview">
                                         <img src="/bootstrap/images/sistem-keamanan-data.jpg" alt="New Image" class="border-radius">
                                         <label class="judul-overview">SISTEM KEAMANAN DATA</label>
-                                        <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Detail</a>
+                                        <a class="btn btn-primary btn-landing-page2" href="/tabellomba">Lihat Peserta</a>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="card radius-15 card-overview">
                                         <img src="/bootstrap/images/membuat-game.jpg" alt="New Image" class="border-radius">
                                         <label class="judul-overview">UI / UX</label>
-                                        <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Detail</a>
+                                        <a class="btn btn-primary btn-landing-page2" href="/tabellomba">Lihat Peserta</a>
                                     </div>
                                 </div> 
                             </div>
@@ -194,7 +165,7 @@ import { Link } from '@inertiajs/vue3';
                 <!--end row-->
 			</div>
 		</div>
-	
-	</div>
-	<!--end switcher-->      
+    </div>        
 </template>
+    
+

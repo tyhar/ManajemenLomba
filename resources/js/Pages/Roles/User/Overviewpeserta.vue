@@ -103,7 +103,7 @@ import { Link } from '@inertiajs/vue3';
                                 <p class="user-name mb-0">Lionel Andres</p>			
                                 <p class="user-role">leon</p>					
                             </div>
-                            <div class="parent-icon posisi-icon"><i class="bx bxs-user me-1"></i>
+                            <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
                             <li class="nav-item dropdown dropdown-large">
                                 <div class="dropdown-menu dropdown-menu-end">

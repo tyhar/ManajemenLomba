@@ -7,7 +7,7 @@ import { Link } from '@inertiajs/vue3';
         <!--sidebar wrapper -->
         <div class="sidebar-wrapper" data-simplebar="true">
             <div class="sidebar-header">
-                <div>
+                <div> 
                     <a href="/">
                         <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon">
                     </a>
@@ -18,38 +18,24 @@ import { Link } from '@inertiajs/vue3';
             <!--navigation-->
             <ul class="metismenu" id="menu">
                 <li>
-                    <a href="/dashboard">
-                        <div class="parent-icon"><i class='bx bx-category'></i>
+                    <a href="/panelis">
+                        <div class="parent-icon"><i class='bx bx-home-circle'></i>
                         </div>
-                        <div class="menu-title">Overview</div>
+                        <div class="menu-title">Dashboard</div>
                     </a>
                 </li>
                 <li>
-                    <a href="/daftarlomba">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-street-view"></i>
+                    <a href="/lombajuri">
+                        <div class="parent-icon"><i class="bx bx-award"></i>
                         </div>
-                        <div class="menu-title">Daftar Lomba</div>
+                        <div class="menu-title">Lomba</div>
                     </a>
                 </li>
                 <li>
-                    <a href="/profilpeserta">
-                        <div class="parent-icon"><i class="bx bx-user-circle"></i>
+                    <a href="/rangkingjuri">
+                        <div class="parent-icon"><i class="fadeIn animated bx bx-trophy"></i>
                         </div>
-                        <div class="menu-title">Profil</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="/notifikasipeserta">
-                        <div class="parent-icon"><i class="bx bx-user-circle"></i>
-                        </div>
-                        <div class="menu-title">Notifikasi<span class="alert-count">1</span></div>
-                    </a>
-                </li>
-                <li>
-                    <a href="/reportpeserta">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i>
-                        </div>
-                        <div class="menu-title">Report <span class="alert-count">1</span></div>
+                        <div class="menu-title">Rangking</div>
                     </a>
                 </li>
                 <li>
@@ -74,13 +60,13 @@ import { Link } from '@inertiajs/vue3';
                         <div class="menu-title">SEMENTARA</div>
                     </a>
                     <ul>
-                        <li class="jarak-dropdown"> <a href="/dashboardjuri">JURI</a>
+                        <li class="jarak-dropdown"> <a href="/panelis">JURI</a>
                         </li>
                         <li class="jarak-dropdown"> <a href="/dashboardpetugas">PETUGAS</a>
                         </li>
                         <li class="jarak-dropdown"> <a href="/overviewpeserta">PESERTA</a>
                         </li>
-                        <li class="jarak-dropdown"> <a href="/index2">ADMIN</a>
+                        <li class="jarak-dropdown"> <a href="/superadmin">ADMIN</a>
                         </li>
                     </ul>
                 </li>
@@ -99,8 +85,7 @@ import { Link } from '@inertiajs/vue3';
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Lionel Andres</p>			
-                                <p class="user-role">leon</p>								
+                                <p class="user-name mb-0">Juri</p>						
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -122,18 +107,69 @@ import { Link } from '@inertiajs/vue3';
             </div>
         </header>
         <!--end header -->
+
         <!--start page wrapper -->
         <div class="page-wrapper">
-            <div class="page-content"> 
-                <div class="card-body btn-crud">
-                    <div class="d-grid notifikasi-peserta"> <a class="btn btn-danger radius-3 text-warna warna-hitam">Mohon maaf TIM anda gagal ke tahap selanjutnya untuk lomba ui/ux dalam event Olinas (Olimpiade Nasional)</a>
-					</div>
-                    <div class="d-grid notifikasi-peserta-2"> <a class="btn btn-success radius-3 text-warna warna-hitam">Selamat TIM anda telah terdaftar lomba UI/UX</a>
-				    </div>
+            <div class="page-content">
+                <div class="ps-3">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-0 p-0">
+                            <li class="breadcrumb-item">
+                            </li>                             
+                        </ol>
+                    </nav>
+                </div>
+				<div class="card">
+					<div class="card-body">
+                        <h4 class="mb-0 jarak-top-kurang5">Tabel Peserta</h4>
+                        <hr class="c-mt10"/>
+                            <label class="jarak-filterstatus">Filter by Status</label> 
+                            <select class="form-select2">
+                                <option selected>Semua</option>
+                                <option>Belum Dibaca</option>
+                                <option>Sudah Dibaca</option>
+                            </select>                           
+                            <br><br>
+                            <div class="table-responsive">	
+                                <table id="example" class="table table-bordered">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th class="width-id">ID</th>
+                                            <th class="crud-width-150">Nama Tim</th>  
+                                            <th class="crud-width-180">Judul</th>
+                                            <th class="crud-width100" >File</th>
+                                            <th class="crud-width100">Link</th>
+                                            <th class="crud-width-150">Instansi</th>
+                                            <th class="crud-width100">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Tim Design</td>
+                                            <td>Platform Pendidikan Interaktif</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>Universitas</td>
+                                            <td>Tidak Lolos</td>
+                                        </tr>                                  
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>      
+                    <!--end row-->
                 </div>
             </div>
-        </div>
         <!--end page wrapper -->
+        <!--start overlay-->
+        <div class="overlay toggle-icon"></div>
+        <!--end overlay-->
+        <!--Start Back To Top Button-->
+        <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
+        <!--End Back To Top Button-->
     </div>
+   
 </template>
     
+

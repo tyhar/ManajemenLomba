@@ -4,7 +4,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 
-//controller
+//controller role
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PanelisController;
 use App\Http\Controllers\ProfileController;
@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function () {
 // -- multi auth roles --
 //dont forget to add controller class or any other import needed
 
-// -> user
+// -> user atau peserta
 Route::middleware('auth','verified','user')->group(function () {
     Route::get('/dashboard', [UserController::class, 'index'])->name('dashboard');
     Route::get('/detailpeserta', [UserController::class, 'detailpeserta']);
@@ -89,13 +89,23 @@ Route::middleware('auth','verified','admin')->group(function () {
 // -> eventadmin atau petugas
 Route::middleware('auth','verified','eventadmin')->group(function () {
     Route::get('/eventadmin', [EventAdminController::class, 'index'])->name('eventadmin');
-    Route::get('/dashboardpetugas', [EventAdminController::class, 'dashboardpetugas'])->name('dashboardpetugas');
+    Route::get('/partisipanpetugas', [EventAdminController::class, 'partisipanpetugas']);
+    Route::get('/timpetugas', [EventAdminController::class, 'timpetugas']);
+    Route::get('/timdetail', [EventAdminController::class, 'timdetail']);
+    Route::get('/pesanpetugas', [EventAdminController::class, 'pesanpetugas']);
+    Route::get('/rangkingpetugas', [EventAdminController::class, 'rangkingpetugas']);
+    Route::get('/petugasrangking', [EventAdminController::class, 'petugasrangking']);
 });
 
 // -> panelis atau juri
 Route::middleware('auth','verified','panelis')->group(function () {
     Route::get('/panelis', [PanelisController::class, 'index'])->name('panelis');
-    Route::get('/dashboardjuri', [PanelisController::class, 'dashboardjuri'])->name('dashboardjuri');
+    Route::get('/lombajuri', [PanelisController::class, 'lombajuri']);
+    Route::get('/tabellomba', [PanelisController::class, 'tabellomba']);
+    Route::get('/rangkingjuri', [PanelisController::class, 'rangkingjuri']);
+    Route::get('/tabelrangkingjuri', [PanelisController::class, 'tabelrangkingjuri']);
+    Route::get('/nilai', [PanelisController::class, 'nilai']);
+    // Route::get('/dashboardjuri', [PanelisController::class, 'dashboardjuri'])->name('dashboardjuri');
     // Route::get('/rangking', [PanelisControllerController::class, 'rangking']);
     // Route::get('/tabelrangking', [PanelisController::class, 'tabelrangking']);
 });
