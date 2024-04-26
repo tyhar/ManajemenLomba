@@ -158,12 +158,13 @@ import { Link } from '@inertiajs/vue3';
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>D3TI UNS</td>
-                                        <td>d3ti.jpg</td>
-                                        <td>https://s4-eight.vercel.app/</td>
-                                        <td class="btn-crud">
+                                        <tr v-for="sponsors in sponsors" :key="sponsors.id">
+                                    <td>{{ sponsors.id }}</td>
+                                    <td>{{ sponsors.nama }}</td>
+                                    <td>{{ sponsors.email }}</td>
+                                    <td>{{ sponsors.nomor }}</td>
+                                    <td>{{ sponsors.pesan }}</td>
+                                 <td class="btn-crud">
                                             <button class="btn btn-secondary" onclick="window.location.href='/detailsponsor'"><i class="bi bi-eye"></i></button>
                                             <button class="btn btn-primary" onclick="window.location.href='/editsponsor'"><i class="bi bi-pencil-square"></i></button>    
                                             <button class="btn btn-danger" ><i class="bi bi-trash"></i></button>                              
@@ -180,7 +181,17 @@ import { Link } from '@inertiajs/vue3';
     </div>
 </template>
     
-<script>
+
+<script setup>
+import { defineProps } from "vue";
+import { Link } from '@inertiajs/vue3';
+
+const props = defineProps({
+    sponsors: {
+        type: Array,
+        default: () => [],
+    },
+});
 $(document).ready(function() {
     $('#example').DataTable();
   } );

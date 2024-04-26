@@ -12,7 +12,9 @@ use App\Http\Controllers\PanelisController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EventAdminController;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\PesanController;
+use App\Http\Controllers\PesanUserController;
+use App\Http\Controllers\SponsorController;
 //default breeze
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -53,7 +55,7 @@ Route::middleware('auth','verified','admin')->group(function () {
     Route::get('/superadmin', [AdminController::class, 'index'])->name('admin');
     Route::get('/partisipan', [AdminController::class, 'partisipan']);
     // Route::resource('superadmin/partisipan', [PartisipanController::class]);
-    Route::get('/pesan', [AdminController::class, 'pesan']);
+    Route::get('/pesan', [PesanUserController::class, 'index'])->name('pesan');
     // Route::resource('superadmin/pesan', [PesanController::class]);
     Route::get('/lomba', [AdminController::class, 'lomba']);
     Route::get('tambahlomba', [AdminController::class, 'tambahlomba']);
@@ -69,9 +71,10 @@ Route::middleware('auth','verified','admin')->group(function () {
     Route::get('/tim', [AdminController::class, 'tim']);
     Route::get('/detailtim', [AdminController::class, 'detailtim']);
     // Route::resource('superadmin/tim', [TimController::class]);
-    Route::get('/sponsor', [AdminController::class, 'sponsor']);
-    Route::get('/tambahsponsor', [AdminController::class, 'tambahsponsor']);
-    Route::get('/editsponsor', [AdminController::class, 'editsponsor']);
+    Route::get('/sponsor', [SponsorController::class, 'show'])->name('sponsors');
+    Route::get('/tambahsponsor', [SponsorController::class, 'create']);
+    
+    Route::get('/editsponsor', [SponsorController::class, 'editsponsor']);
     Route::get('/detailsponsor', [AdminController::class, 'detailsponsor']);
     // Route::resource('superadmin/sponsor', [SponsorController::class]);
     Route::get('/berita', [AdminController::class, 'berita']);
@@ -114,11 +117,14 @@ Route::middleware('auth','verified','panelis')->group(function () {
 
 // -> akses double (bisa admin atau juri)
 // -> akses double (bisa admin atau petugas)
-
 // -- landing page --
 Route::get('/kontak', function() {
     return inertia::render('LandingPage/Kontak');
-});
+})->name('pesan.index');
+Route::post('/kontak', [PesanController::class, 'create']);
+
+
+
 Route::get('/informasiberita', function() {
     return inertia::render('LandingPage/InformasiBerita');
 });
@@ -130,7 +136,6 @@ Route::controller(LoginWithGoogleController::class)->group(function(){
     Route::get('authorized/google/callback', 'handleGoogleCallback');
 });
 
-// -- backup --
 
 // Route::get('/superadmin', function () {
 //     return Inertia::render('Roles/Admin/Admin');

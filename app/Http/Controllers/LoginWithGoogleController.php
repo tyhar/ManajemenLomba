@@ -32,9 +32,9 @@ class LoginWithGoogleController extends Controller
                 // Jika pengguna baru, buat entri pengguna baru di database
                 $newUser = User::create([
                     'name' => $googleUser->name,
-                    'username'=> $googleUser->username,
                     'email' => $googleUser->email,
-                    'google_id' => $googleUser->id
+                    'google_id' => $googleUser->id,
+                    'password' => encrypt('123456dummy')
                 ]);
 
                 // Login pengguna baru dan arahkan ke halaman yang dimaksud

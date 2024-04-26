@@ -24,6 +24,12 @@ const submit = () => {
     });
 };
 
+
+function loginWithGoogle() {
+	// Redirect to Google OAuth URL
+	window.location.href = "/authorized/google";
+};
+
 //frontend
 $(document).ready(function () {
     $("#show_hide_password a").on('click', function (event) {
@@ -139,13 +145,13 @@ $(document).ready(function () {
 													<div class="login-separater text-center mb-4 jarak-top-kurang18"> <span>ATAU MASUK DENGAN EMAIL</span>
 														<hr/>
 													</div>
-													<div class="d-grid jarak-top-kurang10">
-														<a class="btn shadow-sm btn-white" href="javascript:;"> <span class="d-flex justify-content-center align-items-center">
-															<img class="me-2" src="../../../../public/assets/images/icons/search.svg" width="16" alt="Image Description">
-															<span>Masuk dengan Google</span>
-															</span>
-														</a>
-													</div>
+                                                    <div class="d-grid jarak-top-kurang4">
+                                                        <a class="btn shadow-sm btn-white" href="#" @click="loginWithGoogle"> <span class="d-flex justify-content-center align-items-center">
+				                                   				<img class="me-2" src="../../../../public/assets/images/icons/search.svg" width="16" alt="Image Description">
+						                                      		<span >Masuk dengan Google</span>
+						                                      	  </span>
+						                                	</a>
+                                                    </div>
 													<div class="text-center jarak-top-kurang12">
 														<br>
 														<p>

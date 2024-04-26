@@ -20,7 +20,10 @@ return new class extends Migration
             //create roles authentication types
             $table->tinyInteger('role')->default(3); // Users: 1-superadmin, 2-event_admin, 3-user 4-juri
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
+            $table->string('nik')->nullable();
+            $table->string('instansi')->nullable();
+            $table->string('google_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

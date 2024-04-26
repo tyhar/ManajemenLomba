@@ -1,4 +1,5 @@
 <template>
+     <form @submit.prevent="submit">
     <div class="wrapper">
         <!--start header -->
         <header>
@@ -33,23 +34,23 @@
         <div class="page-wrapper-new">
             <div class="page-content">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body">     
                         <h4 class="mb-0">Tambah Sponsor</h4>
                         <hr/>
                         <div>
-                            <div class="c-mb10">
+                            <div class="c-mb10">                 
                                 <label class="c-mb5-black"><b>Nama Sponsor</b></label>
-                                <input type="email" class="form-control">
+                                <input type="text" id="name" v-model="form.name" />
                             </div>
                             <div>
                                 <label class="c-mb5-black"><b>Link</b></label>
                                 <div class="col-12">
-                                    <textarea class="form-control c-mb10" id="inputProductDescription" rows="2"></textarea>
+                                    <textarea class="form-control c-mb10" id="link" v-model="form.link" rows="2"></textarea>
                                 </div>
                             </div>
                             <div>
                                 <label for="formFile" class="form-label warna-hitam"><b>Logo</b></label>
-								<input class="form-control" type="file" id="formFile">
+								<input type="File" id="logo" v-model="form.logo" />
                                 <p class="keterangan-foto">Max 2 MB (500 x 500 px)</p>
                             </div>
                         </div>
@@ -63,6 +64,22 @@
         </div>
         <!--end page wrapper -->
     </div>
+</form>
 </template>
+
+<script setup>
+
+import { useForm } from "@inertiajs/vue3";
+const form = useForm({
+  name: "",
+  link: "",
+  logo: null
+});
+const submit = () => {
+  form.post("/tambahsponsor");
+};
+</script>
+<style lang="scss" scoped></style>
+
     
    

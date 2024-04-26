@@ -21,7 +21,7 @@ class RedirectIfAuthenticated
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
                 if ($guard === 'google') {
-                    return redirect('/overviewpeserta'); // Ganti '/home' dengan rute yang sesuai untuk autentikasi dengan Google
+                    return redirect('/dashboard'); // Ganti '/home' dengan rute yang sesuai untuk autentikasi dengan Google
                 }
                 return redirect('/'); // Ganti '/dashboard' dengan rute yang sesuai untuk autentikasi biasa
             }

@@ -48,4 +48,7 @@ class Admin
             return redirect()->route('panelis');
         }
     }
+    
+
+
 }

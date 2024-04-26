@@ -8,6 +8,7 @@ use App\Http\Middleware\Admin;
 use App\Http\Middleware\EventAdmin;
 use App\Http\Middleware\Panelis;
 use App\Http\Middleware\User;
+use App\Http\Middleware\RedirectIfAuthenticated;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -33,7 +34,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->group('google', [
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class, // Optional, uncomment if needed
             RedirectIfAuthenticated::class . ':google',
-            SubstituteBindings::class, // Ensures route model binding works within the group
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
