@@ -19,10 +19,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
-        ])
-        //adding multi roles authentication (below are middleware class not model class)
-        //these key('admin', etc) are passed into web.php or routes
-        ->alias([
+        ]);
+        //adding multi roles authentication
+        $middleware->alias([
             'admin' => Admin::class,
             'eventadmin' => EventAdmin::class,
             'user' => User::class,
