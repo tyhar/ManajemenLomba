@@ -5,14 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Chat extends Model
+class Eventlomba extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'name',
-        'email',
-        'phone',
-        'message',
+        'logo',
+        'description',
+        'year',
+        'file_report',
     ];
+
+    public function lomba()
+    {
+        return $this->hasMany(Lomba::class);
+    }
 }

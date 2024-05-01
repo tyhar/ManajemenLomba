@@ -20,7 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
         ]);
-        //adding multi roles authentication
+        //adding multi roles authentication (middleware class)
         $middleware->alias([
             'admin' => Admin::class,
             'eventadmin' => EventAdmin::class,
