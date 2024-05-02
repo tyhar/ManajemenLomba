@@ -4,7 +4,7 @@ import { Link } from '@inertiajs/vue3';
 import { useForm } from "@inertiajs/vue3";
 import { Head } from "@inertiajs/vue3";
 import { usePage } from "@inertiajs/vue3";
-// import { router } from "@inertiajs/vue3";
+import { router } from "@inertiajs/vue3";
 
 // defineProps({
 //     sponsors: {
@@ -13,12 +13,12 @@ import { usePage } from "@inertiajs/vue3";
 //     },
 // });
 
-const sponsor = usePage().props.sponsor;
+const sponsor = usePage().props.sponsors; //props.sponsors "sponsors" are from controller
 
 const form = useForm({
-    name: sponsor?.data?.name,
-    logo: sponsor?.data?.logo,
-    link_file: sponsor?.data?.link_file,
+    name: sponsor.data.name,
+    logo: sponsor.data.logo,
+    link_file: sponsor.data.link_file,
 });
 
 const submit = () => {

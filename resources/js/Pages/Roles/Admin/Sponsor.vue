@@ -2,7 +2,7 @@
 import { Link } from '@inertiajs/vue3';
 import { useForm } from "@inertiajs/vue3";
 import { Head } from "@inertiajs/vue3";
-import { usePage } from "@inertiajs/vue3";
+// import { usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/vue3";
 
 defineProps({
@@ -226,7 +226,12 @@ const deleteSponsor = (id) => {
                                             {{ sponsor.link_file }}
                                         </td> 
                                         <td class="btn-crud">
-                                            <button class="btn btn-secondary" onclick="window.location.href='/detailsponsor'"><i class="bi bi-eye"></i></button>
+                                            <a 
+                                                class="btn btn-secondary"
+                                                :href="route('sponsor.show', sponsor.id)"
+                                            >
+                                                <i class="bi bi-eye"></i>
+                                            </a>
                                             <!-- <button class="btn btn-primary" onclick="window.location.href='/editsponsor'"><i class="bi bi-pencil-square"></i></button>     -->
                                             <a 
                                                 class="btn btn-primary"

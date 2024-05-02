@@ -40,14 +40,13 @@ class SponsorController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
             'logo' => 'required|string|max:255',
             'link_file' => 'required|string|max:255'
-            // Add more validation rules as needed
         ]);
     
-        Sponsor::create($validatedData);
+        Sponsor::create($validated);
     
         return redirect()->route('sponsor.index');
     }
@@ -57,7 +56,9 @@ class SponsorController extends Controller
      */
     public function show(Sponsor $sponsor)
     {
-        //
+        return Inertia::render('Roles/Admin/Sponsor/Detailsponsor', [
+            'sponsors' => SponsorResource::make($sponsor),
+        ]);
     }
 
     /**
@@ -76,15 +77,15 @@ class SponsorController extends Controller
     public function update(Request $request, Sponsor $sponsor)
     {
         
-        // $validatedData = $request->validate([
-        //     'name' => 'required|string|max:255',
-        //     'logo' => 'required|string|max:255',
-        //     'link_file' => 'required|string|max:255'
-        // ]);
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'logo' => 'required|string|max:255',
+            'link_file' => 'required|string|max:255'
+        ]);
 
-        // $sponsor->update($validatedData);
+        $sponsor->update($validatedData);
 
-        $sponsor->update($request->validated());
+        // $sponsor->update($request->validated());
 
         return redirect()->route('sponsor.index');
     }
