@@ -1,3 +1,28 @@
+<script setup>
+import { Link } from '@inertiajs/vue3';
+import { useForm } from "@inertiajs/vue3";
+import { Head } from "@inertiajs/vue3";
+
+const form = useForm({
+    name: "",
+    logo: "",
+    link_file: "",
+});
+
+const submit = () => {
+    form.post(route("sponsor.store"), {
+        preserveScroll: true,
+    });
+};
+
+// const submit = () => {
+//     form.post('/superadmin/sponsor'), {
+//         preserveScroll: true,
+//     };
+// };
+
+
+</script>
 <template>
     <div class="wrapper">
         <!--start header -->
@@ -33,31 +58,75 @@
         <div class="page-wrapper-new">
             <div class="page-content">
                 <div class="card">
-                    <div class="card-body">
-                        <h4 class="mb-0">Tambah Sponsor</h4>
-                        <hr/>
-                        <div>
-                            <div class="c-mb10">
-                                <label class="c-mb5-black"><b>Nama Sponsor</b></label>
-                                <input type="email" class="form-control">
-                            </div>
+                    <form @submit.prevent="submit">
+                        <div class="card-body">
+                            <h4 class="mb-0">Tambah Sponsor</h4>
+                            <hr/>
                             <div>
-                                <label class="c-mb5-black"><b>Link</b></label>
-                                <div class="col-12">
-                                    <textarea class="form-control c-mb10" id="inputProductDescription" rows="2"></textarea>
+                                <div class="c-mb10">
+                                    <label
+                                        for="name" 
+                                        class="c-mb5-black"
+                                    >
+                                        <b>Nama Sponsor</b>
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        class="form-control"
+                                        v-model="form.name"
+                                        id="name"
+                                    >
+                                </div>
+                                <div>
+                                    <label
+                                        for="link_file" 
+                                        class="c-mb5-black"
+                                    >
+                                        <b>Link</b>
+                                    </label>
+                                    <div class="col-12">
+                                        <input
+                                            type="text"
+                                            v-model="form.link_file"
+                                            id="link_file"  
+                                            class="form-control c-mb10" rows="2"
+                                        >
+                                    </div>
+                                </div>
+                                <div>
+                                    <label 
+                                        for="logo" 
+                                        class="form-label warna-hitam"
+                                    >
+                                        <b>Logo</b>
+                                    </label>
+                                    <input
+                                        v-model="form.logo" 
+                                        class="form-control" 
+                                        type="text" 
+                                        id="logo"
+                                    >
+                                    <p class="keterangan-foto">Max 2 MB (500 x 500 px)</p>
                                 </div>
                             </div>
-                            <div>
-                                <label for="formFile" class="form-label warna-hitam"><b>Logo</b></label>
-								<input class="form-control" type="file" id="formFile">
-                                <p class="keterangan-foto">Max 2 MB (500 x 500 px)</p>
+                            <div class="btn-posisi">
+                                <!-- <button class="btn btn-primary button-tabel-right" onclick="window.location.href='/sponsor'">Tambah</button>
+                                <button class="btn btn-danger button-tabel-left" onclick="window.location.href='/sponsor'">Batal</button> -->
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary button-tabel-right"
+                                >
+                                    Tambah
+                                </button>
+                                <a 
+                                    class="btn btn-danger button-tabel-left"
+                                    :href="route('sponsor.index')"
+                                >
+                                    Batal
+                                </a>
                             </div>
                         </div>
-                        <div class="btn-posisi">
-                            <button class="btn btn-primary button-tabel-right" onclick="window.location.href='/sponsor'">Tambah</button>
-                            <button class="btn btn-danger button-tabel-left" onclick="window.location.href='/sponsor'">Batal</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

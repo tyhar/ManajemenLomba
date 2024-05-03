@@ -3,25 +3,18 @@
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-use App\Http\Controllers\LoginWithGoogleController;
-=======
 
->>>>>>> parent of b5c8065 (auth google and capcha)
-=======
+//Models
 
->>>>>>> parent of b5c8065 (auth google and capcha)
-=======
 
->>>>>>> parent of 51a4563 (google.com)
-//controller role
+//controllers
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PanelisController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\EventAdminController;
-use App\Http\Controllers\UserController;
 
 //default breeze
 Route::get('/', function () {
@@ -63,36 +56,47 @@ Route::middleware('auth','verified','admin')->group(function () {
     Route::get('/superadmin', [AdminController::class, 'index'])->name('admin');
     Route::get('/partisipan', [AdminController::class, 'partisipan']);
     // Route::resource('superadmin/partisipan', [PartisipanController::class]);
+
     Route::get('/pesan', [AdminController::class, 'pesan']);
     // Route::resource('superadmin/pesan', [PesanController::class]);
+
     Route::get('/lomba', [AdminController::class, 'lomba']);
     Route::get('tambahlomba', [AdminController::class, 'tambahlomba']);
     Route::get('/editlomba', [AdminController::class, 'editlomba']);
     Route::get('/detaillomba', [AdminController::class, 'detaillomba']);
     // Route::resource('superadmin/lomba', [LombaController::class]);
+
     Route::get('/administrator', [AdminController::class, 'administrator'])->name('administrator');
     Route::get('/tambahadministrator', [AdminController::class, 'tambahadministrator']);
-    Route::post('/tambahadministrator', [UsersController::class, 'store'])->name('daftar.store');
+    // Route::post('/tambahadministrator', [UserController::class, 'store'])->name('daftar.store');
     Route::get('/editadministrator', [AdminController::class, 'editadministrator']);
     Route::get('/detailadministrator', [AdminController::class, 'detailadministrator']);
     // Route::resource('superadmin/administrator', [AdministratorController::class]);
+
     Route::get('/tim', [AdminController::class, 'tim']);
     Route::get('/detailtim', [AdminController::class, 'detailtim']);
     // Route::resource('superadmin/tim', [TimController::class]);
-    Route::get('/sponsor', [AdminController::class, 'sponsor']);
-    Route::get('/tambahsponsor', [AdminController::class, 'tambahsponsor']);
-    Route::get('/editsponsor', [AdminController::class, 'editsponsor']);
-    Route::get('/detailsponsor', [AdminController::class, 'detailsponsor']);
-    // Route::resource('superadmin/sponsor', [SponsorController::class]);
+
+    // Route::get('/sponsor', [AdminController::class, 'sponsor']);
+    // Route::get('/tambahsponsor', [AdminController::class, 'tambahsponsor']);
+    // Route::get('/editsponsor', [AdminController::class, 'editsponsor']);
+    // Route::get('/detailsponsor', [AdminController::class, 'detailsponsor']);
+    // Route::resource('superadmin/sponsor', SponsorController::class)->only([
+    //     'index','create'
+    // ]);
+    Route::resource('superadmin/sponsor', SponsorController::class);
+    
     Route::get('/berita', [AdminController::class, 'berita']);
     Route::get('/tambahberita', [AdminController::class, 'tambahberita']);
     Route::get('/editberita', [AdminController::class, 'editberita']);
     Route::get('/detailberita', [AdminController::class, 'detailberita']);
     // Route::resource('superadmin/berita', [BeritaController::class]);
+
     Route::get('/setting', [AdminController::class, 'setting']);
     Route::get('/editsetting', [AdminController::class, 'editsetting']);
     Route::get('/tambahsetting', [AdminController::class, 'tambahsetting']);
     // Route::resource('superadmin/settings', [SettingController::class]);
+
     Route::get('/rangking', [AdminController::class, 'rangking']);
     Route::get('/tabelrangking', [AdminController::class, 'tabelrangking']);
     // Route::resource('superadmin/ranking', [RankingController::class]);
@@ -127,36 +131,13 @@ Route::middleware('auth','verified','panelis')->group(function () {
 
 // -- landing page --
 Route::get('/kontak', function() {
-    return inertia::render('LandingPage/Kontak');
+    return inertia::render('Utama/Kontak');
 });
+// Route::get('/kontak', [ChatController::class, 'create']);
 Route::get('/informasiberita', function() {
-    return inertia::render('LandingPage/InformasiBerita');
+    return inertia::render('Utama/InformasiBerita');
 });
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
-//{{--OauthGoogle--}} login menggunakan google
->>>>>>> parent of 51a4563 (google.com)
-Route::controller(LoginWithGoogleController::class)->group(function(){
-    Route::get('authorized/google', 'googlepage')->name('auth.google');
-    Route::get('authorized/google/callback', 'handleGoogleCallback');
-});
-
-<<<<<<< HEAD
-=======
->>>>>>> parent of b5c8065 (auth google and capcha)
-=======
-
-
-Auth::routes(['verify'=>true]);
-
-
->>>>>>> parent of 51a4563 (google.com)
-=======
->>>>>>> parent of b5c8065 (auth google and capcha)
 // -- backup --
 
 // Route::get('/superadmin', function () {
@@ -166,3 +147,4 @@ Auth::routes(['verify'=>true]);
 // Route::get('/dashboard', function () {
 //     return Inertia::render('Dashboard');
 // })->middleware(['auth', 'verified', 'user'])->name('dashboard');
+

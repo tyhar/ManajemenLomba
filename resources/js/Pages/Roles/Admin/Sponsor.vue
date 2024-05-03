@@ -1,6 +1,51 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
+import { useForm } from "@inertiajs/vue3";
+import { Head } from "@inertiajs/vue3";
+// import { usePage } from "@inertiajs/vue3";
+import { router } from "@inertiajs/vue3";
+
+defineProps({
+    sponsors: {
+        type: Object,
+        required: true,
+    },
+});
+
+const deleteForm = useForm({});
+
+const deleteSponsor = (id) => {
+    if (confirm("Are you sure you want to delete this sponsor?")) {
+        deleteForm.delete(route("sponsor.destroy", id), {
+            preserveScroll: true,
+        });
+    }
+};
+
+// let sponsorsUrl = computed(() => {
+//     const url = new URL(route("sponsor.index"));
+
+//     url.searchParams.set("page", pageNumber.value);
+
+//     if (searchTerm.value) {
+//         url.searchParams.set("search", searchTerm.value);
+//     }
+
+//     return url;
+// });
+
+// watch(
+//     () => studentsUrl.value,
+//     (newValue) => {
+//         router.visit(newValue, {
+//             replace: true,
+//             preserveState: true,
+//             preserveScroll: true,
+//         });
+//     }
+// );
 </script>
+
 <template>
     <!--wrapper-->
     <div class="wrapper">
@@ -18,7 +63,7 @@ import { Link } from '@inertiajs/vue3';
             <!--navigation-->
             <ul class="metismenu" id="menu">
                 <li>
-                    <a href="/superadmin">
+                    <a :href="route('admin')">
                         <div class="parent-icon"><i class='bx bx-home-circle'></i>
                         </div>
                         <div class="menu-title">Dashboard</div>
@@ -144,7 +189,13 @@ import { Link } from '@inertiajs/vue3';
                     <div class="card-body">
                         <h4 class="mb-0 jarak-top-kurang5">Tabel Sponsor</h4>
                         <hr class="c-mt10" />		
-                        <button class="btn btn-success jarak-top-kurang7" onclick="window.location.href='/tambahsponsor'">Tambah Sponsor</button>
+                        <!-- <button class="btn btn-success jarak-top-kurang7" onclick="window.location.href='sponsor/create'">Tambah Sponsor</button> -->
+                        <a 
+                            class="btn btn-success jarak-top-kurang7" 
+                            :href="route('sponsor.create')"
+                        >
+                            Tambah Sponsor
+                        </a>
                         <hr class="c-mt10" />    
                         <div class="table-responsive">	
                             <table id="example" class="table table-bordered">
@@ -158,15 +209,42 @@ import { Link } from '@inertiajs/vue3';
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>D3TI UNS</td>
-                                        <td>d3ti.jpg</td>
-                                        <td>https://s4-eight.vercel.app/</td>
+                                    <tr
+                                        v-for="sponsor in sponsors.data"
+                                        :key="sponsor.id"
+                                    >
+                                        <td>
+                                            {{ sponsor.id }}
+                                        </td>
+                                        <td>
+                                            {{ sponsor.name }}
+                                        </td>
+                                        <td>
+                                            {{ sponsor.logo }}
+                                        </td>
+                                        <td>
+                                            {{ sponsor.link_file }}
+                                        </td> 
                                         <td class="btn-crud">
-                                            <button class="btn btn-secondary" onclick="window.location.href='/detailsponsor'"><i class="bi bi-eye"></i></button>
-                                            <button class="btn btn-primary" onclick="window.location.href='/editsponsor'"><i class="bi bi-pencil-square"></i></button>    
-                                            <button class="btn btn-danger" ><i class="bi bi-trash"></i></button>                              
+                                            <a 
+                                                class="btn btn-secondary"
+                                                :href="route('sponsor.show', sponsor.id)"
+                                            >
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                            <!-- <button class="btn btn-primary" onclick="window.location.href='/editsponsor'"><i class="bi bi-pencil-square"></i></button>     -->
+                                            <a 
+                                                class="btn btn-primary"
+                                                :href="route('sponsor.edit', sponsor.id)" 
+                                            >
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                            <button 
+                                                class="btn btn-danger"
+                                                @click="deleteSponsor(sponsor.id)" 
+                                            >
+                                                <i class="bi bi-trash"></i>
+                                            </button>                              
                                         </td>
                                     </tr>
                                 </tbody>
@@ -184,4 +262,10 @@ import { Link } from '@inertiajs/vue3';
 $(document).ready(function() {
     $('#example').DataTable();
   } );
+
+// import { onMounted } from "vue";
+
+// onMounted(() => {
+//     $('#example').DataTable();
+// });
 </script>

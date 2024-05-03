@@ -1,11 +1,49 @@
+<script setup>
+import { reactive } from 'vue'
+import { Head, Link, useForm, router } from '@inertiajs/vue3'
+
+//backend navbar
+defineProps({
+    canLogin: {
+        type: Boolean,
+    },
+    canRegister: {
+        type: Boolean,
+    },
+    laravelVersion: {
+        type: String,
+        required: true,
+    }, 
+    phpVersion: {
+        type: String,
+        required: true,
+    },
+});
+
+//form data
+const form = useForm({
+  name: null,
+  email: null,
+  phone: null,
+  message: null,
+})
+
+function submit() {
+    router.post('/kontak', form)
+}
+
+// const submit = () => {
+//     form.post(route('register'), {
+//         onFinish: () => form.reset('password', 'password_confirmation'),
+//     });
+// };
+</script>
 <template>
-    <!--=================================
-        MAIN MENU START
-    ==================================-->
+    <!--MAIN MENU START-->
     <nav class="navbar navbar-expand-lg main_menu">
         <div class="container">
             <a class="navbar-brand" href="/">
-               <img src="bootstrap/images/logo.png" alt="Eduor" class="img-fluid w-100">
+               <img src="/bootstrap/images/logo.png" alt="Eduor" class="img-fluid w-100">
            </a>
            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -15,41 +53,47 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                       <a class="nav-link" href="/">Beranda</a>
+                        <a class="nav-link active" href="/#">Beranda</a>
                     </li>
                     <li class="nav-item">
-                       <a class="nav-link" href="/#tentang-section">Tentang</a>
+                        <a class="nav-link" href="/#tentang-section">Tentang</a>
                     </li>
                     <li class="nav-item">
-                       <a class="nav-link" href="/#lomba-section">Lomba</a>
+                        <a class="nav-link" href="/#lomba-section">Lomba</a>
                     </li>
                     <li class="nav-item">
-                       <a class="nav-link" href="/#timeline-section">Timeline</a>
+                        <a class="nav-link" href="/#timeline-section">Timeline</a>
                     </li>
                     <li class="nav-item">
-                       <a class="nav-link" href="/#berita-section">Berita</a>
+                        <a class="nav-link" href="/#berita-section">Berita</a>
                     </li>
                     <li class="nav-item">
-                       <a class="nav-link" href="/#sponsor-section">Sponsor</a>
+                        <a class="nav-link" href="/#sponsor-section">Sponsor</a>
                     </li>
                     <li class="nav-item">
-                       <a class="nav-link active" href="#">Kontak</a>
-                    </li>
+                        <a class="nav-link" href="/kontak">Kontak</a>
+                    </li> 
                     <li class="nav-item">
-                       <a class="nav-link common_btn" href="/login">Login</a>
+                        <template v-if="!$page.props.auth.user">
+                            <div class="row">
+                            <div class="col">
+                                <a class="nav-link common_btn" href="/login">Login</a>
+                            </div>
+                            <div  class="col">
+                                <a class="nav-link common_btn" href="/register">Register</a>
+                            </div>
+                            </div>
+                        </template>
+                        <template v-else>
+                            <a class="nav-link common_btn" href="/dashboard">Dashboard</a>
+                        </template>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-    <!--=================================
-        MAIN MENU END
-    ==================================-->
-   
-   
-    <!--=================================
-        BREADCRUMB START
-    ==================================-->
+    <!--MAIN MENU END-->
+    <!--BREADCRUMB START-->
     <section class="tf__breadcrumb" style="background: url(bootstrap/images/home.jpg);">
         <div class="container">
             <div class="row">
@@ -61,14 +105,8 @@
             </div>
         </div>
     </section>
-    <!--=================================
-       BREADCRUMB END
-    ==================================-->
-   
-   
-    <!--=================================
-       CONTACT PAGE START
-    ==================================-->
+    <!--BREADCRUMB END-->
+    <!--CONTACT PAGE START-->
     <section class="tf__contact_page mt_190 xs_mt_95">
         <div class="container">
             <div class="row">
@@ -78,10 +116,10 @@
                            <h5 class="c-mb-13">HUBUNGI KAMI</h5>
                         </div>
                         <form @submit.prevent="submit">
-                            <input id="nama" v-model="form.nama" placeholder="Nama"/>
+                            <input id="name" v-model="form.name" placeholder="Nama"/>
                             <input id="email" v-model="form.email" placeholder="Email" />
-                            <input id="nomor" v-model="form.nomor" placeholder="No. WhatsApp"/>
-                            <input id="pesan" v-model="form.pesan" placeholder="Pesan"/>
+                            <input id="phone" v-model="form.phone" placeholder="No. WhatsApp"/>
+                            <input id="message" v-model="form.message" placeholder="Pesan"/>
                             <button type="submit" class="common_btn_2">Kirim</button>
                         </form>
                     </div>
@@ -96,24 +134,6 @@
             </div>
         </div>
     </section>
-   <!--=================================
-           CONTACT PAGE END
-    ==================================-->
+    <!--CONTACT PAGE END-->   
 </template>
 
-
-<script setup>
-import { reactive } from 'vue'
-import { router } from '@inertiajs/vue3'
-
-const form = reactive({
-  nama: null,
-  email: null,
-  nomor: null,
-  pesan: null,
-})
-
-function submit() {
-  router.post('/kontak', form)
-}
-</script>

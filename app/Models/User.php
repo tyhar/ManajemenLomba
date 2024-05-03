@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Symfony\Component\CssSelector\Node\FunctionNode;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -17,10 +18,13 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<int, string>
      */
     protected $fillable = [
+        // 'lomba_id',
         'name',
         'username',
         'email',
         'password',
+        'phone',
+        'instansi',
     ];
 
     /**
@@ -45,4 +49,20 @@ class User extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
         ];
     }
+
+    //relasi untuk role eventlomba, spesifik per lombanya
+    // public function lomba()
+    // {
+    //     $this->belongsTo(Lomba::class,'lomba_id');
+    // }
+
+    // public function reglomba()
+    // {
+    //     $this->hasOne(RegLomba::class);
+    // }
+
+    // public function reglombamember()
+    // {
+    //     $this->hasMany(RegLombaMember::class);
+    // }
 }

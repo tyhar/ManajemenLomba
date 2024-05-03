@@ -1,3 +1,33 @@
+<script setup>
+
+import { Link } from '@inertiajs/vue3';
+import { useForm } from "@inertiajs/vue3";
+import { Head } from "@inertiajs/vue3";
+import { usePage } from "@inertiajs/vue3";
+import { router } from "@inertiajs/vue3";
+
+// defineProps({
+//     sponsors: {
+//         type: Object,
+//         required: true,
+//     },
+// });
+
+const sponsor = usePage().props.sponsors; //props.sponsors "sponsors" are from controller
+
+const form = useForm({
+    name: sponsor.data.name,
+    logo: sponsor.data.logo,
+    link_file: sponsor.data.link_file,
+});
+
+const submit = () => {
+    form.put(route("sponsor.update", sponsor.data.id), {
+        preserveScroll: true,
+    });
+};
+
+</script>
 <template>
     <div class="wrapper">
         <header>
@@ -32,31 +62,75 @@
         <div class="page-wrapper-new">
             <div class="page-content">
                 <div class="card">
-                    <div class="card-body">
-                        <h4 class="mb-0">Edit Sponsor</h4>
-                        <hr/>
-                        <div>
-                            <div class="c-mb10">
-                                <label class="c-mb5-black"><b>Nama Sponsor</b></label>
-                                <input type="email" class="form-control" value="D3TI UNS">
-                            </div>
+                    <form @submit.prevent="submit">
+                        <div class="card-body">
+                            <h4 class="mb-0">Tambah Sponsor</h4>
+                            <hr/>
                             <div>
-                                <label class="c-mb5-black"><b>Link</b></label>
-                                <div class="col-12">
-                                    <textarea class="form-control c-mb10" id="inputProductDescription" rows="2" value="https://s4-eight.vercel.app/"></textarea>
+                                <div class="c-mb10">
+                                    <label
+                                        for="name" 
+                                        class="c-mb5-black"
+                                    >
+                                        <b>Nama Sponsor</b>
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        class="form-control"
+                                        v-model="form.name"
+                                        id="name"
+                                    >
+                                </div>
+                                <div>
+                                    <label
+                                        for="link_file" 
+                                        class="c-mb5-black"
+                                    >
+                                        <b>Link</b>
+                                    </label>
+                                    <div class="col-12">
+                                        <input
+                                            type="text"
+                                            v-model="form.link_file"
+                                            id="link_file"  
+                                            class="form-control c-mb10" rows="2"
+                                        >
+                                    </div>
+                                </div>
+                                <div>
+                                    <label 
+                                        for="logo" 
+                                        class="form-label warna-hitam"
+                                    >
+                                        <b>Logo</b>
+                                    </label>
+                                    <input
+                                        v-model="form.logo" 
+                                        class="form-control" 
+                                        type="text" 
+                                        id="logo"
+                                    >
+                                    <p class="keterangan-foto">Max 2 MB (500 x 500 px)</p>
                                 </div>
                             </div>
-                            <div>
-                                <label for="formFile" class="form-label warna-hitam"><b>Logo</b></label>
-								<input class="form-control" type="file" id="formFile">
-                                <p class="keterangan-foto">Max 2 MB (500 x 500 px)</p>
+                            <div class="btn-posisi">
+                                <!-- <button class="btn btn-primary button-tabel-right" onclick="window.location.href='/sponsor'">Tambah</button>
+                                <button class="btn btn-danger button-tabel-left" onclick="window.location.href='/sponsor'">Batal</button> -->
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary button-tabel-right"
+                                >
+                                    Update
+                                </button>
+                                <a 
+                                    class="btn btn-danger button-tabel-left"
+                                    :href="route('sponsor.index')"
+                                >
+                                    Batal
+                                </a>
                             </div>
                         </div>
-                        <div class="btn-posisi">
-                            <button class="btn btn-primary button-tabel-right" onclick="window.location.href='/sponsor'">Simpan</button>
-                            <button class="btn btn-danger button-tabel-left" onclick="window.location.href='/sponsor'">Batal</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
