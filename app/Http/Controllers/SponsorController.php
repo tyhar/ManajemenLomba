@@ -58,6 +58,7 @@ class SponsorController extends Controller
     {
         return Inertia::render('Roles/Admin/Sponsor/Detailsponsor', [
             'sponsors' => SponsorResource::make($sponsor),
+            dd($sponsor),
         ]);
     }
 
