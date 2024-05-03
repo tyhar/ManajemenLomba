@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Eventlomba extends Model
+class EventLomba extends Model
 {
     use HasFactory;
 
@@ -19,6 +19,6 @@ class Eventlomba extends Model
 
     public function lomba()
     {
-        return $this->hasMany(Lomba::class);
+        return $this->hasOne(Lomba::class);
     }
 }

@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('lombas', function (Blueprint $table) {
             $table->id();
-            // $table->foreign('eventlomba_id')->references('id')->on('event');
-            $table->foreignId('eventlomba_id')->constrained()->default(1);
+            // $table->foreign('event_lomba_id')->references('id')->on('event_lombas');
+            $table->foreignId('event_lomba_id')->constrained('event_lombas')->default(1);
             $table->string('name');
             $table->string('description');
-            $table->string('kontak');
-            $table->string('tempat');
+            $table->string('kontak')->nullable();
+            $table->string('pj')->nullable();
+            $table->string('tempat')->nullable();
             $table->string('picture')->nullable();
             $table->string('link_file')->nullable();
             $table->timestamps();

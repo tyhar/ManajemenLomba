@@ -17,7 +17,7 @@ class SponsorFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            'name' => fake()->company(),
             'link_file' => fake()->url(),
         ];
     }

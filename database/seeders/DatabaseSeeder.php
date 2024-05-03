@@ -17,14 +17,7 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        // User::factory()->create([
-        //     'name' => 'admin',
-        //     'email' => 'admin@example.com',
-        //     'role' => rand(1, 4),
-        //     'password' => Hash::make('password'),
-        // ]);
-
-        //create 4 roles user
+        //create 4 user with different roels
         for ($i = 1; $i <= 4; $i++) {
             User::factory()->create([
                 'name' => 'user'.$i,
@@ -35,14 +28,23 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        // User::factory()
-        //     ->count(4)
-        //     ->sequence(fn($sequence) => ['role' => $sequence->index + 1])
-        //     ->create();
+        //create 5 role(3) user
+        User::factory()
+            ->count(5)
+            ->sequence(fn($sequence) => ['username' => 'userbiasa' . $sequence->index + 1])
+            ->state(
+                ['role' => 3]
+            )
+            ->create();
         
         //sponsor
         Sponsor::factory()
-            ->count(10)
+            ->count(100)
             ->create();
+
+        //event dan lomba
+        $this->call([
+            EventSeeder::class,
+        ]);
     }
 }

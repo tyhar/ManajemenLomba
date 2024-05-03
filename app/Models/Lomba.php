@@ -10,17 +10,23 @@ class Lomba extends Model
     use HasFactory;
 
     protected $fillable = [
-        'event_id',
+        'event_lomba_id',
         'name',
         'description',
         'kontak',
+        'pj',
         'tempat',
         'picture',
         'link_file',
     ];
 
-    public function eventlomba() 
+    public function eventlomba()
     {
-        return $this->belongsTo(Eventlomba::class, 'eventlomba_id');
+        return $this->belongsTo(EventLomba::class, 'event_lomba_id');
     }
+
+    // public function user() 
+    // {
+    //     return $this->hasMany(User::class);
+    // }
 }

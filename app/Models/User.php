@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Symfony\Component\CssSelector\Node\FunctionNode;
 
 class User extends Authenticatable
 {
@@ -17,6 +18,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        // 'lomba_id',
         'name',
         'username',
         'email',
@@ -47,4 +49,20 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    //relasi untuk role eventlomba, spesifik per lombanya
+    // public function lomba()
+    // {
+    //     $this->belongsTo(Lomba::class,'lomba_id');
+    // }
+
+    // public function reglomba()
+    // {
+    //     $this->hasOne(RegLomba::class);
+    // }
+
+    // public function reglombamember()
+    // {
+    //     $this->hasMany(RegLombaMember::class);
+    // }
 }

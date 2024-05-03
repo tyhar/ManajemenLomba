@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            // $table->foreignId('lomba_id')->constrained()->default(1)->nullable();
             $table->string('name');
-            //username
             $table->string('username');
             $table->string('email')->unique();
             $table->string('phone')->nullable();
