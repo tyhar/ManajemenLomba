@@ -5,7 +5,7 @@ import { Head } from "@inertiajs/vue3";
 
 const form = useForm({
     name: "",
-    logo: "",
+    logo: null,
     link_file: "",
 });
 
@@ -15,11 +15,11 @@ const submit = () => {
     });
 };
 
-// const submit = () => {
-//     form.post('/superadmin/sponsor'), {
-//         preserveScroll: true,
-//     };
-// };
+const handleLogoUpload = (event) => {
+  form.logo = event.target.files[0];
+};
+
+
 
 
 </script>
@@ -101,9 +101,9 @@ const submit = () => {
                                         <b>Logo</b>
                                     </label>
                                     <input
-                                        v-model="form.logo" 
+                                        v-on:change="handleLogoUpload" 
                                         class="form-control" 
-                                        type="text" 
+                                        type="file" 
                                         id="logo"
                                     >
                                     <p class="keterangan-foto">Max 2 MB (500 x 500 px)</p>

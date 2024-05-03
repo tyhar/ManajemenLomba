@@ -40,12 +40,14 @@ class SponsorController extends Controller
      */
     public function store(Request $request)
     {
+
+        
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'logo' => 'required|string|max:255',
+            'logo' => 'required|image|max:2048',
             'link_file' => 'required|string|max:255'
         ]);
-    
+        $logo = $request->file('logo')->store('file_logo');
         Sponsor::create($validated);
     
         return redirect()->route('sponsor.index');
@@ -80,10 +82,9 @@ class SponsorController extends Controller
         
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'logo' => 'required|string|max:255',
+            'logo' => 'required|string|max:2048',
             'link_file' => 'required|string|max:255'
         ]);
-
         $sponsor->update($validatedData);
 
         // $sponsor->update($request->validated());

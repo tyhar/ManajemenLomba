@@ -21,6 +21,11 @@ const form = useForm({
     link_file: sponsor.data.link_file,
 });
 
+const handleLogoChange = (event) => {
+    const file = event.target.files[0];
+    form.logo = file;
+};
+
 const submit = () => {
     form.put(route("sponsor.update", sponsor.data.id), {
         preserveScroll: true,
@@ -105,11 +110,12 @@ const submit = () => {
                                         <b>Logo</b>
                                     </label>
                                     <input
-                                        v-model="form.logo" 
-                                        class="form-control" 
-                                        type="text" 
-                                        id="logo"
-                                    >
+                                     @change="handleLogoChange"
+                                     type="file"
+                                     accept="image/*"
+                                    id="logo"
+                                     class="form-control"
+                                   >
                                     <p class="keterangan-foto">Max 2 MB (500 x 500 px)</p>
                                 </div>
                             </div>
