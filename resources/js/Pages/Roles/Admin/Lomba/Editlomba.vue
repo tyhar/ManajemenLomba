@@ -33,50 +33,72 @@
         <div class="page-wrapper-new">
             <div class="page-content">
                 <div class="card">
+                    <form @submit.prevent="submit">
                     <div class="card-body">
                         <h4 class="mb-0">Edit Lomba</h4>
                         <hr/>
                         <div class="row">
                             <div class="col-md-6 c-mb10">
                                 <label class="c-mb5-black"><b>Nama Lomba</b></label>
-                                <input type="namalomba" class="form-control" value="Lomba Desain">
+                                <input  type="text" 
+                                        class="form-control"
+                                        v-model="form.name"
+                                        id="name">
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 c-mb10">
                                 <label class="c-mb5-black"><b>Nama PJ</b></label>
-                                <div class="col-12">
-                                    <select class="form-select" id="inputProductType">
-                                        <option value="1" selected>Admin 1</option>
-                                        <option value="2">Admin 2</option>
-                                        <option value="3">Admin 3</option>
-                                    </select>
-                                </div>
+                                <input  type="text" 
+                                        class="form-control"
+                                        v-model="form.pj"
+                                        id="pj">
                             </div>
+                            
                             <div class="col-md-6">
                                 <label class="c-mb5-black"><b>Deskripsi</b></label>
                                 <div class="col-12">
-                                    <textarea class="form-control c-mb10" id="deskripsi" rows="4" value="Lomba Desain adalah ajang kompetitif di mana beberapa tim bersaing dalam merancang dan menciptakan karya visual yang unik dan inovatif, sesuai dengan tema yang ditentukan." ></textarea>  
+                                    <textarea  type="text" 
+                                        class="form-control"
+                                        v-model="form.description"
+                                        id="description"></textarea>  
                                 </div>
                                 <div>
                                     <label for="formFile" class="form-label judul-form"><b>Gambar</b></label>
-                                    <input class="form-control" type="file" id="formFile">
+                                    <input  @change="handlePictureChange"
+                                     type="file"
+                                     accept="image/*"
+                                     id="picture"
+                                     class="form-control">
                                     <p class="keterangan-foto">Ukuran 500 x 500</p>
                                 </div>
                                 <div>
                                     <label for="formFile" class="form-label judul-form"><b>Sertifikat</b></label>
-                                    <input class="form-control" type="file" id="formFile">
+                                    <input  @change="handleSertifikatChange"
+                                     type="file"
+                                     accept="image/*"
+                                     id="sertifikat"
+                                     class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <label class="c-mb5-black"><b>Kontak PJ</b></label>
-                                <input type="email" class="form-control label-8" value="085000000000">
+                                <input  type="number" 
+                                        class="form-control"
+                                        v-model="form.kontak"
+                                        id="kontak">
      
                                 <div>
                                     <label class="c-mb5-black"><b>Tempat</b></label>
-                                    <input type="email" class="form-control">
+                                    <input  type="text" 
+                                        class="form-control"
+                                        v-model="form.tempat"
+                                        id="tempat">
                                 </div>
                                 <div class="c-mt10">
                                     <label class="c-mb5-black"><b>Biaya Pendaftaran</b></label>
-                                    <input type="email" class="form-control label-8" value="20.000">
+                                    <input  type="text" 
+                                        class="form-control"
+                                        v-model="form.biaya_pendaftaran"
+                                        id="biaya_pendaftaran">
                                 </div>
                             </div>
                         </div>
@@ -85,6 +107,7 @@
                             <button class="btn btn-danger button-tabel-left" onclick="window.location.href='/lomba'">Batal</button>
                         </div>
                     </div>
+                </form>
                 </div>
             </div>
         </div>
@@ -92,4 +115,50 @@
     </div>
 </template>
     
-   >>
+<script setup>
+import { Link } from '@inertiajs/vue3';
+import { useForm } from "@inertiajs/vue3";
+import { Head } from "@inertiajs/vue3";
+import { usePage } from "@inertiajs/vue3";
+import { router } from "@inertiajs/vue3";
+
+// defineProps({
+//     sponsors: {
+//         type: Object,
+//         required: true,
+//     },
+// });
+
+const lomba = usePage().props.lombas; //props.sponsors "sponsors" are from controller
+
+const form = useForm({
+    name: lomba.data.name,
+    pj: lomba.data.pj,
+    kontak: lomba.data.kontak,
+    description: lomba.data.description,
+    tempat: lomba.data.tempat,
+    picture: lomba.data.picture,
+    sertifikat: lomba.data.sertifikat,
+    biaya_pendaftaran: lomba.data.biaya_pendaftaran,
+
+
+});
+
+const handlePictureChange = (event) => {
+    const file = event.target.files[0];
+    form.picture = file;
+};
+
+const handleSertifikatChange = (event) => {
+    const file = event.target.files[0];
+    form.sertifikat = file;
+};
+
+
+const submit = () => {
+    form.put(route("lomba.update",lomba.data.id), {
+        preserveScroll: true,
+    });
+};
+
+</script>

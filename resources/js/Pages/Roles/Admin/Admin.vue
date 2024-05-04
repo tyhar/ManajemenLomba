@@ -94,7 +94,7 @@ window.ApexCharts && (new ApexCharts(document.getElementById('bi-weekly-visit'),
                         <div class="menu-title">Event</div>
                     </a>
                     <ul>
-                        <li class="jarak-dropdown"> <a href="/lomba">Lomba</a>
+                        <li class="jarak-dropdown"> <a :href="route('lomba.index')">Lomba</a>
                         </li>
                         <li class="jarak-dropdown"> <a href="/administrator">Administrator</a>
                         </li>

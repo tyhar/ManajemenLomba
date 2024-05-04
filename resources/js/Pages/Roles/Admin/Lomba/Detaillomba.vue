@@ -7,7 +7,9 @@
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
                         <div class="navbar-left">
-                            <img src="/bootstrap/images/logo.png" alt="Logo">
+                            <a href="/">
+                                <img src="/bootstrap/images/logo.png" alt="Logo">
+                            </a>
                         </div>
                     </div>
                     <!-- Mobile toggle menu -->
@@ -19,7 +21,7 @@
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
                                 <p class="user-name mb-0">Habib Shohiburrotib</p>			
-                                <p class="user-role">habib</p>					
+                                <p class="user-role">Admin</p>					
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -39,53 +41,83 @@
                         <div class="row">
                             <div class="col-md-6 c-mb10">
                                 <label class="c-mb5-black"><b>Nama Lomba</b></label>
-                                <div class="data-tim">Lomba Desain</div>
+                                <div class="data-tim" id="name">{{ lomba && lomba.name ? lomba.name : 'Nama Lomba tidak tersedia' }}</div>
                             </div>
                             <div class="col-md-6">
                                 <label class="c-mb5-black"><b>Nama PJ</b></label>
-                                <div class="data-tim">Agung</div>
+                                <div class="data-tim" id="pj">{{ lomba && lomba.pj ? lomba.pj : 'Nama PJ tidak tersedia' }}</div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-6">
                                 <label class="c-mb5-black"><b>Deskripsi</b></label>
                                 <div class="col-12">
-                                    <div class="data-tim">Lomba Desain adalah ajang kompetitif di mana beberapa tim bersaing dalam merancang dan menciptakan karya visual yang unik dan inovatif, sesuai dengan tema yang ditentukan.</div>
+                                    <div class="data-tim" id="description">{{ lomba && lomba.description ? lomba.description : 'Deskripsi tidak tersedia' }}</div>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="c-mb5-black"><b>Gambar</b></label>
-									<div class="col-12">
-											<img src="/bootstrap/images/desain-website.jpg" width="150" />	
-									</div>
-								</div>
-								<div class="col-md-6 jarak-sertifikat">
+                                     <div class="col-12" id="picture">
+                                        <img :src="gambarUrl" alt="Gambar" width="200" >		
+                                    </div>
+                                </div>
+                                <div class="col-md-6 jarak-sertifikat">
                                     <label class="c-mb5-black"><b>Sertifikat</b></label>
-									<div class="col-12">
-											<img src="/bootstrap/images/sertifikat.png" width="150" />	
-									</div>
-								</div>
+                              <div class="col-12" id="sertifikat">
+                                <img :src="sertifikatUrl" alt="Sertifikat" width="200" >	
+                               </div>
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <label class="c-mb5-black"><b>Kontak PJ</b></label>
-                                <div class="data-tim">085000000000</div>
+                                <div class="data-tim" id="kontak">{{ lomba && lomba.kontak ? lomba.kontak : 'Kontak PJ tidak tersedia' }}</div>
      
                                 <label class="c-mb5-black"><b>Tempat</b></label>
-                                <div class="data-tim">Surakarta</div>
+                                <div class="data-tim" id="tempat">{{ lomba && lomba.tempat ? lomba.tempat : 'Tempat tidak tersedia' }}</div>
 
                                 <div class="margin-top5-crud">
                                     <label class="c-mb5-black"><b>Biaya Pendaftaran</b></label>
-                                    <div class="data-tim">20.000</div>
+                                    <div class="data-tim" id="biaya_pendaftaran">{{ lomba && lomba.biaya_pendaftaran ? lomba.biaya_pendaftaran : 'Biaya Pendaftaran tidak tersedia' }}</div>
                                 </div>
-                            </div>    
+                                
+                            </div>  
+                              
                         </div>
                         <div class="btn-posisi">
-                            <button class="btn btn-danger btn-kembali" onclick="window.location.href='/lomba'">Kembali</button>
+                            <button class="btn btn-danger btn-kembali" @click="goBack()">Kembali</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
         <!--end page wrapper -->
     </div>
 </template>
-    
-   
+
+
+<script setup>
+import { defineProps } from "vue";
+import { usePage } from '@inertiajs/vue3';
+
+// Definisikan properti yang diterima oleh komponen
+const props = defineProps({
+    lomba: {
+        type: Object,
+        required: true
+    },
+})
+const picture = props.lomba.picture;
+const sertifikat = props.lomba.sertifikat;
+
+// Buat URL untuk gambar dan sertifikat
+const gambarUrl = picture ? `/storage/${picture}` : null;
+const sertifikatUrl = sertifikat ? `/storage/${sertifikat}` : null;
+
+
+
+const goBack = () => {
+    window.history.back();
+};
+
+
+
+</script>

@@ -1,6 +1,3 @@
-<script setup>
-import { Link } from '@inertiajs/vue3';
-</script>
 <template>
   <!--wrapper-->
 	<div class="wrapper">
@@ -18,7 +15,7 @@ import { Link } from '@inertiajs/vue3';
             <!--navigation-->
             <ul class="metismenu" id="menu">
                 <li>
-                    <a href="/superadmin">
+                    <a :href="route('admin')">
                         <div class="parent-icon"><i class='bx bx-home-circle'></i>
                         </div>
                         <div class="menu-title">Dashboard</div>
@@ -31,7 +28,7 @@ import { Link } from '@inertiajs/vue3';
                         <div class="menu-title">Event</div>
                     </a>
                     <ul>
-                        <li class="jarak-dropdown"> <a href="/lomba">Lomba</a>
+                        <li class="jarak-dropdown"> <a :href="route('lomba.index')">Lomba</a>
                         </li>
                         <li class="jarak-dropdown"> <a href="/administrator">Administrator</a>
                         </li>
@@ -152,7 +149,7 @@ import { Link } from '@inertiajs/vue3';
 					<div class="card-body">
                         <h4 class="mb-0 jarak-top-kurang5">Tabel Lomba</h4>
                         <hr class="c-mt10"/>		
-                        <a class="btn btn-success jarak-top-kurang7" href="/tambahlomba">Tambah Lomba</a>
+                        <a class="btn btn-success jarak-top-kurang7" :href="route('lomba.create')">Tambah Lomba</a>
                         <hr class="c-mt10" />
 						<div class="table-responsive">
 							<table id="example" class="table mt-3  table-bordered">
@@ -167,16 +164,16 @@ import { Link } from '@inertiajs/vue3';
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Lomba Desain</td>
-                                        <td>Desain adalah</td>
-                                        <td>Leocris</td>
-                                        <td>29 Maret 2024</td>
+                                    <tr v-for="lomba in lombas.data":key="lomba.id">
+                                        <td>{{ lomba.id }}</td>
+                                        <td>{{ lomba.name }}</td>
+                                        <td>{{ lomba.description }}</td>
+                                        <td>{{ lomba.pj }}</td>
+                                        <td>{{ lomba.kontak}}</td>
                                         <td class="btn-crud">
-                                            <button class="btn btn-secondary" onclick="window.location.href='/detaillomba'"><i class="bi bi-eye"></i></button>
-                                            <button class="btn btn-primary" onclick="window.location.href='/editlomba'"><i class="bi bi-pencil-square"></i></button>    
-                                            <button class="btn btn-danger" ><i class="bi bi-trash"></i></button>                              
+                                            <a class="btn btn-secondary" :href="route('lomba.show', lomba.id)"><i class="bi bi-eye"></i></a>
+                                             <a class="btn btn-primary" :href="route('lomba.edit', lomba.id)"><i class="bi bi-pencil-square"></i></a> 
+                                            <button class="btn btn-danger" ><i class="bi bi-trash" @click="deleteLomba(lomba.id)" ></i></button>                              
                                         </td>
                                     </tr>
                                 </tbody>
@@ -198,9 +195,37 @@ import { Link } from '@inertiajs/vue3';
             
     <!--end switcher-->
 </template>
+
+
+
+<script setup>
+import { defineProps } from "vue";
+import { Link, useForm} from "@inertiajs/vue3";
+
+// Definisikan properti yang diterima oleh komponen
+const props = defineProps({
+    lombas: {
+        type: Array,
+        default: () => [],
+    },
+});
  
-<script>
+const deleteForm = useForm({});
+
+const deleteLomba = (id) => {
+    if (confirm("Are you sure you want to delete this sponsor?")) {
+        deleteForm.delete(route("lomba.destroy", id), {
+            preserveScroll: true,
+        });
+    }
+};
+
+
+
 $(document).ready(function() {
     $('#example').DataTable();
   } );
+
+
+
 </script>

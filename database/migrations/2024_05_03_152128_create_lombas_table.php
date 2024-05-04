@@ -13,15 +13,14 @@ return new class extends Migration
     {
         Schema::create('lombas', function (Blueprint $table) {
             $table->id();
-            // $table->foreign('event_lomba_id')->references('id')->on('event_lombas');
-            $table->foreignId('event_lomba_id')->constrained('event_lombas')->default(1);
-            $table->string('name');
-            $table->string('description');
+            $table->string('name')->nullable();
+            $table->string('description')->nullable();
             $table->string('kontak')->nullable();
             $table->string('pj')->nullable();
             $table->string('tempat')->nullable();
             $table->string('picture')->nullable();
-            $table->string('link_file')->nullable();
+            $table->string('sertifikat')->nullable();
+            $table->decimal('biaya_pendaftaran', 10, 2)->nullable();
             $table->timestamps();
         });
     }

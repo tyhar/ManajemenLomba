@@ -123,4 +123,11 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'aliases' => [
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        // Tambahkan array baru di sini
+        'CustomAlias' => App\CustomClass::class,
+    ],
+    
+    
 ];

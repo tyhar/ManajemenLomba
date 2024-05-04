@@ -15,6 +15,8 @@ use App\Http\Controllers\PanelisController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\EventAdminController;
+use App\Http\Controllers\LombaController;
+
 
 //default breeze
 Route::get('/', function () {
@@ -60,11 +62,11 @@ Route::middleware('auth','verified','admin')->group(function () {
     Route::get('/pesan', [AdminController::class, 'pesan']);
     // Route::resource('superadmin/pesan', [PesanController::class]);
 
-    Route::get('/lomba', [AdminController::class, 'lomba']);
-    Route::get('tambahlomba', [AdminController::class, 'tambahlomba']);
-    Route::get('/editlomba', [AdminController::class, 'editlomba']);
-    Route::get('/detaillomba', [AdminController::class, 'detaillomba']);
-    // Route::resource('superadmin/lomba', [LombaController::class]);
+    // Route::get('/lomba', [AdminController::class, 'lomba']);
+    // Route::get('tambahlomba', [AdminController::class, 'tambahlomba']);
+    // Route::get('/editlomba', [AdminController::class, 'editlomba']);
+    // Route::get('/detaillomba', [AdminController::class, 'detaillomba']);
+    Route::resource('superadmin/lomba', LombaController::class);
 
     Route::get('/administrator', [AdminController::class, 'administrator'])->name('administrator');
     Route::get('/tambahadministrator', [AdminController::class, 'tambahadministrator']);
@@ -137,6 +139,12 @@ Route::get('/kontak', function() {
 Route::get('/informasiberita', function() {
     return inertia::render('Utama/InformasiBerita');
 });
+
+
+//Excel
+// Route::get('people', [people::class, 'index']);
+// Route::get('people/export/excel', [people::class, 'index']);
+
 
 // -- backup --
 

@@ -8,25 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Lomba extends Model
 {
     use HasFactory;
-
     protected $fillable = [
-        'event_lomba_id',
         'name',
         'description',
         'kontak',
         'pj',
         'tempat',
         'picture',
-        'link_file',
+        'kontak',
+        'sertifikat',
+        'biaya_pendaftaran',
+        
     ];
 
-    public function eventlomba()
-    {
-        return $this->belongsTo(EventLomba::class, 'event_lomba_id');
-    }
-
-    // public function user() 
-    // {
-    //     return $this->hasMany(User::class);
-    // }
 }

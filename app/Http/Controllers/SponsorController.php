@@ -82,7 +82,7 @@ class SponsorController extends Controller
         
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'logo' => 'required|string|max:2048',
+            'logo' => 'required|image|max:2048',
             'link_file' => 'required|string|max:255'
         ]);
         $sponsor->update($validatedData);

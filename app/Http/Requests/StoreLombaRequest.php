@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreSponsorRequest extends FormRequest
+class StoreLombaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +22,12 @@ class StoreSponsorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name_lomba' => ['required', 'string', 'max:255'],
-            'deskripsi' => ['required', 'string', 'max:500'],
-            'images' => ['required', 'image', 'max:2048'], // Memastikan hanya file gambar yang diizinkan
+            'name' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string', 'max:500'],
+            'picture' => ['required', 'image', 'max:2048'], // Memastikan hanya file gambar yang diizinkan
             'sertifikat' => ['required', 'file', 'mimes:pdf,jpeg,png,jpg,', 'max:2048'], // Memastikan hanya file dengan ekstensi tertentu yang diizinkan
-            'nama_pj' => ['required', 'string', 'max:255'],
-            'kontak_pj' => ['required', 'string', 'max:255'],
+            'pj' => ['required', 'string', 'max:255'],
+            'kontak' => ['required', 'string', 'max:255'],
             'tempat' => ['required', 'string', 'max:255'],
             'biaya_pendaftaran' => ['required', 'string', 'max:255'],
             
@@ -38,12 +38,12 @@ class StoreSponsorRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name_lomba' => 'Nama Lomba',
-            'deskripsi' => 'Deskripsi Lomba',
-            'images' => 'Foto Lomba',
+            'name' => 'Nama Lomba',
+            'description' => 'Deskripsi Lomba',
+            'picture' => 'Foto Lomba',
             'sertifikat' => 'Sertifikat Lomba',
-            'nama_pj' => 'Nama Penanggung Jawab',
-            'kontak_pj' => 'Kontak Penanggung Jawab',
+            'pj' => 'Nama Penanggung Jawab',
+            'kontak' => 'Kontak Penanggung Jawab',
             'tempat' => 'Tempat Lomba',
             'biaya_pendaftaran' => 'Biaya Pendaftaran',
         ];
