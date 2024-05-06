@@ -6,9 +6,12 @@ import { Head } from "@inertiajs/vue3";
 import { router } from "@inertiajs/vue3";
 
 defineProps({
+    // sponsors: {
+    //     type: Object,
+    //     required: true,
+    // },
     sponsors: {
-        type: Object,
-        required: true,
+        type: Array,
     },
 });
 
@@ -21,29 +24,6 @@ const deleteSponsor = (id) => {
         });
     }
 };
-
-// let sponsorsUrl = computed(() => {
-//     const url = new URL(route("sponsor.index"));
-
-//     url.searchParams.set("page", pageNumber.value);
-
-//     if (searchTerm.value) {
-//         url.searchParams.set("search", searchTerm.value);
-//     }
-
-//     return url;
-// });
-
-// watch(
-//     () => studentsUrl.value,
-//     (newValue) => {
-//         router.visit(newValue, {
-//             replace: true,
-//             preserveState: true,
-//             preserveScroll: true,
-//         });
-//     }
-// );
 </script>
 
 <template>
@@ -210,9 +190,13 @@ const deleteSponsor = (id) => {
                                 </thead>
                                 <tbody>
                                     <tr
-                                        v-for="sponsor in sponsors.data"
+                                        v-for="sponsor in sponsors"
                                         :key="sponsor.id"
                                     >
+                                    <!-- <tr
+                                        v-for="sponsor in sponsors.data"
+                                        :key="sponsor.id"
+                                    > -->
                                         <td>
                                             {{ sponsor.id }}
                                         </td>
@@ -220,7 +204,8 @@ const deleteSponsor = (id) => {
                                             {{ sponsor.name }}
                                         </td>
                                         <td>
-                                            {{ sponsor.logo }}
+                                            <!-- {{ sponsor.logo }} -->
+                                            <img :src="sponsor.logo" class="w-8 h-8 rounded" style="width: 120px;" />
                                         </td>
                                         <td>
                                             {{ sponsor.link_file }}
@@ -232,7 +217,6 @@ const deleteSponsor = (id) => {
                                             >
                                                 <i class="bi bi-eye"></i>
                                             </a>
-                                            <!-- <button class="btn btn-primary" onclick="window.location.href='/editsponsor'"><i class="bi bi-pencil-square"></i></button>     -->
                                             <a 
                                                 class="btn btn-primary"
                                                 :href="route('sponsor.edit', sponsor.id)" 
@@ -262,10 +246,4 @@ const deleteSponsor = (id) => {
 $(document).ready(function() {
     $('#example').DataTable();
   } );
-
-// import { onMounted } from "vue";
-
-// onMounted(() => {
-//     $('#example').DataTable();
-// });
 </script>

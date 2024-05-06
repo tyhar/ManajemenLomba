@@ -3,36 +3,26 @@
 import { Link } from '@inertiajs/vue3';
 import { useForm } from "@inertiajs/vue3";
 import { Head } from "@inertiajs/vue3";
-import { usePage } from "@inertiajs/vue3";
+// import { usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/vue3";
-import { defineProps } from '@vue/runtime-core';
+// import { defineProps } from '@vue/runtime-core';
 
 defineProps({
-    sponsors: {
-        type: Object,
-        required: true,
-    },
+    // sponsors: {
+    //     type: Object,
+    // },
+    // logo: {
+    //     type: String
+    // }
+    sponsors: Array,
+    baseUrl: String
 });
 
-// Handle potential data type mismatch or missing data
-// const sponsorName = computed(() => {
-//   if (!props.sponsors) return 'Loading...';
-//   return props.sponsors.name?.toString() || 'N/A';  // Default if name is missing
+// const props = defineProps({
+//     sponsors: Object,
+//     logo: String
 // });
 
-// const sponsor = usePage().props.sponsors;
-
-// const form = useForm({
-//     name: sponsor.data.name,
-//     logo: sponsor.data.logo,
-//     link_file: sponsor.data.link_file,
-// });
-
-// const submit = () => {
-//     form.put(route("sponsor.update", sponsor.data.id), {
-//         preserveScroll: true,
-//     });
-// };
 
 </script>
 
@@ -75,34 +65,30 @@ defineProps({
                         <h4 class="mb-0">Detail Berita</h4>
                         <hr/>
                         <div>
-                            <div class="col-md-6 c-mb10" v-if="sponsors">
+                            <div class="col-md-6 c-mb10">
                                 <label class="c-mb5-black"><b>Nama Sponsor</b></label>
                                 <div class="c-mb20">{{ sponsors.name }}</div>
                             </div>
-                            <div class="col-md-6 c-mb10" v-else="sponsors">
-                                <label class="c-mb5-black"><b>Nama Sponsor</b></label>
-                                <div class="c-mb20">ayam</div>
-                            </div>
-                            <!-- <div>
+                            <div>
                                 <label class="col-md-6 c-mb10 warna-hitam"><b>Link</b></label>
-                                <div class="c-mb20"><a href="#">{{ sponsors.link_file }}</a></div>
                                 <div class="c-mb20"><a href="#">{{ sponsors.link_file }}</a></div>
                             </div>
                             <div class="c-mb10">
                                 <label class="c-mb5-black"><b>Gambar</b></label><br>
-                                <div class="c-mb20">{{ sponsors.logo }}</div>
+                                <div>
+                                    <img :src=" '/storage/' + sponsors.logo" class="w-32 h-32" style="width: 500px;" />
+                                </div>
                             </div>
-                            </div> -->
-                            <!-- <div class="btn-posisi">
+                        </div>
+                            <div class="btn-posisi">
                                 <a class="btn btn-danger btn-kembali" :href="route('sponsor.index')">Kembali</a>
-                                <a class="btn btn-danger btn-kembali" :href="route('sponsor.edit', sponsor.id)">Edit</a>
-                            </div> -->
+                                <a class="btn btn-danger btn-kembali" :href="route('sponsor.edit', sponsors.id)">Edit</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         <!--end page wrapper -->
-        </div>
     </div>
 </template>
 <!-- <script>

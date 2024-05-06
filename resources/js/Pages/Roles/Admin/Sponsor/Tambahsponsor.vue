@@ -5,7 +5,7 @@ import { Head } from "@inertiajs/vue3";
 
 const form = useForm({
     name: "",
-    logo: "",
+    logo: null,
     link_file: "",
 });
 
@@ -100,12 +100,18 @@ const submit = () => {
                                     >
                                         <b>Logo</b>
                                     </label>
-                                    <input
-                                        v-model="form.logo" 
-                                        class="form-control" 
-                                        type="text" 
+                                    <input 
+                                        class="form-control"
+                                        type="file"
+                                        @input="form.logo = $event.target.files[0]"
                                         id="logo"
                                     >
+                                    <!-- <input 
+                                        class="form-control"
+                                        type="text"
+                                        v-model="form.logo"
+                                        id="logo"
+                                    > -->
                                     <p class="keterangan-foto">Max 2 MB (500 x 500 px)</p>
                                 </div>
                             </div>

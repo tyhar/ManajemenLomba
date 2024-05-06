@@ -5,27 +5,48 @@ import { useForm } from "@inertiajs/vue3";
 import { Head } from "@inertiajs/vue3";
 import { usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/vue3";
+// import { inertia } from "@inertiajs/inertia";
 
 // defineProps({
 //     sponsors: {
-//         type: Object,
-//         required: true,
+//         type: Object
 //     },
 // });
 
-const sponsor = usePage().props.sponsors; //props.sponsors "sponsors" are from controller
+const props = defineProps({
+    sponsors: Object,
+    logo: String
+});
+
+//with resource
+// const sponsor = usePage().props.sponsors; //props.sponsors "sponsors" are from controller
 
 const form = useForm({
-    name: sponsor.data.name,
-    logo: sponsor.data.logo,
-    link_file: sponsor.data.link_file,
+    // name: sponsor.data.name,
+    // logo: sponsor.data.logo,
+    // link_file: sponsor.data.link_file,
+    name: props.sponsors.name,
+    logo: null,
+    link_file: props.sponsors.link_file,
 });
 
 const submit = () => {
-    form.put(route("sponsor.update", sponsor.data.id), {
-        preserveScroll: true,
+    // form.put(route("sponsor.update", sponsor.data.id), {
+    //     preserveScroll: true,
+    // });
+    // form.put(route("sponsor.update", props.sponsors.id), {
+    //     preserveScroll: true,
+    // });
+    router.post(route("sponsor.update", props.sponsors.id), { 
+        // preserveScroll: true,
+        _method: "put",
+        name: form.name,
+        logo: form.logo,
+        link_file: form.link_file
     });
+
 };
+
 
 </script>
 <template>
@@ -104,10 +125,13 @@ const submit = () => {
                                     >
                                         <b>Logo</b>
                                     </label>
-                                    <input
-                                        v-model="form.logo" 
-                                        class="form-control" 
-                                        type="text" 
+                                    <div class="m-2 p-2">
+                                        <img :src="logo" class="w-32 h-32" style="width: 500px;" />
+                                    </div>
+                                    <input 
+                                        class="form-control"
+                                        type="file"
+                                        @input="form.logo = $event.target.files[0]"
                                         id="logo"
                                     >
                                     <p class="keterangan-foto">Max 2 MB (500 x 500 px)</p>

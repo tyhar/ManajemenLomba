@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\SponsorResource;
 use App\Models\Sponsor;
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class SponsorController extends Controller
@@ -14,10 +16,32 @@ class SponsorController extends Controller
      */
     public function index()
     {
-        $sponsors = SponsorResource::collection(Sponsor::all());
+        // $sponsors = SponsorResource::collection([
+            // Sponsor::all()->map(function($sponsor) {
+            //     return [
+            //         'id' => $sponsor->id,
+            //         'name' => $sponsor->name,
+            //         'link_file' => $sponsor->link_file,
+            //         'logo' => asset('storage/'.$sponsor->logo)
+            //     ];
+        //     })
+        // ]); 
+
+        // $sponsors = SponsorResource::collection(Sponsor::all());
+
+        // return Inertia::render('Roles/Admin/Sponsor', [
+        //     'sponsors' => $sponsors,
+        // ]);
 
         return Inertia::render('Roles/Admin/Sponsor', [
-            'sponsors' => $sponsors,
+            'sponsors' => Sponsor::all()->map(function($sponsor) {
+                return [
+                    'id' => $sponsor->id,
+                    'name' => $sponsor->name,
+                    'link_file' => $sponsor->link_file,
+                    'logo' => asset('storage/'.$sponsor->logo)
+                ];
+            })
         ]);
     }
 
@@ -40,14 +64,22 @@ class SponsorController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'logo' => 'required|string|max:255',
-            'link_file' => 'required|string|max:255'
+        // $validated = $request->validate([
+        //     'name' => 'required|string|max:255',
+        //     'logo' => $logo,
+        //     'link_file' => 'required|string|max:255'
+        // ]);
+        // Sponsor::create($validated);
+
+        // store logo into sponsors folder inside public folder
+        $logo = Request::file('logo')->store('sponsors','public');
+    
+        Sponsor::create([
+            'name' => Request::input('name'),
+            'logo' => $logo,
+            'link_file' => Request::input('link_file')
         ]);
-    
-        Sponsor::create($validated);
-    
+
         return redirect()->route('sponsor.index');
     }
 
@@ -56,9 +88,16 @@ class SponsorController extends Controller
      */
     public function show(Sponsor $sponsor)
     {
+        // return Inertia::render('Roles/Admin/Sponsor/Detailsponsor', [
+        //     'sponsors' => SponsorResource::make($sponsor),
+        //     // dd($sponsor),
+        // ]);
+
+        $baseUrl = config('app.url');
         return Inertia::render('Roles/Admin/Sponsor/Detailsponsor', [
-            'sponsors' => SponsorResource::make($sponsor),
-            dd($sponsor),
+            'sponsors' => $sponsor,
+            'logo' => asset('storage/'.$sponsor->logo),
+            'baseUrl' => $baseUrl
         ]);
     }
 
@@ -67,9 +106,15 @@ class SponsorController extends Controller
      */
     public function edit(Sponsor $sponsor)
     {
+        // return Inertia::render('Roles/Admin/Sponsor/Editsponsor', [
+        //     'sponsors' => SponsorResource::make($sponsor),
+        // ]);
+
         return Inertia::render('Roles/Admin/Sponsor/Editsponsor', [
-            'sponsors' => SponsorResource::make($sponsor),
+            'sponsors' => $sponsor,
+            'logo' => asset('storage/'.$sponsor->logo)
         ]);
+
     }
 
     /**
@@ -77,18 +122,37 @@ class SponsorController extends Controller
      */
     public function update(Request $request, Sponsor $sponsor)
     {
-        
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'logo' => 'required|string|max:255',
-            'link_file' => 'required|string|max:255'
+        $logo = $sponsor->logo;
+        if(Request::file('logo')){
+            Storage::delete('public/'.$sponsor->logo);
+            $logo = Request::file('logo')->store('sponsors','public');
+        }
+
+        $sponsor->update([
+            'name' => Request::input('name'),
+            'logo' => $logo,
+            'link_file' => Request::input('link_file')
         ]);
 
-        $sponsor->update($validatedData);
-
-        // $sponsor->update($request->validated());
-
         return redirect()->route('sponsor.index');
+
+        // $validatedData = $request->validate([
+        //     'name' => Request::input('name'),
+        //     'logo' => $logo,
+        //     'link_file' => Request::input('link_file')
+        // ]);
+        // $validatedData = $request->validate([
+        //     'name' => 'required|string|max:255',
+        //     'logo' => 'required|string|max:255',
+        //     'link_file' => 'required|string|max:255'
+        // ]);
+        // Sponsor::create([
+            // 'name' => Request::input('name'),
+            // 'logo' => $logo,
+            // 'link_file' => Request::input('link_file')
+        // ]);
+        // $sponsor->update($validatedData);
+        // $sponsor->update($request->validated());
     }
 
     /**
@@ -96,6 +160,7 @@ class SponsorController extends Controller
      */
     public function destroy(Sponsor $sponsor)
     {
+        Storage::delete('public/'.$sponsor->logo);
         $sponsor->delete();
         return redirect()->route('sponsor.index');
     }

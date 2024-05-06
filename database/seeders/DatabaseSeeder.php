@@ -39,7 +39,7 @@ class DatabaseSeeder extends Seeder
         
         //sponsor
         Sponsor::factory()
-            ->count(100)
+            ->count(50)
             ->create();
 
         //event dan lomba
