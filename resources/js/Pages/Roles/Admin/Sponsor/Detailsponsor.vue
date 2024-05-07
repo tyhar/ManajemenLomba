@@ -34,9 +34,11 @@ defineProps({
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
-                        <div class="navbar-left">
-                            <img src="/bootstrap/images/logo.png" alt="Logo">
-                        </div>
+                        <a href="/">
+                            <div class="navbar-left">
+                                <img src="/bootstrap/images/logo.png" alt="Logo">
+                            </div>
+                        </a>
                     </div>
                     <!-- Mobile toggle menu -->
                     <!-- Search bar -->
@@ -76,7 +78,7 @@ defineProps({
                             <div class="c-mb10">
                                 <label class="c-mb5-black"><b>Gambar</b></label><br>
                                 <div>
-                                    <img :src=" '/storage/' + sponsors.logo" class="w-32 h-32" style="width: 500px;" />
+                                    <img :src=" '/storage/' + sponsors.logo" alt="Product Image" class="img-fluid" style="display:flex; margin: auto;" />
                                 </div>
                             </div>
                         </div>
@@ -91,15 +93,4 @@ defineProps({
         <!--end page wrapper -->
     </div>
 </template>
-<!-- <script>
-$(document).ready(function() {
-    $('#example').DataTable();
-} );
-
-import { onMounted } from "vue";
-
-onMounted(() => {
-    $('#example').DataTable();
-});
-</script> -->
    

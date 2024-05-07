@@ -31,9 +31,11 @@ const submit = () => {
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
-                        <div class="navbar-left">
-                            <img src="/bootstrap/images/logo.png" alt="Logo">
-                        </div>
+                        <a href="/">
+                            <div class="navbar-left">
+                                <img src="/bootstrap/images/logo.png" alt="Logo">
+                            </div>
+                        </a>
                     </div>
                     <!-- Mobile toggle menu -->
                     <!-- Search bar -->

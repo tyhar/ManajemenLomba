@@ -2,18 +2,18 @@
 import { Link } from '@inertiajs/vue3';
 </script>
 <template>
-  <!--wrapper-->
-	<div class="wrapper">
+    <!--wrapper-->
+    <div class="wrapper">
         <!--sidebar wrapper -->
         <div class="sidebar-wrapper" data-simplebar="true">
             <div class="sidebar-header">
                 <div>
                     <a href="/">
-                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon" >
+                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon">
                     </a>
                 </div>
                 <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
-                </div>
+            </div>
             </div>
             <!--navigation-->
             <ul class="metismenu" id="menu">
@@ -81,42 +81,25 @@ import { Link } from '@inertiajs/vue3';
                         </div>
                     </a>
                 </li>
-                <li>
-                    <a href="javascript:;" class="has-arrow">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-plus-circle"></i>
-                        </div>
-                        <div class="menu-title">SEMENTARA</div>
-                    </a>
-                    <ul>
-                        <li class="jarak-dropdown"> <a href="/dashboardjuri">JURI</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/dashboardpetugas">PETUGAS</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/overviewpeserta">PESERTA</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/index2">ADMIN</a>
-                        </li>
-                    </ul>
-                </li>
             </ul>
             <!--end navigation-->
             
         </div>
         <!--end sidebar wrapper -->
-		<!--start header -->
-		<header>
-			<div class="topbar d-flex align-items-center">
-				<nav class="navbar navbar-expand">
-					<div class="mobile-toggle-menu"><i class='bx bx-menu'></i>
-					</div>
-					<div class="search-bar flex-grow-1">
-					</div>
-					<div class="top-menu ms-auto">
-						<ul class="navbar-nav align-items-center">
+        <!--start header -->
+        <header>
+            <div class="topbar d-flex align-items-center">
+                <nav class="navbar navbar-expand">
+                    <div class="mobile-toggle-menu"><i class='bx bx-menu'></i>
+                    </div>
+                    <div class="search-bar flex-grow-1">
+                    </div>
+                    <div class="top-menu ms-auto">
+                        <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>			
-                                <p class="user-role">habib</p>					
-						    </div>
+                                <p class="user-name mb-0">Habib Shohiburrotib</p>
+                                <p class="user-role">habib</p>
+                            </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
                             <li class="nav-item dropdown dropdown-large">
@@ -125,44 +108,45 @@ import { Link } from '@inertiajs/vue3';
                                     </div>
                                 </div>
                             </li>
-                            <li class="nav-item dropdown dropdown-large">	
+                            <li class="nav-item dropdown dropdown-large">
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <div class="header-message-list">
                                     </div>
                                 </div>
                             </li>
                         </ul>
-                    </div>		
-				</nav>
-			</div>
-		</header>
-		<!--end header -->
-		<!--start page wrapper -->
+                    </div>
+                </nav>
+            </div>
+        </header>
+        <!--end header -->
+        <!--start page wrapper -->
         <div class="page-wrapper">
             <div class="page-content">
                 <div class="ps-3">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb mb-0 p-0">
                             <li class="breadcrumb-item">
-                            </li>                             
+                            </li>
                         </ol>
                     </nav>
                 </div>
-				<div class="card">
-					<div class="card-body">
+                <div class="card">
+                    <div class="card-body">
                         <h4 class="mb-0 jarak-top-kurang5">Tabel Lomba</h4>
-                        <hr class="c-mt10"/>		
-                        <a class="btn btn-success jarak-top-kurang7" href="/tambahlomba">Tambah Lomba</a>
                         <hr class="c-mt10" />
-						<div class="table-responsive">
-							<table id="example" class="table mt-3  table-bordered">
+                        <a class="btn btn-success jarak-top-kurang7" href="/tambahlomba">Tambah Lomba</a>
+                        <a class="btn btn-info jarak-top-kurang7" href="/kriteria">Kriteria</a>
+                        <hr class="c-mt10" />
+                        <div class="table-responsive">
+                            <table id="example" class="table mt-3  table-bordered">
                                 <thead class="table-dark">
                                     <tr>
                                         <th class="width-id">ID</th>
                                         <th>Nama Lomba</th>
                                         <th>Deskripsi</th>
                                         <th>Nama PJ</th>
-                                        <th>Kontak PJ</th>  
+                                        <th>Kontak PJ</th>
                                         <th class="crud-width-180">Aksi</th>
                                     </tr>
                                 </thead>
@@ -174,24 +158,29 @@ import { Link } from '@inertiajs/vue3';
                                         <td>Leocris</td>
                                         <td>29 Maret 2024</td>
                                         <td class="btn-crud">
-                                            <button class="btn btn-secondary" onclick="window.location.href='/detaillomba'"><i class="bi bi-eye"></i></button>
-                                            <button class="btn btn-primary" onclick="window.location.href='/editlomba'"><i class="bi bi-pencil-square"></i></button>    
-                                            <button class="btn btn-danger" ><i class="bi bi-trash"></i></button>                              
+                                            <button class="btn btn-secondary"
+                                                onclick="window.location.href='/detaillomba'"><i
+                                                    class="bi bi-eye"></i></button>
+                                            <button class="btn btn-primary"
+                                                onclick="window.location.href='/editlomba'"><i
+                                                    class="bi bi-pencil-square"></i></button>
+                                            <button class="btn btn-danger"><i class="bi bi-trash"></i></button>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!--end page wrapper -->
-		<!--start overlay-->
-		<div class="overlay toggle-icon"></div>
-		<!--end overlay-->
-		<!--Start Back To Top Button--> <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
-		<!--End Back To Top Button-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end page wrapper -->
+        <!--start overlay-->
+        <div class="overlay toggle-icon"></div>
+        <!--end overlay-->
+        <!--Start Back To Top Button--> <a href="javaScript:;" class="back-to-top"><i
+                class='bx bxs-up-arrow-alt'></i></a>
+        <!--End Back To Top Button-->
     </div>
     <!--end wrapper-->
     <!--start switcher-->

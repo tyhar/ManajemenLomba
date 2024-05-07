@@ -18,7 +18,7 @@ import { Link } from '@inertiajs/vue3';
             <!--navigation-->
             <ul class="metismenu" id="menu">
                 <li>
-                    <a href="/superadmin">
+                    <a href="/index2">
                         <div class="parent-icon"><i class='bx bx-home-circle'></i>
                         </div>
                         <div class="menu-title">Dashboard</div>
@@ -35,8 +35,6 @@ import { Link } from '@inertiajs/vue3';
                         </li>
                         <li class="jarak-dropdown"> <a href="/administrator">Administrator</a>
                         </li>
-                        <li class="jarak-dropdown"> <a href="/tim">Tim</a>
-                        </li>
                         <li class="jarak-dropdown"> <a href="/sponsor">Sponsor</a>
                         </li>
                         <li class="jarak-dropdown"> <a href="/berita">Berita</a>
@@ -46,11 +44,18 @@ import { Link } from '@inertiajs/vue3';
                     </ul>
                 </li>
                 <li>
-                <a href="/partisipan">
-                    <div class="parent-icon"><i class="fadeIn animated bx bx-street-view"></i>
-                    </div>
-                    <div class="menu-title">Partisipan</div>
-                </a>
+                    <a href="/tim">
+                        <div class="parent-icon"><i class="fadeIn animated lni lni-users"></i>
+                        </div>
+                        <div class="menu-title">Tim</div>
+                    </a>
+                </li>   
+                <li>
+                    <a href="/partisipan">
+                        <div class="parent-icon"><i class="fadeIn animated bx bx-user-circle c-font25"></i>
+                        </div>
+                        <div class="menu-title">Partisipan</div>
+                    </a>
                 </li>
                 <li>
                     <a href="/pesan">
@@ -67,18 +72,10 @@ import { Link } from '@inertiajs/vue3';
                     </a>
                 </li>
                 <li>
-                    <a>
+                    <a href="/">
                         <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
                         </div>
-                        <div class="menu-title">
-                            <Link class="menu-title"
-                                :href="route('logout')"
-                                method="post"
-                                as="button"
-                            >
-                                Logout
-                            </Link>
-                        </div>
+                        <div class="menu-title">Logout</div>
                     </a>
                 </li>
                 <li>
@@ -100,7 +97,6 @@ import { Link } from '@inertiajs/vue3';
                 </li>
             </ul>
             <!--end navigation-->
-            
         </div>
         <!--end sidebar wrapper -->
         <!--start header -->
@@ -149,42 +145,42 @@ import { Link } from '@inertiajs/vue3';
                                 <div class="card radius-15 card-overview">
                                     <img src="/bootstrap/images/desain.jpg" alt="New Image" class="border-radius">
                                     <label class="judul-overview">UI / UX</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Lihat Peserta</a>
+                                    <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Lihat Rangking</a>
                                 </div>
                             </div>
                             <div class="col">
                                     <div class="card radius-15 card-overview">
                                         <img src="/bootstrap/images/ar-vr.jpg" alt="New Image" class="border-radius">
                                         <label class="judul-overview">AR / VR</label>
-                                        <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Detail</a>
+                                        <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Lihat Rangking</a>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="card radius-15 card-overview">
                                         <img src="/bootstrap/images/aplikasi-mobile.jpg" alt="New Image" class="border-radius">
                                         <label class="judul-overview">APLIKASI MOBILE</label>
-                                        <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Detail</a>
+                                        <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Lihat Rangking</a>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="card radius-15 card-overview">
                                         <img src="/bootstrap/images/desain-website.jpg" alt="New Image" class="border-radius">
                                         <label class="judul-overview">DESAIN WEBSITE</label>
-                                        <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Detail</a>
+                                        <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Lihat Rangking</a>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="card radius-15 card-overview">
                                         <img src="/bootstrap/images/sistem-keamanan-data.jpg" alt="New Image" class="border-radius">
                                         <label class="judul-overview">SISTEM KEAMANAN DATA</label>
-                                        <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Detail</a>
+                                        <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Lihat Rangking</a>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="card radius-15 card-overview">
                                         <img src="/bootstrap/images/membuat-game.jpg" alt="New Image" class="border-radius">
                                         <label class="judul-overview">UI / UX</label>
-                                        <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Detail</a>
+                                        <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Lihat Rangking</a>
                                     </div>
                                 </div> 
                             </div>

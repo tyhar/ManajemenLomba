@@ -106,23 +106,6 @@ const deleteSponsor = (id) => {
                         </div>
                     </a>
                 </li>
-                <li>
-                    <a href="javascript:;" class="has-arrow">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-plus-circle"></i>
-                        </div>
-                        <div class="menu-title">SEMENTARA</div>
-                    </a>
-                    <ul>
-                        <li class="jarak-dropdown"> <a href="/dashboardjuri">JURI</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/dashboardpetugas">PETUGAS</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/overviewpeserta">PESERTA</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/index2">ADMIN</a>
-                        </li>
-                    </ul>
-                </li>
             </ul>
             <!--end navigation-->
             
@@ -205,7 +188,7 @@ const deleteSponsor = (id) => {
                                         </td>
                                         <td>
                                             <!-- {{ sponsor.logo }} -->
-                                            <img :src="sponsor.logo" class="w-8 h-8 rounded" style="width: 120px;" />
+                                            <img :src="sponsor.logo" class="w-8 h-8 rounded" style="width: 120px;" alt="no image"/>
                                         </td>
                                         <td>
                                             {{ sponsor.link_file }}

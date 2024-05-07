@@ -1,2 +1,0 @@
-1. panggil halaman di AdminController.php 
-2. buat route di web.php bagian admin

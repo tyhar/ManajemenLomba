@@ -1,24 +1,19 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
 </script>
-<script>
-$(document).ready(function() {
-      $('#example').DataTable();
-} );
-</script>
 <template>
     <!--wrapper-->
-        <div class="wrapper">
+    <div class="wrapper">
         <!--sidebar wrapper -->
         <div class="sidebar-wrapper" data-simplebar="true">
             <div class="sidebar-header">
                 <div>
                     <a href="/">
-                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon" >
+                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon">
                     </a>
                 </div>
                 <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
-                </div>
+            </div>
             </div>
             <!--navigation-->
             <ul class="metismenu" id="menu">
@@ -86,23 +81,6 @@ $(document).ready(function() {
                         </div>
                     </a>
                 </li>
-                <li>
-                    <a href="javascript:;" class="has-arrow">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-plus-circle"></i>
-                        </div>
-                        <div class="menu-title">SEMENTARA</div>
-                    </a>
-                    <ul>
-                        <li class="jarak-dropdown"> <a href="/dashboardjuri">JURI</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/dashboardpetugas">PETUGAS</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/overviewpeserta">PESERTA</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/index2">ADMIN</a>
-                        </li>
-                    </ul>
-                </li>
             </ul>
             <!--end navigation-->
             
@@ -142,7 +120,6 @@ $(document).ready(function() {
                 </div>
             </header>
             <!--end header -->
-
             <!--start page wrapper -->
             <div class="page-wrapper">
                 <div class="page-content">
@@ -213,6 +190,10 @@ $(document).ready(function() {
         <!--end wrapper-->
         <!--end wrapper-->
         <!--start switcher-->
-                
         <!--end switcher-->
 </template>
+<script>
+$(document).ready(function() {
+      $('#example').DataTable();
+} );
+</script>

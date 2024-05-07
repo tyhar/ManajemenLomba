@@ -9,11 +9,11 @@ import { Link } from '@inertiajs/vue3';
             <div class="sidebar-header">
                 <div>
                     <a href="/">
-                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon" >
+                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon">
                     </a>
                 </div>
                 <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
-                </div>
+            </div>
             </div>
             <!--navigation-->
             <ul class="metismenu" id="menu">
@@ -81,26 +81,8 @@ import { Link } from '@inertiajs/vue3';
                         </div>
                     </a>
                 </li>
-                <li>
-                    <a href="javascript:;" class="has-arrow">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-plus-circle"></i>
-                        </div>
-                        <div class="menu-title">SEMENTARA</div>
-                    </a>
-                    <ul>
-                        <li class="jarak-dropdown"> <a href="/dashboardjuri">JURI</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/dashboardpetugas">PETUGAS</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/overviewpeserta">PESERTA</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/index2">ADMIN</a>
-                        </li>
-                    </ul>
-                </li>
             </ul>
             <!--end navigation-->
-            
         </div>
         <!--end sidebar wrapper -->
         <!--start header -->
@@ -150,7 +132,7 @@ import { Link } from '@inertiajs/vue3';
                 </div>
 				<div class="card">
 					<div class="card-body">
-                        <h4 class="mb-0 jarak-top-kurang5">Tabel Partisipan</h4>
+                        <h4 class="mb-0 jarak-top-kurang5">Tabel Pesan</h4>
                         <hr class="c-mt10"/>
                             <label class="jarak-filterstatus">Filter by Status</label> 
                             <select class="form-select2">

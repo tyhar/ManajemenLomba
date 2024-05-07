@@ -56,9 +56,11 @@ const submit = () => {
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
-                        <div class="navbar-left">
-                            <img src="/bootstrap/images/logo.png" alt="Logo">
-                        </div>
+                        <a href="/">
+                            <div class="navbar-left">
+                                <img src="/bootstrap/images/logo.png" alt="Logo">
+                            </div>
+                        </a>
                     </div>
                     <!-- Mobile toggle menu -->
                     <!-- Search bar -->
@@ -126,7 +128,8 @@ const submit = () => {
                                         <b>Logo</b>
                                     </label>
                                     <div class="m-2 p-2">
-                                        <img :src="logo" class="w-32 h-32" style="width: 500px;" />
+                                        <!-- <img :src="logo" class="w-32 h-32" style="width: 500px;" /> -->
+                                        <img :src="logo" alt="Product Image" class="img-fluid" style="display:flex; margin: auto;" />
                                     </div>
                                     <input 
                                         class="form-control"

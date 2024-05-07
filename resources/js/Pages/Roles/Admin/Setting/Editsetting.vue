@@ -6,9 +6,11 @@
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
-                        <div class="navbar-left">
-                            <img src="/bootstrap/images/logo.png" alt="Logo">
-                        </div>
+                        <a href="/">
+                            <div class="navbar-left">
+                                <img src="/bootstrap/images/logo.png" alt="Logo">
+                            </div>
+                        </a>
                     </div>
                     <!-- Mobile toggle menu -->
                     <!-- Search bar -->
@@ -41,19 +43,23 @@
                                 <label class="c-mb5-black"><b>Nama Event</b></label>
                                 <input type="email" class="form-control" value="Olinas">
                             </div>  
-                            <div>
-                                <label class="c-mb5-black"><b>Deskripsi</b></label>
-                                <div class="col-12">
-                                    <textarea class="form-control c-mb10" id="inputProductDescription" rows="5" value="Olinas adalah"></textarea>
-                                </div>
-                            </div>
                             <div class="c-mb10">
                                 <label class="c-mb5-black"><b>Judul</b></label>
-                                <input type="email" class="form-control">
+                                <input type="email" class="form-control" value="OLINAS 2024">
                             </div>
                             <div class="c-mb10">
                                 <label class="c-mb5-black"><b>Sub Judul</b></label>
                                 <input type="email" class="form-control">
+                            </div>
+                            <div class="c-mb10">
+                                <label class="c-mb5-black"><b>Judul Deskripsi</b></label>
+                                <input type="email" class="form-control">
+                            </div>
+                            <div>
+                                <label class="c-mb5-black"><b>Deskripsi</b></label>
+                                <div class="col-12">
+                                    <textarea class="form-control c-mb10" id="inputProductDescription" rows="4" value="Olinas adalah"></textarea>
+                                </div>
                             </div>
                             <div>
                                 <label class="form-label warna-hitam"><b>Tanggal Mulai</b></label>

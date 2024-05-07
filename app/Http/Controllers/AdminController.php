@@ -44,6 +44,24 @@ class AdminController extends Controller
         return Inertia::render('Roles/Admin/Lomba/Detaillomba');
     }
 
+    //KRITERIA
+    public function kriteria()
+    {
+        return Inertia::render('Roles/Admin/Lomba');
+    }
+    public function tambahkriteria()
+    {
+        return Inertia::render('Roles/Admin/Kriteria/Tambahkriteria');
+    }
+    public function editkriteria()
+    {
+        return Inertia::render('Roles/Admin/Kriteria/Editkriteria');
+    }
+    public function detailkriteria()
+    {
+        return Inertia::render('Roles/Admin/Kriteria/Detailkriteria');
+    }
+
     //ADMINISTRATOR
     public function administrator()
     {
@@ -62,6 +80,10 @@ class AdminController extends Controller
     public function tim()
     {
         return Inertia::render('Roles/Admin/Tim');
+    }
+    public function tabeltim()
+    {
+        return Inertia::render('Roles/Admin/Tim/Tabeltim');
     }
     public function detailtim()
     {

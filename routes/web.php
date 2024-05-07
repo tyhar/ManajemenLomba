@@ -66,6 +66,12 @@ Route::middleware('auth','verified','admin')->group(function () {
     Route::get('/detaillomba', [AdminController::class, 'detaillomba']);
     // Route::resource('superadmin/lomba', [LombaController::class]);
 
+    Route::get('/kriteria', [AdminController::class, 'kriteria']);
+    Route::get('/tambahkriteria', [AdminController::class, 'tambahkriteria']);
+    Route::get('/editkriteria', [AdminController::class, 'editkriteria']);
+    Route::get('/detailkriteria', [AdminContrAller::class, 'detailkriteria']);
+    // Route::resource('superadmin/kriteria', [KriteriaController::class]);
+
     Route::get('/administrator', [AdminController::class, 'administrator'])->name('administrator');
     Route::get('/tambahadministrator', [AdminController::class, 'tambahadministrator']);
     // Route::post('/tambahadministrator', [UserController::class, 'store'])->name('daftar.store');
@@ -74,16 +80,10 @@ Route::middleware('auth','verified','admin')->group(function () {
     // Route::resource('superadmin/administrator', [AdministratorController::class]);
 
     Route::get('/tim', [AdminController::class, 'tim']);
+    Route::get('/tabeltim', [AdminController::class, 'tabeltim']);
     Route::get('/detailtim', [AdminController::class, 'detailtim']);
     // Route::resource('superadmin/tim', [TimController::class]);
 
-    // Route::get('/sponsor', [AdminController::class, 'sponsor']);
-    // Route::get('/tambahsponsor', [AdminController::class, 'tambahsponsor']);
-    // Route::get('/editsponsor', [AdminController::class, 'editsponsor']);
-    // Route::get('/detailsponsor', [AdminController::class, 'detailsponsor']);
-    // Route::resource('superadmin/sponsor', SponsorController::class)->only([
-    //     'index','create'
-    // ]);
     Route::resource('superadmin/sponsor', SponsorController::class);
     
     Route::get('/berita', [AdminController::class, 'berita']);
