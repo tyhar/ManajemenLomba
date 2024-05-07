@@ -2,12 +2,12 @@
 
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Application;
 
 //Models
-
+use App\Models\Sponsor;
 
 //controllers
+use Illuminate\Foundation\Application;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
@@ -23,6 +23,14 @@ Route::get('/', function () {
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
+        'sponsors' => Sponsor::all()->map(function($sponsor) {
+            return [
+                'id' => $sponsor->id,
+                'name' => $sponsor->name,
+                'link_file' => $sponsor->link_file,
+                'logo' => asset('storage/'.$sponsor->logo)
+            ];
+        }),
     ]);
 });
 
@@ -84,7 +92,8 @@ Route::middleware('auth','verified','admin')->group(function () {
     Route::get('/detailtim', [AdminController::class, 'detailtim']);
     // Route::resource('superadmin/tim', [TimController::class]);
 
-    Route::resource('superadmin/sponsor', SponsorController::class);
+    // Route::resource('superadmin/sponsor', SponsorController::class);
+    Route::resource('sponsor', SponsorController::class);
     
     Route::get('/berita', [AdminController::class, 'berita']);
     Route::get('/tambahberita', [AdminController::class, 'tambahberita']);

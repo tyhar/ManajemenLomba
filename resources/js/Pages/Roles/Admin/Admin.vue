@@ -38,6 +38,8 @@ import { Link } from '@inertiajs/vue3';
                         </li>
                         <li class="jarak-dropdown"> <a :href="route('sponsor.index')">Sponsor</a>
                         </li>
+                        <!-- <li class="jarak-dropdown"> <a href="/superadmin/sponsor">Sponsor</a>
+                        </li> -->
                         <li class="jarak-dropdown"> <a href="/berita">Berita</a>
                         </li>
                         <li class="jarak-dropdown"> <a href="/setting">Setting</a>

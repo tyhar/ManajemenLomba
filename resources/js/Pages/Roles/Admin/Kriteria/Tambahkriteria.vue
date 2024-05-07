@@ -64,22 +64,22 @@
 </template>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    // Menangkap elemen tombol tambah
-    var tambahKriteriaButton = document.getElementById('tambahKriteriaButton');
+// document.addEventListener("DOMContentLoaded", function () {
+//     // Menangkap elemen tombol tambah
+//     var tambahKriteriaButton = document.getElementById('tambahKriteriaButton');
 
-    // Menambahkan event listener ketika tombol tambah diklik
-    tambahKriteriaButton.addEventListener('click', function () {
-        // Membuat elemen input baru
-        var inputBaru = document.createElement('input');
-        inputBaru.setAttribute('type', 'email');
-        inputBaru.classList.add('form-control', 'label-8');
+//     // Menambahkan event listener ketika tombol tambah diklik
+//     tambahKriteriaButton.addEventListener('click', function () {
+//         // Membuat elemen input baru
+//         var inputBaru = document.createElement('input');
+//         inputBaru.setAttribute('type', 'email');
+//         inputBaru.classList.add('form-control', 'label-8');
 
-        // Mendapatkan container untuk kriteria penilaian
-        var kriteriaPenilaianContainer = document.getElementById('kriteriaPenilaianContainer');
+//         // Mendapatkan container untuk kriteria penilaian
+//         var kriteriaPenilaianContainer = document.getElementById('kriteriaPenilaianContainer');
 
-        // Menambahkan input baru ke dalam container
-        kriteriaPenilaianContainer.appendChild(inputBaru);
-    });
-});
+//         // Menambahkan input baru ke dalam container
+//         kriteriaPenilaianContainer.appendChild(inputBaru);
+//     });
+// });
 </script>
