@@ -99,7 +99,7 @@
         <script src="/assets/plugins/datatable/js/dataTables.bootstrap5.min.js"></script>
         <!--app JS-->
         <script src="/assets/js/app.js"></script>
-        <script src="admin/dist/libs/apexcharts/dist/apexcharts.min.js"></script>
+     <!--    <script src="admin/dist/libs/apexcharts/dist/apexcharts.min.js"></script>-->
         <!-- Tabler Core -->
         <!-- <script src="admin/dist/js/tabler.min.js"></script> -->
         {{-- Dari frontend --}}

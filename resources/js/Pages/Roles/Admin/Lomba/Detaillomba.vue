@@ -57,7 +57,7 @@
                                 <div class="col-md-6">
                                     <label class="c-mb5-black"><b>Gambar</b></label>
                                      <div class="col-12" id="picture">
-                                        <img :src="gambarUrl" alt="Gambar" width="200" >		
+                                        <img :src="pictureUrl" alt="Gambar" width="200" >		
                                     </div>
                                 </div>
                                 <div class="col-md-6 jarak-sertifikat">
@@ -77,17 +77,30 @@
                                 <div class="margin-top5-crud">
                                     <label class="c-mb5-black"><b>Biaya Pendaftaran</b></label>
                                     <div class="data-tim" id="biaya_pendaftaran">{{ lomba && lomba.biaya_pendaftaran ? lomba.biaya_pendaftaran : 'Biaya Pendaftaran tidak tersedia' }}</div>
+                               </div>                              
+                            </div>           
+                        </div>
+                        <div class="col-md-6 c-mb10">
+                                <label class="c-mb5-black"><b>Nama Kriteria</b></label>
+                                <!-- Menampilkan nama kriteria yang dipilih -->
+                                <div class="data-tim" v-if="kriteria && kriteria.selectedCriteria && kriteria.selectedCriteria.length > 0">
+                                    <ul>
+                                        <li v-for="selectedId in kriteria.selectedCriteria" :key="selectedId">
+                                            {{ getKriteriaName(selectedId) }}
+                                        </li>
+                                    </ul>
                                 </div>
-                                
-                            </div>  
-                              
+                                <div class="data-tim" v-else>
+                                    Tidak ada kriteria yang dipilih.
+                                </div>
+                            </div>
                         </div>
                         <div class="btn-posisi">
                             <button class="btn btn-danger btn-kembali" @click="goBack()">Kembali</button>
                         </div>
                     </div>
                 </div>
-            </div>
+            
         </div>
         <!--end page wrapper -->
     </div>
@@ -96,7 +109,7 @@
 
 <script setup>
 import { defineProps } from "vue";
-import { usePage } from '@inertiajs/vue3';
+import { useForm, usePage } from '@inertiajs/vue3';
 
 // Definisikan properti yang diterima oleh komponen
 const props = defineProps({
@@ -104,20 +117,29 @@ const props = defineProps({
         type: Object,
         required: true
     },
-})
+    kriteria: {
+        type: Array,
+        required: true
+    }
+});
+
 const picture = props.lomba.picture;
 const sertifikat = props.lomba.sertifikat;
 
+// const form = useForm({
+//     selectedCriteria: props.kriteria.selectedCriteria,
+// })
 // Buat URL untuk gambar dan sertifikat
-const gambarUrl = picture ? `/storage/${picture}` : null;
-const sertifikatUrl = sertifikat ? `/storage/${sertifikat}` : null;
+const pictureUrl = picture ? `/storage/${picture}` : null;
+ const sertifikatUrl = sertifikat ? `/storage/${sertifikat}` : null;
 
-
+ const getKriteriaName = (kriteriaId) => {
+    const kriteria = props.kriteriaz.find(kriteria => kriteria.id === kriteriaId);
+    return kriteria ? kriteria.name_kriteria : 'Kriteria tidak ditemukan';
+};
 
 const goBack = () => {
     window.history.back();
 };
-
-
 
 </script>

@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\LombaResource;
 use App\Models\Lomba;
+use App\Models\Kriteria;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Validation\Rule;
 use App\Http\Requests\StoreLombaRequest;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\KriteriaResource;
+
 
 class LombaController extends Controller
 {
@@ -16,10 +20,10 @@ class LombaController extends Controller
      */
     public function index()
     {
-        $lombas = LombaResource::collection(Lomba::all());
+        $lomba = LombaResource::collection(Lomba::all());
 
         return Inertia::render('Roles/Admin/Lomba', [
-            'lombas' => $lombas,
+            'lombas' => $lomba,
         ]);
     }
 
@@ -28,7 +32,14 @@ class LombaController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Roles/Admin/Lomba/Tambahlomba');
+
+        $kriteria = KriteriaResource::collection(Kriteria::all());
+
+          
+        return Inertia::render('Roles/Admin/Lomba/Tambahlomba', [
+            'kriteriaz' => $kriteria,
+        ]);
+            
      
     }
 
@@ -64,16 +75,57 @@ class LombaController extends Controller
     }
 
 
-    public function show(Lomba $lomba)
+    public function show(Lomba $lomba, Kriteria $kriteria)
     {
+
+
+      
+        
         // Ambil objek Lomba dari parameter metode
         $lomba = Lomba::find($lomba->id);
-
+      
+        // Buat variabel untuk menyimpan URL gambar dan sertifikat
+        $pictureUrl = null;
+        $sertifikatUrl = null;
+    
+        // Periksa apakah gambar tersedia
+        if ($lomba->picture) {
+            // Buat path untuk gambar baru
+            $picturePath = 'picture_files/' . $lomba->picture;
+            // Periksa apakah file gambar baru ada
+            if (Storage::exists($picturePath)) {
+                // Generate URL untuk gambar baru
+                $pictureUrl = asset('storage/' . $picturePath);
+            } else {
+                // Jika file gambar tidak ditemukan, berikan URL default atau pesan error
+                $pictureUrl = asset('default_picture.jpg'); // Ganti dengan URL gambar default yang sesuai
+                // Atau berikan pesan error
+                // echo "File gambar tidak ditemukan.";
+            }
+        }
+    
+        // Periksa apakah sertifikat tersedia
+        if ($lomba->sertifikat) {
+            // Buat path untuk sertifikat baru
+            $sertifikatPath = 'sertifikat_files/' . $lomba->sertifikat;
+            // Periksa apakah file sertifikat baru ada
+            if (Storage::exists($sertifikatPath)) {
+                // Generate URL untuk sertifikat baru
+                $sertifikatUrl = asset('storage/' . $sertifikatPath);
+            } else {
+                // Jika file sertifikat tidak ditemukan, berikan URL default atau pesan error
+                $sertifikatUrl =  asset('default_picture.jpg');// Jika sertifikat tidak ada, mungkin Anda tidak ingin menampilkan apa pun
+                // Atau berikan pesan error
+                // echo "File sertifikat tidak ditemukan.";
+            }
+        }
+        $kriteria = Kriteria::findOrFail($kriteria);
         // Kirim data lomba beserta URL gambar dan sertifikat ke tampilan
         return Inertia::render('Roles/Admin/Lomba/Detaillomba', [
             'lomba' => $lomba,
-            'gambarUrl' => asset("storage/{$lomba->picture}"),
-            'sertifikatUrl' => asset("storage/{$lomba->sertifikat}"),
+            'pictureUrl' => $pictureUrl,
+            'sertifikatUrl' => $sertifikatUrl,
+            'kriteria' => $kriteria
         ]);
     }
     
@@ -84,40 +136,57 @@ class LombaController extends Controller
     public function edit(Lomba $lomba)
     {
         return Inertia::render('Roles/Admin/Lomba/Editlomba', [
-            'lomba' => LombaResource::make($lomba),
+            'lombas' => LombaResource::make($lomba),
+             
+            'lomba' => $lomba
         ]);
     }
-
+    
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Lomba $lomba)
     {
+        $picture = $lomba->picture;
+        if ($request->file('picture')) {
+            Storage::delete('public/'. $lomba->picture);
+            $picture = $request->file('picture')->storePublicly('picture_files', 'public');
+        }
         
-        $validatedData = $request->validate([
-            'id' => 'required|string|max:255',
-            'name' => 'required|string|max:255',
-            'description' => 'required|string|max:500',
-            'kontak' => 'required|string|max:255',
-            'pj' => 'required|string|max:255',
-            'picture' => 'required|image|max:2048',
-            'tempat' => 'required|string|max:255',
-            'sertifikat' => 'required|file|mimes:pdf,jpeg,png,jpg|max:2048',
-            'biaya_pendaftaran' => 'required|string|max:255'
-
+        $sertifikat = $lomba->sertifikat;
+        if ($request->file('sertifikat')) {
+            Storage::delete('public/'. $lomba->sertifikat);
+            $sertifikat = $request->file('sertifikat')->storePublicly('sertifikat_files', 'public');
+        }
+        
+        $lomba->update([
+            'name' => $request->input('name'),
+            'pj' => $request->input('pj'),
+            'kontak' => $request->input('kontak'),
+            'description' => $request->input('description'),
+            'tempat' => $request->input('tempat'),
+            'biaya_pendaftaran' => $request->input('biaya_pendaftaran'),
+            'picture' => $picture,
+            'sertifikat' => $sertifikat,
         ]);
-        $lomba->update($validatedData);
-
-       
-        return redirect()->route('lomba.index');
+    
+        return redirect()->route('lomba.index')->with('success', 'Lomba berhasil diupdate');
     }
-
+    
+    
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Lomba $lomba)
     {
+      // Hapus picture
+       Storage::delete('public/'. $lomba->picture);
+       //hapus file sertfikat 
+       Storage::delete('public/'. $lomba->sertifikat);
+
+       
         $lomba->delete();
+    
         return redirect()->route('lomba.index');
     }
 }

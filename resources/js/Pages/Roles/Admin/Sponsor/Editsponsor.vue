@@ -17,20 +17,21 @@ const sponsor = usePage().props.sponsors; //props.sponsors "sponsors" are from c
 
 const form = useForm({
     name: sponsor.data.name,
-    logo: sponsor.data.logo,
+    logo: null,
     link_file: sponsor.data.link_file,
+
 });
 
-const handleLogoChange = (event) => {
-    const file = event.target.files[0];
-    form.logo = file;
-};
 
-const submit = () => {
-    form.put(route("sponsor.update", sponsor.data.id), {
-        preserveScroll: true,
-    });
-};
+function submit() {
+    router.post(`/superadmin/sponsor/${sponsor.data.id }`, {
+        _method: 'put',
+        name: form.name,
+        logo: form.logo,
+        link_file: form.link_file,
+        
+    })
+ }
 
 </script>
 <template>
@@ -67,7 +68,7 @@ const submit = () => {
         <div class="page-wrapper-new">
             <div class="page-content">
                 <div class="card">
-                    <form @submit.prevent="submit">
+                    <form @submit.prevent="submit" enctype="multipart/form-data">
                         <div class="card-body">
                             <h4 class="mb-0">Tambah Sponsor</h4>
                             <hr/>
@@ -110,7 +111,7 @@ const submit = () => {
                                         <b>Logo</b>
                                     </label>
                                     <input
-                                     @change="handleLogoChange"
+                                      @input="form.logo = $event.target.files[0]"
                                      type="file"
                                      accept="image/*"
                                     id="logo"

@@ -1,12 +1,12 @@
 <template>
-  <!--wrapper-->
-	<div class="wrapper">
+    <!--wrapper-->
+    <div class="wrapper">
         <!--sidebar wrapper -->
         <div class="sidebar-wrapper" data-simplebar="true">
             <div class="sidebar-header">
                 <div>
                     <a href="/">
-                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon" >
+                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon">
                     </a>
                 </div>
                 <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
@@ -20,8 +20,8 @@
                         </div>
                         <div class="menu-title">Dashboard</div>
                     </a>
-                    </li>
-                    <li>
+                </li>
+                <li>
                     <a href="javascript:;" class="has-arrow">
                         <div class="parent-icon"><i class="fadeIn animated bx bx-plus-circle"></i>
                         </div>
@@ -32,8 +32,6 @@
                         </li>
                         <li class="jarak-dropdown"> <a href="/administrator">Administrator</a>
                         </li>
-                        <li class="jarak-dropdown"> <a href="/tim">Tim</a>
-                        </li>
                         <li class="jarak-dropdown"> <a href="/sponsor">Sponsor</a>
                         </li>
                         <li class="jarak-dropdown"> <a href="/berita">Berita</a>
@@ -43,11 +41,18 @@
                     </ul>
                 </li>
                 <li>
-                <a href="/partisipan">
-                    <div class="parent-icon"><i class="fadeIn animated bx bx-street-view"></i>
-                    </div>
-                    <div class="menu-title">Partisipan</div>
-                </a>
+                    <a href="/tim">
+                        <div class="parent-icon"><i class="fadeIn animated lni lni-users"></i>
+                        </div>
+                        <div class="menu-title">Tim</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="/partisipan">
+                        <div class="parent-icon"><i class="fadeIn animated bx bx-user-circle c-font25"></i>
+                        </div>
+                        <div class="menu-title">Partisipan</div>
+                    </a>
                 </li>
                 <li>
                     <a href="/pesan">
@@ -64,18 +69,10 @@
                     </a>
                 </li>
                 <li>
-                    <a>
+                    <a href="/">
                         <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
                         </div>
-                        <div class="menu-title">
-                            <Link class="menu-title"
-                                :href="route('logout')"
-                                method="post"
-                                as="button"
-                            >
-                                Logout
-                            </Link>
-                        </div>
+                        <div class="menu-title">Logout</div>
                     </a>
                 </li>
                 <li>
@@ -97,23 +94,22 @@
                 </li>
             </ul>
             <!--end navigation-->
-            
         </div>
         <!--end sidebar wrapper -->
-		<!--start header -->
-		<header>
-			<div class="topbar d-flex align-items-center">
-				<nav class="navbar navbar-expand">
-					<div class="mobile-toggle-menu"><i class='bx bx-menu'></i>
-					</div>
-					<div class="search-bar flex-grow-1">
-					</div>
-					<div class="top-menu ms-auto">
-						<ul class="navbar-nav align-items-center">
+        <!--start header -->
+        <header>
+            <div class="topbar d-flex align-items-center">
+                <nav class="navbar navbar-expand">
+                    <div class="mobile-toggle-menu"><i class='bx bx-menu'></i>
+                    </div>
+                    <div class="search-bar flex-grow-1">
+                    </div>
+                    <div class="top-menu ms-auto">
+                        <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>			
-                                <p class="user-role">habib</p>					
-						    </div>
+                                <p class="user-name mb-0">Habib Shohiburrotib</p>
+                                <p class="user-role">habib</p>
+                            </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
                             <li class="nav-item dropdown dropdown-large">
@@ -122,81 +118,75 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="nav-item dropdown dropdown-large">	
+                            <li class="nav-item dropdown dropdown-large">
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <div class="header-message-list">
                                     </div>
                                 </div>
                             </li>
                         </ul>
-                    </div>		
-				</nav>
-			</div>
-		</header>
-		<!--end header -->
-		<!--start page wrapper -->
+                    </div>
+                </nav>
+            </div>
+        </header>
+        <!--end header -->
+        <!--start page wrapper -->
         <div class="page-wrapper">
             <div class="page-content">
                 <div class="ps-3">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb mb-0 p-0">
                             <li class="breadcrumb-item">
-                            </li>                             
+                            </li>
                         </ol>
                     </nav>
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0 jarak-top-kurang5">Tabel Lomba</h4>
-                        <hr class="c-mt10"/>		
-                        <a class="btn btn-success jarak-top-kurang7" :href="route('lomba.create')">Tambah Lomba</a>
-                        <a class="btn btn-info jarak-top-kurang7" :href="route('kriteria.index')">Kriteria</a>
+                        <h4 class="mb-0 jarak-top-kurang5">Tabel Kriteria</h4>
+                        <hr class="c-mt10" />
+                        <a class="btn btn-success jarak-top-kurang7" :href="route('lomba.index')">Lomba</a>
+                        <a class="btn btn-info jarak-top-kurang7" :href="route('kriteria.create')">Tambah Kriteria</a>
                         <hr class="c-mt10" />
                         <div class="table-responsive">
                             <table id="example" class="table mt-3  table-bordered">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th class="width-id">ID</th>
-                                        <th>Nama Lomba</th>
-                                        <th>Deskripsi</th>
-                                        <th>Nama PJ</th>
-                                        <th>Kontak PJ</th>  
-                                        <th class="crud-width-180">Aksi</th>
+                                        <th class="width-id2">ID</th>
+                                        <th class="crud-width-400">Kriteria</th>
+                                        <th class="crud-width100">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="lomba in lombas.data":key="lomba.id">
-                                        <td>{{ lomba.id }}</td>
-                                        <td>{{ lomba.name }}</td>
-                                        <td>{{ lomba.description }}</td>
-                                        <td>{{ lomba.pj }}</td>
-                                        <td>{{ lomba.kontak}}</td>
+                                    <tr v-for="kriteria in kriterias.data":key="kriteria.id">
+                                        <td>{{ kriteria.id }}</td>
+                                        <td>{{ kriteria.name_kriteria }}</td>
                                         <td class="btn-crud">
-                                            <a class="btn btn-secondary" :href="route('lomba.show', lomba.id)"><i class="bi bi-eye"></i></a>
-                                             <a class="btn btn-primary" :href="route('lomba.edit', lomba.id)"><i class="bi bi-pencil-square"></i></a> 
-                                            <button class="btn btn-danger" ><i class="bi bi-trash" @click="deleteLomba(lomba.id)" ></i></button>                              
+                                             <a class="btn btn-secondary" :href="route('kriteria.show', kriteria.id)"><i class="bi bi-eye"></i></a>
+                                             <a class="btn btn-primary" :href="route('kriteria.edit', kriteria.id)"><i class="bi bi-pencil-square"></i></a> 
+                                            <button class="btn btn-danger" ><i class="bi bi-trash" @click="deleteKriteria(kriteria.id)" ></i></button>                              
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!--end page wrapper -->
-		<!--start overlay-->
-		<div class="overlay toggle-icon"></div>
-		<!--end overlay-->
-		<!--Start Back To Top Button--> <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
-		<!--End Back To Top Button-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end page wrapper -->
+        <!--start overlay-->
+        <div class="overlay toggle-icon"></div>
+        <!--end overlay-->
+        <!--Start Back To Top Button--> <a href="javaScript:;" class="back-to-top"><i
+                class='bx bxs-up-arrow-alt'></i></a>
+        <!--End Back To Top Button-->
     </div>
     <!--end wrapper-->
     <!--start switcher-->
-            
+
     <!--end switcher-->
 </template>
-
 
 
 <script setup>
@@ -205,28 +195,23 @@ import { Link, useForm} from "@inertiajs/vue3";
 
 // Definisikan properti yang diterima oleh komponen
 const props = defineProps({
-    lombas: {
+    kriterias: {
         type: Array,
         default: () => [],
+        kriterias: Object,
     },
 });
- 
-const deleteForm = useForm({});
 
-const deleteLomba = (id) => {
-    if (confirm("Are you sure you want to delete this lomba?")) {
-        deleteForm.delete(route("lomba.destroy", id), {
+
+const deleteKriteria = (id) => {
+    if (confirm("Are you sure you want to delete this kriteria?")) {
+        deleteForm.delete(route("kriteria.destroy", id), {
             preserveScroll: true,
         });
     }
 };
 
-
-
-$(document).ready(function() {
+$(document).ready(function () {
     $('#example').DataTable();
-  } );
-
-
-
+});
 </script>

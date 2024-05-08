@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('tempat')->nullable();
             $table->string('picture')->nullable();
             $table->string('sertifikat')->nullable();
-            $table->decimal('biaya_pendaftaran', 10, 2)->nullable();
+            $table->decimal('biaya_pendaftaran', 10, 3)->nullable();
             $table->timestamps();
         });
     }

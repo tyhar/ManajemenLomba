@@ -7,7 +7,9 @@
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
                         <div class="navbar-left">
-                            <img src="/bootstrap/images/logo.png" alt="Logo">
+                            <a href="/">
+                                <img src="/bootstrap/images/logo.png" alt="Logo">
+                            </a>
                         </div>
                     </div>
                     <!-- Mobile toggle menu -->
@@ -18,13 +20,13 @@
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>			
-                                <p class="user-role">habib</p>					
+                                <p class="user-name mb-0">Habib Shohiburrotib</p>
+                                <p class="user-role">habib</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
                         </ul>
-                    </div>		
+                    </div>
                 </nav>
             </div>
         </header>
@@ -34,20 +36,12 @@
             <div class="page-content">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0">Detail Berita</h4>
-                        <hr/>
-                        <div>
+                        <h4 class="mb-0">Detail Kriteria Lomba</h4>
+                        <hr />
+                        <div class="row">
                             <div class="col-md-6 c-mb10">
-                                <label class="c-mb5-black"><b>Nama Sponsor</b></label>
-                                <div class="c-mb20">{{ sponsor && sponsor.name ? sponsor.name : 'Nama Lomba tidak tersedia' }}</div>
-                            </div>
-                            <div>
-                                <label class="col-md-6 c-mb10 warna-hitam"><b>Link</b></label>
-                                <div class="c-mb20"><a >{{ sponsor && sponsor.link_file ? sponsor.link_file: 'Link tidak tersedia' }}</a></div>
-                            </div>
-                            <div class="c-mb10">
-                                <label class="c-mb5-black"><b>Gambar</b></label><br>
-                                <img :src="logoUrl" alt="Product Image" class="img-fluid" style="display:flex; margin: auto;" >
+                                <label class="c-mb5-black"><b>Nama Kriteria</b></label>
+                                <div class="data-tim">{{  form.name_kriteria}}</div>
                             </div>
                         </div>
                         <div class="btn-posisi">
@@ -57,25 +51,30 @@
                 </div>
             </div>
         </div>
+
         <!--end page wrapper -->
     </div>
 </template>
-<script setup>
 
+
+<script setup>
+import { defineProps } from "vue";
+import { useForm, usePage } from '@inertiajs/vue3';
+
+// Definisikan properti yang diterima oleh komponen
 const props = defineProps({
-    sponsor: {
+    kriteria: {
         type: Object,
-        required: true
+        required: true,
     },
 })
 
-const logo = props.sponsor.logo;
+const form = useForm({
+    name_kriteria: props.kriteria.name_kriteria,
+})
 
-
-const logoUrl = logo ? `/storage/${logo}` : null;
 const goBack = () => {
     window.history.back();
 };
+
 </script>
-    
-   

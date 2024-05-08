@@ -6,6 +6,7 @@ use App\Http\Resources\SponsorResource;
 use App\Models\Sponsor;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Storage;
 
 class SponsorController extends Controller
 {
@@ -31,7 +32,7 @@ class SponsorController extends Controller
         return Inertia::render('Roles/Admin/Sponsor/Tambahsponsor');
 
         // return Inertia::render('Roles/Admin/Sponsor/Tambahsponsor',[
-        //     'sponsors' => $sponsors,
+      //      'sponsors' => $sponsors,
         // ]);
     }
 
@@ -40,29 +41,57 @@ class SponsorController extends Controller
      */
     public function store(Request $request)
     {
-
-        
+        // Validasi input
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'logo' => 'required|image|max:2048',
+            'logo' => 'required|image|max:2048', // Memastikan logo adalah file gambar
             'link_file' => 'required|string|max:255'
         ]);
-        $logo = $request->file('logo')->store('file_logo');
-        Sponsor::create($validated);
+        // Mengunggah file logo ke penyimpanan publik
+        $logoPath = $request->file('logo')->storePublicly('logo_files', 'public');
     
+        // Membuat entitas Sponsor menggunakan data yang divalidasi
+        $sponsor = new Sponsor([
+            'name' => $validated['name'],
+            'logo' => $logoPath,
+            'link_file' => $validated['link_file']
+        ]);
+        // Menyimpan entitas Sponsor ke dalam database
+        $sponsor->save();
+    
+        // Redirect ke halaman index sponsor setelah berhasil menyimpan
         return redirect()->route('sponsor.index');
     }
+    
 
     /**
      * Display the specified resource.
      */
     public function show(Sponsor $sponsor)
     {
+        $sponsor = Sponsor::find($sponsor->id);
+
+        $logoUrl = null;
+        if ($sponsor->logo) {
+            // Buat path untuk gambar baru
+            $logoPath = 'logo_files/' . $sponsor->logo;
+            // Periksa apakah file gambar baru ada
+            if (Storage::exists($logoPath)) {
+                // Generate URL untuk gambar baru
+                $logoUrl = asset('storage/' . $logoPath);
+            } else {
+                // Jika file gambar tidak ditemukan, berikan URL default atau pesan error
+                $logoUrl = asset('default_picture.jpg'); // Ganti dengan URL gambar default yang sesuai
+                // Atau berikan pesan error
+                // echo "File gambar tidak ditemukan.";
+            }
+        }
         return Inertia::render('Roles/Admin/Sponsor/Detailsponsor', [
-            'sponsors' => SponsorResource::make($sponsor),
-            dd($sponsor),
+            'sponsor' => $sponsor,
+            'logoUrl' => $logoUrl
         ]);
     }
+   
 
     /**
      * Show the form for editing the specified resource.
@@ -71,6 +100,7 @@ class SponsorController extends Controller
     {
         return Inertia::render('Roles/Admin/Sponsor/Editsponsor', [
             'sponsors' => SponsorResource::make($sponsor),
+            'sponsor' => $sponsor
         ]);
     }
 
@@ -79,17 +109,21 @@ class SponsorController extends Controller
      */
     public function update(Request $request, Sponsor $sponsor)
     {
-        
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'logo' => 'required|image|max:2048',
-            'link_file' => 'required|string|max:255'
-        ]);
-        $sponsor->update($validatedData);
 
-        // $sponsor->update($request->validated());
+        $logo = $sponsor->logo;
+        if ($request->file('logo')) {
+            Storage::delete('public/'. $sponsor->logo);
+            $logo = $request->file('logo')->storePublicly('logo_files', 'public');
+        }
+        $sponsor->update([
+            'name' => $request->input('name'),
+            'link_file' => $request->input('link_file'),
+            'logo' => $logo,
+
+        ]);
 
         return redirect()->route('sponsor.index');
+        
     }
 
     /**
@@ -97,6 +131,8 @@ class SponsorController extends Controller
      */
     public function destroy(Sponsor $sponsor)
     {
+
+        Storage::delete('public/'. $sponsor->logo);
         $sponsor->delete();
         return redirect()->route('sponsor.index');
     }

@@ -16,6 +16,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\EventAdminController;
 use App\Http\Controllers\LombaController;
+use App\Http\Controllers\KriteriaController;
 
 
 //default breeze
@@ -68,6 +69,11 @@ Route::middleware('auth','verified','admin')->group(function () {
     // Route::get('/detaillomba', [AdminController::class, 'detaillomba']);
     Route::resource('superadmin/lomba', LombaController::class);
 
+    Route::resource('superadmin/kriteria', KriteriaController::class);
+    // Route::get('superadmin/kriteria/{detail}/detail', KriteriaController::class, 'show');
+
+    //Route::put('/superadmin/lomba/{lomba}', [LombaController::class, 'update']);
+    
     Route::get('/administrator', [AdminController::class, 'administrator'])->name('administrator');
     Route::get('/tambahadministrator', [AdminController::class, 'tambahadministrator']);
     // Route::post('/tambahadministrator', [UserController::class, 'store'])->name('daftar.store');

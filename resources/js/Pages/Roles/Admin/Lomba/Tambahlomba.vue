@@ -70,7 +70,16 @@
                     <div class="c-mt10">
                       <label class="c-mb5-black" for="biaya_pendaftaran"><b>Biaya Pendaftaran</b></label>
                       <input type="number" class="form-control label-8" id="biaya_pendaftaran" v-model="form.biaya_pendaftaran">
-                    </div>       
+                    </div>   
+                    <div>
+                    <label class="role-add"><b class="warna-hitam">Kriteria Lomba</b></label>
+                    <div>   
+              <div class="form-check" v-for="kriteria in kriteriaz.data" :key="kriteria.id">
+                 <input class="form-check-input" type="checkbox" :id="'kriteria_' + kriteria.id" v-model="form.selectedCriteria" :value="kriteria.id">
+                <label class="form-check-label" :for="'kriteria_' + kriteria.id">{{ kriteria.name_kriteria }}</label>
+                   </div>
+                </div>
+               </div>           
                   </div>   
                 </div>
                 <div class="btn-posisi">
@@ -87,6 +96,7 @@
   </template>
   
   <script setup>
+  import { defineProps } from "vue";
   import { reactive } from 'vue'
   import { router } from '@inertiajs/vue3'
   
@@ -99,8 +109,19 @@
     kontak: '',
     tempat: '',
     biaya_pendaftaran: '',
+    selectedCriteria: [],
   });
   
+  const props = defineProps({
+    kriteriaz: {
+        type: Array,
+        default: () => [],
+    },
+});
+
+// const form = useForm({
+//     kriteria: [{ name_kriteria: '' }],
+// });
   const handleSertifikatUpload = (event) => {
     form.sertifikat = event.target.files[0];
   };
@@ -109,8 +130,10 @@
     form.picture = event.target.files[0];
   };
 
-function submit() {
-  router.post('/superadmin/lomba', form)
+  function submit() {
+  // Menambahkan properti selectedCriteria ke dalam data yang disubmit
+  const formData = { ...form, selectedCriteria: form.selectedCriteria };
+  router.post('/superadmin/lomba', formData);
 }
 
 
