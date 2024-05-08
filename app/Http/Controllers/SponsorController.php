@@ -71,14 +71,17 @@ class SponsorController extends Controller
         // ]);
         // Sponsor::create($validated);
 
+        // dd($request);
         // store logo into sponsors folder inside public folder
         $logo = Request::file('logo')->store('sponsors','public');
     
-        Sponsor::create([
+        $sponsor = Sponsor::create([
             'name' => Request::input('name'),
             'logo' => $logo,
             'link_file' => Request::input('link_file')
         ]);
+
+        dd($sponsor);
 
         return redirect()->route('sponsor.index');
     }
@@ -92,7 +95,7 @@ class SponsorController extends Controller
         //     'sponsors' => SponsorResource::make($sponsor),
         //     // dd($sponsor),
         // ]);
-
+        // dd($sponsor);
         $baseUrl = config('app.url');
         return Inertia::render('Roles/Admin/Sponsor/Detailsponsor', [
             'sponsors' => $sponsor,
@@ -160,6 +163,7 @@ class SponsorController extends Controller
      */
     public function destroy(Sponsor $sponsor)
     {
+        // dd($sponsor);
         Storage::delete('public/'.$sponsor->logo);
         $sponsor->delete();
         return redirect()->route('sponsor.index');

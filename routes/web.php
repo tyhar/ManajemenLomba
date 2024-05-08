@@ -1,10 +1,10 @@
 <?php
 
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Route;
+use App\Models\Sponsor;
 
 //Models
-use App\Models\Sponsor;
+use Illuminate\Support\Facades\Route;
 
 //controllers
 use Illuminate\Foundation\Application;
@@ -15,6 +15,7 @@ use App\Http\Controllers\PanelisController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\EventAdminController;
+use App\Http\Controllers\AdministratorController;
 
 //default breeze
 Route::get('/', function () {
@@ -77,15 +78,15 @@ Route::middleware('auth','verified','admin')->group(function () {
     Route::get('/kriteria', [AdminController::class, 'kriteria']);
     Route::get('/tambahkriteria', [AdminController::class, 'tambahkriteria']);
     Route::get('/editkriteria', [AdminController::class, 'editkriteria']);
-    Route::get('/detailkriteria', [AdminContrAller::class, 'detailkriteria']);
+    Route::get('/detailkriteria', [AdminController::class, 'detailkriteria']);
     // Route::resource('superadmin/kriteria', [KriteriaController::class]);
 
-    Route::get('/administrator', [AdminController::class, 'administrator'])->name('administrator');
-    Route::get('/tambahadministrator', [AdminController::class, 'tambahadministrator']);
+    // Route::get('/administrator', [AdminController::class, 'administrator'])->name('administrator');
+    // Route::get('/tambahadministrator', [AdminController::class, 'tambahadministrator']);
     // Route::post('/tambahadministrator', [UserController::class, 'store'])->name('daftar.store');
-    Route::get('/editadministrator', [AdminController::class, 'editadministrator']);
-    Route::get('/detailadministrator', [AdminController::class, 'detailadministrator']);
-    // Route::resource('superadmin/administrator', [AdministratorController::class]);
+    // Route::get('/editadministrator', [AdminController::class, 'editadministrator']);
+    // Route::get('/detailadministrator', [AdminController::class, 'detailadministrator']);
+    Route::resource('administrator', AdministratorController::class);
 
     Route::get('/tim', [AdminController::class, 'tim']);
     Route::get('/tabeltim', [AdminController::class, 'tabeltim']);

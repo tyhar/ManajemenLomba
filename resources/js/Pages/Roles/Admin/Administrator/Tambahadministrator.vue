@@ -1,3 +1,34 @@
+<script setup>
+import { useForm, Link, router } from "@inertiajs/vue3";
+import { reactive } from "vue";
+
+const form = useForm({
+    name: null,
+    username: null,
+    email: null,
+    password: null,
+    role: null,
+});
+
+const submit = () => {
+    form.post(route("administrator.store"), {
+        preserveScroll: true,
+    });
+};
+
+// const form = reactive({
+//   name: null,
+//   email: null,
+//   password: null,
+//   role: null, // Tambahkan role di sini
+// })
+
+
+// function submit() {
+//     router.post(route("administrator.store"), form)
+// }
+
+</script>
 <template>
     <div class="wrapper">
         <!--start header -->
@@ -42,36 +73,61 @@
                             <div class="row">
                                 <div class="col-md-6 margin-top10-crud">
                                     <label class="c-mb5-black"><b>Nama Lengkap</b></label>
-                                    <input type="name" class="form-control">
+                                    <input
+                                        id="name" 
+                                        type="name" 
+                                        class="form-control"
+                                        v-model="form.name"
+                                    >
                                 </div>
 
                                 <div class="col-md-6 margin-top10-crud">
                                     <label class="c-mb5-black"><b>Username</b></label>
-                                    <input type="username" class="form-control">
+                                    <input
+                                        id="username"
+                                        type="username" 
+                                        class="form-control"
+                                        v-model="form.username"
+                                    >
                                 </div>
                                 <div class="col-md-12 margin-top10-crud">
                                     <label class="c-mb5-black"><b>Email</b></label>
-                                    <input type="email" class="form-control">
+                                    <input
+                                        id="email" 
+                                        type="email" 
+                                        class="form-control"
+                                        v-model="form.email"
+                                    >
                                 </div>
                                 <div>
                                     <label for="inputChoosePassword"
                                         class="form-label warna-hitam"><b>Password</b></label>
                                     <div class="input-group" id="show_hide_password">
-                                        <input type="password" class="form-control border-end-0"
-                                            id="inputChoosePassword"> <a href="javascript:;"
-                                            class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
+                                        <input 
+                                            type="password" 
+                                            class="form-control border-end-0"
+                                            id="password"
+                                            v-model="form.password"
+                                        > 
+                                            <a href="javascript:;" class="input-group-text bg-transparent">
+                                                <i class='bx bx-hide'></i>
+                                            </a>
                                     </div>
                                 </div>
                                 <div>
                                     <label class="role-add "><b class="warna-hitam">Role</b></label>
-                                    <select class="form-select" id="inputProductType">
-                                        <option value="admin" selected>Pilih Role</option>
-                                        <option value="admin">Admin</option>
-                                        <option value="juri">Juri</option>
-                                        <option value="petugas">Petugas</option>
+                                    <select 
+                                        class="form-select" 
+                                        id="role" 
+                                        v-model="form.role"
+                                    >
+                                        <option selected disabled>Pilih Role</option>
+                                        <option :value="1">Admin</option>
+                                        <option :value="4">Juri</option>
+                                        <option :value="2">Petugas</option>
                                     </select>
                                 </div>
-                                <div>
+                                <!-- <div>
                                     <label class="role-add"><b class="warna-hitam">Lomba</b></label>
                                     <div>
                                         <div class="form-check">
@@ -87,12 +143,20 @@
                                             <label class="form-check-label" for="gridCheck">Sistem Keamanan Data</label>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="btn-posisi">
-                                    <button class="btn btn-primary button-tabel-right"
-                                        onclick="window.location.href='/administrator'">Tambah</button>
-                                    <button class="btn btn-danger button-tabel-left"
-                                        onclick="window.location.href='/administrator'">Batal</button>
+                                    <button 
+                                        class="btn btn-primary button-tabel-right"
+                                        type="submit"
+                                    >
+                                        Tambah
+                                    </button>
+                                    <a 
+                                        class="btn btn-danger button-tabel-left"
+                                        :href="route('administrator.index')"
+                                    >
+                                        Batal
+                                    </a>
                                 </div>
                             </div>
                         </form>
@@ -105,20 +169,6 @@
     </div>
 </template>
 
-<script setup>
-import { reactive } from 'vue'
-import { router } from '@inertiajs/vue3'
-
-const form = reactive({
-  name: null,
-  email: null,
-  password: null,
-})
-
-function submit() {
-    router.post('/tambahadministrator', form)
-}
-</script>
 <script>
 $(document).ready(function () {
     $("#show_hide_password a").on('click', function (event) {

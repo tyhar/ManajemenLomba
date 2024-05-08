@@ -63,18 +63,18 @@ class AdminController extends Controller
     }
 
     //ADMINISTRATOR
-    public function administrator()
-    {
-        return Inertia::render('Roles/Admin/Administrator');
-    }
-    public function tambahadministrator()
-    {
-        return Inertia::render('Roles/Admin/Administrator/Tambahadministrator');
-    }
-    public function detailadministrator()
-    {
-        return Inertia::render('Roles/Admin/Administrator/Detailadministrator');
-    }
+    // public function administrator()
+    // {
+    //     return Inertia::render('Roles/Admin/Administrator');
+    // }
+    // public function tambahadministrator()
+    // {
+    //     return Inertia::render('Roles/Admin/Administrator/Tambahadministrator');
+    // }
+    // public function detailadministrator()
+    // {
+    //     return Inertia::render('Roles/Admin/Administrator/Detailadministrator');
+    // }
 
     //TIM
     public function tim()

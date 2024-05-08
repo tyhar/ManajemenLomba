@@ -1,5 +1,51 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { Link, useForm, router } from '@inertiajs/vue3';
+import { Head } from "@inertiajs/vue3";
+import { ref, computed } from "vue";
+// import { usePage } from "@inertiajs/vue3";
+
+defineProps({
+    users: {
+        type: Object,
+    },
+});
+
+const deleteForm = useForm({});
+
+const deleteAdministrator = (id) => {
+    if (confirm("Are you sure you want to delete this user?")) {
+        deleteForm.delete(route("administrator.destroy", id), {
+            preserveScroll: true,
+        });
+    }
+};
+
+// Define the users prop (pake ini juga bisa)
+// const props = defineProps({
+//   users: {
+//     type: Array,
+//     required: true,
+//   },
+// });
+
+// Define the role names mapping
+const roleNames = {
+  1: 'Admin',
+  2: 'Petugas',
+  3: 'User',
+  4: 'Juri',
+};
+
+// Create a function to get the role name based on the role number
+const getRoleName = (role) => {
+  return roleNames[role] || 'Unknown';
+};
+
+// Function to view user details
+const viewDetails = (userId) => {
+  // Logic to navigate to user details page, if needed
+};
+
 </script>
 <template>
     <!--wrapper-->
@@ -135,7 +181,12 @@ import { Link } from '@inertiajs/vue3';
                         <div class="card-body">
                             <h4 class="mb-0 jarak-top-kurang5">Tabel Administrator</h4>
                             <hr class="c-mt10" />		
-                            <button class="btn btn-success jarak-top-kurang7" onclick="window.location.href='/tambahadministrator'">Tambah Administrator</button>
+                            <a 
+                                class="btn btn-success jarak-top-kurang7" 
+                                :href="route('administrator.create')"
+                            >
+                                Tambah Administrator
+                            </a>
                             <hr class="c-mt10" />    
                             <div class="table-responsive">
                                 <label class="dropdown-crud">Tampilkan Role</label> 
@@ -154,22 +205,36 @@ import { Link } from '@inertiajs/vue3';
                                             <th class="crud-width-70">Username</th>
                                             <th class="crud-width-110">Email</th>
                                             <th class="crud-width-50">Role</th>
-                                            <th class="crud-width-90">Lomba</th>
-                                            <th class="crud-width-90">Tanggal</th>
+                                            <!-- <th class="crud-width-90">Lomba</th>
+                                            <th class="crud-width-90">Tanggal</th> -->
                                             <th class="crud-width-50">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Bambang</td>
-                                            <td>admin</td>
-                                            <td>bambang@gmail.com</td>
-                                            <td>admin</td>
-                                            <td>Lomba Desain</td>
-                                            <td>Maret 1, 2024</td>
+                                        <tr
+                                            v-for="user in users"
+                                            :key="user.id"
+                                        >
+                                            <td>{{ user.id }}</td>
+                                            <td>{{ user.username }}</td>
+                                            <td>{{ user.name }}</td>
+                                            <td>{{ user.email }}</td>
+                                            <td>{{ getRoleName(user.role) }}</td>
+                                            <!-- <td>Lomba Desain</td>
+                                            <td>Maret 1, 2024</td> -->
                                             <td class="btn-crud">
-                                                <button class="btn btn-secondary" onclick="window.location.href='/detailadministrator'"><i class="bi bi-eye"></i></button>
+                                                <a 
+                                                    class="btn btn-secondary"
+                                                    :href="route('administrator.show', user.id)"
+                                                >
+                                                    <i class="bi bi-eye"></i>
+                                                </a>
+                                                <button 
+                                                    class="btn btn-danger"
+                                                    @click="deleteAdministrator(user.id)" 
+                                                >
+                                                    <i class="bi bi-trash"></i>
+                                                </button>   
                                             </td>
                                         </tr>
                                     </tbody>
