@@ -9,6 +9,8 @@ class Lomba extends Model
 {
     use HasFactory;
 
+    protected $table = 'lombas';
+
     protected $fillable = [
         'event_lomba_id',
         'name',
@@ -18,13 +20,18 @@ class Lomba extends Model
         'tempat',
         'picture',
         'link_file',
+        'price',
     ];
 
     public function eventlomba()
     {
-        return $this->belongsTo(EventLomba::class, 'event_lomba_id');
+        return $this->belongsTo(EventLomba::class, "event_lomba_id");
     }
 
+    public function kriteria()
+    {
+        return $this->belongsToMany(Kriteria::class, table: "kriteria_lomba", foreignPivotKey: "lomba_id", relatedPivotKey: "kriteria_id");
+    }
     // public function user() 
     // {
     //     return $this->hasMany(User::class);

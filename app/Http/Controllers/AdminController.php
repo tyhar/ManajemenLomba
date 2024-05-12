@@ -21,10 +21,10 @@ class AdminController extends Controller
     {
         return Inertia::render('Roles/Admin/Partisipan');
     }
-    public function pesan()
-    {
-        return Inertia::render('Roles/Admin/Pesan');
-    }
+    // public function pesan()
+    // {
+    //     return Inertia::render('Roles/Admin/Pesan');
+    // }
 
     //LOMBA
     public function lomba()

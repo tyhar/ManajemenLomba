@@ -1,5 +1,13 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { Link, useForm, router } from '@inertiajs/vue3';
+import { Head } from "@inertiajs/vue3";
+
+defineProps({
+    messages: {
+        type: Array,
+    },
+});
+
 </script>
 <template>
     <!--wrapper-->
@@ -155,7 +163,7 @@ import { Link } from '@inertiajs/vue3';
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
+                                        <!-- <tr>
                                             <td>1</td>
                                             <td>Lionel Andres </td>
                                             <td>goat@gmail.com</td>
@@ -165,14 +173,17 @@ import { Link } from '@inertiajs/vue3';
                                             <td class="border-none">
                                                 <input type="checkbox">
                                             </td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Cristiano Ikhsan </td>
-                                            <td>goat@gmail.com</td>
-                                            <td>08123456789</td>
-                                            <td>Mohon ijin min, saya tidak bisa login akun min, mohon solusinya</td>
-                                            <td class="border-none"><label>Sudah Baca</label></td>
+                                        </tr> -->
+                                        <tr
+                                            v-for="message in messages"
+                                            :key="message.id"
+                                        >
+                                            <td>{{ message.id }}</td>
+                                            <td>{{ message.name }}</td>
+                                            <td>{{ message.email }}</td>
+                                            <td>{{ message.phone }}</td>
+                                            <td>{{ message.value }}</td>
+                                            <td class="border-none"><label>{{ message.staus }}</label></td>
                                             <td class="border-none">
                                                 <input type="checkbox" checked>
                                             </td>

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('tempat')->nullable();
             $table->string('picture')->nullable();
             $table->string('link_file')->nullable();
+            $table->string('price')->nullable();
             $table->timestamps();
         });
     }

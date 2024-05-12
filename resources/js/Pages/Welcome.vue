@@ -69,7 +69,8 @@ function handleImageError() {
                         <a class="nav-link" href="/#sponsor-section">Sponsor</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/kontak">Kontak</a>
+                        <!-- <a class="nav-link" href="/kontak">Kontak</a> -->
+                        <a class="nav-link" :href="route('pesan.create')">Kontak</a>
                     </li> 
                     <li class="nav-item">
                         <template v-if="!$page.props.auth.user">

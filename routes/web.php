@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\Route;
 
 //controllers
 use Illuminate\Foundation\Application;
-use App\Http\Controllers\ChatController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PanelisController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SponsorController;
@@ -33,7 +33,7 @@ Route::get('/', function () {
             ];
         }),
     ]);
-});
+})->name('welcome');
 
 require __DIR__.'/auth.php';
 
@@ -66,8 +66,10 @@ Route::middleware('auth','verified','admin')->group(function () {
     Route::get('/partisipan', [AdminController::class, 'partisipan']);
     // Route::resource('superadmin/partisipan', [PartisipanController::class]);
 
-    Route::get('/pesan', [AdminController::class, 'pesan']);
-    // Route::resource('superadmin/pesan', [PesanController::class]);
+    // Route::get('/pesan', [AdminController::class, 'pesan']);
+    Route::resource('pesan', MessageController::class)->only([
+        'index'
+    ]);
 
     Route::get('/lomba', [AdminController::class, 'lomba']);
     Route::get('tambahlomba', [AdminController::class, 'tambahlomba']);
@@ -140,10 +142,13 @@ Route::middleware('auth','verified','panelis')->group(function () {
 // -> akses double (bisa admin atau petugas)
 
 // -- landing page --
-Route::get('/kontak', function() {
-    return inertia::render('Utama/Kontak');
-});
-// Route::get('/kontak', [ChatController::class, 'create']);
+// Route::get('/kontak', function() {
+//     return inertia::render('Utama/Kontak');
+// });
+Route::resource('pesan', MessageController::class)->only([
+    'create','store'
+]);
+
 Route::get('/informasiberita', function() {
     return inertia::render('Utama/InformasiBerita');
 });

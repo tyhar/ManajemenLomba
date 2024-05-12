@@ -9,6 +9,8 @@ class EventLomba extends Model
 {
     use HasFactory;
 
+    protected $table = 'event_lombas';
+
     protected $fillable = [
         'name',
         'logo',
