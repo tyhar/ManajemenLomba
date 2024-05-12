@@ -3,9 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
@@ -15,9 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('kriterias', function (Blueprint $table) {
-            $table->id('kriteria_id');
-            $table->foreignId('lomba_id')->constrained('lombas')->onDelete('cascade'); // Menyesuaikan foreign key dengan tabel lombas
-            $table->string('name_kriteria')->nullable();
+            $table->id();
+            $table->string('name');
             $table->timestamps();
         });
     }
