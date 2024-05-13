@@ -43,8 +43,8 @@ class DatabaseSeeder extends Seeder
             ->create();
 
         //event dan lomba
-        $this->call([
-            EventSeeder::class,
-        ]);
+        // $this->call([
+        //     EventSeeder::class,
+        // ]);
     }
 }

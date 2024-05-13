@@ -67,7 +67,7 @@ Route::middleware('auth','verified','admin')->group(function () {
     // Route::get('tambahlomba', [AdminController::class, 'tambahlomba']);
     // Route::get('/editlomba', [AdminController::class, 'editlomba']);
     // Route::get('/detaillomba', [AdminController::class, 'detaillomba']);
-    Route::resource('superadmin/lomba', LombaController::class);
+    Route::resource('lomba', LombaController::class);
 
     Route::resource('superadmin/kriteria', KriteriaController::class);
     // Route::get('superadmin/kriteria/{detail}/detail', KriteriaController::class, 'show');

@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -10,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kriteria_values', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('kriteria_id')->constrained()->onDelete('cascade');
-            $table->string('value');
+        Schema::create('kriteria_lombas', function (Blueprint $table) {
+            $table->id();    
+                   $table->foreignId('lomba_id')->constrained('lombas')->onDelete('cascade'); 
+                   $table->foreignId('kriteria_id')->constrained('kriterias')->onDelete('cascade');// Menyesuaikan foreign key dengan tabel lombas
             $table->timestamps();
         });
     }
@@ -23,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kriteria_values');
+        Schema::dropIfExists('kriteria_lombas');
     }
 };
