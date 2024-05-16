@@ -1,6 +1,17 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
+import { useForm } from "@inertiajs/vue3";
+import { Head } from "@inertiajs/vue3";
+import { router } from "@inertiajs/vue3";
+// import { usePage } from "@inertiajs/vue3";
+
+defineProps({
+    settings: {
+        type: Array,
+    },
+});
 </script>
+
 <template>
     <!--wrapper-->
     <div class="wrapper">

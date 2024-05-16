@@ -1,3 +1,27 @@
+<script setup>
+import { Link } from '@inertiajs/vue3';
+import { useForm } from "@inertiajs/vue3";
+import { Head } from "@inertiajs/vue3";
+
+const form = useForm({
+    name: "",
+    judul: "",
+    sub_judul: "",
+    judul_des: "",
+    deskripsi: "",
+    mulai: "",
+    berakhir: "",
+    logo1: "",
+    logo2: "",
+    logo3: "",
+});
+
+const submit = () => {
+    form.post(route("setting.store"), {
+        preserveScroll: true,
+    });
+};
+</script>
 <template>
     <div class="wrapper">
         <!--start header -->
