@@ -8,6 +8,9 @@ defineProps({
     users: {
         type: Object,
     },
+    settings: {
+        type: Array,
+    },
 });
 
 const deleteForm = useForm({});
@@ -54,8 +57,12 @@ const viewDetails = (userId) => {
         <div class="sidebar-wrapper" data-simplebar="true">
             <div class="sidebar-header">
                 <div>
-                    <a href="/">
-                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon">
+                    <a href="/" class="navbar-brand" v-for="setting in settings" :key="setting.id">
+                        <img
+                        :src="setting.logo1"
+                        :alt="setting.name"
+                        class="logo-icon"
+                        />
                     </a>
                 </div>
                 <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>

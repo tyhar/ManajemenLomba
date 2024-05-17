@@ -4,7 +4,10 @@ use Inertia\Inertia;
 use App\Models\Sponsor;
 
 //Models
+
 use Illuminate\Support\Facades\Route;
+use App\Models\Setting;
+
 
 //controllers
 use Illuminate\Foundation\Application;
@@ -14,6 +17,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PanelisController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SponsorController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\EventAdminController;
 use App\Http\Controllers\AdministratorController;
 
@@ -29,11 +33,23 @@ Route::get('/', function () {
                 'id' => $sponsor->id,
                 'name' => $sponsor->name,
                 'link_file' => $sponsor->link_file,
-                'logo' => asset('storage/'.$sponsor->logo)
-            ];
-        }),
+                'logo' => asset('storage/'.$sponsor->logo),];}),
+        'settings' => Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'name' => $setting->name,
+                'judul' => $setting->judul,
+                'sub_judul' => $setting->sub_judul,
+                'judul_des' => $setting->judul_des,
+                'deskripsi' => $setting->deskripsi,
+                'mulai' => $setting->mulai,
+                'berakhir' => $setting->berakhir,
+                'logo1' => asset('storage/'.$setting->logo1),
+                'logo2' => asset('storage/'.$setting->logo2),
+                'logo3' => asset('storage/'.$setting->logo3),];}),
     ]);
 })->name('welcome');
+
 
 require __DIR__.'/auth.php';
 
@@ -108,6 +124,7 @@ Route::middleware('auth','verified','admin')->group(function () {
     Route::get('/editsetting', [AdminController::class, 'editsetting']);
     Route::get('/tambahsetting', [AdminController::class, 'tambahsetting']);
     // Route::resource('superadmin/settings', [SettingController::class]);
+    Route::resource('setting', SettingController::class);
 
     Route::get('/rangking', [AdminController::class, 'rangking']);
     Route::get('/tabelrangking', [AdminController::class, 'tabelrangking']);

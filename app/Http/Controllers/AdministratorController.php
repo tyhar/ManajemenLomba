@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+
+use App\Models\Setting;
 // use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
@@ -31,7 +33,22 @@ class AdministratorController extends Controller
                     'email' => $user->email,
                     'role' => $user->role
                 ];
-            })
+            }),
+            'settings' => Setting::all()->map(function($setting) {
+                return [
+                    'id' => $setting->id,
+                    'name' => $setting->name,
+                    'judul' => $setting->judul,
+                    'sub_judul' => $setting->sub_judul,
+                    'judul_des' => $setting->judul_des,
+                    'deskripsi' => $setting->deskripsi,
+                    'mulai' => $setting->mulai,
+                    'berakhir' => $setting->berakhir,
+                    'logo1' => asset('storage/' . $setting->logo1),
+                    'logo2' => asset('storage/' . $setting->logo2),
+                    'logo3' => asset('storage/' . $setting->logo3),
+                ];
+            }),
         ]);
     }
 

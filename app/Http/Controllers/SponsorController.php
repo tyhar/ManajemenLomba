@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\SponsorResource;
 use App\Models\Sponsor;
+
+use App\Models\Setting;
 // use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
@@ -39,9 +41,24 @@ class SponsorController extends Controller
                     'id' => $sponsor->id,
                     'name' => $sponsor->name,
                     'link_file' => $sponsor->link_file,
-                    'logo' => asset('storage/'.$sponsor->logo)
+                    'logo' => asset('storage/' . $sponsor->logo),
                 ];
-            })
+            }),
+            'settings' => Setting::all()->map(function($setting) {
+                return [
+                    'id' => $setting->id,
+                    'name' => $setting->name,
+                    'judul' => $setting->judul,
+                    'sub_judul' => $setting->sub_judul,
+                    'judul_des' => $setting->judul_des,
+                    'deskripsi' => $setting->deskripsi,
+                    'mulai' => $setting->mulai,
+                    'berakhir' => $setting->berakhir,
+                    'logo1' => asset('storage/' . $setting->logo1),
+                    'logo2' => asset('storage/' . $setting->logo2),
+                    'logo3' => asset('storage/' . $setting->logo3),
+                ];
+            }),
         ]);
     }
 
