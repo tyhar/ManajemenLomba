@@ -43,26 +43,22 @@
                     </a>
                 </li>
                 <li>
-                    <li>
+                <li>
                     <a href="/reportpeserta">
                         <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i>
                         </div>
                         <div class="menu-title">Report <span class="alert-count">1</span></div>
                     </a>
                 </li>
-                    <a href="/">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
-                        </div>
-                        <div class="menu-title">
-                            <Link class="menu-title"
-                                :href="route('logout')"
-                                method="post"
-                                as="button"
-                            >
-                                Logout
-                            </Link>
-                        </div>
-                    </a>
+                <a href="/">
+                    <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
+                    </div>
+                    <div class="menu-title">
+                        <Link class="menu-title" :href="route('logout')" method="post" as="button">
+                        Logout
+                        </Link>
+                    </div>
+                </a>
 
                 </li>
             </ul>
@@ -124,7 +120,7 @@
                                 <div class="col-md-2 jarak-daftar-lomba">
                                     <label class="c-mb5-black"><b>LOMBA</b></label>
                                     <ul>
-                                    <li v-for="lomba in team.lomba" :key="lomba.id">{{ lomba.name_lomba }}</li>
+                                        <li v-for="lomba in team.lomba" :key="lomba.id">{{ lomba.name_lomba }}</li>
                                     </ul>
                                 </div>
                                 <div class="col-md-2 jarak-daftar-lomba">
@@ -145,7 +141,7 @@
                                 </div>
 
                                 <div>
-                                    <button onclick="window.location.href='/datatim'"
+                                    <button onclick="window.location.href='/datatim/create'"
                                         class="btn btn-primary radius-5 isi-data">Isi Data</button>
                                 </div>
                             </div>
@@ -153,15 +149,17 @@
                         <div class="card">
                             <h5 class="p-3">Input Anggota Tim</h5>
                             <div class="row row-cards jarak-data-peserta">
-                                <div class="col-md-6 col-lg-3 crud-max-width260" v-for="member in teamMembers" :key="member.id">
+                                <div class="col-md-6 col-lg-3 crud-max-width260" v-for="member in teamMembers"
+                                    :key="member.id">
                                     <div class="card">
                                         <div class="card-header btn-crud ">
                                             <h6><b>{{ member.role }}</b></h6>
                                         </div>
                                         <div class="card-body p-4 text-center posisi-mb23">
                                             <div class="btn-crud ">
-							                 <img :src="member.photo ? `/storage/${member.photo}` : '/bootstrap/images/default2.png'" height="120" alt="..." class="img-fluid rounded">
-			                            </div>
+                                                <img :src="member.photo ? `/storage/${member.photo}` : '/bootstrap/images/default2.png'"
+                                                    height="120" alt="..." class="img-fluid rounded">
+                                            </div>
                                             <br>
                                             <h6><b>{{ member.name }}</b></h6>
                                             <br>
@@ -199,7 +197,8 @@
                                 </div>
                                 <div class="overflow-auto">
                                     <ul class="search-results">
-                                        <li v-for="user in filteredUsers" :key="user.id" @click="selectUser(user)" :class="{ 'selected': user.selected }" class="user-item">
+                                        <li v-for="user in filteredUsers" :key="user.id" @click="selectUser(user)"
+                                            :class="{ 'selected': user.selected }" class="user-item">
                                             <div class="user-info csearch">
                                                 {{ user.name }} ({{ user.email }})
                                             </div>
@@ -227,11 +226,13 @@
                                     </div>
                                     <div class="col-md-3 text-left">
                                         <label class="jarak-teks05"><b>File</b></label>
-                                        <div class="data-tim"><a :href="`/daftarlomba/${submission.id}`">Lihat File</a></div>
+                                        <div class="data-tim"><a :href="`/daftarlomba/${submission.id}`">Lihat File</a>
+                                        </div>
                                     </div>
                                     <div class="col-md-3 text-left">
                                         <label class="jarak-teks05"><b>LINK VIDEO</b></label>
-                                        <div class="data-tim c-mb-70"> <a :href="submission.link" target="_blank">Link Video</a></div>
+                                        <div class="data-tim c-mb-70"> <a :href="submission.link" target="_blank">Link
+                                                Video</a></div>
                                     </div>
                                     <div>
                                         <button onclick="window.location.href='/pengumpulankarya'"
@@ -251,11 +252,11 @@
     </div>
 </template>
 <script setup>
-  import { defineProps } from "vue";
+import { defineProps } from "vue";
 import { ref, computed, watch } from 'vue';
 import { Link, useForm } from '@inertiajs/vue3';
 
-const { userData, users, team, submission} = defineProps(['userData', 'users', 'team', 'submission']);
+const { userData, users, team, submission } = defineProps(['userData', 'users', 'team', 'submission']);
 
 // Define form state using Inertia's useForm
 const form = useForm({

@@ -57,32 +57,11 @@ import { Link } from '@inertiajs/vue3';
                         <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
                         </div>
                         <div class="menu-title">
-                            <Link class="menu-title"
-                                :href="route('logout')"
-                                method="post"
-                                as="button"
-                            >
-                                Logout
+                            <Link class="menu-title" :href="route('logout')" method="post" as="button">
+                            Logout
                             </Link>
                         </div>
                     </a>
-                </li>
-                <li>
-                    <a href="javascript:;" class="has-arrow">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-plus-circle"></i>
-                        </div>
-                        <div class="menu-title">SEMENTARA</div>
-                    </a>
-                    <ul>
-                        <li class="jarak-dropdown"> <a href="/dashboardjuri">JURI</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/eventadmin">PETUGAS</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/overviewpeserta">PESERTA</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/superadmin">ADMIN</a>
-                        </li>
-                    </ul>
                 </li>
             </ul>
             <!--end navigation-->
@@ -99,7 +78,7 @@ import { Link } from '@inertiajs/vue3';
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Petugas</p>						
+                                <p class="user-name mb-0">Petugas</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -109,14 +88,14 @@ import { Link } from '@inertiajs/vue3';
                                     </div>
                                 </div>
                             </li>
-                            <li class="nav-item dropdown dropdown-large">	
+                            <li class="nav-item dropdown dropdown-large">
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <div class="header-message-list">
                                     </div>
                                 </div>
                             </li>
                         </ul>
-                    </div>		
+                    </div>
                 </nav>
             </div>
         </header>
@@ -128,16 +107,16 @@ import { Link } from '@inertiajs/vue3';
                 <div class="card">
                     <div class="card-body">
                         <h4 class="mb-0 jarak-top-kurang5">Tabel Tim</h4>
-                        <hr class="c-mt10"/>		
+                        <hr class="c-mt10" />
                         <button class="btn btn-primary btn-export">Export Excel</button>
-                        <label class="dropdown-crud">Filter by Status</label> 
-						<select class="form-select2">
-							<option selected>Semua</option>
-							<option>Verified</option>
+                        <label class="dropdown-crud">Filter by Status</label>
+                        <select class="form-select2">
+                            <option selected>Semua</option>
+                            <option>Verified</option>
                             <option>Unverified</option>
-						</select>
+                        </select>
                         <br><br>
-                        <div class="table-responsive">	
+                        <div class="table-responsive">
                             <table id="example" class="table table-bordered">
                                 <thead class="table-dark">
                                     <tr>
@@ -161,7 +140,9 @@ import { Link } from '@inertiajs/vue3';
                                         <td>Universitas</td>
                                         <td>Verified</td>
                                         <td class="btn-crud">
-                                            <button class="btn btn-secondary" onclick="window.location.href='/timdetail'"><i class="bi bi-eye"></i></button>
+                                            <button class="btn btn-secondary"
+                                                onclick="window.location.href='/timdetail'"><i
+                                                    class="bi bi-eye"></i></button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -171,6 +152,6 @@ import { Link } from '@inertiajs/vue3';
                 </div>
             </div>
         </div>
-        <!--end page wrapper --> 
+        <!--end page wrapper -->
     </div>
 </template>

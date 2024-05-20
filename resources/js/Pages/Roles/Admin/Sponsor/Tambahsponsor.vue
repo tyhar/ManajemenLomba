@@ -58,7 +58,7 @@ const submit = () => {
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
                         </ul>
-                    </div>		
+                    </div>
                 </nav>
             </div>
         </header>
@@ -67,86 +67,45 @@ const submit = () => {
         <div class="page-wrapper-new">
             <div class="page-content">
                 <div class="card">
-                    <form @submit.prevent="submit">
-                        <div class="card-body">
-                            <h4 class="mb-0">Tambah Sponsor</h4>
-                            <hr/>
+                    <div class="card-body">
+                        <h4 class="mb-0">Tambah Sponsor</h4>
+                        <hr />
+                        <form @submit.prevent="submit">
+                            <div class="c-mb10">
+                                <label for="name" class="c-mb5-black">
+                                    <b>Nama Sponsor</b>
+                                </label>
+                                <input type="text" class="form-control" v-model="form.name" id="name">
+                            </div>
                             <div>
-                                <div class="c-mb10">
-                                    <label
-                                        for="name" 
-                                        class="c-mb5-black"
-                                    >
-                                        <b>Nama Sponsor</b>
-                                    </label>
-                                    <input 
-                                        type="text" 
-                                        class="form-control"
-                                        v-model="form.name"
-                                        id="name"
-                                    >
-                                </div>
-                                <div>
-                                    <label
-                                        for="link_file" 
-                                        class="c-mb5-black"
-                                    >
-                                        <b>Link</b>
-                                    </label>
-                                    <div class="col-12">
-                                        <input
-                                            type="text"
-                                            v-model="form.link_file"
-                                            id="link_file"  
-                                            class="form-control c-mb10" rows="2"
-                                        >
-                                    </div>
-                                </div>
-                                <div>
-                                    <label 
-                                        for="logo" 
-                                        class="form-label warna-hitam"
-                                    >
-                                        <b>Logo</b>
-                                    </label>
-                                    <input 
-                                        class="form-control"
-                                        type="file"
-                                        @input="form.logo = $event.target.files[0]"
-                                        id="logo"
-                                    >
-                                    <!-- <input 
-                                        class="form-control"
-                                        type="text"
-                                        v-model="form.logo"
-                                        id="logo"
-                                    > -->
-                                    <p class="keterangan-foto">Max 2 MB (500 x 500 px)</p>
+                                <label for="link_file" class="c-mb5-black"><b>Link</b>
+                                </label>
+                                <div class="col-12">
+                                    <textarea class="form-control c-mb10" rows="2" v-model="form.link_file"
+                                        id="link_file">
+                                        </textarea>
                                 </div>
                             </div>
+                            <div>
+                                <label for="logo" class="form-label warna-hitam"><b>Logo</b>
+                                </label>
+                                <input class="form-control" type="file" @input="form.logo = $event.target.files[0]"
+                                    id="logo">
+                                <p class="keterangan-foto">Max 2 MB (200 x 200 px)</p>
+                            </div>
                             <div class="btn-posisi">
-                                <!-- <button class="btn btn-primary button-tabel-right" onclick="window.location.href='/sponsor'">Tambah</button>
-                                <button class="btn btn-danger button-tabel-left" onclick="window.location.href='/sponsor'">Batal</button> -->
-                                <button
-                                    type="submit"
-                                    class="btn btn-primary button-tabel-right"
-                                >
+                                <button type="submit" class="btn btn-primary button-tabel-right">
                                     Tambah
                                 </button>
-                                <a 
-                                    class="btn btn-danger button-tabel-left"
-                                    :href="route('sponsor.index')"
-                                >
+                                <a class="btn btn-danger button-tabel-left" :href="route('sponsor.index')">
                                     Batal
                                 </a>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
         <!--end page wrapper -->
     </div>
 </template>
-    
-   

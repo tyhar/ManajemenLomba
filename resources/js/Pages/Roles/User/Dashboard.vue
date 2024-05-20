@@ -63,7 +63,7 @@ const props = defineProps({
             <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i></div>
             <div class="menu-title">
               <Link class="menu-title" :href="route('logout')" method="post" as="button">
-                Logout
+              Logout
               </Link>
             </div>
           </a>
@@ -108,54 +108,22 @@ const props = defineProps({
         <div class="tf__activities_slider_area">
           <div class="container">
             <!--breadcrumb-->
-            <div class="row">
-              <div class="col-12">
-                <div class="grid-container">
-                  <div v-for="lomba in lombas" :key="lomba.id" class="card radius-15 card-overview">
-                    <img :src="lomba.picture ? `/storage/${lomba.picture}` : '/bootstrap/images/default.jpg'" alt="New Image">
-                      <div class="judul-overview">{{ lomba.name_lomba }}</div>
-                    <a class="btn btn-primary btn-landing-page2"  :href="`/detailpeserta/${lomba.id}`">Detail</a>
-                  </div>
+            <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
+              <div class="col" v-for="lomba in lombas" :key="lomba.id">
+                <div class="card radius-15 card-overview">
+                  <img :src="lomba.picture ? `/storage/${lomba.picture}` : '/bootstrap/images/default.jpg'"
+                    class="border-radius">
+                  <div class="judul-overview">{{ lomba.name_lomba }}</div>
+                  <a class="btn btn-primary btn-landing-page2" :href="`/detailpeserta/${lomba.id}`">Detail</a>
                 </div>
               </div>
             </div>
-            <!--end row-->
           </div>
+          <!--end row-->
         </div>
-        <!--end row-->
       </div>
+      <!--end row-->
     </div>
   </div>
   <!--end switcher-->
 </template>
-<!-- 
-<style scoped>
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-}
-
-.card-overview img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-}
-.judul-overlay {
-  position: absolute;
-  top: 1px; /* Adjust to move text slightly up */
-  left: 10px; /* Shift text to the right */
-  width: calc(100% - 20px); /* Adjust width to accommodate padding */ 
-  color: black;
-  padding: 10px;
-  text-align: left; /* Align text to the left */
-  border-radius: 8px 8px 0 0;
-  font-family: Arial, sans-serif; /* Change to desired font-family */
-  font-size: 1.2em; /* Change to desired font-size */
-  font-weight: bold; /* Make text bold */
-}
-.btn-landing-page2 {
-  margin-top: 10px;
-}
-
-</style> -->

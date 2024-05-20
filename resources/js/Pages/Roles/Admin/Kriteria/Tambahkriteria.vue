@@ -29,7 +29,6 @@
             </div>
         </header>
         <!-- End Header -->
-
         <!-- Start Page Wrapper -->
         <div class="page-wrapper-new">
             <div class="page-content">
@@ -42,15 +41,18 @@
                                 <div class="c-mt10">
                                     <label class="c-mb5-black c-mt10"><b>Kriteria Penilaian</b></label>
                                     <div>
-                                        <input type="text" class="form-control label-8" v-model="criteria.name_kriteria">
-                                        <button class="btn btn-secondary" @click="removeKriteria(index)" v-if="form.kriteria.length > 1"><i class="fas fa-minus"></i></button>
+                                        <input type="text" class="form-control label-8"
+                                            v-model="criteria.name_kriteria">
+                                        <button class="btn btn-secondary" @click="removeKriteria(index)"
+                                            v-if="form.kriteria.length > 1"><i class="fas fa-minus"></i></button>
                                     </div>
                                 </div>
                             </div>
-                            <button class="btn btn-secondary" @click="addKriteria"><i class="fas fa-plus"></i> Tambah Kriteria</button>
+                            <button class="btn btn-secondary" @click="addKriteria"><i class="fas fa-plus"></i> Tambah
+                                Kriteria</button>
                             <div class="btn-posisi">
                                 <button type="submit" class="btn btn-primary button-tabel-right">Tambah</button>
-                                <button class="btn btn-danger btn-kembali" @click="goBack()">Batal</button>
+                                <button class="btn btn-danger button-tabel-left" @click="goBack()">Batal</button>
                             </div>
                         </form>
                     </div>
@@ -65,7 +67,7 @@
 import { reactive } from 'vue'
 import { useForm } from "@inertiajs/vue3";
 
-const { name, username} = defineProps(['name', 'username']);
+const { name, username } = defineProps(['name', 'username']);
 
 console.log(name); // Contoh penggunaan di dalam script setup
 console.log(username);

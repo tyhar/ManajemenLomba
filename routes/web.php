@@ -35,18 +35,18 @@ Route::get('/', function () {
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
-        'sponsors' => Sponsor::all()->map(function($sponsor) {
+        'sponsors' => Sponsor::all()->map(function ($sponsor) {
             return [
                 'id' => $sponsor->id,
                 'name' => $sponsor->name,
                 'link_file' => $sponsor->link_file,
-                'logo' => asset('storage/'.$sponsor->logo)
+                'logo' => asset('storage/' . $sponsor->logo)
             ];
         }),
     ]);
 })->name('welcome');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -58,18 +58,20 @@ Route::middleware('auth')->group(function () {
 //dont forget to add controller class or any other import needed
 
 // -> user atau peserta
-Route::middleware('auth','verified','user')->group(function () {
+Route::middleware('auth', 'verified', 'user')->group(function () {
     Route::get('/dashboard', [UserController::class, 'index'])->name('dashboard');
 
 
-    
+
     Route::get('/detailpeserta/{id}', [UserController::class, 'show']);
-    
+
     Route::resource('profilpeserta', ProfilePesertaController::class)->only([
-        'create','store',
+        'create',
+        'store',
     ]);
     Route::resource('submission', SubmissionController::class)->only([
-        'create','store',
+        'create',
+        'store',
     ]);
 
 
@@ -79,22 +81,26 @@ Route::middleware('auth','verified','user')->group(function () {
 
 
     Route::resource('daftarlomba', RegLombaController::class)->only([
-        'index', 'show', 'store',
+        'index',
+        'show',
+        'store',
     ]);
-    
+
     // Route::get('/search-users', [RegLombaController::class, 'search'])->name('search-users');
 
     Route::resource('datatim', TeamController::class)->only([
-        'create','store','show',
+        'create',
+        'store',
+        'show',
     ]);
-    
+
     Route::get('/anggotatim', [UserController::class, 'anggotatim']);
     Route::get('/pengumpulankarya', [UserController::class, 'pengumpulankarya']);
 });
 
 // -> admin
-Route::middleware('auth','verified','admin')->group(function () {
- Route::get('/superadmin', [AdminController::class, 'index'])->name('admin');
+Route::middleware('auth', 'verified', 'admin')->group(function () {
+    Route::get('/superadmin', [AdminController::class, 'index'])->name('admin');
     Route::get('/partisipan', [PartisipanController::class, 'index']);
     Route::get('/export-partisipan', [ExcelController::class, 'export'])->name('export.partisipan');
     // Route::resource('superadmin/partisipan', [PartisipanController::class]);
@@ -133,7 +139,7 @@ Route::middleware('auth','verified','admin')->group(function () {
 
     // Route::resource('superadmin/sponsor', SponsorController::class);
     Route::resource('sponsor', SponsorController::class);
-    
+
     Route::get('/berita', [AdminController::class, 'berita']);
     Route::get('/tambahberita', [AdminController::class, 'tambahberita']);
     Route::get('/editberita', [AdminController::class, 'editberita']);
@@ -144,17 +150,21 @@ Route::middleware('auth','verified','admin')->group(function () {
     // Route::get('/editsetting', [AdminController::class, 'editsetting']);
     // Route::get('/tambahsetting', [AdminController::class, 'tambahsetting']);
     Route::resource('setting', SettingEventController::class)->only([
-        'index', 'create', 'store', 'edit', 'update',
+        'index',
+        'create',
+        'store',
+        'edit',
+        'update',
     ]);
 
-    
+
     Route::get('/rangking', [AdminController::class, 'rangking']);
     Route::get('/tabelrangking', [AdminController::class, 'tabelrangking']);
     // Route::resource('superadmin/ranking', [RankingController::class]);
 });
 
 // -> eventadmin atau petugas
-Route::middleware('auth','verified','eventadmin')->group(function () {
+Route::middleware('auth', 'verified', 'eventadmin')->group(function () {
     Route::get('/eventadmin', [EventAdminController::class, 'index'])->name('eventadmin');
     Route::get('/partisipanpetugas', [EventAdminController::class, 'partisipanpetugas']);
     Route::get('/timpetugas', [EventAdminController::class, 'timpetugas']);
@@ -165,13 +175,15 @@ Route::middleware('auth','verified','eventadmin')->group(function () {
 });
 
 // -> panelis atau juri
-Route::middleware('auth','verified','panelis')->group(function () {
+Route::middleware('auth', 'verified', 'panelis')->group(function () {
     Route::get('/panelis', [PanelisController::class, 'index'])->name('panelis');
     Route::get('/lombajuri', [PanelisController::class, 'lombajuri']);
     Route::get('/tabellomba', [PanelisController::class, 'tabellomba']);
     Route::get('/rangkingjuri', [PanelisController::class, 'rangkingjuri']);
     Route::get('/tabelrangkingjuri', [PanelisController::class, 'tabelrangkingjuri']);
     Route::get('/nilai', [PanelisController::class, 'nilai']);
+    Route::get('/editnilai', [PanelisController::class, 'editnilai']);
+    Route::get('/timdetailjuri', [PanelisController::class, 'timdetailjuri']);
     // Route::get('/dashboardjuri', [PanelisController::class, 'dashboardjuri'])->name('dashboardjuri');
     // Route::get('/rangking', [PanelisControllerController::class, 'rangking']);
     // Route::get('/tabelrangking', [PanelisController::class, 'tabelrangking']);
@@ -185,11 +197,13 @@ Route::middleware('auth','verified','panelis')->group(function () {
 //     return inertia::render('Utama/Kontak');
 // });
 Route::resource('pesan', MessageController::class)->only([
-    'create','store','edit',
+    'create',
+    'store',
+    'edit',
 ]);
 Route::patch('/messages/{message}/status', [MessageController::class, 'updateStatus'])->name('messages.updateStatus');
 
-Route::get('/informasiberita', function() {
+Route::get('/informasiberita', function () {
     return inertia::render('Utama/InformasiBerita');
 });
 
@@ -204,9 +218,7 @@ Route::get('/api/all-participants', [MessageController::class, 'getAllparticipan
 // -- backup --
 // Route::get('/api/logo', [LogoController::class, 'getLogo']);
 // Route::get('/superadmin', function () {
-    Route::controller(GoogleController::class)->group(function(){
-        Route::get('authorized/google', 'googlepage')->name('auth.google');
-        Route::get('authorized/google/callback', 'handleGoogleCallback');
-    });
-
-
+Route::controller(GoogleController::class)->group(function () {
+    Route::get('authorized/google', 'googlepage')->name('auth.google');
+    Route::get('authorized/google/callback', 'handleGoogleCallback');
+});

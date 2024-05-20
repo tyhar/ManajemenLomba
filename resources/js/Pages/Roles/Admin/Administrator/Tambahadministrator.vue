@@ -20,26 +20,26 @@ const form = useForm({
     username: null,
     email: null,
     password: null,
-    role: null,
+    role: "Pilih Role",
     selectedLomba: [],
 });
 
 function submit() {
-  // Menambahkan properti selectedCriteria ke dalam data yang disubmit
-  const formData = { ...form, selectedLomba: form.selectedLomba };
-  router.post('/administrator', formData)
-    .then(() => {
-      Swal.fire({
-        icon: 'success',
-        title: 'Sukses!',
-        text: 'Akun administrator berhasil ditambahkan.',
-        confirmButtonText: 'Ok'
-      });
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      // Handle error here
-    });
+    // Menambahkan properti selectedCriteria ke dalam data yang disubmit
+    const formData = { ...form, selectedLomba: form.selectedLomba };
+    router.post('/administrator', formData)
+        .then(() => {
+            Swal.fire({
+                icon: 'success',
+                title: 'Sukses!',
+                text: 'Akun administrator berhasil ditambahkan.',
+                confirmButtonText: 'Ok'
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Handle error here
+        });
 }
 
 
@@ -55,6 +55,20 @@ function submit() {
 //     router.post(route("administrator.store"), form)
 // }
 
+$(document).ready(function () {
+    $("#show_hide_password a").on('click', function (event) {
+        event.preventDefault();
+        if ($('#show_hide_password input').attr("type") == "text") {
+            $('#show_hide_password input').attr('type', 'password');
+            $('#show_hide_password i').addClass("bx-hide");
+            $('#show_hide_password i').removeClass("bx-show");
+        } else if ($('#show_hide_password input').attr("type") == "password") {
+            $('#show_hide_password input').attr('type', 'text');
+            $('#show_hide_password i').removeClass("bx-hide");
+            $('#show_hide_password i').addClass("bx-show");
+        }
+    });
+});
 </script>
 <template>
     <div class="wrapper">
@@ -100,54 +114,29 @@ function submit() {
                             <div class="row">
                                 <div class="col-md-6 margin-top10-crud">
                                     <label class="c-mb5-black"><b>Nama Lengkap</b></label>
-                                    <input
-                                        id="name" 
-                                        type="name" 
-                                        class="form-control"
-                                        v-model="form.name"
-                                    >
+                                    <input id="name" type="name" class="form-control" v-model="form.name">
                                 </div>
 
                                 <div class="col-md-6 margin-top10-crud">
                                     <label class="c-mb5-black"><b>Username</b></label>
-                                    <input
-                                        id="username"
-                                        type="username" 
-                                        class="form-control"
-                                        v-model="form.username"
-                                    >
+                                    <input id="username" type="username" class="form-control" v-model="form.username">
                                 </div>
                                 <div class="col-md-12 margin-top10-crud">
                                     <label class="c-mb5-black"><b>Email</b></label>
-                                    <input
-                                        id="email" 
-                                        type="email" 
-                                        class="form-control"
-                                        v-model="form.email"
-                                    >
+                                    <input id="email" type="email" class="form-control" v-model="form.email">
                                 </div>
                                 <div>
                                     <label for="inputChoosePassword"
                                         class="form-label warna-hitam"><b>Password</b></label>
                                     <div class="input-group" id="show_hide_password">
-                                        <input 
-                                            type="password" 
-                                            class="form-control border-end-0"
-                                            id="password"
-                                            v-model="form.password"
-                                        > 
-                                            <a href="javascript:;" class="input-group-text bg-transparent">
-                                                <i class='bx bx-hide'></i>
-                                            </a>
+                                        <input type="password" v-model="form.password" class="form-control border-end-0"
+                                            id="inputChoosePassword"> <a href="javascript:;"
+                                            class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
                                     </div>
                                 </div>
                                 <div>
                                     <label class="role-add "><b class="warna-hitam">Role</b></label>
-                                    <select 
-                                        class="form-select" 
-                                        id="role" 
-                                        v-model="form.role"
-                                    >
+                                    <select class="form-select" id="role" v-model="form.role">
                                         <option selected disabled>Pilih Role</option>
                                         <option :value="1">Admin</option>
                                         <option :value="4">Juri</option>
@@ -155,25 +144,21 @@ function submit() {
                                     </select>
                                 </div>
                                 <div>
-                               <label class="role-add"><b class="warna-hitam">Lomba</b></label>
-                              <div>   
-                         <div class="form-check" v-for="lomba in lombas.data" :key="lomba.id">
-                       <input class="form-check-input" type="checkbox" :id="'lomba' + lomba.id" v-model="form.selectedLomba" :value="lomba.id">
-                       <label class="form-check-label" :for="'lomba' + lomba.id">{{ lomba.name_lomba }}</label>
-                       </div>
-                         </div>
-                               </div>                                   
+                                    <label class="role-add"><b class="warna-hitam">Lomba</b></label>
+                                    <div>
+                                        <div class="form-check" v-for="lomba in lombas.data" :key="lomba.id">
+                                            <input class="form-check-input" type="checkbox" :id="'lomba' + lomba.id"
+                                                v-model="form.selectedLomba" :value="lomba.id">
+                                            <label class="form-check-label" :for="'lomba' + lomba.id">{{
+                                                lomba.name_lomba }}</label>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="btn-posisi">
-                                    <button 
-                                        class="btn btn-primary button-tabel-right"
-                                        type="submit"
-                                    >
+                                    <button class="btn btn-primary button-tabel-right" type="submit">
                                         Tambah
                                     </button>
-                                    <a 
-                                        class="btn btn-danger button-tabel-left"
-                                        :href="route('administrator.index')"
-                                    >
+                                    <a class="btn btn-danger button-tabel-left" :href="route('administrator.index')">
                                         Batal
                                     </a>
                                 </div>
@@ -186,20 +171,4 @@ function submit() {
 
         <!--end page wrapper -->
     </div>
-    </template>
-<script>
-$(document).ready(function () {
-    $("#show_hide_password a").on('click', function (event) {
-        event.preventDefault();
-        const inputPassword = $('#password');
-        const icon = $('#show_hide_password i');
-        if (inputPassword.attr("type") === "text") {
-            inputPassword.attr('type', 'password');
-            icon.removeClass("bx-show").addClass("bx-hide");
-        } else if (inputPassword.attr("type") === "password") {
-            inputPassword.attr('type', 'text');
-            icon.removeClass("bx-hide").addClass("bx-show");
-        }
-    });
-});
-</script>
+</template>

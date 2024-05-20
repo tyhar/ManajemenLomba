@@ -18,20 +18,20 @@ const props = {
 
 // Define the role names mapping
 const roleNames = {
-  1: 'Admin',
-  2: 'Petugas',
-  3: 'User',
-  4: 'Juri',
+    1: 'Admin',
+    2: 'Petugas',
+    3: 'User',
+    4: 'Juri',
 };
 
 // Create a function to get the role name based on the role number
 const getRoleName = (role) => {
-  return roleNames[role] || 'Unknown';
+    return roleNames[role] || 'Unknown';
 };
 
 // Function to view user details
 const viewDetails = (userId) => {
-  // Logic to navigate to user details page, if needed
+    // Logic to navigate to user details page, if needed
 };
 
 // Function to format date
@@ -76,7 +76,7 @@ const formatDate = (dateString) => {
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
                         </ul>
-                    </div>		
+                    </div>
                 </nav>
             </div>
         </header>
@@ -87,7 +87,7 @@ const formatDate = (dateString) => {
                 <div class="card">
                     <div class="card-body">
                         <h4 class="mb-0">DETAIL ADMINISTRATOR</h4>
-                        <hr/>
+                        <hr />
                         <div class="row">
                             <div class="col-md-6 c-mb10">
                                 <label class="c-mb5-black"><b>Nama Lengkap</b></label>
@@ -108,18 +108,19 @@ const formatDate = (dateString) => {
                             <div class="col-md-6">
                                 <label class="c-mb5-black"><b>Role</b></label>
                                 <div class="data-tim">{{ getRoleName(users.role) }}</div>
-                            </div>           
+                            </div>
                             <div class="col-md-6">
                                 <label class="c-mb5-black"><b>Tanggal Dibuat</b></label>
                                 <div class="data-tim">{{ formatDate(users.created_at) }}</div>
-                            </div>      
+                            </div>
                         </div>
                         <label class="c-mb5-black"><b>Lomba</b></label>
-                                <ul>
-                                    <li v-for="lomba in users.lomba" :key="lomba.id">{{ lomba.name_lomba }}</li>
-                                </ul>
+                        <ul>
+                            <li v-for="lomba in users.lomba" :key="lomba.id">{{ lomba.name_lomba }}</li>
+                        </ul>
                         <div class="btn-posisi">
-                            <button class="btn btn-danger btn-kembali" onclick="window.location.href='/administrator'">Kembali</button>
+                            <button class="btn btn-danger btn-kembali"
+                                onclick="window.location.href='/administrator'">Kembali</button>
                         </div>
                     </div>
                 </div>
@@ -128,5 +129,3 @@ const formatDate = (dateString) => {
         <!--end page wrapper -->
     </div>
 </template>
-    
-   

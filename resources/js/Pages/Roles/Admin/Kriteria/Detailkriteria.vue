@@ -41,7 +41,7 @@
                         <div class="row">
                             <div class="col-md-6 c-mb10">
                                 <label class="c-mb5-black"><b>Nama Kriteria</b></label>
-                                <div class="data-tim">{{  form.name_kriteria }}</div>
+                                <div class="data-tim">{{ form.name_kriteria }}</div>
                             </div>
                         </div>
                         <div class="btn-posisi">
@@ -51,7 +51,6 @@
                 </div>
             </div>
         </div>
-
         <!--end page wrapper -->
     </div>
 </template>

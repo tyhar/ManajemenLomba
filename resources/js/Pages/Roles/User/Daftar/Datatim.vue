@@ -58,13 +58,15 @@
                                     <input v-model="form.email" type="email" class="form-control" required>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="formFile" class="form-label jarak-teks12"><b>Bukti Pembayaran</b></label>
-                                    <input type="file" name="payment" v-on:change="handlePaymentUpload">
+                                    <label for="formFile" class="form-label jarak-teks12"><b>Bukti
+                                            Pembayaran</b></label>
+                                    <input class="form-control" type="file" name="payment"
+                                        v-on:change="handlePaymentUpload">
                                 </div>
                             </div>
                             <div style="display: flex;">
                                 <button type="submit" class="btn btn-primary button-tabel-right">Simpan</button>
-                                <button class="btn btn-danger btn-kembali" @click="goBack()">Batal</button>
+                                <button class="btn btn-danger button-tabel-left" @click="goBack()">Batal</button>
                             </div>
                         </form>
                     </div>
@@ -83,51 +85,51 @@ import { router } from '@inertiajs/vue3';
 import Swal from 'sweetalert2';
 
 const form = reactive({
-  name_team: '',
-  instansi: '',
-  SelectedLomba: [],
-  phone: '',
-  email: '',
-  payment: null,
+    name_team: '',
+    instansi: '',
+    SelectedLomba: [],
+    phone: '',
+    email: '',
+    payment: null,
 });
 
 const { name, username, lombas } = defineProps(['name', 'username', 'lombas']);
 
 // Definisikan properti yang diterima oleh komponen
 const props = {
-  lombas: {
-    type: Array,
-    default: () => [],
-  },
+    lombas: {
+        type: Array,
+        default: () => [],
+    },
 };
 
 const handlePaymentUpload = (event) => {
-  form.payment = event.target.files[0];
+    form.payment = event.target.files[0];
 };
 
 async function submit() {
-  // Menambahkan properti selectedCriteria ke dalam data yang disubmit
-  const formData = { ...form, SelectedLomba: form.SelectedLomba };
-  
-  try {
-    await router.post('/datatim', formData);
-    // Tampilkan SweetAlert2 jika request berhasil
-    Swal.fire({
-      icon: 'success',
-      title: 'Success!',
-      text: 'Data tim berhasil ditambahkan.',
-      confirmButtonText: 'OK',
-    });
-  } catch (error) {
-    // Handle error
-    console.error('Error:', error);
-    Swal.fire({
-      icon: 'error',
-      title: 'Oops...',
-      text: 'Terjadi kesalahan saat menambahkan data tim.',
-      confirmButtonText: 'OK',
-    });
-  }
+    // Menambahkan properti selectedCriteria ke dalam data yang disubmit
+    const formData = { ...form, SelectedLomba: form.SelectedLomba };
+
+    try {
+        await router.post('/datatim', formData);
+        // Tampilkan SweetAlert2 jika request berhasil
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Data tim berhasil ditambahkan.',
+            confirmButtonText: 'OK',
+        });
+    } catch (error) {
+        // Handle error
+        console.error('Error:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Terjadi kesalahan saat menambahkan data tim.',
+            confirmButtonText: 'OK',
+        });
+    }
 }
 
 

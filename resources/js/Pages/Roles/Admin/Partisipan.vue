@@ -1,5 +1,5 @@
 <script setup>
-import { Link, useForm} from "@inertiajs/vue3";
+import { Link, useForm } from "@inertiajs/vue3";
 import { defineProps, ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 
@@ -92,20 +92,16 @@ onMounted(async () => {
           </a>
         </li>
         <li>
-                    <a>
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
-                        </div>
-                        <div class="menu-title">
-                            <Link class="menu-title"
-                                :href="route('logout')"
-                                method="post"
-                                as="button"
-                            >
-                                Logout
-                            </Link>
-                        </div>
-                    </a>
-                </li>
+          <a>
+            <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
+            </div>
+            <div class="menu-title">
+              <Link class="menu-title" :href="route('logout')" method="post" as="button">
+              Logout
+              </Link>
+            </div>
+          </a>
+        </li>
       </ul>
       <!--end navigation-->
     </div>

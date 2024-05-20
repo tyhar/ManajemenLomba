@@ -122,12 +122,8 @@ const filteredMessages = computed(() => {
           <a>
             <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i></div>
             <div class="menu-title">
-              <Link class="menu-title"
-                    :href="route('logout')"
-                    method="post"
-                    as="button"
-              >
-                Logout
+              <Link class="menu-title" :href="route('logout')" method="post" as="button">
+              Logout
               </Link>
             </div>
           </a>
@@ -144,10 +140,10 @@ const filteredMessages = computed(() => {
           <div class="search-bar flex-grow-1"></div>
           <div class="top-menu ms-auto">
             <ul class="navbar-nav align-items-center">
-                <div class="user-info ps-3">
-                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
-                                <p class="user-role">{{ $page.props.userData.username }}</p>
-                            </div>
+              <div class="user-info ps-3">
+                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                <p class="user-role">{{ $page.props.userData.username }}</p>
+              </div>
               <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i></div>
               <li class="nav-item dropdown dropdown-large">
                 <div class="dropdown-menu dropdown-menu-end">
@@ -179,7 +175,7 @@ const filteredMessages = computed(() => {
         <div class="card">
           <div class="card-body">
             <h4 class="mb-0 jarak-top-kurang5">Tabel Pesan</h4>
-            <hr class="c-mt10"/>
+            <hr class="c-mt10" />
             <label class="jarak-filterstatus">Filter by Status</label>
             <select class="form-select2" v-model="selectedStatus">
               <option value="Semua" selected>Semua</option>
@@ -191,13 +187,13 @@ const filteredMessages = computed(() => {
               <table id="example" class="table table-bordered">
                 <thead class="table-dark">
                   <tr>
-                    <th>ID</th>
-                    <th>Nama</th>
-                    <th>Email</th>
-                    <th class="crud-width100">No WhatsApp</th>
-                    <th class="crud-width-290">Pesan</th>
-                    <th class="border-none">Status</th>
-                    <th class="border-none"></th>
+                    <th class="width-id">ID</th>
+                    <th class="crud-width-250">Nama</th>
+                    <th class="crud-width-50">Email</th>
+                    <th class="crud-width-150">No WhatsApp</th>
+                    <th class="crud-width-350">Pesan</th>
+                    <th class="crud-width-80">Status</th>
+                    <th class="width-id"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -209,11 +205,8 @@ const filteredMessages = computed(() => {
                     <td>{{ message.value }}</td>
                     <td>{{ message.status }}</td>
                     <td>
-                      <input
-                        type="checkbox"
-                        :checked="message.status === 'sudah_dibaca'"
-                        @change="() => updateMessageStatus(message.id, message.status)"
-                      />
+                      <input type="checkbox" :checked="message.status === 'sudah_dibaca'"
+                        @change="() => updateMessageStatus(message.id, message.status)" />
                     </td>
                   </tr>
                 </tbody>
@@ -224,14 +217,6 @@ const filteredMessages = computed(() => {
       </div>
     </div>
     <!--end page wrapper -->
-    <!--start overlay-->
-    <div class="overlay toggle-icon"></div>
-    <!--end overlay-->
-    <!--Start Back To Top Button-->
-    <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
-    <!--End Back To Top Button-->
   </div>
   <!--end wrapper-->
-  <!--start switcher-->
-  <!--end switcher-->
 </template>

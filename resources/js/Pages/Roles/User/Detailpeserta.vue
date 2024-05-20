@@ -40,7 +40,9 @@
                             <div class="row">
                                 <div class="col-md-7 label-left">
                                     <h5 class="judul-detail c-ml-25 c-mt10"><b>Tema Lomba</b></h5>
-                                    <div class="judul-lomba-index c-ml-25 warna-hitam" id="name_lomba">{{ lombax.name_lomba }}</div>
+                                    <div class="judul-lomba-index c-ml-25 warna-hitam" id="name_lomba">{{
+                                        lombax.name_lomba }}
+                                    </div>
                                 </div>
                                 <div>
                                     <div class="div-class">
@@ -59,8 +61,7 @@
             </div>
         </div>
         <div class="des-biru">
-            <a class="kont">Deskripsi</a>
-            <div class="data-tim description-text" id="description">{{ lombax.description }}</div>
+            <a class="kont">{{ lombax.description }}</a>
         </div>
         <!--end page wrapper -->
     </div>
@@ -77,23 +78,3 @@ const props = defineProps({
 });
 
 </script>
-
-
-<style scoped>
-
-.des-biru {
-    display: flex;
-    flex-direction: column;
-    margin: 20px; /* Adjust this value as needed */
-}
-
-.des-biru .kont {
-    font-weight: bold;
-    margin-bottom: 10px; /* Adjust this value as needed */
-}
-
-.description-text {
-    margin-left: 20px; /* Adjust this value to align with the "Deskripsi" label */
-    padding-left: 10px; /* Adjust this value as needed */
-}
-</style>

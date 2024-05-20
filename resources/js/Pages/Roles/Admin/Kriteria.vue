@@ -75,23 +75,6 @@
                         <div class="menu-title">Logout</div>
                     </a>
                 </li>
-                <li>
-                    <a href="javascript:;" class="has-arrow">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-plus-circle"></i>
-                        </div>
-                        <div class="menu-title">SEMENTARA</div>
-                    </a>
-                    <ul>
-                        <li class="jarak-dropdown"> <a href="/dashboardjuri">JURI</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/dashboardpetugas">PETUGAS</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/overviewpeserta">PESERTA</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/index2">ADMIN</a>
-                        </li>
-                    </ul>
-                </li>
             </ul>
             <!--end navigation-->
         </div>
@@ -153,17 +136,19 @@
                                 <thead class="table-dark">
                                     <tr>
                                         <th class="width-id2">ID</th>
-                                        <th class="crud-width-400">Kriteria</th>
-                                        <th class="crud-width100">Aksi</th>
+                                        <th class="crud-width-400">Kritera</th>
+                                        <th class="crud-width120">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="kriteria in kriterias.data":key="kriteria.id">
+                                    <tr v-for="kriteria in kriterias.data" :key="kriteria.id">
                                         <td>{{ kriteria.id }}</td>
                                         <td>{{ kriteria.name_kriteria }}</td>
                                         <td class="btn-crud">
-                                             <a class="btn btn-secondary" :href="route('kriteria.show', kriteria.id)"><i class="bi bi-eye"></i></a>
-                                            <button class="btn btn-danger" ><i class="bi bi-trash" @click="deleteKriteria(kriteria.id)" ></i></button>                              
+                                            <a class="btn btn-secondary" :href="route('kriteria.show', kriteria.id)"><i
+                                                    class="bi bi-eye"></i></a>
+                                            <button class="btn btn-danger"><i class="bi bi-trash"
+                                                    @click="deleteKriteria(kriteria.id)"></i></button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -174,17 +159,8 @@
             </div>
         </div>
         <!--end page wrapper -->
-        <!--start overlay-->
-        <div class="overlay toggle-icon"></div>
-        <!--end overlay-->
-        <!--Start Back To Top Button--> <a href="javaScript:;" class="back-to-top"><i
-                class='bx bxs-up-arrow-alt'></i></a>
-        <!--End Back To Top Button-->
     </div>
     <!--end wrapper-->
-    <!--start switcher-->
-
-    <!--end switcher-->
 </template>
 
 

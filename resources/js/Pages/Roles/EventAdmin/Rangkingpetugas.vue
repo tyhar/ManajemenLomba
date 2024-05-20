@@ -57,32 +57,11 @@ import { Link } from '@inertiajs/vue3';
                         <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
                         </div>
                         <div class="menu-title">
-                            <Link class="menu-title"
-                                :href="route('logout')"
-                                method="post"
-                                as="button"
-                            >
-                                Logout
+                            <Link class="menu-title" :href="route('logout')" method="post" as="button">
+                            Logout
                             </Link>
                         </div>
                     </a>
-                </li>
-                <li>
-                    <a href="javascript:;" class="has-arrow">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-plus-circle"></i>
-                        </div>
-                        <div class="menu-title">SEMENTARA</div>
-                    </a>
-                    <ul>
-                        <li class="jarak-dropdown"> <a href="/dashboardjuri">JURI</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/eventadmin">PETUGAS</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/overviewpeserta">PESERTA</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/superadmin">ADMIN</a>
-                        </li>
-                    </ul>
                 </li>
             </ul>
             <!--end navigation-->
@@ -99,7 +78,7 @@ import { Link } from '@inertiajs/vue3';
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Petugas</p>				
+                                <p class="user-name mb-0">Petugas</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -109,23 +88,23 @@ import { Link } from '@inertiajs/vue3';
                                     </div>
                                 </div>
                             </li>
-                            <li class="nav-item dropdown dropdown-large">	
+                            <li class="nav-item dropdown dropdown-large">
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <div class="header-message-list">
                                     </div>
                                 </div>
                             </li>
                         </ul>
-                    </div>		
+                    </div>
                 </nav>
             </div>
         </header>
         <!--end header -->
-		<!--start page wrapper -->
-		<div class="page-wrapper">
-			<div class="page-content">
-				<!--breadcrumb-->
-				<div class="tf__activities_slider_area">
+        <!--start page wrapper -->
+        <div class="page-wrapper">
+            <div class="page-content">
+                <!--breadcrumb-->
+                <div class="tf__activities_slider_area">
                     <div class="container">
                         <!--breadcrumb-->
                         <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
@@ -133,54 +112,60 @@ import { Link } from '@inertiajs/vue3';
                                 <div class="card radius-15 card-overview">
                                     <img src="/bootstrap/images/desain.jpg" alt="New Image" class="border-radius">
                                     <label class="judul-overview">UI / UX</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/petugasrangking">Lihat Peserta</a>
+                                    <a class="btn btn-primary btn-landing-page2" href="/petugasrangking">Lihat
+                                        Peserta</a>
                                 </div>
                             </div>
                             <div class="col">
-                                    <div class="card radius-15 card-overview">
-                                        <img src="/bootstrap/images/ar-vr.jpg" alt="New Image" class="border-radius">
-                                        <label class="judul-overview">AR / VR</label>
-                                        <a class="btn btn-primary btn-landing-page2" href="/petugasrangking">Lihat Peserta</a>
-                                    </div>
+                                <div class="card radius-15 card-overview">
+                                    <img src="/bootstrap/images/ar-vr.jpg" alt="New Image" class="border-radius">
+                                    <label class="judul-overview">AR / VR</label>
+                                    <a class="btn btn-primary btn-landing-page2" href="/petugasrangking">Lihat
+                                        Peserta</a>
                                 </div>
-                                <div class="col">
-                                    <div class="card radius-15 card-overview">
-                                        <img src="/bootstrap/images/aplikasi-mobile.jpg" alt="New Image" class="border-radius">
-                                        <label class="judul-overview">APLIKASI MOBILE</label>
-                                        <a class="btn btn-primary btn-landing-page2" href="/petugasrangking">Lihat Peserta</a>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="card radius-15 card-overview">
-                                        <img src="/bootstrap/images/desain-website.jpg" alt="New Image" class="border-radius">
-                                        <label class="judul-overview">DESAIN WEBSITE</label>
-                                        <a class="btn btn-primary btn-landing-page2" href="/petugasrangking">Lihat Peserta</a>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="card radius-15 card-overview">
-                                        <img src="/bootstrap/images/sistem-keamanan-data.jpg" alt="New Image" class="border-radius">
-                                        <label class="judul-overview">SISTEM KEAMANAN DATA</label>
-                                        <a class="btn btn-primary btn-landing-page2" href="/petugasrangking">Lihat Peserta</a>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="card radius-15 card-overview">
-                                        <img src="/bootstrap/images/membuat-game.jpg" alt="New Image" class="border-radius">
-                                        <label class="judul-overview">UI / UX</label>
-                                        <a class="btn btn-primary btn-landing-page2" href="/petugasrangking">Lihat Peserta</a>
-                                    </div>
-                                </div> 
                             </div>
+                            <div class="col">
+                                <div class="card radius-15 card-overview">
+                                    <img src="/bootstrap/images/aplikasi-mobile.jpg" alt="New Image"
+                                        class="border-radius">
+                                    <label class="judul-overview">APLIKASI MOBILE</label>
+                                    <a class="btn btn-primary btn-landing-page2" href="/petugasrangking">Lihat
+                                        Peserta</a>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card radius-15 card-overview">
+                                    <img src="/bootstrap/images/desain-website.jpg" alt="New Image"
+                                        class="border-radius">
+                                    <label class="judul-overview">DESAIN WEBSITE</label>
+                                    <a class="btn btn-primary btn-landing-page2" href="/petugasrangking">Lihat
+                                        Peserta</a>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card radius-15 card-overview">
+                                    <img src="/bootstrap/images/sistem-keamanan-data.jpg" alt="New Image"
+                                        class="border-radius">
+                                    <label class="judul-overview">SISTEM KEAMANAN DATA</label>
+                                    <a class="btn btn-primary btn-landing-page2" href="/petugasrangking">Lihat
+                                        Peserta</a>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card radius-15 card-overview">
+                                    <img src="/bootstrap/images/membuat-game.jpg" alt="New Image" class="border-radius">
+                                    <label class="judul-overview">UI / UX</label>
+                                    <a class="btn btn-primary btn-landing-page2" href="/petugasrangking">Lihat
+                                        Peserta</a>
+                                </div>
+                            </div>
+                        </div>
                         <!--end row-->
                     </div>
-                </div>				
+                </div>
                 <!--end row-->
-			</div>
-		</div>
-	
-	</div>
-	<!--end switcher-->      
+            </div>
+        </div>
+    </div>
+    <!--end switcher-->
 </template>
-    
-

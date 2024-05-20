@@ -36,89 +36,66 @@
                     <form @submit.prevent="submit" enctype="multipart/form-data">
                         <div class="card-body">
                             <h4 class="mb-0">Edit Lomba</h4>
-                            <hr/>
+                            <hr />
                             <div class="row">
                                 <div class="col-md-6 c-mb10">
                                     <label class="c-mb5-black"><b>Nama Lomba</b></label>
-                                    <input  type="text"
-                                            class="form-control"
-                                            v-model="form.name_lomba"
-                                            id="name">
+                                    <input type="text" class="form-control" v-model="form.name_lomba" id="name">
                                 </div>
                                 <div class="col-md-6 c-mb10">
                                     <label class="c-mb5-black"><b>Nama PJ</b></label>
-                                    <input  type="text"
-                                            class="form-control"
-                                            v-model="form.pj"
-                                            id="pj">
+                                    <input type="text" class="form-control" v-model="form.pj" id="pj">
                                 </div>
-
                                 <div class="col-md-6">
                                     <label class="c-mb5-black"><b>Deskripsi</b></label>
                                     <div class="col-12">
-                                        <textarea  type="text"
-                                            class="form-control"
-                                            v-model="form.description"
-                                            id="description"></textarea>
+                                        <textarea class="form-control c-mb10" id="deskripsi" rows="4"
+                                            v-model="form.description"></textarea>
                                     </div>
                                     <div>
                                         <label for="picture" class="form-label judul-form"><b>Gambar</b></label>
-                                        <input type="file" id="picture" accept="image/*" class="form-control" @input="form.picture = $event.target.files[0]">
+                                        <input type="file" id="picture" accept="image/*" class="form-control"
+                                            @input="form.picture = $event.target.files[0]">
                                         <p class="keterangan-foto">Ukuran 500 x 500</p>
-                                    </div> 
-                                    <!-- <div>
-                                        <label for="picture" class="form-label judul-form"><b>Gambar</b></label>
-                                        <input type="file" id="picture" accept="image/*" class="form-control" ref="pictureInput">
-                                        <p class="keterangan-foto">Ukuran 500 x 500</p>
-                                    </div>  -->
-                                     <div>
+                                    </div>
+                                    <div>
                                         <label for="sertifikat" class="form-label judul-form"><b>Sertifikat</b></label>
-                                        <input type="file" id="sertifikat" accept="image/*" class="form-control"  @input="form.sertifikat = $event.target.files[0]">
+                                        <input type="file" id="sertifikat" accept="image/*" class="form-control"
+                                            @input="form.sertifikat = $event.target.files[0]">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="c-mb5-black"><b>Kontak PJ</b></label>
-                                    <input  
-                                            type="number"
-                                            class="form-control"
-                                            v-model="form.kontak"
-                                            id="kontak"
-                                            >
-                                            
-
+                                    <input type="number" class="form-control" v-model="form.kontak" id="kontak">
                                     <div>
                                         <label class="c-mb5-black"><b>Tempat</b></label>
-                                        <input  type="text"
-                                            class="form-control"
-                                            v-model="form.tempat"
-                                            id="tempat">
+                                        <input type="text" class="form-control" v-model="form.tempat" id="tempat">
                                     </div>
                                     <div class="c-mt10">
                                         <label class="c-mb5-black"><b>Biaya Pendaftaran</b></label>
-                                        <input  type="text"
-                                            class="form-control"
-                                            v-model="form.biaya_pendaftaran"
+                                        <input type="text" class="form-control" v-model="form.biaya_pendaftaran"
                                             id="biaya_pendaftaran">
-                                           </div>                    
+                                    </div>
+                                    <div>
+                                        <label class="role-add"><b class="warna-hitam">Kriteria Lomba</b></label>
                                         <div>
-                                   <label class="role-add"><b class="warna-hitam">Kriteria Lomba</b></label>
-                               <div>   
-                             <div class="form-check" v-for="kriteria in kriterias.data" :key="kriteria.id">
-                                      <input class="form-check-input" type="checkbox" :id="'kriteria' + kriteria.id" v-model="form.selectedCriteria" :value="kriteria.id">
-                                  <label class="form-check-label" :for="'kriteria' + kriteria.id">{{ kriteria.name_kriteria }} </label>
-                                          </div>
-                                  </div>
-                                       </div>           
-                                      </div>   
-                                     </div>
-                                         <div class="btn-posisi">
-                                <button
-                                    type="submit"
-                                    class="btn btn-primary button-tabel-right"
-                                >
+                                            <div class="form-check" v-for="kriteria in kriterias.data"
+                                                :key="kriteria.id">
+                                                <input class="form-check-input" type="checkbox"
+                                                    :id="'kriteria' + kriteria.id" v-model="form.selectedCriteria"
+                                                    :value="kriteria.id">
+                                                <label class="form-check-label" :for="'kriteria' + kriteria.id">{{
+                                                    kriteria.name_kriteria }} </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="btn-posisi">
+                                <button type="submit" class="btn btn-primary button-tabel-right">
                                     Update
                                 </button>
-                                    <button class="btn btn-danger btn-kembali" @click="goBack()">Kembali</button>
+                                <button class="btn btn-danger btn-kembali" @click="goBack()">Kembali</button>
                             </div>
                         </div>
                     </form>
@@ -155,7 +132,7 @@ const form = useForm({
     biaya_pendaftaran: lomba.data.biaya_pendaftaran,
     picture: lomba.data.picture ? `/storage/${lomba.data.picture}` : null,
     sertifikat: lomba.data.sertifikat ? `/storage/${lomba.data.sertifikat}` : null,
-    selectedCriteria: [], 
+    selectedCriteria: [],
 });
 
 async function submit() {

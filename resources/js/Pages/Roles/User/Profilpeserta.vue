@@ -90,13 +90,8 @@ const submit = () => {
                     <a href="/">
                         <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i></div>
                         <div class="menu-title">
-                            <Link
-                                class="menu-title"
-                                :href="route('logout')"
-                                method="post"
-                                as="button"
-                            >
-                                Logout
+                            <Link class="menu-title" :href="route('logout')" method="post" as="button">
+                            Logout
                             </Link>
                         </div>
                     </a>
@@ -137,8 +132,6 @@ const submit = () => {
         <!--start page wrapper -->
         <div class="page-wrapper">
             <div class="page-content">
-                <!--breadcrumb-->
-                <!--end breadcrumb-->
                 <div class="container">
                     <div class="main-body">
                         <form @submit.prevent="submit">
@@ -148,9 +141,12 @@ const submit = () => {
                                         <div class="card-body">
                                             <div class="d-flex flex-column align-items-center text-center">
                                                 <div class="ukuran-foto">
-                                                    <img :src="userData.photo ? `/storage/${userData.photo}` : '/bootstrap/images/default.jpg'" alt="Profile" class="rounded-circle p-1 bg-primary" width="190" height="150">
+                                                    <img :src="userData.photo ? `/storage/${userData.photo}` : '/bootstrap/images/default.jpg'"
+                                                        alt="Profile" class="rounded-circle p-1 bg-primary" width="190"
+                                                        height="150">
                                                 </div>
-                                                <input type="file" class="form-control form-control-sm btn-profil2 mt-2" @change="e => form.photo = e.target.files[0]">
+                                                <input type="file" class="form-control form-control-sm btn-profil2"
+                                                    @change="e => form.photo = e.target.files[0]">
                                             </div>
                                         </div>
                                     </div>
@@ -206,11 +202,9 @@ const submit = () => {
                                                     <input type="text" class="form-control" v-model="form.phone">
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-sm-3"></div>
-                                                <div class="col-sm-9 text-secondary">
-                                                    <button type="submit" class="btn btn-primary px-4">Perbarui</button>
-                                                </div>
+                                            <div class="pperbarui">
+                                                <button type="submit"
+                                                    class="btn btn-primary  crud-width-435">Perbarui</button>
                                             </div>
                                         </div>
                                     </div>

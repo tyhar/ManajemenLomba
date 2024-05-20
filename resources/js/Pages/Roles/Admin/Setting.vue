@@ -7,23 +7,23 @@ import { defineProps } from "vue";
 
 const unreadCount = ref(0);
 onMounted(async () => {
-  try {
-    const response = await axios.get('/api/unread-messages');
-    unreadCount.value = response.data.unreadCount;
-  } catch (error) {
-    console.error(error);
-  }
+    try {
+        const response = await axios.get('/api/unread-messages');
+        unreadCount.value = response.data.unreadCount;
+    } catch (error) {
+        console.error(error);
+    }
 });
 
 const props = defineProps({
-  name: {
-    type: String,
-    required: true,
-  },
-  username: {
-    type: String,
-    required: true,
-  },
+    name: {
+        type: String,
+        required: true,
+    },
+    username: {
+        type: String,
+        required: true,
+    },
 });
 
 
@@ -42,7 +42,7 @@ const props = defineProps({
             <div class="sidebar-header">
                 <div>
                     <a href="/">
-                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon" >
+                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon">
                     </a>
                 </div>
                 <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
@@ -56,8 +56,8 @@ const props = defineProps({
                         </div>
                         <div class="menu-title">Dashboard</div>
                     </a>
-                    </li>
-                    <li>
+                </li>
+                <li>
                     <a href="javascript:;" class="has-arrow">
                         <div class="parent-icon"><i class="fadeIn animated bx bx-plus-circle"></i>
                         </div>
@@ -79,18 +79,18 @@ const props = defineProps({
                     </ul>
                 </li>
                 <li>
-                <a href="/partisipan">
-                    <div class="parent-icon"><i class="fadeIn animated bx bx-street-view"></i>
-                    </div>
-                    <div class="menu-title">Partisipan</div>
-                </a>
+                    <a href="/partisipan">
+                        <div class="parent-icon"><i class="fadeIn animated bx bx-street-view"></i>
+                        </div>
+                        <div class="menu-title">Partisipan</div>
+                    </a>
                 </li>
                 <li>
                     <a href="/pesan">
-            <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i></div>
-            <!-- Menampilkan jumlah pesan yang belum dibaca -->
-            <div class="menu-title">Pesan <span class="alert-count">{{ unreadCount }}</span></div>
-          </a>
+                        <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i></div>
+                        <!-- Menampilkan jumlah pesan yang belum dibaca -->
+                        <div class="menu-title">Pesan <span class="alert-count">{{ unreadCount }}</span></div>
+                    </a>
                 </li>
                 <li>
                     <a href="/rangking">
@@ -104,19 +104,15 @@ const props = defineProps({
                         <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
                         </div>
                         <div class="menu-title">
-                            <Link class="menu-title"
-                                :href="route('logout')"
-                                method="post"
-                                as="button"
-                            >
-                                Logout
+                            <Link class="menu-title" :href="route('logout')" method="post" as="button">
+                            Logout
                             </Link>
                         </div>
                     </a>
                 </li>
             </ul>
             <!--end navigation-->
-            
+
         </div>
         <!--end sidebar wrapper -->
         <!--start header -->
@@ -141,14 +137,14 @@ const props = defineProps({
                                     </div>
                                 </div>
                             </li>
-                            <li class="nav-item dropdown dropdown-large">	
+                            <li class="nav-item dropdown dropdown-large">
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <div class="header-message-list">
                                     </div>
                                 </div>
                             </li>
                         </ul>
-                    </div>		
+                    </div>
                 </nav>
             </div>
         </header>
@@ -159,10 +155,10 @@ const props = defineProps({
                 <div class="card">
                     <div class="card-body">
                         <h4 class="mb-0 jarak-top-kurang5">Setting Event</h4>
-                        <hr class="c-mt10" />		
-                        <a class="btn btn-success jarak-top-kurang7"  :href="route('setting.create')">Tambah Event</a>
-                        <hr class="c-mt10" /> 	
-                        <div class="table-responsive">	     
+                        <hr class="c-mt10" />
+                        <a class="btn btn-success jarak-top-kurang7" :href="route('setting.create')">Tambah Event</a>
+                        <hr class="c-mt10" />
+                        <div class="table-responsive">
                             <table id="example" class="table table-bordered">
                                 <thead class="table-dark">
                                     <tr>
@@ -184,7 +180,9 @@ const props = defineProps({
                                         <td>April 1, 2024</td>
                                         <td>April 20, 2024</td>
                                         <td class="btn-crud">
-                                            <button class="btn btn-primary" onclick="window.location.href='/setting/{setting}/edit'"><i class="bi bi-pencil-square"></i></button>
+                                            <button class="btn btn-primary"
+                                                onclick="window.location.href='/setting/{setting}/edit'"><i
+                                                    class="bi bi-pencil-square"></i></button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -199,7 +197,7 @@ const props = defineProps({
 </template>
 
 <script>
-$(document).ready(function() {
+$(document).ready(function () {
     $('#example').DataTable();
-  } );
+});
 </script>
