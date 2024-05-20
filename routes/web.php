@@ -24,18 +24,18 @@ Route::get('/', function () {
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
-        'sponsors' => Sponsor::all()->map(function($sponsor) {
+        'sponsors' => Sponsor::all()->map(function ($sponsor) {
             return [
                 'id' => $sponsor->id,
                 'name' => $sponsor->name,
                 'link_file' => $sponsor->link_file,
-                'logo' => asset('storage/'.$sponsor->logo)
+                'logo' => asset('storage/' . $sponsor->logo)
             ];
         }),
     ]);
 })->name('welcome');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -47,7 +47,7 @@ Route::middleware('auth')->group(function () {
 //dont forget to add controller class or any other import needed
 
 // -> user atau peserta
-Route::middleware('auth','verified','user')->group(function () {
+Route::middleware('auth', 'verified', 'user')->group(function () {
     Route::get('/dashboard', [UserController::class, 'index'])->name('dashboard');
     Route::get('/detailpeserta', [UserController::class, 'detailpeserta']);
     Route::get('/profilpeserta', [UserController::class, 'profilpeserta']);
@@ -61,7 +61,7 @@ Route::middleware('auth','verified','user')->group(function () {
 });
 
 // -> admin
-Route::middleware('auth','verified','admin')->group(function () {
+Route::middleware('auth', 'verified', 'admin')->group(function () {
     Route::get('/superadmin', [AdminController::class, 'index'])->name('admin');
     Route::get('/partisipan', [AdminController::class, 'partisipan']);
     // Route::resource('superadmin/partisipan', [PartisipanController::class]);
@@ -97,7 +97,7 @@ Route::middleware('auth','verified','admin')->group(function () {
 
     // Route::resource('superadmin/sponsor', SponsorController::class);
     Route::resource('sponsor', SponsorController::class);
-    
+
     Route::get('/berita', [AdminController::class, 'berita']);
     Route::get('/tambahberita', [AdminController::class, 'tambahberita']);
     Route::get('/editberita', [AdminController::class, 'editberita']);
@@ -115,7 +115,7 @@ Route::middleware('auth','verified','admin')->group(function () {
 });
 
 // -> eventadmin atau petugas
-Route::middleware('auth','verified','eventadmin')->group(function () {
+Route::middleware('auth', 'verified', 'eventadmin')->group(function () {
     Route::get('/eventadmin', [EventAdminController::class, 'index'])->name('eventadmin');
     Route::get('/partisipanpetugas', [EventAdminController::class, 'partisipanpetugas']);
     Route::get('/timpetugas', [EventAdminController::class, 'timpetugas']);
@@ -126,12 +126,13 @@ Route::middleware('auth','verified','eventadmin')->group(function () {
 });
 
 // -> panelis atau juri
-Route::middleware('auth','verified','panelis')->group(function () {
+Route::middleware('auth', 'verified', 'panelis')->group(function () {
     Route::get('/panelis', [PanelisController::class, 'index'])->name('panelis');
     Route::get('/lombajuri', [PanelisController::class, 'lombajuri']);
     Route::get('/tabellomba', [PanelisController::class, 'tabellomba']);
     Route::get('/rangkingjuri', [PanelisController::class, 'rangkingjuri']);
     Route::get('/tabelrangkingjuri', [PanelisController::class, 'tabelrangkingjuri']);
+    Route::get('/editnilai', [PanelisController::class, 'editnilai']);
     Route::get('/nilai', [PanelisController::class, 'nilai']);
     // Route::get('/dashboardjuri', [PanelisController::class, 'dashboardjuri'])->name('dashboardjuri');
     // Route::get('/rangking', [PanelisControllerController::class, 'rangking']);
@@ -146,10 +147,11 @@ Route::middleware('auth','verified','panelis')->group(function () {
 //     return inertia::render('Utama/Kontak');
 // });
 Route::resource('pesan', MessageController::class)->only([
-    'create','store'
+    'create',
+    'store'
 ]);
 
-Route::get('/informasiberita', function() {
+Route::get('/informasiberita', function () {
     return inertia::render('Utama/InformasiBerita');
 });
 
@@ -162,4 +164,3 @@ Route::get('/informasiberita', function() {
 // Route::get('/dashboard', function () {
 //     return Inertia::render('Dashboard');
 // })->middleware(['auth', 'verified', 'user'])->name('dashboard');
-

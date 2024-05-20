@@ -31,11 +31,11 @@ const submit = () => {
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
-                        <a href="/">
-                            <div class="navbar-left">
+                        <div class="navbar-left">
+                            <a href="/">
                                 <img src="/bootstrap/images/logo.png" alt="Logo">
-                            </div>
-                        </a>
+                            </a>
+                        </div>
                     </div>
                     <!-- Mobile toggle menu -->
                     <!-- Search bar -->
@@ -45,13 +45,13 @@ const submit = () => {
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>			
-                                <p class="user-role">habib</p>					
+                                <p class="user-name mb-0">Habib Shohiburrotib</p>
+                                <p class="user-role">habib</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
                         </ul>
-                    </div>		
+                    </div>
                 </nav>
             </div>
         </header>
@@ -63,73 +63,45 @@ const submit = () => {
                     <form @submit.prevent="submit">
                         <div class="card-body">
                             <h4 class="mb-0">Tambah Sponsor</h4>
-                            <hr/>
+                            <hr />
                             <div>
                                 <div class="c-mb10">
-                                    <label
-                                        for="name" 
-                                        class="c-mb5-black"
-                                    >
+                                    <label for="name" class="c-mb5-black">
                                         <b>Nama Sponsor</b>
                                     </label>
-                                    <input 
-                                        type="text" 
-                                        class="form-control"
-                                        v-model="form.name"
-                                        id="name"
-                                    >
+                                    <input type="text" class="form-control" v-model="form.name" id="name">
                                 </div>
                                 <div>
-                                    <label
-                                        for="link_file" 
-                                        class="c-mb5-black"
-                                    >
+                                    <label for="link_file" class="c-mb5-black">
                                         <b>Link</b>
                                     </label>
                                     <div class="col-12">
-                                        <input
-                                            type="text"
-                                            v-model="form.link_file"
-                                            id="link_file"  
-                                            class="form-control c-mb10" rows="2"
-                                        >
+                                        <input type="text" v-model="form.link_file" id="link_file"
+                                            class="form-control c-mb10" rows="2">
                                     </div>
                                 </div>
                                 <div>
-                                    <label 
-                                        for="logo" 
-                                        class="form-label warna-hitam"
-                                    >
+                                    <label for="logo" class="form-label warna-hitam">
                                         <b>Logo</b>
                                     </label>
-                                    <input 
-                                        class="form-control"
-                                        type="file"
-                                        @input="form.logo = $event.target.files[0]"
-                                        id="logo"
-                                    >
+                                    <input class="form-control" type="file" @input="form.logo = $event.target.files[0]"
+                                        id="logo">
                                     <!-- <input 
                                         class="form-control"
                                         type="text"
                                         v-model="form.logo"
                                         id="logo"
                                     > -->
-                                    <p class="keterangan-foto">Max 2 MB (500 x 500 px)</p>
+                                    <p class="keterangan-foto">Max 2 MB (200 x 200 px)</p>
                                 </div>
                             </div>
                             <div class="btn-posisi">
                                 <!-- <button class="btn btn-primary button-tabel-right" onclick="window.location.href='/sponsor'">Tambah</button>
                                 <button class="btn btn-danger button-tabel-left" onclick="window.location.href='/sponsor'">Batal</button> -->
-                                <button
-                                    type="submit"
-                                    class="btn btn-primary button-tabel-right"
-                                >
+                                <button type="submit" class="btn btn-primary button-tabel-right">
                                     Tambah
                                 </button>
-                                <a 
-                                    class="btn btn-danger button-tabel-left"
-                                    :href="route('sponsor.index')"
-                                >
+                                <a class="btn btn-danger button-tabel-left" :href="route('sponsor.index')">
                                     Batal
                                 </a>
                             </div>
@@ -141,5 +113,3 @@ const submit = () => {
         <!--end page wrapper -->
     </div>
 </template>
-    
-   

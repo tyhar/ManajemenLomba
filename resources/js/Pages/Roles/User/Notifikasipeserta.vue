@@ -57,32 +57,11 @@ import { Link } from '@inertiajs/vue3';
                         <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
                         </div>
                         <div class="menu-title">
-                            <Link class="menu-title"
-                                :href="route('logout')"
-                                method="post"
-                                as="button"
-                            >
-                                Logout
+                            <Link class="menu-title" :href="route('logout')" method="post" as="button">
+                            Logout
                             </Link>
                         </div>
                     </a>
-                </li>
-                <li>
-                    <a href="javascript:;" class="has-arrow">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-plus-circle"></i>
-                        </div>
-                        <div class="menu-title">SEMENTARA</div>
-                    </a>
-                    <ul>
-                        <li class="jarak-dropdown"> <a href="/dashboardjuri">JURI</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/dashboardpetugas">PETUGAS</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/overviewpeserta">PESERTA</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/index2">ADMIN</a>
-                        </li>
-                    </ul>
                 </li>
             </ul>
             <!--end navigation-->
@@ -99,8 +78,8 @@ import { Link } from '@inertiajs/vue3';
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Lionel Andres</p>			
-                                <p class="user-role">leon</p>								
+                                <p class="user-name mb-0">Lionel Andres</p>
+                                <p class="user-role">leon</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -110,30 +89,34 @@ import { Link } from '@inertiajs/vue3';
                                     </div>
                                 </div>
                             </li>
-                            <li class="nav-item dropdown dropdown-large">	
+                            <li class="nav-item dropdown dropdown-large">
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <div class="header-message-list">
                                     </div>
                                 </div>
                             </li>
                         </ul>
-                    </div>		
+                    </div>
                 </nav>
             </div>
         </header>
         <!--end header -->
         <!--start page wrapper -->
         <div class="page-wrapper">
-            <div class="page-content"> 
+            <div class="page-content">
                 <div class="card-body btn-crud">
-                    <div class="d-grid notifikasi-peserta"> <a class="btn btn-danger radius-3 text-warna warna-hitam">Mohon maaf TIM anda gagal ke tahap selanjutnya untuk lomba ui/ux dalam event Olinas (Olimpiade Nasional)</a>
-					</div>
-                    <div class="d-grid notifikasi-peserta-2"> <a class="btn btn-success radius-3 text-warna warna-hitam">Selamat TIM anda telah terdaftar lomba UI/UX</a>
-				    </div>
+                    <div class="keterangan-notif jarak-bottom-kurang20 c-mb30 bg-cred">
+                        <label>Mey 21</label>
+                        <label>Mohon maaf TIM anda gagal ke tahap selanjutnya untuk lomba ui/ux </label>
+                    </div>
+                    <div class="keterangan-notif jarak-bottom-kurang20 bg-cgreen">
+                        <label>Mey 21</label>
+                        <label>Selamat TIM anda telah terdaftar lomba ui/ux </label>
+                    </div>
+
                 </div>
             </div>
         </div>
         <!--end page wrapper -->
     </div>
 </template>
-    

@@ -66,7 +66,6 @@
                             <div class="col-md-6">
                                 <label class="c-mb5-black"><b>Kontak PJ</b></label>
                                 <input type="email" class="form-control label-8" value="085000000000">
-
                                 <div>
                                     <label class="c-mb5-black"><b>Tempat</b></label>
                                     <input type="email" class="form-control">

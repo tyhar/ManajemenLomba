@@ -13,7 +13,7 @@ import { Link } from '@inertiajs/vue3';
                     </a>
                 </div>
                 <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
-            </div>
+                </div>
             </div>
             <!--navigation-->
             <ul class="metismenu" id="menu">
@@ -23,8 +23,8 @@ import { Link } from '@inertiajs/vue3';
                         </div>
                         <div class="menu-title">Dashboard</div>
                     </a>
-                    </li>
-                    <li>
+                </li>
+                <li>
                     <a href="javascript:;" class="has-arrow">
                         <div class="parent-icon"><i class="fadeIn animated bx bx-plus-circle"></i>
                         </div>
@@ -46,11 +46,11 @@ import { Link } from '@inertiajs/vue3';
                     </ul>
                 </li>
                 <li>
-                <a href="/partisipan">
-                    <div class="parent-icon"><i class="fadeIn animated bx bx-street-view"></i>
-                    </div>
-                    <div class="menu-title">Partisipan</div>
-                </a>
+                    <a href="/partisipan">
+                        <div class="parent-icon"><i class="fadeIn animated bx bx-street-view"></i>
+                        </div>
+                        <div class="menu-title">Partisipan</div>
+                    </a>
                 </li>
                 <li>
                     <a href="/pesan">
@@ -71,19 +71,15 @@ import { Link } from '@inertiajs/vue3';
                         <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
                         </div>
                         <div class="menu-title">
-                            <Link class="menu-title"
-                                :href="route('logout')"
-                                method="post"
-                                as="button"
-                            >
-                                Logout
+                            <Link class="menu-title" :href="route('logout')" method="post" as="button">
+                            Logout
                             </Link>
                         </div>
                     </a>
                 </li>
             </ul>
             <!--end navigation-->
-            
+
         </div>
         <!--end sidebar wrapper -->
         <!--start header -->
@@ -175,21 +171,12 @@ import { Link } from '@inertiajs/vue3';
             </div>
         </div>
         <!--end page wrapper -->
-        <!--start overlay-->
-        <div class="overlay toggle-icon"></div>
-        <!--end overlay-->
-        <!--Start Back To Top Button--> <a href="javaScript:;" class="back-to-top"><i
-                class='bx bxs-up-arrow-alt'></i></a>
-        <!--End Back To Top Button-->
     </div>
     <!--end wrapper-->
-    <!--start switcher-->
-            
-    <!--end switcher-->
 </template>
- 
+
 <script>
-$(document).ready(function() {
+$(document).ready(function () {
     $('#example').DataTable();
-  } );
+});
 </script>

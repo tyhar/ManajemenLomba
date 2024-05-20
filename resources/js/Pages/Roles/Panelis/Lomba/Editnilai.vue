@@ -1,6 +1,3 @@
-<script setup>
-import { Link } from '@inertiajs/vue3';
-</script>
 <template>
     <div class="wrapper">
         <!--start header -->
@@ -23,8 +20,8 @@ import { Link } from '@inertiajs/vue3';
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Lionel Andres</p>
-                                <p class="user-role">leon</p>
+                                <p class="user-name mb-0">Habib Shohiburrotib</p>
+                                <p class="user-role">habib</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -39,49 +36,51 @@ import { Link } from '@inertiajs/vue3';
             <div class="page-content">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0">INFO TIM LOMBA</h4>
+                        <h4 class="mb-0">EDIT NILAI</h4>
                         <hr />
                         <div class="row">
                             <div class="col-md-6 c-mb10">
-                                <label class="jarak-input"><b>Nama Tim</b></label>
-                                <input type="email" class="form-control">
+                                <label class="c-mb5-black"><b>1. Kreativitas</b></label>
                             </div>
                             <div class="col-md-6">
-                                <label class="jarak-input"><b>Instansi</b></label>
-                                <input type="email" class="form-control">
+                                <label class="c-mb5-black"><b>Nilai</b></label>
+                                <input type="namalomba" class="form-control c-mb20">
+                            </div>
+                            <div class="col-md-6 c-mb10">
+                                <label class="c-mb5-black"><b>2. Estetika dan Komposisi</b></label>
                             </div>
                             <div class="col-md-6">
-                                <label class="c-mb5-black"><b>Nama Lomba</b></label>
-                                <div class="col-12">
-                                    <select class="form-select" id="inputProductType">
-                                        <option value="1" selected>AR/VR</option>
-                                        <option value="2">APLIKASI MOBILE</option>
-                                        <option value="3">DESAIN WEBSITE</option>
-                                    </select>
-                                </div>
+                                <label class="c-mb5-black"><b>Nilai</b></label>
+                                <input type="namalomba" class="form-control c-mb20">
+                            </div>
+                            <div class="col-md-6 c-mb10">
+                                <label class="c-mb5-black"><b>3. Kriteria 3</b></label>
                             </div>
                             <div class="col-md-6">
-                                <label class="jarak-input"><b>No WhatsApp</b></label>
-                                <input type="email" class="form-control c-mb8">
+                                <label class="c-mb5-black"><b>Nilai</b></label>
+                                <input type="namalomba" class="form-control c-mb20">
+                            </div>
+                            <div class="col-md-6 c-mb10">
+                                <label class="c-mb5-black"><b>4. Kriteria 4</b></label>
                             </div>
                             <div class="col-md-6">
-                                <label class="jarak-input"><b>Email</b></label>
-                                <input type="email" class="form-control">
+                                <label class="c-mb5-black"><b>Nilai</b></label>
+                                <input type="namalomba" class="form-control c-mb20">
                             </div>
-                            <!-- <div class="col-md-6">
-                                <label for="formFile" class="form-label jarak-teks11"><b>Surat</b></label>
-								<input class="form-control" type="file" id="formFile">
-                            </div> -->
+                            <div class="col-md-6 c-mb10">
+                                <label class="c-mb5-black"><b>4. Kriteria 5</b></label>
+                            </div>
                             <div class="col-md-6">
-                                <label for="formFile" class="form-label jarak-teks12"><b>Bukti Pembayaran</b></label>
-                                <input class="form-control" type="file" id="formFile">
+                                <label class="c-mb5-black"><b>Nilai</b></label>
+                                <input type="namalomba" class="form-control c-mb20">
                             </div>
+
                         </div>
-                        <div style="display: flex;">
+                        <div class="btn-posisi">
                             <button class="btn btn-primary button-tabel-right"
-                                onclick="window.location.href='/daftarlomba'">Simpan</button>
+                                onclick="window.location.href='/tabellomba'">Simpan</button>
                             <button class="btn btn-danger button-tabel-left"
-                                onclick="window.location.href='/daftarlomba'">Batal</button>
+                                onclick="window.location.href='/tabellomba'">Batal</button>
                         </div>
                     </div>
                 </div>

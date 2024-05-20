@@ -10,7 +10,7 @@ import { Link } from '@inertiajs/vue3';
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
                         <div class="navbar-left">
-                            <a href="dashboard">
+                            <a href="/">
                                 <img src="/bootstrap/images/logo.png" alt="Logo">
                             </a>
                         </div>
@@ -23,37 +23,47 @@ import { Link } from '@inertiajs/vue3';
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>			
-                                <p class="user-role">habib</p>					
+                                <p class="user-name mb-0">Habib Shohiburrotib</p>
+                                <p class="user-role">habib</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
                         </ul>
-                    </div>		
+                    </div>
                 </nav>
             </div>
         </header>
         <!--end header -->
         <!--start page wrapper -->
-        <div class="page-wrapper-peserta">
-            <div class="page-content">
-                <div class="card container-hg180">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-7 label-left">
-                                <h5 class="judul-detail c-ml-80 c-mt10"><b>Tema Lomba</b></h5>
-                                <div class="judul-lomba-index c-ml-80 warna-hitam"><b>Desain Website</b></div>
-                            </div>
-                            <div class="col-md-5 d-flex justify-content-end align-items-center">
-                                <a class="btn btn-primary crud-width-180  isi-data" href="/daftarlomba">Daftar Lomba</a>
+        <div class="kotak-putih">
+            <div class="page-wrapper-peserta">
+                <div class="page-content">
+                    <div class="card container-hgnew">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-7 label-left">
+                                    <h5 class="judul-detail c-ml-25 c-mt10"><b>Tema Lomba</b></h5>
+                                    <div class="judul-lomba-index c-ml-25 warna-hitam"><b>Desain Website</b></div>
+                                </div>
+                                <div>
+                                    <div class="div-class">
+                                        <a class="btn btn-pink c-mtkc" href="#">BUKU
+                                            PANDUAN</a>
+                                        <a class="btn btn-success c-mtk margin-afkar1 warna-hitam" href="#">AJUKAN
+                                            PERTANYAAN</a>
+                                        <a class="btn btn-primary c-mtk mg-t10 warna-hitam" href="/daftarlomba">DAFTAR
+                                            LOMBA</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>      
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="des-biru">
+            <a class="kont">Deskripsi</a>
+        </div>
         <!--end page wrapper -->
     </div>
-
 </template>
-    

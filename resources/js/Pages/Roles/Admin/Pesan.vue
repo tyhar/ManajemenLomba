@@ -21,7 +21,7 @@ defineProps({
                     </a>
                 </div>
                 <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
-            </div>
+                </div>
             </div>
             <!--navigation-->
             <ul class="metismenu" id="menu">
@@ -31,8 +31,8 @@ defineProps({
                         </div>
                         <div class="menu-title">Dashboard</div>
                     </a>
-                    </li>
-                    <li>
+                </li>
+                <li>
                     <a href="javascript:;" class="has-arrow">
                         <div class="parent-icon"><i class="fadeIn animated bx bx-plus-circle"></i>
                         </div>
@@ -54,11 +54,11 @@ defineProps({
                     </ul>
                 </li>
                 <li>
-                <a href="/partisipan">
-                    <div class="parent-icon"><i class="fadeIn animated bx bx-street-view"></i>
-                    </div>
-                    <div class="menu-title">Partisipan</div>
-                </a>
+                    <a href="/partisipan">
+                        <div class="parent-icon"><i class="fadeIn animated bx bx-street-view"></i>
+                        </div>
+                        <div class="menu-title">Partisipan</div>
+                    </a>
                 </li>
                 <li>
                     <a href="/pesan">
@@ -79,12 +79,8 @@ defineProps({
                         <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
                         </div>
                         <div class="menu-title">
-                            <Link class="menu-title"
-                                :href="route('logout')"
-                                method="post"
-                                as="button"
-                            >
-                                Logout
+                            <Link class="menu-title" :href="route('logout')" method="post" as="button">
+                            Logout
                             </Link>
                         </div>
                     </a>
@@ -104,25 +100,25 @@ defineProps({
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>			
-                                <p class="user-role">habib</p>						
+                                <p class="user-name mb-0">Habib Shohiburrotib</p>
+                                <p class="user-role">habib</p>
                             </div>
-                        <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
-                        </div>
+                            <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
+                            </div>
                             <li class="nav-item dropdown dropdown-large">
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <div class="header-notifications-list">
                                     </div>
                                 </div>
                             </li>
-                            <li class="nav-item dropdown dropdown-large">	
+                            <li class="nav-item dropdown dropdown-large">
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <div class="header-message-list">
                                     </div>
                                 </div>
                             </li>
                         </ul>
-                    </div>		
+                    </div>
                 </nav>
             </div>
         </header>
@@ -134,36 +130,36 @@ defineProps({
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb mb-0 p-0">
                             <li class="breadcrumb-item">
-                            </li>                             
+                            </li>
                         </ol>
                     </nav>
                 </div>
-				<div class="card">
-					<div class="card-body">
+                <div class="card">
+                    <div class="card-body">
                         <h4 class="mb-0 jarak-top-kurang5">Tabel Pesan</h4>
-                        <hr class="c-mt10"/>
-                            <label class="jarak-filterstatus">Filter by Status</label> 
-                            <select class="form-select2">
-                                <option selected>Semua</option>
-                                <option>Belum Dibaca</option>
-                                <option>Sudah Dibaca</option>
-                            </select>                           
-                            <br><br>
-                            <div class="table-responsive">	
-                                <table id="example" class="table table-bordered">
-                                    <thead class="table-dark">
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Nama</th>  
-                                            <th>Email</th>
-                                            <th class="crud-width100" >No WhatsApp</th>
-                                            <th class="crud-width-290">Pesan</th>
-                                            <th class="border-none">Status</th>
-                                            <th class="border-none"></th> 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <!-- <tr>
+                        <hr class="c-mt10" />
+                        <label class="jarak-filterstatus">Filter by Status</label>
+                        <select class="form-select2">
+                            <option selected>Semua</option>
+                            <option>Belum Dibaca</option>
+                            <option>Sudah Dibaca</option>
+                        </select>
+                        <br><br>
+                        <div class="table-responsive">
+                            <table id="example" class="table table-bordered">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th class="width-id">ID</th>
+                                        <th class="crud-width-250">Nama</th>
+                                        <th class="crud-width-50">Email</th>
+                                        <th class="crud-width-150">No WhatsApp</th>
+                                        <th class="crud-width-350">Pesan</th>
+                                        <th class="crud-width-80">Status</th>
+                                        <th class="width-id"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- <tr>
                                             <td>1</td>
                                             <td>Lionel Andres </td>
                                             <td>goat@gmail.com</td>
@@ -174,37 +170,25 @@ defineProps({
                                                 <input type="checkbox">
                                             </td>
                                         </tr> -->
-                                        <tr
-                                            v-for="message in messages"
-                                            :key="message.id"
-                                        >
-                                            <td>{{ message.id }}</td>
-                                            <td>{{ message.name }}</td>
-                                            <td>{{ message.email }}</td>
-                                            <td>{{ message.phone }}</td>
-                                            <td>{{ message.value }}</td>
-                                            <td class="border-none"><label>{{ message.staus }}</label></td>
-                                            <td class="border-none">
-                                                <input type="checkbox" checked>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                                    <tr v-for="message in messages" :key="message.id">
+                                        <td>{{ message.id }}</td>
+                                        <td>{{ message.name }}</td>
+                                        <td>{{ message.email }}</td>
+                                        <td>{{ message.phone }}</td>
+                                        <td>{{ message.value }}</td>
+                                        <td class="border-none"><label>{{ message.staus }}</label></td>
+                                        <td class="border-none">
+                                            <input type="checkbox" checked>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                    </div>      
-                    <!--end row-->
+                    </div>
                 </div>
+                <!--end row-->
             </div>
+        </div>
         <!--end page wrapper -->
-        <!--start overlay-->
-        <div class="overlay toggle-icon"></div>
-        <!--end overlay-->
-        <!--Start Back To Top Button-->
-        <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
-        <!--End Back To Top Button-->
     </div>
-    <!--end wrapper-->
-    <!--start switcher-->  
-    <!--end switcher-->
 </template>

@@ -10,7 +10,7 @@ import { Link } from '@inertiajs/vue3';
             <div class="sidebar-header">
                 <div>
                     <a href="/">
-                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon" >
+                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon">
                     </a>
                 </div>
                 <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
@@ -24,8 +24,8 @@ import { Link } from '@inertiajs/vue3';
                         </div>
                         <div class="menu-title">Dashboard</div>
                     </a>
-                    </li>
-                    <li>
+                </li>
+                <li>
                     <a href="javascript:;" class="has-arrow">
                         <div class="parent-icon"><i class="fadeIn animated bx bx-plus-circle"></i>
                         </div>
@@ -75,24 +75,19 @@ import { Link } from '@inertiajs/vue3';
                     </a>
                 </li>
                 <li>
-                    <li>
-                        <a>
+                <li>
+                    <a>
                         <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
                         </div>
-                        <Link 
-                            class="menu-title"
-                            :href="route('logout')"
-                            method="post"
-                            as="button"
-                        >
-                            Logout
+                        <Link class="menu-title" :href="route('logout')" method="post" as="button">
+                        Logout
                         </Link>
                     </a>
-                    </li>
+                </li>
                 </li>
             </ul>
             <!--end navigation-->
-            
+
         </div>
         <!--end sidebar wrapper -->
 
@@ -198,16 +193,8 @@ import { Link } from '@inertiajs/vue3';
             </div>
         </div>
         <!--end page wrapper -->
-        <!--start overlay-->
-        <div class="overlay toggle-icon"></div>
-        <!--end overlay-->
-        <!--Start Back To Top Button-->
-        <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
-        <!--End Back To Top Button-->
     </div>
     <!--end wrapper-->
-    <!--start switcher--> 
-    <!--end switcher-->
 </template>
 <script>
 document.addEventListener("DOMContentLoaded", function () {

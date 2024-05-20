@@ -57,8 +57,7 @@
                                 <div class="col-md-6">
                                     <label class="c-mb5-black"><b>Gambar</b></label>
                                     <div class="col-12">
-                                        <img src="/bootstrap/images/desain-website.jpg"
-                                            width="150" />
+                                        <img src="/bootstrap/images/desain-website.jpg" width="150" />
                                     </div>
                                 </div>
                                 <div class="col-md-6 jarak-sertifikat">
@@ -93,7 +92,6 @@
                 </div>
             </div>
         </div>
-
         <!--end page wrapper -->
     </div>
 </template>

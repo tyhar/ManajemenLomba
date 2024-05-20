@@ -57,32 +57,11 @@ import { Link } from '@inertiajs/vue3';
                         <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
                         </div>
                         <div class="menu-title">
-                            <Link class="menu-title"
-                                :href="route('logout')"
-                                method="post"
-                                as="button"
-                            >
-                                Logout
+                            <Link class="menu-title" :href="route('logout')" method="post" as="button">
+                            Logout
                             </Link>
                         </div>
                     </a>
-                </li>
-                <li>
-                    <a href="javascript:;" class="has-arrow">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-plus-circle"></i>
-                        </div>
-                        <div class="menu-title">SEMENTARA</div>
-                    </a>
-                    <ul>
-                        <li class="jarak-dropdown"> <a href="/dashboardjuri">JURI</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/eventadmin">PETUGAS</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/overviewpeserta">PESERTA</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/superadmin">ADMIN</a>
-                        </li>
-                    </ul>
                 </li>
             </ul>
             <!--end navigation-->
@@ -99,7 +78,7 @@ import { Link } from '@inertiajs/vue3';
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Petugas</p>						
+                                <p class="user-name mb-0">Petugas</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -109,14 +88,14 @@ import { Link } from '@inertiajs/vue3';
                                     </div>
                                 </div>
                             </li>
-                            <li class="nav-item dropdown dropdown-large">	
+                            <li class="nav-item dropdown dropdown-large">
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <div class="header-message-list">
                                     </div>
                                 </div>
                             </li>
                         </ul>
-                    </div>		
+                    </div>
                 </nav>
             </div>
         </header>
@@ -164,7 +143,7 @@ import { Link } from '@inertiajs/vue3';
                                 </div>
                             </div>
                         </div>
-                    </div>	  
+                    </div>
                     <div class="col">
                         <div class="card radius-10 border-start border-0 border-3 border-warning">
                             <div class="card-body">
@@ -177,7 +156,7 @@ import { Link } from '@inertiajs/vue3';
                                 </div>
                             </div>
                         </div>
-                    </div>             
+                    </div>
                 </div>
                 <div class="card">
                     <div class="card-body">
@@ -189,6 +168,5 @@ import { Link } from '@inertiajs/vue3';
                 <!--end row-->
             </div>
         </div>
-    </div>        
+    </div>
 </template>
-    

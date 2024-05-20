@@ -34,11 +34,11 @@ defineProps({
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
-                        <a href="/">
-                            <div class="navbar-left">
+                        <div class="navbar-left">
+                            <a href="/">
                                 <img src="/bootstrap/images/logo.png" alt="Logo">
-                            </div>
-                        </a>
+                            </a>
+                        </div>
                     </div>
                     <!-- Mobile toggle menu -->
                     <!-- Search bar -->
@@ -48,13 +48,13 @@ defineProps({
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>			
-                                <p class="user-role">habib</p>					
+                                <p class="user-name mb-0">Habib Shohiburrotib</p>
+                                <p class="user-role">habib</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
                         </ul>
-                    </div>		
+                    </div>
                 </nav>
             </div>
         </header>
@@ -64,8 +64,8 @@ defineProps({
             <div class="page-content">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0">Detail Berita</h4>
-                        <hr/>
+                        <h4 class="mb-0">Detail Sponsor</h4>
+                        <hr />
                         <div>
                             <div class="col-md-6 c-mb10">
                                 <label class="c-mb5-black"><b>Nama Sponsor</b></label>
@@ -78,19 +78,19 @@ defineProps({
                             <div class="c-mb10">
                                 <label class="c-mb5-black"><b>Gambar</b></label><br>
                                 <div>
-                                    <img :src=" '/storage/' + sponsors.logo" alt="Product Image" class="img-fluid" style="display:flex; margin: auto;" />
+                                    <img :src="'/storage/' + sponsors.logo" alt="Product Image"
+                                        class="img-fluid c-maxw400" />
                                 </div>
                             </div>
                         </div>
-                            <div class="btn-posisi">
-                                <a class="btn btn-danger btn-kembali" :href="route('sponsor.index')">Kembali</a>
-                                <a class="btn btn-danger btn-kembali" :href="route('sponsor.edit', sponsors.id)">Edit</a>
-                            </div>
+                        <div class="btn-posisi">
+                            <a class="btn btn-danger btn-kembali" :href="route('sponsor.index')">Kembali</a>
+                            <a class="btn btn-danger btn-kembali" :href="route('sponsor.edit', sponsors.id)">Edit</a>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
         <!--end page wrapper -->
     </div>
 </template>
-   

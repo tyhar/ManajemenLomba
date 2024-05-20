@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Inertia\Inertia;
+
 // use Illuminate\Http\Request;
 // use App\Http\Requests\ProfileUpdateRequest;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -47,7 +48,7 @@ class AdminController extends Controller
     //KRITERIA
     public function kriteria()
     {
-        return Inertia::render('Roles/Admin/Lomba');
+        return Inertia::render('Roles/Admin/Kriteria');
     }
     public function tambahkriteria()
     {
