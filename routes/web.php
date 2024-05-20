@@ -134,6 +134,7 @@ Route::middleware('auth', 'verified', 'panelis')->group(function () {
     Route::get('/tabelrangkingjuri', [PanelisController::class, 'tabelrangkingjuri']);
     Route::get('/editnilai', [PanelisController::class, 'editnilai']);
     Route::get('/nilai', [PanelisController::class, 'nilai']);
+    Route::get('/timdetailjuri', [PanelisController::class, 'timdetailjuri']);
     // Route::get('/dashboardjuri', [PanelisController::class, 'dashboardjuri'])->name('dashboardjuri');
     // Route::get('/rangking', [PanelisControllerController::class, 'rangking']);
     // Route::get('/tabelrangking', [PanelisController::class, 'tabelrangking']);

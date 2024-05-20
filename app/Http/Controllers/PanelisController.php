@@ -41,5 +41,9 @@ class PanelisController extends Controller
     {
         return Inertia::render('Roles/Panelis/Lomba/Editnilai');
     }
+    public function timdetailjuri()
+    {
+        return Inertia::render('Roles/Panelis/Lomba/Timdetailjuri');
+    }
 
 }
