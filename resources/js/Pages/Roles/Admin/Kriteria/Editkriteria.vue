@@ -35,7 +35,7 @@
         <div class="page-wrapper-new">
             <div class="page-content">
                 <div class="card">
-                    <form @submit.prevent="submit" >
+                    <form @submit.prevent="submit" enctype="multipart/form-data">
                     <div class="card-body">
                         <h4 class="mb-0">Edit Kriteria Lomba</h4>
                         <hr />
@@ -70,22 +70,21 @@ import { useForm } from "@inertiajs/vue3";
 import { usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/vue3";
 
-const kriteria = usePage().props.kriterias;
 // const props = defineProps({
-//     errors: Object,
-//     sponsor: Object,
+//     kriterias: Object,
 // });
-const form = useForm({
-   name_kriteria: kriteria.data.name_kriteria,
 
+//with resource
+ const kriteria = usePage().props.kriterias; //props.sponsors "sponsors" are from controller
+
+const form = useForm({
+    name_kriteria: kriteria.data.name_kriteria,
 });
 
-
 function submit() {
-   router.post(`/superadmin/kriteria/${kriteria.data.id }`, {
-       _method: 'put',
-       name_kriteria: form.name_kriteria,
-
+    router.post(`/superadmin/kriteria/${kriteria.data.id }`, {
+        _method: 'put',
+        name_kriteria: form.name_kriteria,
 
     })
  }

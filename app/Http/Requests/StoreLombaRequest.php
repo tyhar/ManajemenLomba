@@ -22,10 +22,10 @@ class StoreLombaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string', 'max:500'],
-            'picture' => ['required', 'image', 'max:2048'], // Memastikan hanya file gambar yang diizinkan
-            'sertifikat' => ['required', 'file', 'mimes:pdf,jpeg,png,jpg,', 'max:2048'], // Memastikan hanya file dengan ekstensi tertentu yang diizinkan
+            'name_lomba' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string', 'max:1000'],
+            'picture' => ['required', 'image', 'max:4096'], // Memastikan hanya file gambar yang diizinkan
+            'sertifikat' => ['required', 'file', 'mimes:pdf,jpeg,png,jpg,', 'max:4096'], // Memastikan hanya file dengan ekstensi tertentu yang diizinkan
             'pj' => ['required', 'string', 'max:255'],
             'kontak' => ['required', 'string', 'max:255'],
             'tempat' => ['required', 'string', 'max:255'],
@@ -38,7 +38,7 @@ class StoreLombaRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name' => 'Nama Lomba',
+            'name_lomba' => 'Nama Lomba',
             'description' => 'Deskripsi Lomba',
             'picture' => 'Foto Lomba',
             'sertifikat' => 'Sertifikat Lomba',

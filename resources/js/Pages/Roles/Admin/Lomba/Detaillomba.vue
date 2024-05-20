@@ -20,8 +20,8 @@
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>			
-                                <p class="user-role">Admin</p>					
+                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                                <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -41,7 +41,7 @@
                         <div class="row">
                             <div class="col-md-6 c-mb10">
                                 <label class="c-mb5-black"><b>Nama Lomba</b></label>
-                                <div class="data-tim" id="name">{{ lomba && lomba.name ? lomba.name : 'Nama Lomba tidak tersedia' }}</div>
+                                <div class="data-tim" id="name">{{ lomba && lomba.name_lomba ? lomba.name_lomba : 'Nama Lomba tidak tersedia' }}</div>
                             </div>
                             <div class="col-md-6">
                                 <label class="c-mb5-black"><b>Nama PJ</b></label>
@@ -77,23 +77,14 @@
                                 <div class="margin-top5-crud">
                                     <label class="c-mb5-black"><b>Biaya Pendaftaran</b></label>
                                     <div class="data-tim" id="biaya_pendaftaran">{{ lomba && lomba.biaya_pendaftaran ? lomba.biaya_pendaftaran : 'Biaya Pendaftaran tidak tersedia' }}</div>
-                               </div>                              
+                               </div>   
+                                <!-- Tambahkan bagian untuk menampilkan kriteria -->
+                                <label class="c-mb5-black"><b>Kriteria Dipilih</b></label>
+                                <ul>
+                                    <li v-for="kriteria in lomba.kriteria" :key="kriteria.id">{{ kriteria.name_kriteria }}</li>
+                                </ul>
                             </div>           
                         </div>
-                        <div class="col-md-6 c-mb10">
-                                <label class="c-mb5-black"><b>Nama Kriteria</b></label>
-                                <!-- Menampilkan nama kriteria yang dipilih -->
-                                <div class="data-tim" v-if="kriteria && kriteria.selectedCriteria && kriteria.selectedCriteria.length > 0">
-                                    <ul>
-                                        <li v-for="selectedId in kriteria.selectedCriteria" :key="selectedId">
-                                            {{ getKriteriaName(selectedId) }}
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="data-tim" v-else>
-                                    Tidak ada kriteria yang dipilih.
-                                </div>
-                            </div>
                         </div>
                         <div class="btn-posisi">
                             <button class="btn btn-danger btn-kembali" @click="goBack()">Kembali</button>
@@ -111,32 +102,25 @@
 import { defineProps } from "vue";
 import { useForm, usePage } from '@inertiajs/vue3';
 
-// Definisikan properti yang diterima oleh komponen
+// Mendefinisikan properti yang diterima oleh komponen
 const props = defineProps({
-    lomba: {
-        type: Object,
-        required: true
-    },
-    kriteria: {
-        type: Array,
-        required: true
-    }
+    name: String,
+    username: String,
+    lomba: Object
 });
 
-const picture = props.lomba.picture;
-const sertifikat = props.lomba.sertifikat;
+// Menampilkan properti name dan username yang diterima
+console.log(props.name);
+console.log(props.username);
 
-// const form = useForm({
-//     selectedCriteria: props.kriteria.selectedCriteria,
-// })
-// Buat URL untuk gambar dan sertifikat
-const pictureUrl = picture ? `/storage/${picture}` : null;
- const sertifikatUrl = sertifikat ? `/storage/${sertifikat}` : null;
+// Mendeklarasikan variabel pictureUrl dan sertifikatUrl
+const pictureUrl = props.lomba && props.lomba.picture ? `/storage/${props.lomba.picture}` : null;
+const sertifikatUrl = props.lomba && props.lomba.sertifikat ? `/storage/${props.lomba.sertifikat}` : null;
 
- const getKriteriaName = (kriteriaId) => {
-    const kriteria = props.kriteriaz.find(kriteria => kriteria.id === kriteriaId);
-    return kriteria ? kriteria.name_kriteria : 'Kriteria tidak ditemukan';
-};
+// Menampilkan URL gambar dan sertifikat jika tersedia
+console.log(pictureUrl);
+console.log(sertifikatUrl);
+
 
 const goBack = () => {
     window.history.back();

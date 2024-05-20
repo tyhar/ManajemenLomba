@@ -38,13 +38,37 @@ class DatabaseSeeder extends Seeder
             ->create();
         
         //sponsor
-        Sponsor::factory()
-            ->count(100)
-            ->create();
+        $data = [
+            [
+                'name' => 'Universitas Sebelas Maret',
+                'link_file' => 'https://uns.ac.id/',
+                'logo' => 'sponsors/IomBriJvZH75fEJMTDBR6IQcGCjw9YaVJHrJMZwL.png',
+            ],
+            [
+                'name' => 'D3TI UNS',
+                'link_file' => 'https://d3ti.vokasi.uns.ac.id/',
+                'logo' => 'sponsors/9EUxLFGXEKmNgxsNHfmXMSwQh4BeJE1FvnYUf7uS.png',
+            ],
+            [
+                'name' => 'Emailkomp',
+                'link_file' => 'https://www.instagram.com/emailkompuns/',
+                'logo' => 'sponsors/whZfHrFaTEOePjtEief0B6r6EKT7L9cuhlGCGULu.png',
+            ],
+            [
+                'name' => 'SV UNS',
+                'link_file' => 'https://vokasi.uns.ac.id/',
+                'logo' => 'sponsors/KbrECeGXT1Qvhv634pfOXxHP3ODeQzlT3hE3fNIw.png',
+            ],
+        ];
+
+        // Loop through the data and create Sponsor records
+        foreach ($data as $sponsorData) {
+            Sponsor::factory()->create($sponsorData);
+        }
 
         //event dan lomba
-        // $this->call([
-        //     EventSeeder::class,
-        // ]);
+        $this->call([
+            EventSeeder::class,
+        ]);
     }
 }

@@ -2,16 +2,31 @@
 import { Link } from '@inertiajs/vue3';
 import { useForm } from "@inertiajs/vue3";
 import { Head } from "@inertiajs/vue3";
-// import { usePage } from "@inertiajs/vue3";
+import { onMounted, ref, computed } from 'vue';
 import { router } from "@inertiajs/vue3";
+// import { usePage } from "@inertiajs/vue3";
 
-defineProps({
+const { name, username, sponsors } = defineProps(['name', 'username', 'sponsors']);
+
+console.log(name); // Contoh penggunaan di dalam script setup
+console.log(username);
+
+// Definisikan properti yang diterima oleh komponen
+const props = {
     sponsors: {
-        type: Object,
-        required: true,
+        type: Array,
     },
-});
+};
+const unreadCount = ref(0);
 
+onMounted(async () => {
+  try {
+    const response = await axios.get('/api/unread-messages');
+    unreadCount.value = response.data.unreadCount;
+  } catch (error) {
+    console.error(error);
+  }
+});
 const deleteForm = useForm({});
 
 const deleteSponsor = (id) => {
@@ -21,29 +36,6 @@ const deleteSponsor = (id) => {
         });
     }
 };
-
-// let sponsorsUrl = computed(() => {
-//     const url = new URL(route("sponsor.index"));
-
-//     url.searchParams.set("page", pageNumber.value);
-
-//     if (searchTerm.value) {
-//         url.searchParams.set("search", searchTerm.value);
-//     }
-
-//     return url;
-// });
-
-// watch(
-//     () => studentsUrl.value,
-//     (newValue) => {
-//         router.visit(newValue, {
-//             replace: true,
-//             preserveState: true,
-//             preserveScroll: true,
-//         });
-//     }
-// );
 </script>
 
 <template>
@@ -99,10 +91,10 @@ const deleteSponsor = (id) => {
                 </li>
                 <li>
                     <a href="/pesan">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i>
-                        </div>
-                        <div class="menu-title">Pesan <span class="alert-count">1</span></div>
-                    </a>
+            <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i></div>
+            <!-- Menampilkan jumlah pesan yang belum dibaca -->
+            <div class="menu-title">Pesan <span class="alert-count">{{ unreadCount }}</span></div>
+          </a>
                 </li>
                 <li>
                     <a href="/rangking">
@@ -126,23 +118,6 @@ const deleteSponsor = (id) => {
                         </div>
                     </a>
                 </li>
-                <li>
-                    <a href="javascript:;" class="has-arrow">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-plus-circle"></i>
-                        </div>
-                        <div class="menu-title">SEMENTARA</div>
-                    </a>
-                    <ul>
-                        <li class="jarak-dropdown"> <a href="/dashboardjuri">JURI</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/dashboardpetugas">PETUGAS</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/overviewpeserta">PESERTA</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/index2">ADMIN</a>
-                        </li>
-                    </ul>
-                </li>
             </ul>
             <!--end navigation-->
             
@@ -159,8 +134,8 @@ const deleteSponsor = (id) => {
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>			
-                                <p class="user-role">habib</p>							
+                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                                <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -210,9 +185,13 @@ const deleteSponsor = (id) => {
                                 </thead>
                                 <tbody>
                                     <tr
-                                        v-for="sponsor in sponsors.data"
+                                        v-for="sponsor in sponsors"
                                         :key="sponsor.id"
                                     >
+                                    <!-- <tr
+                                        v-for="sponsor in sponsors.data"
+                                        :key="sponsor.id"
+                                    > -->
                                         <td>
                                             {{ sponsor.id }}
                                         </td>
@@ -220,7 +199,8 @@ const deleteSponsor = (id) => {
                                             {{ sponsor.name }}
                                         </td>
                                         <td>
-                                            {{ sponsor.logo }}
+                                            <!-- {{ sponsor.logo }} -->
+                                            <img :src="sponsor.logo" class="w-8 h-8 rounded" style="width: 120px;" alt="no image"/>
                                         </td>
                                         <td>
                                             {{ sponsor.link_file }}
@@ -232,7 +212,6 @@ const deleteSponsor = (id) => {
                                             >
                                                 <i class="bi bi-eye"></i>
                                             </a>
-                                            <!-- <button class="btn btn-primary" onclick="window.location.href='/editsponsor'"><i class="bi bi-pencil-square"></i></button>     -->
                                             <a 
                                                 class="btn btn-primary"
                                                 :href="route('sponsor.edit', sponsor.id)" 
@@ -262,10 +241,4 @@ const deleteSponsor = (id) => {
 $(document).ready(function() {
     $('#example').DataTable();
   } );
-
-// import { onMounted } from "vue";
-
-// onMounted(() => {
-//     $('#example').DataTable();
-// });
 </script>

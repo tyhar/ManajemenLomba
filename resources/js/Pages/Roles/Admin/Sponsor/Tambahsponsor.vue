@@ -3,6 +3,13 @@ import { Link } from '@inertiajs/vue3';
 import { useForm } from "@inertiajs/vue3";
 import { Head } from "@inertiajs/vue3";
 
+const { name, username } = defineProps(['name', 'username']);
+
+console.log(name); // Contoh penggunaan di dalam script setup
+console.log(username);
+
+
+
 const form = useForm({
     name: "",
     logo: null,
@@ -15,11 +22,11 @@ const submit = () => {
     });
 };
 
-const handleLogoUpload = (event) => {
-  form.logo = event.target.files[0];
-};
-
-
+// const submit = () => {
+//     form.post('/superadmin/sponsor'), {
+//         preserveScroll: true,
+//     };
+// };
 
 
 </script>
@@ -31,9 +38,11 @@ const handleLogoUpload = (event) => {
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
-                        <div class="navbar-left">
-                            <img src="/bootstrap/images/logo.png" alt="Logo">
-                        </div>
+                        <a href="/">
+                            <div class="navbar-left">
+                                <img src="/bootstrap/images/logo.png" alt="Logo">
+                            </div>
+                        </a>
                     </div>
                     <!-- Mobile toggle menu -->
                     <!-- Search bar -->
@@ -43,8 +52,8 @@ const handleLogoUpload = (event) => {
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>			
-                                <p class="user-role">habib</p>					
+                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                                <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -100,12 +109,18 @@ const handleLogoUpload = (event) => {
                                     >
                                         <b>Logo</b>
                                     </label>
-                                    <input
-                                        v-on:change="handleLogoUpload" 
-                                        class="form-control" 
-                                        type="file" 
+                                    <input 
+                                        class="form-control"
+                                        type="file"
+                                        @input="form.logo = $event.target.files[0]"
                                         id="logo"
                                     >
+                                    <!-- <input 
+                                        class="form-control"
+                                        type="text"
+                                        v-model="form.logo"
+                                        id="logo"
+                                    > -->
                                     <p class="keterangan-foto">Max 2 MB (500 x 500 px)</p>
                                 </div>
                             </div>

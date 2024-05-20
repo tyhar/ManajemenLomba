@@ -14,11 +14,9 @@ class Kriteria extends Model
         'name_kriteria',
     ];
 
-    /**
-     * Get the values associated with the kriteria.
-     */
-    public function kriteriaValues()
+    public function lombas()
     {
-        return $this->hasMany(KriteriaValue::class);
+        return $this->belongsToMany(Lomba::class,'kriteria_lombas_');
     }
+
 }

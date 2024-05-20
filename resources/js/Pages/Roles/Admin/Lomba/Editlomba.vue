@@ -18,8 +18,8 @@
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>
-                                <p class="user-role">habib</p>
+                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                                <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -42,7 +42,7 @@
                                     <label class="c-mb5-black"><b>Nama Lomba</b></label>
                                     <input  type="text"
                                             class="form-control"
-                                            v-model="form.name"
+                                            v-model="form.name_lomba"
                                             id="name">
                                 </div>
                                 <div class="col-md-6 c-mb10">
@@ -99,10 +99,19 @@
                                             class="form-control"
                                             v-model="form.biaya_pendaftaran"
                                             id="biaya_pendaftaran">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="btn-posisi">
+                                           </div>                    
+                                        <div>
+                                   <label class="role-add"><b class="warna-hitam">Kriteria Lomba</b></label>
+                               <div>   
+                             <div class="form-check" v-for="kriteria in kriterias.data" :key="kriteria.id">
+                                      <input class="form-check-input" type="checkbox" :id="'kriteria' + kriteria.id" v-model="form.selectedCriteria" :value="kriteria.id">
+                                  <label class="form-check-label" :for="'kriteria' + kriteria.id">{{ kriteria.name_kriteria }} </label>
+                                          </div>
+                                  </div>
+                                       </div>           
+                                      </div>   
+                                     </div>
+                                         <div class="btn-posisi">
                                 <button
                                     type="submit"
                                     class="btn btn-primary button-tabel-right"
@@ -119,38 +128,40 @@
         <!--end page wrapper -->
     </div>
 </template>
-
 <script setup>
-import { router, useForm,usePage } from "@inertiajs/vue3";
+import { router, useForm, usePage } from "@inertiajs/vue3";
+import Swal from 'sweetalert2'; // Import SweetAlert
 
-// const props = defineProps({
-//     lombas : Object,
-//         picture: String,
-//         sertifikat: String
-// })
+const { name, username, kriterias } = defineProps(['name', 'username', 'kriterias']);
 
+const props = {
+    sponsors: {
+        type: Object,
+        default: () => ({}),
+    },
+    logo: {
+        type: String,
+    },
+};
 
-
-
-const lomba = usePage().props.lombas; //props.sponsors "sponsors" are from controller
+const lomba = usePage().props.lombas;
 
 const form = useForm({
-   name: lomba.data.name,
-   pj: lomba.data.pj,
-   description: lomba.data.description,
-   kontak: lomba.data.kontak,
-   tempat: lomba.data.tempat,
-   biaya_pendaftaran: lomba.data.biaya_pendaftaran,
-   picture: lomba.data.picture ? `/storage/${lomba.data.picture}` : null,
-   sertifikat: lomba.data.sertifikat ? `/storage/${lomba.data.sertifikat}` : null,
-
+    name_lomba: lomba.data.name_lomba,
+    pj: lomba.data.pj,
+    description: lomba.data.description,
+    kontak: lomba.data.kontak,
+    tempat: lomba.data.tempat,
+    biaya_pendaftaran: lomba.data.biaya_pendaftaran,
+    picture: lomba.data.picture ? `/storage/${lomba.data.picture}` : null,
+    sertifikat: lomba.data.sertifikat ? `/storage/${lomba.data.sertifikat}` : null,
+    selectedCriteria: [], 
 });
 
-
- function submit() {
-    router.post(`/superadmin/lomba/${lomba.data.id }`, {
+async function submit() {
+    const formData = {
         _method: 'put',
-        name: form.name,
+        name_lomba: form.name_lomba,
         pj: form.pj,
         description: form.description,
         tempat: form.tempat,
@@ -158,32 +169,20 @@ const form = useForm({
         picture: form.picture,
         sertifikat: form.sertifikat,
         biaya_pendaftaran: form.biaya_pendaftaran,
+        selectedCriteria: form.selectedCriteria,
+    };
 
-    })
- }
-// const submit = () => {
-    // let formData = new FormData();
-    // formData.append('name', form.name);
-    // formData.append('pj', form.pj);
-    // formData.append('description', form.description);
-    // formData.append('kontak', form.kontak);
-    // formData.append('tempat', form.tempat);
-    // formData.append('biaya_pendaftaran', form.biaya_pendaftaran);
-    
-    // if (pictureInput.value.files[0]) {
-    //     formData.append('picture', pictureInput.value.files[0]);
-    // }
-    // if (sertifikatInput.value.files[0]) {
-    //     formData.append('sertifikat', sertifikatInput.value.files[0]);
-    // }
-
-    // form.put(route("lomba.update", lomba.data.id), formData, {
-    //     preserveScroll: true,
-
-    // })
-// }
-// Fungsi untuk kembali ke halaman sebelumnya
-const goBack = () => {
-    window.history.back();
-};
+    try {
+        await router.post(`/lomba/${lomba.data.id}`, formData);
+        // Display SweetAlert on success
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Lomba berhasil diperbarui!',
+        });
+    } catch (error) {
+        console.error('Error:', error);
+        // Handle error if needed
+    }
+}
 </script>

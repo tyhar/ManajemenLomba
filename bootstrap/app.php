@@ -3,11 +3,14 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-//importing the roles middleware 
+// Importing the roles middleware
 use App\Http\Middleware\Admin;
 use App\Http\Middleware\EventAdmin;
 use App\Http\Middleware\Panelis;
 use App\Http\Middleware\User;
+// Importing the email verification middleware
+use App\Http\Middleware\EnsureEmailIsVerified;
+use App\Http\Middleware\RedirectIfAuthenticated;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -20,12 +23,16 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
         ]);
-        //adding multi roles authentication (middleware class)
+
+        // Adding multi roles authentication (middleware class)
         $middleware->alias([
             'admin' => Admin::class,
             'eventadmin' => EventAdmin::class,
             'user' => User::class,
             'panelis' => Panelis::class,
+            // Adding the verified middleware
+            'verified' => EnsureEmailIsVerified::class,
+            'google' => RedirectIfAuthenticated::class,
         ]);
 
         //

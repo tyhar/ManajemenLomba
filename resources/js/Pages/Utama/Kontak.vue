@@ -1,6 +1,6 @@
 <script setup>
 import { reactive } from 'vue'
-import { Head, Link, useForm, router } from '@inertiajs/vue3'
+import { Head, Link, useForm, router} from '@inertiajs/vue3'
 
 //backend navbar
 defineProps({
@@ -25,16 +25,22 @@ const form = useForm({
   name: null,
   email: null,
   phone: null,
-  message: null,
+  value: null,
 })
 
-function submit() {
-    router.post('/kontak', form)
-}
+const submit = () => {
+    form.post(route("pesan.store"), {
+        preserveScroll: true,
+    });
+};
 
+//not work
 // const submit = () => {
-//     form.post(route('register'), {
-//         onFinish: () => form.reset('password', 'password_confirmation'),
+//     form.post(route("pesan.store"), {
+//         preserveScroll: true,
+//     }).then(() => {
+//         // Reload the page after successful form submission
+//         window.location.reload();
 //     });
 // };
 </script>
@@ -71,7 +77,8 @@ function submit() {
                         <a class="nav-link" href="/#sponsor-section">Sponsor</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/kontak">Kontak</a>
+                        <!-- <a class="nav-link" href="/kontak">Kontak</a> -->
+                        <a class="nav-link" :href="route('pesan.create')">Kontak</a>
                     </li> 
                     <li class="nav-item">
                         <template v-if="!$page.props.auth.user">
@@ -94,7 +101,7 @@ function submit() {
     </nav>
     <!--MAIN MENU END-->
     <!--BREADCRUMB START-->
-    <section class="tf__breadcrumb" style="background: url(bootstrap/images/home.jpg);">
+    <section class="tf__breadcrumb" style="background: url(/bootstrap/images/home.jpg);">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -116,10 +123,30 @@ function submit() {
                            <h5 class="c-mb-13">HUBUNGI KAMI</h5>
                         </div>
                         <form @submit.prevent="submit">
-                            <input id="name" v-model="form.name" placeholder="Nama"/>
-                            <input id="email" v-model="form.email" placeholder="Email" />
-                            <input id="phone" v-model="form.phone" placeholder="No. WhatsApp"/>
-                            <input id="message" v-model="form.message" placeholder="Pesan"/>
+                            <!-- <div class="mb-3">
+                                <label for="exampleFormControlInput1" class="form-label">Email address</label>
+                                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                            </div> -->
+                            <div class="mb-3">
+                                <label for="nama" class="form-label">Nama</label>
+                                <input class="form-control" id="nama" type="name" v-model="form.name" placeholder="Nama"/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input class="form-control" id="email" type="name" v-model="form.email" placeholder="Email"/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">No Telepon</label>
+                                <input class="form-control" id="phone" type="number" v-model="form.phone" placeholder="Nomor yang dapat dihubungi"/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="pesan" class="form-label">Pesan</label>
+                                <textarea class="form-control" id="pesan" type="textarea" v-model="form.value" />
+                            </div>
+                            <!-- <input id="nama" type="name" v-model="form.name" placeholder="Nama"/> -->
+                            <!-- <input id="email" type="email" v-model="form.email" placeholder="Email" /> -->
+                            <!-- <input id="phone" type="number" v-model="form.phone" placeholder="No. WhatsApp"/> -->
+                            <!-- <textarea id="pesan" type="textarea" v-model="form.value" placeholder="Pesan"/> -->
                             <button type="submit" class="common_btn_2">Kirim</button>
                         </form>
                     </div>

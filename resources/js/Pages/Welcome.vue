@@ -16,7 +16,13 @@ defineProps({
         type: String,
         required: true,
     },
+    sponsors: {
+        type: Array,
+        required: true,
+    },
 });
+
+// console.log('Sponsors:', sponsors);
 
 //front-end
 function handleImageError() {
@@ -63,7 +69,8 @@ function handleImageError() {
                         <a class="nav-link" href="/#sponsor-section">Sponsor</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/kontak">Kontak</a>
+                        <!-- <a class="nav-link" href="/kontak">Kontak</a> -->
+                        <a class="nav-link" :href="route('pesan.create')">Kontak</a>
                     </li> 
                     <li class="nav-item">
                         <template v-if="!$page.props.auth.user">
@@ -301,7 +308,16 @@ function handleImageError() {
                 <div class="tf__heading_area mb_15">
                     <h5>Sponsor</h5>
                     <div class="sponsor-grid">
-                        <div class="sponsor-item">
+                        <div
+                            v-for="sponsor in sponsors"
+                            :key="sponsor.id"
+                            class="sponsor-item2" 
+                        >
+                            <a :href="sponsor.link_file">
+                                <img :src="sponsor.logo" :alt="sponsor.name" class="img-fluid" style="max-width: 200px;" />
+                            </a>
+                        </div>
+                        <!-- <div class="sponsor-item">
                             <img src="bootstrap/images/logo-sv.png" alt="about" class="img-fluid">
                         </div>
                         <div class="sponsor-item">
@@ -312,7 +328,7 @@ function handleImageError() {
                         </div>
                         <div class="sponsor-item">
                             <img src="bootstrap/images/em.png" alt="about" class="img-fluid">
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

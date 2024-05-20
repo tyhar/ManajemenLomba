@@ -17,7 +17,7 @@ class LombaResource extends JsonResource
         //$this from Request $request a.k.a the model because it called form SponsorController
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'name_lomba' => $this->name_lomba,
             'description' => $this->description,
             'kontak' => $this->kontak,
             'pj' => $this->pj,

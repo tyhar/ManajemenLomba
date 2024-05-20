@@ -9,6 +9,8 @@ class Sponsor extends Model
 {
     use HasFactory;
 
+    protected $table = 'sponsors';
+
     protected $fillable = [
         'name',
         'link_file',

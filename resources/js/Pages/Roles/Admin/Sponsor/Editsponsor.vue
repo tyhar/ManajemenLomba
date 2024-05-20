@@ -5,33 +5,53 @@ import { useForm } from "@inertiajs/vue3";
 import { Head } from "@inertiajs/vue3";
 import { usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/vue3";
+// import { inertia } from "@inertiajs/inertia";
+const { name, username, sponsor, logo } = defineProps(['name', 'username', 'kriterias', 'logo']);
 
-// defineProps({
-//     sponsors: {
-//         type: Object,
-//         required: true,
-//     },
-// });
 
-const sponsor = usePage().props.sponsors; //props.sponsors "sponsors" are from controller
+console.log(name); // Contoh penggunaan di dalam script setup
+console.log(username);
+
+const props = {
+    sponsors: {
+        type: Object, // Menggunakan "type" untuk menentukan tipe data props
+        default: () => ({}), // Menggunakan "default" jika props tidak diberikan
+    },
+    logo: {
+        type: String, // Menentukan tipe data logo sebagai String
+    },
+};
+
+
+//with resource
+// const sponsor = usePage().props.sponsors; //props.sponsors "sponsors" are from controller
 
 const form = useForm({
-    name: sponsor.data.name,
+    // name: sponsor.data.name,
+    // logo: sponsor.data.logo,
+    // link_file: sponsor.data.link_file,
+    name: props.sponsors.name,
     logo: null,
-    link_file: sponsor.data.link_file,
-
+    link_file: props.sponsors.link_file,
 });
 
-
-function submit() {
-    router.post(`/superadmin/sponsor/${sponsor.data.id }`, {
-        _method: 'put',
+const submit = () => {
+    // form.put(route("sponsor.update", sponsor.data.id), {
+    //     preserveScroll: true,
+    // });
+    // form.put(route("sponsor.update", props.sponsors.id), {
+    //     preserveScroll: true,
+    // });
+    router.post(route("sponsor.update", props.sponsors.id), { 
+        // preserveScroll: true,
+        _method: "put",
         name: form.name,
         logo: form.logo,
-        link_file: form.link_file,
-        
-    })
- }
+        link_file: form.link_file
+    });
+
+};
+
 
 </script>
 <template>
@@ -41,9 +61,11 @@ function submit() {
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
-                        <div class="navbar-left">
-                            <img src="/bootstrap/images/logo.png" alt="Logo">
-                        </div>
+                        <a href="/">
+                            <div class="navbar-left">
+                                <img src="/bootstrap/images/logo.png" alt="Logo">
+                            </div>
+                        </a>
                     </div>
                     <!-- Mobile toggle menu -->
                     <!-- Search bar -->
@@ -53,8 +75,8 @@ function submit() {
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>			
-                                <p class="user-role">habib</p>					
+                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                                <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -68,7 +90,7 @@ function submit() {
         <div class="page-wrapper-new">
             <div class="page-content">
                 <div class="card">
-                    <form @submit.prevent="submit" enctype="multipart/form-data">
+                    <form @submit.prevent="submit">
                         <div class="card-body">
                             <h4 class="mb-0">Tambah Sponsor</h4>
                             <hr/>
@@ -110,13 +132,16 @@ function submit() {
                                     >
                                         <b>Logo</b>
                                     </label>
-                                    <input
-                                      @input="form.logo = $event.target.files[0]"
-                                     type="file"
-                                     accept="image/*"
-                                    id="logo"
-                                     class="form-control"
-                                   >
+                                    <div class="m-2 p-2">
+                                        <!-- <img :src="logo" class="w-32 h-32" style="width: 500px;" /> -->
+                                        <img :src="logo" alt="Product Image" class="img-fluid" style="display:flex; margin: auto;" />
+                                    </div>
+                                    <input 
+                                        class="form-control"
+                                        type="file"
+                                        @input="form.logo = $event.target.files[0]"
+                                        id="logo"
+                                    >
                                     <p class="keterangan-foto">Max 2 MB (500 x 500 px)</p>
                                 </div>
                             </div>

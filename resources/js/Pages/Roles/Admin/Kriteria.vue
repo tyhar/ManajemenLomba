@@ -107,8 +107,8 @@
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>
-                                <p class="user-role">habib</p>
+                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                                <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -163,7 +163,6 @@
                                         <td>{{ kriteria.name_kriteria }}</td>
                                         <td class="btn-crud">
                                              <a class="btn btn-secondary" :href="route('kriteria.show', kriteria.id)"><i class="bi bi-eye"></i></a>
-                                             <a class="btn btn-primary" :href="route('kriteria.edit', kriteria.id)"><i class="bi bi-pencil-square"></i></a> 
                                             <button class="btn btn-danger" ><i class="bi bi-trash" @click="deleteKriteria(kriteria.id)" ></i></button>                              
                                         </td>
                                     </tr>
@@ -191,27 +190,43 @@
 
 <script setup>
 import { defineProps } from "vue";
-import { Link, useForm} from "@inertiajs/vue3";
+import { Link, useForm } from "@inertiajs/vue3";
+import Swal from 'sweetalert2';
 
-// Definisikan properti yang diterima oleh komponen
-const props = defineProps({
-    kriterias: {
-        type: Array,
-        default: () => [],
-        kriterias: Object,
-    },
-});
+const { name, username, kriterias } = defineProps(['name', 'username', 'kriterias']);
 
+const deleteForm = useForm({});
 
 const deleteKriteria = (id) => {
-    if (confirm("Are you sure you want to delete this kriteria?")) {
-        deleteForm.delete(route("kriteria.destroy", id), {
-            preserveScroll: true,
-        });
-    }
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            deleteForm.delete(route("kriteria.destroy", id), {
+                preserveScroll: true,
+                onSuccess: () => {
+                    Swal.fire(
+                        'Deleted!',
+                        'The criterion has been deleted.',
+                        'success'
+                    );
+                }
+            });
+        }
+    });
 };
 
 $(document).ready(function () {
     $('#example').DataTable();
 });
 </script>
+
+<style>
+/* Add any necessary styles */
+</style>

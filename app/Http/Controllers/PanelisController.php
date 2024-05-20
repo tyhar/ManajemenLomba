@@ -9,7 +9,7 @@ class PanelisController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Roles/Panelis/Panelis');
+        return Inertia::render('Roles/Panelis/Dashboardjuri');
     }
     // public function dashboardjuri()
     // {

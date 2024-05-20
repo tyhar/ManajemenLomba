@@ -19,8 +19,8 @@
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>
-                                <p class="user-role">habib</p>
+                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                                <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i></div>
                         </ul>
@@ -64,6 +64,11 @@
 <script setup>
 import { reactive } from 'vue'
 import { useForm } from "@inertiajs/vue3";
+
+const { name, username} = defineProps(['name', 'username']);
+
+console.log(name); // Contoh penggunaan di dalam script setup
+console.log(username);
 
 const form = useForm({
     kriteria: [{ name_kriteria: '' }],

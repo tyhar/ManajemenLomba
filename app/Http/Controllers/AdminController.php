@@ -7,7 +7,7 @@ use Inertia\Inertia;
 // use App\Http\Requests\ProfileUpdateRequest;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 // use Illuminate\Http\RedirectResponse;
-// use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth;
 // use Illuminate\Support\Facades\Redirect;
 // use Inertia\Response;
 
@@ -15,53 +15,84 @@ class AdminController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Roles/Admin/Admin');
+        $user = Auth::user();
+        Inertia::share('userData', [
+            'name' => $user->name,
+            'username' => $user->username,
+        ]);
+        
+
+        return Inertia::render('Roles/Admin/Admin',[
+            'UserData' => $user,
+        ]);
     }
     public function partisipan()
     {
         return Inertia::render('Roles/Admin/Partisipan');
     }
-    public function pesan()
-    {
-        return Inertia::render('Roles/Admin/Pesan');
-    }
+    // public function pesan()
+    // {
+    //     return Inertia::render('Roles/Admin/Pesan');
+    // }
 
     //LOMBA
-    public function lomba()
+    // public function lomba()
+    // {
+    //     return Inertia::render('Roles/Admin/Lomba');
+    // }
+    // public function tambahlomba()
+    // {
+    //     return Inertia::render('Roles/Admin/Lomba/Tambahlomba');
+    // }
+    // public function editlomba()
+    // {
+    //     return Inertia::render('Roles/Admin/Lomba/Editlomba');
+    // }
+    // public function detaillomba()
+    // {
+    //     return Inertia::render('Roles/Admin/Lomba/Detaillomba');
+    // }
+
+    //KRITERIA
+    public function kriteria()
     {
         return Inertia::render('Roles/Admin/Lomba');
     }
-    public function tambahlomba()
+    public function tambahkriteria()
     {
-        return Inertia::render('Roles/Admin/Lomba/Tambahlomba');
+        return Inertia::render('Roles/Admin/Kriteria/Tambahkriteria');
     }
-    public function editlomba()
+    public function editkriteria()
     {
-        return Inertia::render('Roles/Admin/Lomba/Editlomba');
+        return Inertia::render('Roles/Admin/Kriteria/Editkriteria');
     }
-    public function detaillomba()
+    public function detailkriteria()
     {
-        return Inertia::render('Roles/Admin/Lomba/Detaillomba');
+        return Inertia::render('Roles/Admin/Kriteria/Detailkriteria');
     }
 
     //ADMINISTRATOR
-    public function administrator()
-    {
-        return Inertia::render('Roles/Admin/Administrator');
-    }
-    public function tambahadministrator()
-    {
-        return Inertia::render('Roles/Admin/Administrator/Tambahadministrator');
-    }
-    public function detailadministrator()
-    {
-        return Inertia::render('Roles/Admin/Administrator/Detailadministrator');
-    }
+    // public function administrator()
+    // {
+    //     return Inertia::render('Roles/Admin/Administrator');
+    // }
+    // public function tambahadministrator()
+    // {
+    //     return Inertia::render('Roles/Admin/Administrator/Tambahadministrator');
+    // }
+    // public function detailadministrator()
+    // {
+    //     return Inertia::render('Roles/Admin/Administrator/Detailadministrator');
+    // }
 
     //TIM
     public function tim()
     {
         return Inertia::render('Roles/Admin/Tim');
+    }
+    public function tabeltim()
+    {
+        return Inertia::render('Roles/Admin/Tim/Tabeltim');
     }
     public function detailtim()
     {

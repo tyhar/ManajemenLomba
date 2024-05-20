@@ -18,8 +18,8 @@ class KriteriaResource extends JsonResource
         return [
             'id' => $this->id,
             'name_kriteria' => $this->name_kriteria,
-            // 'created_at' => $this->created_at,
-            // 'updated_at' => $this->updated_at,
+            //  'created_at' => $this->created_at,
+            //  'updated_at' => $this->updated_at,
         ];
     }
 }

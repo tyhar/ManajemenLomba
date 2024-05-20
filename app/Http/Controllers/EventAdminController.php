@@ -9,7 +9,7 @@ class EventAdminController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Roles/EventAdmin/EventAdmin');
+        return Inertia::render('Roles/EventAdmin/Dashboardpetugas');
     }
     // public function dashboardpetugas()
     // {

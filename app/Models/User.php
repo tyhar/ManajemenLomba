@@ -12,6 +12,8 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
 
+    protected $table = 'users';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -23,8 +25,13 @@ class User extends Authenticatable implements MustVerifyEmail
         'username',
         'email',
         'password',
+        'role',
         'phone',
         'instansi',
+        'nik',
+        'photo',
+        'email_verification_status',
+        'created_at',
     ];
 
     /**
@@ -51,18 +58,21 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     //relasi untuk role eventlomba, spesifik per lombanya
-    // public function lomba()
-    // {
-    //     $this->belongsTo(Lomba::class,'lomba_id');
-    // }
+    public function lomba()
+    {
+        return  $this->belongsToMany(Lomba::class,'user_lombas');
+    }
 
-    // public function reglomba()
-    // {
-    //     $this->hasOne(RegLomba::class);
-    // }
+    public function hasVerifiedEmail()
+    {
+        return $this->email_verification_status === 'verified';
+    }
+    public function markEmailAsVerified()
+    {
+        $this->email_verification_status = 'verified';
+        $this->save();
+    }
 
-    // public function reglombamember()
-    // {
-    //     $this->hasMany(RegLombaMember::class);
-    // }
+
+
 }

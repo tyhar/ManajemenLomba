@@ -22,14 +22,14 @@ class StoreKriteriaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],       
+            'name_kriteria' => ['required', 'string', 'max:255'],
         ];
     }
 
     public function attributes()
     {
         return [
-            'name' => 'Nama Kriteria',
+            'name_kriteria' => 'Nama Kriteria',
         ];
     }
 }

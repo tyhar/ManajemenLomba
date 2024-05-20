@@ -1,4 +1,5 @@
 <script setup>
+import Swal from 'sweetalert2';
 // import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
 // import InputLabel from '@/Components/InputLabel.vue';
@@ -16,9 +17,25 @@ const form = useForm({
     email: '',
 });
 
-const submit = () => {
-    form.post(route('password.email'));
+const submit = async () => {
+    try {
+        await form.post(route('password.email'));
+        Swal.fire({
+            title: 'Success!',
+            text: 'Please check your email to reset your password.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
+    } catch (error) {
+        // handle error if needed
+    }
 };
+
+
+const showPassword = ref(false);
+function togglePasswordVisibility() {
+    showPassword.value = !showPassword.value;
+}
 </script>
 <template>
     <!--=========================
@@ -55,9 +72,9 @@ const submit = () => {
 											</div>
 											<div class="d-grid gap-2">
 												<!-- <a type="button" onclick="window.location.href='/login'"class="btn btn-primary btn-lg">Kirim</a>  -->
-												<Button class="btn btn-light btn-lg" :disabled="form.processing">
+												<button type="submit" class="btn btn-light btn-lg" :disabled="form.processing">
 													Email Password Reset Link
-												</Button>
+												</button>
 												<a href="/login" class="btn btn-light btn-lg"><i class='bx bx-arrow-back me-1'></i>Kembali ke halaman login</a>
 											</div>
 										</form>

@@ -1,5 +1,36 @@
 <script setup>
+import { onMounted, ref, computed } from 'vue';
 import { Link } from '@inertiajs/vue3';
+import { defineProps } from "vue";
+
+
+
+const props = defineProps({
+
+  name: {
+    type: String,
+    required: true,
+  },
+  username: {
+    type: String,
+    required: true,
+  },
+});
+
+const unreadCount = ref(0);
+
+onMounted(async () => {
+  try {
+    const response = await axios.get('/api/unread-messages');
+    unreadCount.value = response.data.unreadCount;
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+
+
+
 </script>
 <template>
     <!--wrapper-->
@@ -9,11 +40,11 @@ import { Link } from '@inertiajs/vue3';
             <div class="sidebar-header">
                 <div>
                     <a href="/">
-                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon" >
+                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon">
                     </a>
                 </div>
                 <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
-                </div>
+            </div>
             </div>
             <!--navigation-->
             <ul class="metismenu" id="menu">
@@ -54,10 +85,10 @@ import { Link } from '@inertiajs/vue3';
                 </li>
                 <li>
                     <a href="/pesan">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i>
-                        </div>
-                        <div class="menu-title">Pesan <span class="alert-count">1</span></div>
-                    </a>
+            <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i></div>
+            <!-- Menampilkan jumlah pesan yang belum dibaca -->
+            <div class="menu-title">Pesan <span class="alert-count">{{ unreadCount }}</span></div>
+          </a>
                 </li>
                 <li>
                     <a href="/rangking">
@@ -80,23 +111,6 @@ import { Link } from '@inertiajs/vue3';
                             </Link>
                         </div>
                     </a>
-                </li>
-                <li>
-                    <a href="javascript:;" class="has-arrow">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-plus-circle"></i>
-                        </div>
-                        <div class="menu-title">SEMENTARA</div>
-                    </a>
-                    <ul>
-                        <li class="jarak-dropdown"> <a href="/dashboardjuri">JURI</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/dashboardpetugas">PETUGAS</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/overviewpeserta">PESERTA</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/index2">ADMIN</a>
-                        </li>
-                    </ul>
                 </li>
             </ul>
             <!--end navigation-->
@@ -152,10 +166,10 @@ import { Link } from '@inertiajs/vue3';
                                 <tr>
                                     <th class="width-id">ID</th>
                                     <th class="crud-width100">Judul</th>
-                                    <th class="crud-width130">Deskripsi Awal</th>
+                                    <th class="crud-width-150">Deskripsi Awal</th>
                                     <th class="crud-width-40">Penerbit</th>
                                     <th class="crud-custom">Tanggal Upload</th>  
-                                    <th class="crud-width-150">Aksi</th>
+                                    <th class="crud-width130">Aksi</th>
                                 </tr>
                                 </thead>
                                 <tbody>
