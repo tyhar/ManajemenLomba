@@ -1,3 +1,4 @@
+DetailLOMBA
 <template>
     <div class="wrapper">
         <!--start header -->
