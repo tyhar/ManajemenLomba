@@ -147,7 +147,9 @@
                         </div>
                         <div class="card">
                             <h5 class="p-3">Input Anggota Tim</h5>
+                            
                             <div class="row row-cards jarak-data-peserta">
+                                
                                 <div class="col-md-6 col-lg-3 crud-max-width260" v-for="member in teamMembers"
                                     :key="member.id">
                                     <div class="card">
@@ -170,7 +172,7 @@
                                 <div class="col-md-6 col-lg-3 crud-max-width260">
                                     <div class="card">
                                         <div class="card-header btn-crud">
-                                            <h6><b>Anggota 1</b></h6>
+                                            <h6><b>anggota 1</b></h6>
                                         </div>
                                         <div class="card-body p-4 text-center posisi-mb23">
                                             <div class="btn-crud ">
@@ -179,8 +181,13 @@
                                             <br>
                                         </div>
                                     </div>
+                                    <div class="btn-dl">
+        <button @click="saveTeamMembers" class="btn btn-primary radius-5 lebar-btn">Save</button>
+    </div>
                                 </div>
+                                
                             </div>
+                            
                         </div>
                         <div v-if="isPopupVisible" class="popup">
                             <div class="popup-content">
@@ -250,10 +257,11 @@
         <!--end page wrapper -->
     </div>
 </template>
+
 <script setup>
-import { defineProps } from "vue";
-import { ref, computed, watch } from 'vue';
-import { Link, useForm } from '@inertiajs/vue3';
+import { defineProps, ref, computed, watch } from 'vue';
+import { Link, useForm, router } from '@inertiajs/vue3';
+import Swal from 'sweetalert2';
 
 const { userData, users, team, submissions } = defineProps(['userData', 'users', 'team', 'submissions']);
 
@@ -281,7 +289,8 @@ const searchQuery = ref('');
 const searchResults = ref(users); // Use the users data passed from the controller
 const teamMembers = ref([
     {
-        role: 'Ketua',
+        id: userData.id, // Ensure the `id` field is included
+        role: 'ketua',
         name: userData.name,
         nik: userData.nik,
         instansi: userData.instansi,
@@ -326,13 +335,44 @@ function addMember() {
     if (selectedUser) {
         teamMembers.value.push({
             id: selectedUser.id,
-            role: `Anggota ${teamMembers.value.length}`,
+            role: `anggota ${teamMembers.value.length}`,
             name: selectedUser.name,
             nik: selectedUser.nik,
             instansi: selectedUser.instansi,
             photo: selectedUser.photo
         });
         hidePopup();
+        Swal.fire({
+            title: 'Berhasil!',
+            text: 'Anggota berhasil ditambahkan.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
+    }
+}
+
+async function saveTeamMembers() {
+    try {
+        await router.post('/team-member', {
+            members: teamMembers.value.map(member => ({
+                user_id: member.id, // Ensure the `user_id` field is included
+                role: member.role === 'ketua' ? 'ketua' : 'member'
+            }))
+        });
+        Swal.fire({
+            title: 'Berhasil!',
+            text: 'Anggota tim berhasil disimpan!',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
+    } catch (error) {
+        console.error('Error saving team members:', error);
+        Swal.fire({
+            title: 'Gagal!',
+            text: 'Gagal menyimpan anggota tim.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
     }
 }
 </script>

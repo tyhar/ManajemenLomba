@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use App\Models\User;
 use App\Models\Team;
+use App\Models\TeamMember;
 use App\Models\Lomba;
 use App\Models\Submission;
 use Illuminate\Support\Facades\Auth;
@@ -24,12 +25,28 @@ class RegLombaController extends Controller
         if ($team) {
             $submission = Submission::where('team_id', $team->id)->first();
         }
+
+        $user = Auth::user();
+
+        // Ensure the user is associated with a team
+        if (!$user->team) {
+            return response()->json([
+                'success' => false,
+                'message' => 'User is not associated with any team'
+            ], 400);
+        }
+
+        $teamId = $user->team->id;
+
+        // Get team members
+        $teamMembers = TeamMember::all();
     
         return Inertia::render('Roles/User/Daftarlomba', [
             'userData' => $user,
             'users' => $users,
             'team' => $team,
             'submissions' => $submission,
+            'members' => $teamMembers,
         ]);
     }
     

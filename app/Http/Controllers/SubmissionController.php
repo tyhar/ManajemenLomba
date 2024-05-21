@@ -49,7 +49,7 @@ class SubmissionController extends Controller
         ]);
     
         // Redirect ke halaman yang diinginkan setelah submission dibuat
-        return redirect()->route('submissions.index');
+        return redirect()->route('daftarlomba.index');
     }
     
 }

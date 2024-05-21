@@ -36,7 +36,7 @@ class TeamController extends Controller
             $team->lomba()->attach($request->input('SelectedLomba'));
         }
 
-        return redirect()->route('daftarlomba.show');
+        return redirect()->route('daftarlomba.index');
     }
 
     public function show($id)

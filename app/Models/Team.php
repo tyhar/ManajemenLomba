@@ -32,5 +32,9 @@ class Team extends Model
     {
         return $this->hasMany(Submission::class);
     }
+    public function team_member()
+    {
+        return $this->hasMany(Team::class);
+    }
 
 }

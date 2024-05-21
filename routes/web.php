@@ -27,6 +27,7 @@ use App\Http\Controllers\ProfileUserController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\RegLombaController;
+use App\Http\Controllers\TeamMemberController;
 
 //default breeze
 Route::get('/', function () {
@@ -73,7 +74,9 @@ Route::middleware('auth', 'verified', 'user')->group(function () {
         'create',
         'store',
     ]);
-
+    Route::resource('team-member', TeamMemberController::class)->only([
+        'store',
+    ]);
 
     Route::get('/notifikasipeserta', [UserController::class, 'notifikasipeserta']);
     Route::get('/reportpeserta', [UserController::class, 'reportpeserta']);
