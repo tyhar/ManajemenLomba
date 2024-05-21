@@ -137,11 +137,11 @@ const submit = () => {
                             </div>
                             <div class="mb-3">
                                 <label for="phone" class="form-label">No Telepon</label>
-                                <input class="form-control" id="phone" type="number" v-model="form.phone" placeholder="Nomor yang dapat dihubungi"/>
+                                <input class="form-control" id="phone" type="tel" v-model="form.phone" placeholder="Nomor yang dapat dihubungi"/>
                             </div>
                             <div class="mb-3">
                                 <label for="pesan" class="form-label">Pesan</label>
-                                <textarea class="form-control" id="pesan" type="textarea" v-model="form.value" />
+                                <textarea class="form-control" id="pesan" type="textarea" v-model="form.value" rows="3" />
                             </div>
                             <!-- <input id="nama" type="name" v-model="form.name" placeholder="Nama"/> -->
                             <!-- <input id="email" type="email" v-model="form.email" placeholder="Email" /> -->

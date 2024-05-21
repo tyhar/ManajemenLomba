@@ -2,6 +2,7 @@
 import { Link } from '@inertiajs/vue3';
 import { useForm } from "@inertiajs/vue3";
 import { Head } from "@inertiajs/vue3";
+import Swal from 'sweetalert2/dist/sweetalert2.min.js';
 
 const form = useForm({
     name: "",
@@ -9,8 +10,9 @@ const form = useForm({
     link_file: "",
 });
 
-const submit = () => {
+const store = () => {
     form.post(route("sponsor.store"), {
+        onSuccess: () => form.reset(),
         preserveScroll: true,
     });
 };
@@ -60,7 +62,7 @@ const submit = () => {
         <div class="page-wrapper-new">
             <div class="page-content">
                 <div class="card">
-                    <form @submit.prevent="submit">
+                    <form @submit.prevent="store">
                         <div class="card-body">
                             <h4 class="mb-0">Tambah Sponsor</h4>
                             <hr/>
@@ -114,7 +116,7 @@ const submit = () => {
                                         v-model="form.logo"
                                         id="logo"
                                     > -->
-                                    <p class="keterangan-foto">Max 2 MB (500 x 500 px)</p>
+                                    <p class="keterangan-foto">Max 2 MB (200 x 200 px)</p>
                                 </div>
                             </div>
                             <div class="btn-posisi">

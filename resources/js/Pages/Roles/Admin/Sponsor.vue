@@ -3,6 +3,8 @@ import { Link } from '@inertiajs/vue3';
 import { useForm } from "@inertiajs/vue3";
 import { Head } from "@inertiajs/vue3";
 import { router } from "@inertiajs/vue3";
+import Swal from 'sweetalert2/dist/sweetalert2.min.js';
+
 // import { usePage } from "@inertiajs/vue3";
 
 defineProps({
@@ -226,6 +228,8 @@ const deleteSponsor = (id) => {
 </template>
     
 <script>
+
+
 $(document).ready(function() {
     $('#example').DataTable();
   } );

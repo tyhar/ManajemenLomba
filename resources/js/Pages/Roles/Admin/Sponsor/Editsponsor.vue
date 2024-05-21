@@ -137,7 +137,7 @@ const submit = () => {
                                         @input="form.logo = $event.target.files[0]"
                                         id="logo"
                                     >
-                                    <p class="keterangan-foto">Max 2 MB (500 x 500 px)</p>
+                                    <p class="keterangan-foto">Max 2 MB (200 x 200 px)</p>
                                 </div>
                             </div>
                             <div class="btn-posisi">

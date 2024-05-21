@@ -81,7 +81,7 @@ class SponsorController extends Controller
             'link_file' => Request::input('link_file')
         ]);
 
-        dd($sponsor);
+        // dd($sponsor);
 
         return redirect()->route('sponsor.index');
     }

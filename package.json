@@ -19,6 +19,7 @@
         "vue": "^3.4.0"
     },
     "dependencies": {
-        "apexcharts": "^3.49.0"
+        "apexcharts": "^3.49.0",
+        "sweetalert2": "^11.11.0"
     }
 }

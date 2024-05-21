@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Inertia\Inertia;
 // use Illuminate\Http\Request;
 // use App\Http\Requests\ProfileUpdateRequest;
@@ -15,7 +16,9 @@ class AdminController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Roles/Admin/Admin');
+        return Inertia::render('Roles/Admin/Admin', [
+            'user' => auth()->user(),
+        ]);
     }
     public function partisipan()
     {
