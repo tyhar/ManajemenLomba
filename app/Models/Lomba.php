@@ -32,7 +32,7 @@ class Lomba extends Model
 }
 public function teams()
 {
-    return $this->belongsToMany(Team::class,'team_lombas');
+    return $this->hasMany(Team::class);
 }
 
 

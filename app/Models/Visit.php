@@ -5,18 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Reg_Lomba extends Model
+class Visit extends Model
 {
     use HasFactory;
-    protected $table = 'reg_lombas';
-
     protected $fillable = [
-        'user_id',
-        'team_id',
-        'team_member_id',
-        'submission_id',
-        'status',
+        'visit_count',
+        'visit_month',
+        'created_at',
+        'updated_at'
     ];
-
-
+    
 }

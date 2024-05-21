@@ -17,8 +17,9 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('link')->nullable();
             $table->string('file')->nullable();
-            $table->timestamps();
             $table->foreignId('team_id')->constrained('team')->onDelete('cascade'); 
+            $table->timestamps();
+           
         });
     }
 

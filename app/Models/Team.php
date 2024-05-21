@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Team extends Model
 {
     use HasFactory;
-    protected $table = 'teams';
+    protected $table = 'team';
     protected $fillable = [
         'name_team',
         'email',
@@ -17,11 +17,20 @@ class Team extends Model
         'payment',
         'lomba_id',
         'status',
+        'user_id',
     ];
     public function lomba()
     {
-        return $this->belongsToMany(Lomba::class,'team_lombas');
+        return $this->belongsToMany(Lomba::class, 'team_lombas');
     }
-    
+
+    public function users()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function submissions()
+    {
+        return $this->hasMany(Submission::class);
+    }
 
 }

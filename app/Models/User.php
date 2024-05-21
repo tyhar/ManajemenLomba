@@ -72,7 +72,13 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->email_verification_status = 'verified';
         $this->save();
     }
-
-
+    public function team_member()
+    {
+        return $this->hasMany(TeamMember::class);
+    }
+    public function team()
+    {
+        return $this->hasOne(Team::class);
+    }
 
 }

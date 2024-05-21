@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('team_lombas', function (Blueprint $table) {
+        Schema::create('certificate', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('lomba_id')->constrained('lombas')->onDelete('cascade'); // Add cascade on delete
-            $table->foreignId('team_id')->constrained('teams')->onDelete('cascade');   // Add cascade on delete
+            $table->foreignId('team_id')->constrained('team')->onDelete('cascade');
+            $table->string('team_sertifikat');
+            $table->date('date');
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('team_lombas');
+        Schema::dropIfExists('certificate');
     }
 };

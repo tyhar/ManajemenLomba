@@ -109,37 +109,36 @@
                             <h5 class="p-3">Info Tim Lomba</h5>
                             <hr class="garis">
                             <div class="row">
-                                <div class="col-md-2 jarak-daftar-lomba">
+                                <div class="col-md-2 jarak-daftar-lomba" v-if="team">
                                     <label class="c-mb5-black"><b>NAMA TIM</b></label>
                                     <div class="data-tim">{{ team.name_team }}</div>
                                 </div>
-                                <div class="col-md-2 jarak-daftar-lomba">
+                                <div class="col-md-2 jarak-daftar-lomba" v-if="team">
                                     <label class="c-mb5-black"><b>INSTANSI</b></label>
                                     <div class="data-tim">{{ team.instansi }}</div>
                                 </div>
-                                <div class="col-md-2 jarak-daftar-lomba">
+                                <div class="col-md-2 jarak-daftar-lomba" v-if="team">
                                     <label class="c-mb5-black"><b>LOMBA</b></label>
                                     <ul>
                                         <li v-for="lomba in team.lomba" :key="lomba.id">{{ lomba.name_lomba }}</li>
                                     </ul>
                                 </div>
-                                <div class="col-md-2 jarak-daftar-lomba">
+                                <div class="col-md-2 jarak-daftar-lomba" v-if="team">
                                     <label class="c-mb5-black"><b>EMAIL</b></label>
                                     <div class="data-tim">{{ team.email }}</div>
                                 </div>
-                                <div class="col-md-2 jarak-daftar-lomba">
-                                    <label class="c-mb5-black "><b>NO WHATSAPP</b></label>
+                                <div class="col-md-2 jarak-daftar-lomba" v-if="team">
+                                    <label class="c-mb5-black"><b>NO WHATSAPP</b></label>
                                     <div class="data-tim">{{ team.phone }}</div>
                                 </div>
-                                <div class="col-md-2 jarak-daftar-lomba">
+                                <div class="col-md-2 jarak-daftar-lomba" v-if="team">
                                     <label class="c-mb5-black"><b>STATUS</b></label>
                                     <div class="data-tim">{{ team.status }}</div>
                                 </div>
-                                <div class="col-md-2 jarak-daftar-lomba">
+                                <div class="col-md-2 jarak-daftar-lomba" v-if="team">
                                     <label class="c-mb5-black"><b>PEMBAYARAN</b></label>
                                     <div class="data-tim c-mb-70"><a :href="`/datatim/${team.id}`">Lihat Bukti</a></div>
                                 </div>
-
                                 <div>
                                     <button onclick="window.location.href='/datatim/create'"
                                         class="btn btn-primary radius-5 isi-data">Isi Data</button>
@@ -216,22 +215,22 @@
                             <h5 class="p-3">PENGUMPULAN KARYA</h5>
                             <div class="card-body p-4 text-center">
                                 <div class="row">
-                                    <div class="col-md-3 text-left">
+                                    <div class="col-md-3 text-left" v-if="submissions">
                                         <label class="jarak-teks05"><b>JUDUL</b></label>
-                                        <div class="data-tim">{{ submission.title }}</div>
+                                        <div class="data-tim">{{ submissions.title }}</div>
                                     </div>
-                                    <div class="col-md-3 text-left">
+                                    <div class="col-md-3 text-left" v-if="submissions">
                                         <label class="jarak-teks05"><b>DESKRIPSI</b></label>
-                                        <div class="data-tim">{{ submission.description }}</div>
+                                        <div class="data-tim">{{ submissions.description }}</div>
                                     </div>
-                                    <div class="col-md-3 text-left">
+                                    <div class="col-md-3 text-left" v-if="submissions">
                                         <label class="jarak-teks05"><b>File</b></label>
-                                        <div class="data-tim"><a :href="`/daftarlomba/${submission.id}`">Lihat File</a>
+                                        <div class="data-tim"><a :href="`/daftarlomba/${submissions.id}`">Lihat File</a>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 text-left">
+                                    <div class="col-md-3 text-left" v-if="submissions">
                                         <label class="jarak-teks05"><b>LINK VIDEO</b></label>
-                                        <div class="data-tim c-mb-70"> <a :href="submission.link" target="_blank">Link
+                                        <div class="data-tim c-mb-70"> <a :href="submissions.link" target="_blank">Link
                                                 Video</a></div>
                                     </div>
                                     <div>
@@ -256,7 +255,7 @@ import { defineProps } from "vue";
 import { ref, computed, watch } from 'vue';
 import { Link, useForm } from '@inertiajs/vue3';
 
-const { userData, users, team, submission } = defineProps(['userData', 'users', 'team', 'submission']);
+const { userData, users, team, submissions } = defineProps(['userData', 'users', 'team', 'submissions']);
 
 // Define form state using Inertia's useForm
 const form = useForm({
@@ -272,7 +271,7 @@ const props = {
     team: {
         type: Object,
     },
-    submission: {
+    submissions: {
         type: Object,
     },
 };

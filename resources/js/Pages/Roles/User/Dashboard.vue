@@ -34,8 +34,8 @@ const props = defineProps({
             <div class="menu-title">Overview</div>
           </a>
         </li>
-        <li>
-          <a href="/daftarlomba">
+        <li >
+          <a :href="route('daftarlomba.index')">
             <div class="parent-icon"><i class="fadeIn animated bx bx-street-view"></i></div>
             <div class="menu-title">Daftar Lomba</div>
           </a>

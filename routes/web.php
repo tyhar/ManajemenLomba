@@ -79,12 +79,17 @@ Route::middleware('auth', 'verified', 'user')->group(function () {
     Route::get('/reportpeserta', [UserController::class, 'reportpeserta']);
     Route::get('/detailtimreport', [UserController::class, 'detailtimreport']);
 
-
+    
     Route::resource('daftarlomba', RegLombaController::class)->only([
         'index',
         'show',
         'store',
     ]);
+    
+
+
+
+
 
     // Route::get('/search-users', [RegLombaController::class, 'search'])->name('search-users');
 

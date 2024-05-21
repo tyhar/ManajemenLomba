@@ -5,22 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Submission extends Model
+class TeamMember extends Model
 {
     use HasFactory;
-
     protected $fillable = [
-        'title',
-        'description',
-        'link',
-        'file',
-        'team_id'
+        'team_id',
+        'user_id',
+        'role'
 
     ];
 
-    public function team()
+    public function users()
     {
-        return $this->belongsTo(Team::class);
+        return $this->belongsTo(Users::class);
     }
-
 }

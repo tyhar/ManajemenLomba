@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('teams', function (Blueprint $table) {
+        Schema::create('team', function (Blueprint $table) {
             $table->id();
             $table->string('name_team')->nullable();
             $table->string('email')->unique();  // Menambahkan kolom email dan memberikan unique constraint
@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('phone')->nullable(); // Menambahkan kolom phone
             $table->string('payment')->nullable();
             $table->enum('status', ['unverified', 'verified'])->default('unverified');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); 
+            $table->string('certificate')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('teams');
+        Schema::dropIfExists('team');
     }
 };

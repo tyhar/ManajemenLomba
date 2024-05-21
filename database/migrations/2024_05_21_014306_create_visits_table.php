@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('certificates', function (Blueprint $table) {
+        Schema::create('visits', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('team_id')->constrained('teams')->onDelete('cascade');
-            $table->string('team_sertifikat');
-            $table->date('date');
+            $table->integer('visit_count')->default(0); // Menambahkan default value
+            $table->string('visit_month', 20); // Membatasi panjang string
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('certificates');
+        Schema::dropIfExists('visits');
     }
 };

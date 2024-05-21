@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('submissions', function (Blueprint $table) {
+        Schema::create('team_members', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->nullable();
-            $table->text('description')->nullable();
-            $table->string('link')->nullable();
-            $table->string('file')->nullable();
+            $table->foreignId('team_id')->constrained('teams')->onDelete('cascade'); 
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); 
+            $table->enum('role', ['ketua', 'anggota1', 'anggota2', 'anggota3', 'anggota4']);
             $table->timestamps();
-            $table->foreignId('team_id')->constrained('team')->onDelete('cascade'); 
         });
     }
 
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('submissions');
+        Schema::dropIfExists('team_members');
     }
 };

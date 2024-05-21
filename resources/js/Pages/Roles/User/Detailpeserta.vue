@@ -50,7 +50,7 @@
                                             PANDUAN</a>
                                         <a class="btn btn-success c-mtk margin-afkar1 warna-hitam" href="#">AJUKAN
                                             PERTANYAAN</a>
-                                        <a class="btn btn-primary c-mtk mg-t10 warna-hitam" href="/daftarlomba">DAFTAR
+                                        <a class="btn btn-primary c-mtk mg-t10 warna-hitam" :href="`/daftarlombautama/${team.id}`">DAFTAR
                                             LOMBA</a>
                                     </div>
                                 </div>
