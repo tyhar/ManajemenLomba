@@ -34,7 +34,7 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
 
         <form @submit.prevent="submit">
             <div class="mt-4 flex items-center justify-between">
-                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing" class="text-dark-blue">
                     Resend Verification Email
                 </PrimaryButton>
 
@@ -49,3 +49,10 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
         </form>
     </GuestLayout>
 </template>
+
+<style>
+
+.text-dark-blue {
+    color: #00008b !important; /* dark blue */
+}
+</style>

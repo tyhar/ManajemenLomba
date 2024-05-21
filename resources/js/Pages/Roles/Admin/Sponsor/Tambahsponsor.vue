@@ -2,7 +2,13 @@
 import { Link } from '@inertiajs/vue3';
 import { useForm } from "@inertiajs/vue3";
 import { Head } from "@inertiajs/vue3";
-import Swal from 'sweetalert2/dist/sweetalert2.min.js';
+
+const { name, username } = defineProps(['name', 'username']);
+
+console.log(name); // Contoh penggunaan di dalam script setup
+console.log(username);
+
+
 
 const form = useForm({
     name: "",
@@ -10,9 +16,8 @@ const form = useForm({
     link_file: "",
 });
 
-const store = () => {
+const submit = () => {
     form.post(route("sponsor.store"), {
-        onSuccess: () => form.reset(),
         preserveScroll: true,
     });
 };
@@ -47,8 +52,8 @@ const store = () => {
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>			
-                                <p class="user-role">habib</p>					
+                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                                <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -62,7 +67,7 @@ const store = () => {
         <div class="page-wrapper-new">
             <div class="page-content">
                 <div class="card">
-                    <form @submit.prevent="store">
+                    <form @submit.prevent="submit">
                         <div class="card-body">
                             <h4 class="mb-0">Tambah Sponsor</h4>
                             <hr/>
@@ -116,7 +121,7 @@ const store = () => {
                                         v-model="form.logo"
                                         id="logo"
                                     > -->
-                                    <p class="keterangan-foto">Max 2 MB (200 x 200 px)</p>
+                                    <p class="keterangan-foto">Max 2 MB (500 x 500 px)</p>
                                 </div>
                             </div>
                             <div class="btn-posisi">

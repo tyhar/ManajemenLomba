@@ -1,34 +1,52 @@
 <script setup>
-import { Link, useForm, router } from '@inertiajs/vue3';
+import { Link, useForm} from "@inertiajs/vue3";
+import { defineProps } from "vue";
 import { Head } from "@inertiajs/vue3";
-import { ref, computed } from "vue";
-// import { usePage } from "@inertiajs/vue3";
+import { router  } from "@inertiajs/vue3";
+import { onMounted, ref, computed } from 'vue';
 
-defineProps({
-    users: {
-        type: Object,
-    },
+
+const unreadCount = ref(0);
+
+onMounted(async () => {
+  try {
+    const response = await axios.get('/api/unread-messages');
+    unreadCount.value = response.data.unreadCount;
+  } catch (error) {
+    console.error(error);
+  }
+});
+// Mendefinisikan properti yang diterima oleh komponen
+const { name, username, users } = defineProps(['name', 'username', 'users']);
+
+// Menginisialisasi properti yang dibutuhkan untuk filter
+const selectedRole = ref('all');
+
+// Membuat properti terkomputasi untuk menyaring pengguna berdasarkan peran yang dipilih
+const filteredUsers = computed(() => {
+  if (selectedRole.value === 'all') {
+    return users; // Mengembalikan semua pengguna jika 'Semua' dipilih
+  } else {
+    return users.filter(user => user.role === parseInt(selectedRole.value));
+  }
 });
 
-const deleteForm = useForm({});
-
-const deleteAdministrator = (id) => {
-    if (confirm("Are you sure you want to delete this user?")) {
-        deleteForm.delete(route("administrator.destroy", id), {
-            preserveScroll: true,
-        });
-    }
+// Fungsi untuk memperbarui daftar pengguna sesuai dengan peran yang dipilih
+const filterUsers = () => {
+  console.log('Selected Role:', selectedRole.value);
+  // Di sini Anda dapat menambahkan logika untuk memperbarui daftar pengguna dari server, jika diperlukan
 };
 
-// Define the users prop (pake ini juga bisa)
-// const props = defineProps({
-//   users: {
-//     type: Array,
-//     required: true,
-//   },
-// });
+// Fungsi untuk menghapus administrator
+const deleteAdministrator = (id) => {
+  if (confirm("Are you sure you want to delete this user?")) {
+    deleteForm.delete(route("administrator.destroy", id), {
+      preserveScroll: true,
+    });
+  }
+};
 
-// Define the role names mapping
+// Objek untuk memetakan nama peran berdasarkan nomor peran
 const roleNames = {
   1: 'Admin',
   2: 'Petugas',
@@ -36,17 +54,18 @@ const roleNames = {
   4: 'Juri',
 };
 
-// Create a function to get the role name based on the role number
+// Fungsi untuk mendapatkan nama peran berdasarkan nomor peran
 const getRoleName = (role) => {
   return roleNames[role] || 'Unknown';
 };
 
-// Function to view user details
+// Fungsi untuk melihat detail pengguna
 const viewDetails = (userId) => {
-  // Logic to navigate to user details page, if needed
+  // Logika untuk menavigasi ke halaman detail pengguna, jika diperlukan
 };
 
 </script>
+
 <template>
     <!--wrapper-->
     <div class="wrapper">
@@ -100,10 +119,10 @@ const viewDetails = (userId) => {
                 </li>
                 <li>
                     <a href="/pesan">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i>
-                        </div>
-                        <div class="menu-title">Pesan <span class="alert-count">1</span></div>
-                    </a>
+            <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i></div>
+            <!-- Menampilkan jumlah pesan yang belum dibaca -->
+            <div class="menu-title">Pesan <span class="alert-count">{{ unreadCount }}</span></div>
+          </a>
                 </li>
                 <li>
                     <a href="/rangking">
@@ -143,9 +162,9 @@ const viewDetails = (userId) => {
                         <div class="top-menu ms-auto">
                             <ul class="navbar-nav align-items-center">
                                 <div class="user-info ps-3">
-                                    <p class="user-name mb-0">Habib Shohiburrotib</p>			
-                                    <p class="user-role">habib</p>							
-                                </div>
+                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                                <p class="user-role">{{ $page.props.userData.username }}</p>
+                            </div>
                                 <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                                 </div>
                                 <li class="nav-item dropdown dropdown-large">
@@ -190,11 +209,11 @@ const viewDetails = (userId) => {
                             <hr class="c-mt10" />    
                             <div class="table-responsive">
                                 <label class="dropdown-crud">Tampilkan Role</label> 
-                                <select class="form-select2">
-                                    <option selected>Semua</option>
-                                    <option>Admin</option>
-                                    <option>Juri</option>
-                                    <option>Petugas</option>
+                                <select class="form-select2" v-model="selectedRole" @change="filterUsers">
+                                    <option value="all" selected>Semua</option>
+                                    <option value="1">Admin</option>
+                                    <option value="4">Juri</option>
+                                    <option value="2">Petugas</option>
                                 </select>
                                 <br><br>  
                                 <table id="example" class="table table-bordered">
@@ -212,12 +231,12 @@ const viewDetails = (userId) => {
                                     </thead>
                                     <tbody>
                                         <tr
-                                            v-for="user in users"
+                                            v-for="user in filteredUsers"
                                             :key="user.id"
                                         >
                                             <td>{{ user.id }}</td>
-                                            <td>{{ user.username }}</td>
                                             <td>{{ user.name }}</td>
+                                            <td>{{ user.username }}</td>
                                             <td>{{ user.email }}</td>
                                             <td>{{ getRoleName(user.role) }}</td>
                                             <!-- <td>Lomba Desain</td>
@@ -228,13 +247,7 @@ const viewDetails = (userId) => {
                                                     :href="route('administrator.show', user.id)"
                                                 >
                                                     <i class="bi bi-eye"></i>
-                                                </a>
-                                                <button 
-                                                    class="btn btn-danger"
-                                                    @click="deleteAdministrator(user.id)" 
-                                                >
-                                                    <i class="bi bi-trash"></i>
-                                                </button>   
+                                                </a>  
                                             </td>
                                         </tr>
                                     </tbody>
@@ -257,6 +270,7 @@ const viewDetails = (userId) => {
         <!--start switcher-->
         <!--end switcher-->
 </template>
+
 <script>
 $(document).ready(function() {
       $('#example').DataTable();

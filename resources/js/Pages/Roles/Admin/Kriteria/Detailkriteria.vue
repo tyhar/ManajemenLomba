@@ -20,8 +20,8 @@
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>
-                                <p class="user-role">habib</p>
+                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                                <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -41,12 +41,11 @@
                         <div class="row">
                             <div class="col-md-6 c-mb10">
                                 <label class="c-mb5-black"><b>Nama Kriteria</b></label>
-                                <div class="data-tim">Kreativitas</div>
+                                <div class="data-tim">{{  form.name_kriteria }}</div>
                             </div>
                         </div>
                         <div class="btn-posisi">
-                            <button class="btn btn-danger btn-kembali"
-                                onclick="window.location.href='/kriteria'">Kembali</button>
+                            <button class="btn btn-danger btn-kembali" @click="goBack()">Kembali</button>
                         </div>
                     </div>
                 </div>
@@ -56,3 +55,29 @@
         <!--end page wrapper -->
     </div>
 </template>
+
+
+<script setup>
+import { defineProps } from "vue";
+import { useForm, usePage } from '@inertiajs/vue3';
+
+
+// Mendefinisikan properti yang diterima oleh komponen
+const props = defineProps({
+    name: String,
+    username: String,
+    kriteria: Object
+});
+
+// Menampilkan properti name dan username yang diterima
+console.log(props.name);
+console.log(props.username);
+const form = useForm({
+    name_kriteria: props.kriteria.name_kriteria,
+})
+
+const goBack = () => {
+    window.history.back();
+};
+
+</script>

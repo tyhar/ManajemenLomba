@@ -4,9 +4,17 @@ import { useForm } from "@inertiajs/vue3";
 import { Head } from "@inertiajs/vue3";
 import { router } from "@inertiajs/vue3";
 
-defineProps({
-    users: Array,
-});
+const { name, username, users } = defineProps(['name', 'username', 'users']);
+
+console.log(name); // Contoh penggunaan di dalam script setup
+console.log(username);
+
+// Definisikan properti yang diterima oleh komponen
+const props = {
+    users: {
+        type: Array,
+    },
+};
 
 // Define the role names mapping
 const roleNames = {
@@ -62,8 +70,8 @@ const formatDate = (dateString) => {
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>			
-                                <p class="user-role">habib</p>					
+                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                                <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -100,16 +108,16 @@ const formatDate = (dateString) => {
                             <div class="col-md-6">
                                 <label class="c-mb5-black"><b>Role</b></label>
                                 <div class="data-tim">{{ getRoleName(users.role) }}</div>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="c-mb5-black"><b>Lomba</b></label>
-                                <div class="data-tim">Lomba Desain</div>
                             </div>           
                             <div class="col-md-6">
                                 <label class="c-mb5-black"><b>Tanggal Dibuat</b></label>
                                 <div class="data-tim">{{ formatDate(users.created_at) }}</div>
                             </div>      
                         </div>
+                        <label class="c-mb5-black"><b>Lomba</b></label>
+                                <ul>
+                                    <li v-for="lomba in users.lomba" :key="lomba.id">{{ lomba.name_lomba }}</li>
+                                </ul>
                         <div class="btn-posisi">
                             <button class="btn btn-danger btn-kembali" onclick="window.location.href='/administrator'">Kembali</button>
                         </div>

@@ -1,6 +1,3 @@
-<script setup>
-import { Link } from '@inertiajs/vue3';
-</script>
 <template>
     <!--wrapper-->
     <div class="wrapper">
@@ -9,7 +6,7 @@ import { Link } from '@inertiajs/vue3';
             <div class="sidebar-header">
                 <div>
                     <a href="/">
-                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon">
+                        <img src="bootstrap/images/logocb.png" class="logo-icon" alt="logo icon">
                     </a>
                 </div>
                 <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
@@ -56,33 +53,8 @@ import { Link } from '@inertiajs/vue3';
                     <a href="/">
                         <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
                         </div>
-                        <div class="menu-title">
-                            <Link class="menu-title"
-                                :href="route('logout')"
-                                method="post"
-                                as="button"
-                            >
-                                Logout
-                            </Link>
-                        </div>
+                        <div class="menu-title">Keluar</div>
                     </a>
-                </li>
-                <li>
-                    <a href="javascript:;" class="has-arrow">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-plus-circle"></i>
-                        </div>
-                        <div class="menu-title">SEMENTARA</div>
-                    </a>
-                    <ul>
-                        <li class="jarak-dropdown"> <a href="/dashboardjuri">JURI</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/dashboardpetugas">PETUGAS</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/overviewpeserta">PESERTA</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/index2">ADMIN</a>
-                        </li>
-                    </ul>
                 </li>
             </ul>
             <!--end navigation-->
@@ -126,10 +98,15 @@ import { Link } from '@inertiajs/vue3';
         <div class="page-wrapper">
             <div class="page-content"> 
                 <div class="card-body btn-crud">
-                    <div class="d-grid notifikasi-peserta"> <a class="btn btn-danger radius-3 text-warna warna-hitam">Mohon maaf TIM anda gagal ke tahap selanjutnya untuk lomba ui/ux dalam event Olinas (Olimpiade Nasional)</a>
-					</div>
-                    <div class="d-grid notifikasi-peserta-2"> <a class="btn btn-success radius-3 text-warna warna-hitam">Selamat TIM anda telah terdaftar lomba UI/UX</a>
-				    </div>
+                    <div  class="keterangan-notif jarak-bottom-kurang20 c-mb30 bg-cred"> 
+                        <label>Mey 21</label>
+                        <label>Mohon maaf TIM anda gagal ke tahap selanjutnya untuk lomba ui/ux </label>
+                    </div>
+                    <div  class="keterangan-notif jarak-bottom-kurang20 bg-cgreen"> 
+                        <label>Mey 21</label>
+                        <label>Selamat TIM anda telah terdaftar lomba ui/ux </label>
+                    </div>
+                   
                 </div>
             </div>
         </div>

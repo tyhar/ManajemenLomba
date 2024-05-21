@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Symfony\Component\CssSelector\Node\FunctionNode;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
 
@@ -28,6 +28,10 @@ class User extends Authenticatable
         'role',
         'phone',
         'instansi',
+        'nik',
+        'photo',
+        'email_verification_status',
+        'created_at',
     ];
 
     /**
@@ -54,18 +58,21 @@ class User extends Authenticatable
     }
 
     //relasi untuk role eventlomba, spesifik per lombanya
-    // public function lomba()
-    // {
-    //     $this->belongsTo(Lomba::class,'lomba_id');
-    // }
+    public function lomba()
+    {
+        return  $this->belongsToMany(Lomba::class,'user_lombas');
+    }
 
-    // public function reglomba()
-    // {
-    //     $this->hasOne(RegLomba::class);
-    // }
+    public function hasVerifiedEmail()
+    {
+        return $this->email_verification_status === 'verified';
+    }
+    public function markEmailAsVerified()
+    {
+        $this->email_verification_status = 'verified';
+        $this->save();
+    }
 
-    // public function reglombamember()
-    // {
-    //     $this->hasMany(RegLombaMember::class);
-    // }
+
+
 }

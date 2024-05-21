@@ -1,5 +1,38 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
+import { onMounted, ref, computed } from 'vue';
+import { router } from "@inertiajs/vue3";
+import { defineProps } from "vue";
+
+
+const unreadCount = ref(0);
+onMounted(async () => {
+  try {
+    const response = await axios.get('/api/unread-messages');
+    unreadCount.value = response.data.unreadCount;
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+const props = defineProps({
+  name: {
+    type: String,
+    required: true,
+  },
+  username: {
+    type: String,
+    required: true,
+  },
+});
+
+
+
+
+
+
+
+
 </script>
 <template>
     <!--wrapper-->
@@ -54,10 +87,10 @@ import { Link } from '@inertiajs/vue3';
                 </li>
                 <li>
                     <a href="/pesan">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i>
-                        </div>
-                        <div class="menu-title">Pesan <span class="alert-count">1</span></div>
-                    </a>
+            <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i></div>
+            <!-- Menampilkan jumlah pesan yang belum dibaca -->
+            <div class="menu-title">Pesan <span class="alert-count">{{ unreadCount }}</span></div>
+          </a>
                 </li>
                 <li>
                     <a href="/rangking">
@@ -97,8 +130,8 @@ import { Link } from '@inertiajs/vue3';
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>			
-                                <p class="user-role">habib</p>							
+                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                                <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -127,7 +160,7 @@ import { Link } from '@inertiajs/vue3';
                     <div class="card-body">
                         <h4 class="mb-0 jarak-top-kurang5">Setting Event</h4>
                         <hr class="c-mt10" />		
-                        <button class="btn btn-success jarak-top-kurang7" onclick="window.location.href='/tambahsetting'">Tambah Event</button>
+                        <a class="btn btn-success jarak-top-kurang7"  :href="route('setting.create')">Tambah Event</a>
                         <hr class="c-mt10" /> 	
                         <div class="table-responsive">	     
                             <table id="example" class="table table-bordered">
@@ -151,7 +184,7 @@ import { Link } from '@inertiajs/vue3';
                                         <td>April 1, 2024</td>
                                         <td>April 20, 2024</td>
                                         <td class="btn-crud">
-                                            <button class="btn btn-primary" onclick="window.location.href='/editsetting'"><i class="bi bi-pencil-square"></i></button>
+                                            <button class="btn btn-primary" onclick="window.location.href='/setting/{setting}/edit'"><i class="bi bi-pencil-square"></i></button>
                                         </td>
                                     </tr>
                                 </tbody>

@@ -35,25 +35,57 @@
         <div class="page-wrapper-new">
             <div class="page-content">
                 <div class="card">
+                    <form @submit.prevent="submit" enctype="multipart/form-data">
                     <div class="card-body">
                         <h4 class="mb-0">Edit Kriteria Lomba</h4>
                         <hr />
                         <div class="row">
                             <div class=" c-mb10">
                                 <label class="c-mb5-black"><b>Nama Kriteria</b></label>
-                                <input type="namalomba" class="form-control">
+                                <input type="text" id="name_kriteria" class="form-control" v-model="form.name_kriteria">
                             </div>
                         </div>
                         <div class="btn-posisi">
                             <button class="btn btn-primary button-tabel-right"
-                                onclick="window.location.href='/kriteria'">Simpan</button>
-                            <button class="btn btn-danger button-tabel-left"
-                                onclick="window.location.href='/kriteria'">Batal</button>
+                               type="submit">Simpan</button>
+                               <a 
+                                    class="btn btn-danger button-tabel-left"
+                                    :href="route('kriteria.index')"
+                                >
+                                    Batal
+                                </a>
                         </div>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
         <!--end page wrapper -->
     </div>
 </template>
+
+<script setup>
+
+import { useForm } from "@inertiajs/vue3";
+import { usePage } from "@inertiajs/vue3";
+import { router } from "@inertiajs/vue3";
+
+// const props = defineProps({
+//     kriterias: Object,
+// });
+
+//with resource
+ const kriteria = usePage().props.kriterias; //props.sponsors "sponsors" are from controller
+
+const form = useForm({
+    name_kriteria: kriteria.data.name_kriteria,
+});
+
+function submit() {
+    router.post(`/superadmin/kriteria/${kriteria.data.id }`, {
+        _method: 'put',
+        name_kriteria: form.name_kriteria,
+
+    })
+ }
+</script>

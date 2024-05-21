@@ -1,5 +1,33 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
+import { onMounted, ref, computed } from 'vue';
+import { router } from "@inertiajs/vue3";
+import { defineProps } from "vue";
+
+
+
+const props = defineProps({
+  name: {
+    type: String,
+    required: true,
+  },
+  username: {
+    type: String,
+    required: true,
+  },
+});
+
+
+const unreadCount = ref(0);
+
+onMounted(async () => {
+  try {
+    const response = await axios.get('/api/unread-messages');
+    unreadCount.value = response.data.unreadCount;
+  } catch (error) {
+    console.error(error);
+  }
+});
 </script>
 <template>
     <!--wrapper-->
@@ -54,10 +82,10 @@ import { Link } from '@inertiajs/vue3';
                 </li>
                 <li>
                     <a href="/pesan">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i>
-                        </div>
-                        <div class="menu-title">Pesan <span class="alert-count">1</span></div>
-                    </a>
+            <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i></div>
+            <!-- Menampilkan jumlah pesan yang belum dibaca -->
+            <div class="menu-title">Pesan <span class="alert-count">{{ unreadCount }}</span></div>
+          </a>
                 </li>
                 <li>
                     <a href="/rangking">
@@ -81,23 +109,6 @@ import { Link } from '@inertiajs/vue3';
                         </div>
                     </a>
                 </li>
-                <li>
-                    <a href="javascript:;" class="has-arrow">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-plus-circle"></i>
-                        </div>
-                        <div class="menu-title">SEMENTARA</div>
-                    </a>
-                    <ul>
-                        <li class="jarak-dropdown"> <a href="/dashboardjuri">JURI</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/dashboardpetugas">PETUGAS</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/overviewpeserta">PESERTA</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/index2">ADMIN</a>
-                        </li>
-                    </ul>
-                </li>
             </ul>
             <!--end navigation-->
         </div>
@@ -113,8 +124,8 @@ import { Link } from '@inertiajs/vue3';
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                            <p class="user-name mb-0">Habib Shohiburrotib</p>			
-                            <p class="user-role">habib</p>							
+                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                                <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>

@@ -87,7 +87,7 @@
                         </div>
                         <div class="btn-posisi">
                             <button class="btn btn-primary button-tabel-right" onclick="window.location.href='/setting'">Simpan</button>
-                            <button class="btn btn-danger button-tabel-left" onclick="window.location.href='/setting'">Batal</button>
+                            <a class="btn btn-danger button-tabel-left" :href="route('setting.index')">Batal</a>
                         </div>
                     </div>
                 </div>

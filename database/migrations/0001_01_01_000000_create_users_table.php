@@ -19,12 +19,13 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('phone')->nullable();
             $table->string('instansi')->nullable();
-            //create roles authentication types
             $table->tinyInteger('role')->default(3); // Users: 1-superadmin,2-event_admin,3-user,4-panelis. default means when the value are null or unassigned it automatically set to default value. so if you changed the default value you have to migrate 
             $table->string('password');
-            $table->timestamp('email_verified_at')->nullable();
+            $table->enum('email_verification_status', ['unverified', 'verified'])->default('unverified');
             $table->rememberToken();
             $table->timestamps();
+            $table->string('nik')->nullable();
+            $table->string('photo')->nullable();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
