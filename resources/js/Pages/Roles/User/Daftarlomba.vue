@@ -183,7 +183,7 @@ function selectUser(user) {
                                         <div class="card-body p-4 text-center posisi-mb23">
                                             <div class="btn-crud ">
                                                 <img src="http://via.placeholder.com/120x120" height="120" alt="..."
-                                                    class="img-fluid rounded">
+                                                    class="img-fluidc rounded">
                                             </div>
                                             <br>
                                             <h6><b>Muhammaad Afkar Triwardana</b></h6>
@@ -205,6 +205,11 @@ function selectUser(user) {
                                             <br>
                                         </div>
                                     </div>
+                                </div>
+                                <div>
+                                    <br><br>
+                                    <button type="submit" @click="saveTeamMembers"
+                                        class="btn btn-primary radius-5 isi-data2">Kirim</button>
                                 </div>
                             </div>
                         </div>
@@ -272,3 +277,18 @@ function selectUser(user) {
         <!--end page wrapper -->
     </div>
 </template>
+
+<style scoped>
+/* DAFTAR LOMBA EDIT */
+.crud-max-width260 {
+    /* flex: 1 1 calc(25% - 1rem); */
+    display: flex;
+    flex-direction: column;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+</style>

@@ -106,11 +106,11 @@ import { Link } from '@inertiajs/vue3';
             <div class="page-content">
                 <div class="card-body btn-crud">
                     <div class="keterangan-notif jarak-bottom-kurang20 c-mb30 bg-cred">
-                        <label>Mey 21</label>
+                        <label>Mei 21</label>
                         <label>Mohon maaf TIM anda gagal ke tahap selanjutnya untuk lomba ui/ux </label>
                     </div>
                     <div class="keterangan-notif jarak-bottom-kurang20 bg-cgreen">
-                        <label>Mey 21</label>
+                        <label>Mei 21</label>
                         <label>Selamat TIM anda telah terdaftar lomba ui/ux </label>
                     </div>
 

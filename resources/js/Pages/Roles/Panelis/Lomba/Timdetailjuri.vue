@@ -6,11 +6,11 @@
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
-                        <a href="/">
-                            <div class="navbar-left">
+                        <div class="navbar-left">
+                            <a href="/">
                                 <img src="/bootstrap/images/logo.png" alt="Logo">
-                            </div>
-                        </a>
+                            </a>
+                        </div>
                     </div>
                     <!-- Mobile toggle menu -->
                     <!-- Search bar -->
@@ -82,7 +82,7 @@
                                     <div class="card-body p-4 text-center posisi-mb23">
                                         <div class="btn-crud">
                                             <img src="http://via.placeholder.com/120x120" height="120" alt="..."
-                                                class="img-fluid rounded">
+                                                class="img-fluidc rounded">
                                         </div>
                                         <br>
                                         <h6><b>Muhammaad Afkar Triwardana</b></h6>
@@ -100,7 +100,7 @@
                                     <div class="card-body p-4 text-center posisi-mb23">
                                         <div class="btn-crud">
                                             <img src="http://via.placeholder.com/120x120" height="120" alt="..."
-                                                class="img-fluid rounded">
+                                                class="img-fluidc rounded">
                                         </div>
                                         <br>
                                         <h6><b>Muhammaad Haidar</b></h6>
@@ -118,7 +118,7 @@
                                     <div class="card-body p-4 text-center posisi-mb23">
                                         <div class="btn-crud">
                                             <img src="http://via.placeholder.com/120x120" height="120" alt="..."
-                                                class="img-fluid rounded">
+                                                class="img-fluidc rounded">
                                         </div>
                                         <br>
                                         <h6><b>Iqbal Farhan Rasyid</b></h6>
@@ -136,7 +136,7 @@
                                     <div class="card-body p-4 text-center posisi-mb23">
                                         <div class="btn-crud">
                                             <img src="http://via.placeholder.com/120x120" height="120" alt="..."
-                                                class="img-fluid rounded">
+                                                class="img-fluidc rounded">
                                         </div>
                                         <br>
                                         <h6><b>Lutfi Iffah Lathifah</b></h6>
@@ -177,3 +177,18 @@
         <!--end page wrapper -->
     </div>
 </template>
+
+<style scoped>
+/* DAFTAR LOMBA EDIT */
+.crud-max-width260 {
+    /* flex: 1 1 calc(25% - 1rem); */
+    display: flex;
+    flex-direction: column;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+</style>
