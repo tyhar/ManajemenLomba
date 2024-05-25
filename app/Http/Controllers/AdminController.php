@@ -109,23 +109,7 @@ class AdminController extends Controller
         return Inertia::render('Roles/Admin/Sponsor/Detailsponsor');
     }
 
-    //BERITA
-    public function berita()
-    {
-        return Inertia::render('Roles/Admin/Berita');
-    }
-    public function tambahberita()
-    {
-        return Inertia::render('Roles/Admin/Berita/Tambahberita');
-    }
-    public function editberita()
-    {
-        return Inertia::render('Roles/Admin/Berita/Editberita');
-    }
-    public function detailberita()
-    {
-        return Inertia::render('Roles/Admin/Berita/Detailberita');
-    }
+
 
     //SETTING
     public function setting()

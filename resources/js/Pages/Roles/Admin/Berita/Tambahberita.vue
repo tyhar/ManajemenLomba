@@ -20,13 +20,13 @@
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>			
-                                <p class="user-role">habib</p>					
+                                <p class="user-name mb-0">Habib Shohiburrotib</p>
+                                <p class="user-role">habib</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
                         </ul>
-                    </div>		
+                    </div>
                 </nav>
             </div>
         </header>
@@ -37,43 +37,46 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="mb-0">Tambah Berita</h4>
-                        <hr/>
-                        <div>
+                        <hr />
+                        <form @submit.prevent="submit">
                             <div class="c-mb10">
                                 <label class="c-mb5-black"><b>Judul</b></label>
-                                <input type="email" class="form-control" value="Monitoring Perkembangan Projek Manajemen Lomba Prodi ">
+                                <input type="text" class="form-control" v-model="form.judul" required>
                             </div>
                             <div>
                                 <label class="c-mb5-black"><b>Deskripsi Awal</b></label>
                                 <div class="col-12">
-                                    <textarea class="form-control c-mb10" id="inputProductDescription" rows="2" value="Platform yang sering kami gunakan untuk melakukan diskusi online selai..."></textarea>
+                                    <textarea class="form-control c-mb10" id="inputProductDescription" rows="2"
+                                        v-model="form.deskripsi_awal" required></textarea>
                                 </div>
                             </div>
                             <div>
                                 <label class="c-mb5-black"><b>Deskripsi</b></label>
                                 <div class="col-12">
-                                    <textarea class="form-control c-mb10" id="inputProductDescription" rows="5" value="Dalam rangka memperkuat semangat kompetisi yang sehat dan mendorong pencapaian akademik yang gemilang, Universitas [Nama Universitas] dengan bangga mempersembahkan Proyek Manajemen Lomba Prodi."></textarea>
+                                    <textarea class="form-control c-mb10" id="inputProductDescription" rows="5"
+                                        v-model="form.deskripsi" required></textarea>
                                 </div>
                             </div>
                             <div class="c-mb10">
                                 <label class="c-mb5-black"><b>Penerbit</b></label>
-                                <input type="email" class="form-control" value="Admin">
+                                <input type="text" class="form-control" v-model="form.penerbit" required>
                             </div>
                             <div>
                                 <label class="form-label warna-hitam"><b>Tanggal Upload</b></label>
-								<input type="date" class="form-control jarak-btn8">
+                                <input type="date" class="form-control jarak-btn8" v-model="form.tanggal_upload">
                             </div>
-
                             <div>
                                 <label for="formFile" class="form-label warna-hitam"><b>Upload Gambar</b></label>
-								<input class="form-control" type="file" id="formFile">
-                                <p class="keterangan-foto">Max 2 MB (500 x 500 px)</p>
+                                <input class="form-control" type="file" id="formFile" v-on:change="onFileChange"
+                                    required>
+                                <p class="keterangan-foto">Max 2 MB (640 x 500 px)</p>
                             </div>
-                        </div>
-                        <div class="btn-posisi">
-                            <button class="btn btn-primary button-tabel-right" onclick="window.location.href='/berita'">Tambah</button>
-                            <button class="btn btn-danger button-tabel-left" onclick="window.location.href='/berita'">Batal</button>
-                        </div>
+                            <div class="btn-posisi">
+                                <button class="btn btn-primary button-tabel-right" type="submit">Tambah</button>
+                                <button class="btn btn-danger button-tabel-left"
+                                    onclick="window.location.href='/event/berita'">Batal</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -81,5 +84,39 @@
         <!--end page wrapper -->
     </div>
 </template>
-    
-   
+<script setup>
+import { reactive, ref } from 'vue'
+import { router } from '@inertiajs/vue3'
+
+
+const form = reactive({
+    judul: null,
+    deskripsi_awal: null,
+    deskripsi: null,
+    penerbit: null,
+    tanggal_upload: null,
+    images: null
+})
+
+const selectedFile = ref(null)
+
+function submit() {
+    const formData = new FormData();
+    formData.append('judul', form.judul);
+    formData.append('deskripsi_awal', form.deskripsi_awal);
+    formData.append('deskripsi', form.deskripsi);
+    formData.append('penerbit', form.penerbit);
+    formData.append('tanggal_upload', form.tanggal_upload);
+    formData.append('images', selectedFile.value);
+
+    router.post('/berita', formData);
+}
+
+function onFileChange(event) {
+    selectedFile.value = event.target.files[0];
+}
+
+const getImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/admin/setting/${imageName}` : '';
+};
+</script>

@@ -14,6 +14,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PanelisController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SponsorController;
+use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\EventAdminController;
 use App\Http\Controllers\AdministratorController;
 
@@ -98,11 +99,13 @@ Route::middleware('auth', 'verified', 'admin')->group(function () {
     // Route::resource('superadmin/sponsor', SponsorController::class);
     Route::resource('sponsor', SponsorController::class);
 
-    Route::get('/berita', [AdminController::class, 'berita']);
-    Route::get('/tambahberita', [AdminController::class, 'tambahberita']);
-    Route::get('/editberita', [AdminController::class, 'editberita']);
-    Route::get('/detailberita', [AdminController::class, 'detailberita']);
-    // Route::resource('superadmin/berita', [BeritaController::class]);
+    Route::get('/berita/tambah-berita', [BeritaController::class, 'tambahberita']);
+    Route::get('/berita', [BeritaController::class, 'berita'])->name('berita.index');
+    Route::post('/berita', [BeritaController::class, 'store']);
+    Route::delete('/berita/{berita}', [BeritaController::class, 'destroy']);
+    Route::get('/berita/{berita}/edit-berita', [BeritaController::class, 'editberita']);
+    Route::put('/berita/{berita}', [BeritaController::class, 'update']);
+    Route::get('/berita/{berita}/detail-berita', [BeritaController::class, 'detailberita']);
 
     Route::get('/setting', [AdminController::class, 'setting']);
     Route::get('/editsetting', [AdminController::class, 'editsetting']);

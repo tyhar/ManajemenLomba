@@ -129,7 +129,7 @@ import { Link } from '@inertiajs/vue3';
                         <h4 class="mb-0 jarak-top-kurang5">Tabel Berita</h4>
                         <hr class="c-mt10" />
                         <button class="btn btn-success" style="margin-top: -7px;"
-                            onclick="window.location.href='/tambahberita'">Tambah Berita</button>
+                            onclick="window.location.href='/berita/tambah-berita'">Tambah Berita</button>
                         <hr class="c-mt10" />
                         <div class="table-responsive">
                             <table id="example" class="table mt-3  table-bordered">
@@ -144,21 +144,20 @@ import { Link } from '@inertiajs/vue3';
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Profil Ketua Emailkomp Periode 2024</td>
-                                        <td>Emailkomp adalah sebuah organisasi dibawah pengawasan langsung oleh Prodi
-                                            Teknik Informatika</td>
-                                        <td>Admin</td>
-                                        <td>February 27, 2024</td>
+                                    <tr v-for="berita in beritas">
+                                        <td>{{ berita.id }}</td>
+                                        <td>{{ berita.judul }}</td>
+                                        <td>{{ berita.deskripsi_awal }}</td>
+                                        <td>{{ berita.penerbit }}</td>
+                                        <td>{{ berita.tanggal_upload }}</td>
                                         <td class="btn-crud">
                                             <button class="btn btn-secondary"
-                                                onclick="window.location.href='/detailberita'"><i
+                                                @click.prevent="detailberita(berita.id)"><i
                                                     class="bi bi-eye"></i></button>
-                                            <button class="btn btn-primary"
-                                                onclick="window.location.href='/editberita'"><i
+                                            <button class="btn btn-primary" @click.prevent="editberita(berita.id)"><i
                                                     class="bi bi-pencil-square"></i></button>
-                                            <button class="btn btn-danger"><i class="bi bi-trash"></i></button>
+                                            <button class="btn btn-danger" @click.prevent="destroy(berita.id)"><i
+                                                    class="bi bi-trash"></i></button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -173,6 +172,27 @@ import { Link } from '@inertiajs/vue3';
 </template>
 
 <script>
+import { router } from '@inertiajs/vue3'
+
+export default {
+    props: {
+        beritas: Object
+    }
+}
+
+function editberita(id) {
+    router.get('/berita/' + id + '/edit-berita')
+}
+
+function detailberita(id) {
+    router.get('/berita/' + id + '/detail-berita')
+}
+
+function destroy(id) {
+    router.delete('/berita/' + id)
+}
+
+
 $(document).ready(function () {
     $('#example').DataTable();
 });
