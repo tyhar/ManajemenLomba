@@ -3890,6 +3890,7 @@ input.search-control-2::placeholder {
 	}
 	.cnew {
 		margin-top: -80px;
+		/* margin-top: -120px; */
 	}
 	.crud-width150 {
 		width: 150px;
@@ -4175,5 +4176,6 @@ button.menu-title {
 	height: auto;
 }
 
-
-
+body {
+    background-color: #E4EDF3;
+}

@@ -40,5 +40,9 @@ class EventAdminController extends Controller
     {
         return Inertia::render('Roles/EventAdmin/Rangking/Petugasrangking');
     }
+    public function detailtimpetugas()
+    {
+        return Inertia::render('Roles/EventAdmin/Rangking/Detailtimpetugas');
+    }
 
 }

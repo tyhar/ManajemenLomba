@@ -126,6 +126,7 @@ Route::middleware('auth', 'verified', 'eventadmin')->group(function () {
     Route::get('/pesanpetugas', [EventAdminController::class, 'pesanpetugas']);
     Route::get('/rangkingpetugas', [EventAdminController::class, 'rangkingpetugas']);
     Route::get('/petugasrangking', [EventAdminController::class, 'petugasrangking']);
+    Route::get('/detailtimpetugas', [EventAdminController::class, 'detailtimpetugas']);
 });
 
 // -> panelis atau juri
