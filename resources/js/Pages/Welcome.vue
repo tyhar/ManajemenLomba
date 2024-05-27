@@ -289,17 +289,18 @@ function handleImageError() {
                     <div class="tf__heading_area mb_15">
                         <h5 class="c-mb-40">Timeline</h5>
                         <div class="card container-hg180-index">
-                            <div class="card-body p-4 text-center">
+                            <div class="card-body p-4 text-center" v-for="setting in settings"
+                            :key="setting.id">
                                 <h6 class="h6-landing-page1">
                                     <b>Event OLINAS</b>
                                 </h6>
                                 <h6 class="h6-landing-page2">
-                                    <b>Tanggal Mulai : 12 April 2024</b>
+                                    <b>Tanggal Mulai : {{ setting.mulai }}</b>
                                 </h6>
                                 <h6 class="h6-landing-page2">
-                                    <b>Tanggal Berakhir : 13 Mei 2024</b>
+                                    <b>Tanggal Berakhir : {{ setting.berakhir }}</b>
                                 </h6>
-                            </div>
+                            </div>  
                         </div>
                     </div>
                 </div>
