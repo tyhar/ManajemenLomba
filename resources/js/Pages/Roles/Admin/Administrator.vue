@@ -223,9 +223,6 @@ const viewDetails = (userId) => {
                                             <a class="btn btn-secondary" :href="route('administrator.show', user.id)">
                                                 <i class="bi bi-eye"></i>
                                             </a>
-                                            <button class="btn btn-danger" @click="deleteAdministrator(user.id)">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
                                         </td>
                                     </tr>
                                 </tbody>

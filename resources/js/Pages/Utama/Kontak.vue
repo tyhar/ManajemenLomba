@@ -132,7 +132,8 @@ const submit = () => {
                                 placeholder="Email" />
                             <input class="form-control" id="nomor" type="number" v-model="form.phone"
                                 placeholder="Nomor yang dapat dihubungi" />
-                            <textarea class="form-control" type="textarea" v-model="form.value" placeholder="Pesan" />
+                            <textarea class="form-control" type="textarea" rows="5" v-model="form.value"
+                                placeholder="Pesan" />
                             <!-- <input id="nama" type="name" v-model="form.name" placeholder="Nama"/> -->
                             <!-- <input id="email" type="email" v-model="form.email" placeholder="Email" /> -->
                             <!-- <input id="phone" type="number" v-model="form.phone" placeholder="No. WhatsApp"/> -->

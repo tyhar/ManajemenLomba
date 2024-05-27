@@ -45,6 +45,7 @@ class BeritaController extends Controller
 
     public function berita()
     {
+        Carbon::setLocale('id');
         return Inertia::render('Roles/Admin/Berita', [
 
             'beritas' => Berita::all()->map(function ($berita) {
@@ -117,6 +118,7 @@ class BeritaController extends Controller
 
     public function detailberita(Berita $berita)
     {
+        Carbon::setLocale('id');
         return Inertia::render('Roles/Admin/Berita/Detailberita', [
             'berita' => [
                 'id' => $berita->id,

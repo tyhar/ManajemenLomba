@@ -36,7 +36,7 @@
             <div class="page-content">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0">Tambah Berita</h4>
+                        <h4 class="mb-0">TAMBAH BERITA</h4>
                         <hr />
                         <form @submit.prevent="submit">
                             <div class="c-mb10">
@@ -74,7 +74,7 @@
                             <div class="btn-posisi">
                                 <button class="btn btn-primary button-tabel-right" type="submit">Tambah</button>
                                 <button class="btn btn-danger button-tabel-left"
-                                    onclick="window.location.href='/event/berita'">Batal</button>
+                                    onclick="window.location.href='/berita'">Batal</button>
                             </div>
                         </form>
                     </div>

@@ -147,9 +147,9 @@ import { Link } from '@inertiajs/vue3';
                                 <tbody>
                                     <tr>
                                         <td>1</td>
-                                        <td>images1.jpg</td>
                                         <td>Olinas</td>
-                                        <td>2024</td>
+                                        <td>Olinas</td>
+                                        <td>Olinas</td>
                                         <td>April 1, 2024</td>
                                         <td>April 20, 2024</td>
                                         <td class="btn-crud">

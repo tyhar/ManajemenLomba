@@ -2757,6 +2757,10 @@ input.search-control-2::placeholder {
 .jarak-dropdown {
 	padding-left: 35px;
 }
+/* .jarak-dropdown a {
+    text-indent: 20px;
+} */
+
 
 .data-tim {
 	margin-bottom: 20px
@@ -3900,7 +3904,7 @@ input.search-control-2::placeholder {
 /* Aturan CSS untuk tampilan mobile */
 @media (max-width: 767px) {
 	.card-height200 {
-		height: 260px;
+		height: 310px;
 	}
 	.btn-download {
 		margin-top: 150;

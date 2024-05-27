@@ -129,17 +129,17 @@ import { Link } from '@inertiajs/vue3';
                                         <th class="crud-width100">Instansi</th>
                                         <th class="crud-width100">Hasil</th>
                                         <th class="crud-width-150">Status</th>
-                                        <th class="crud-width-70">Aksi</th>
-                                        <td data-orderable="false">
-                                            <input type="checkbox" onchange="checkAll(this)">
-                                        </td>
+                                        <th class="crud-width-60">Aksi</th>
+                                        <th data-orderable="false">
+                                            <input type="checkbox">
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td>1</td>
-                                        <td>Tim Design</td>
-                                        <td>Platform Pendidikan Interaktif</td>
+                                        <td>Start Green</td>
+                                        <td>Lomba Desain</td>
                                         <td>UNS</td>
                                         <td>90</td>
                                         <td>Lolos</td>

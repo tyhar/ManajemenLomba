@@ -62,7 +62,7 @@ const submit = () => {
                 <div class="card">
                     <form @submit.prevent="submit">
                         <div class="card-body">
-                            <h4 class="mb-0">Tambah Sponsor</h4>
+                            <h4 class="mb-0">TAMBAH SPONSOR</h4>
                             <hr />
                             <div>
                                 <div class="c-mb10">

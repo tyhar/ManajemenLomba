@@ -145,7 +145,7 @@ import { Link } from '@inertiajs/vue3';
                                     <tr>
                                         <th class="width-id">ID</th>
                                         <th>Nama Lomba</th>
-                                        <th>Deskripsi</th>
+                                        <th>Biaya Pendaftaran</th>
                                         <th>Nama PJ</th>
                                         <th>Kontak PJ</th>
                                         <th class="crud-width-180">Aksi</th>

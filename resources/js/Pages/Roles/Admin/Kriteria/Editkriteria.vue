@@ -36,7 +36,7 @@
             <div class="page-content">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0">Edit Kriteria Lomba</h4>
+                        <h4 class="mb-0">EDIT KRITERIA PENILAIAN</h4>
                         <hr />
                         <div class="row">
                             <div class=" c-mb10">

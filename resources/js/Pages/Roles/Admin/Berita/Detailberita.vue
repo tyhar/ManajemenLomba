@@ -36,32 +36,32 @@
             <div class="page-content">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0">Detail Berita</h4>
+                        <h4 class="mb-0">DETAIL BERITA</h4>
                         <hr />
                         <div>
                             <div class="col-md-6 c-mb10">
-                                <label class="c-mb5-black"><b>Judul</b></label>
+                                <label class="c-mb5-black"><b>JUDUL</b></label>
                                 <div class="c-mb20">{{ form.judul }}</div>
                             </div>
                             <div>
-                                <label class="c-mb5-black"><b>Deskripsi Awal</b></label>
+                                <label class="c-mb5-black"><b>DESKRIPSI AWAL</b></label>
                                 <div class="c-mb20">{{ form.deskripsi_awal }}</div>
                             </div>
                             <div>
-                                <label class="c-mb5-black"><b>Deskripsi</b></label>
+                                <label class="c-mb5-black"><b>DESKRIPSI</b></label>
                                 <div class="c-mb20">{{ form.deskripsi }}</div>
                             </div>
                             <div class="col-md-6 c-mb10">
-                                <label class="c-mb5-black"><b>Penerbit</b></label>
+                                <label class="c-mb5-black"><b>PENERBIT</b></label>
                                 <div class="c-mb20">{{ form.penerbit }}</div>
                             </div>
                             <div class="col-md-6 c-mb10">
-                                <label class="c-mb5-black"><b>Tanggal Upload</b></label>
+                                <label class="c-mb5-black"><b>TANGGAL UPLOAD</b></label>
                                 <div class="c-mb20">{{ form.tanggal_upload }}</div>
                             </div>
                             <div class="c-mb10">
-                                <label class="c-mb5-black"><b>Gambar</b></label><br>
-                                <img :src="getBeritaImageUrl(form.images)" class="form-control c-maxw400">
+                                <label class="c-mb5-black"><b>GAMBAR</b></label><br>
+                                <img :src="getBeritaImageUrl(form.images)" class="c-maxw400">
                             </div>
                         </div>
                         <div class="btn-posisi">

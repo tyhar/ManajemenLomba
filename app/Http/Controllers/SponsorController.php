@@ -17,13 +17,13 @@ class SponsorController extends Controller
     public function index()
     {
         // $sponsors = SponsorResource::collection([
-            // Sponsor::all()->map(function($sponsor) {
-            //     return [
-            //         'id' => $sponsor->id,
-            //         'name' => $sponsor->name,
-            //         'link_file' => $sponsor->link_file,
-            //         'logo' => asset('storage/'.$sponsor->logo)
-            //     ];
+        // Sponsor::all()->map(function($sponsor) {
+        //     return [
+        //         'id' => $sponsor->id,
+        //         'name' => $sponsor->name,
+        //         'link_file' => $sponsor->link_file,
+        //         'logo' => asset('storage/'.$sponsor->logo)
+        //     ];
         //     })
         // ]); 
 
@@ -34,12 +34,12 @@ class SponsorController extends Controller
         // ]);
 
         return Inertia::render('Roles/Admin/Sponsor', [
-            'sponsors' => Sponsor::all()->map(function($sponsor) {
+            'sponsors' => Sponsor::all()->map(function ($sponsor) {
                 return [
                     'id' => $sponsor->id,
                     'name' => $sponsor->name,
                     'link_file' => $sponsor->link_file,
-                    'logo' => asset('storage/'.$sponsor->logo)
+                    'logo' => asset('storage/' . $sponsor->logo)
                 ];
             })
         ]);
@@ -73,15 +73,15 @@ class SponsorController extends Controller
 
         // dd($request);
         // store logo into sponsors folder inside public folder
-        $logo = Request::file('logo')->store('sponsors','public');
-    
+        $logo = Request::file('logo')->store('sponsors', 'public');
+
         $sponsor = Sponsor::create([
             'name' => Request::input('name'),
             'logo' => $logo,
             'link_file' => Request::input('link_file')
         ]);
 
-        dd($sponsor);
+        // dd($sponsor);
 
         return redirect()->route('sponsor.index');
     }
@@ -99,7 +99,7 @@ class SponsorController extends Controller
         $baseUrl = config('app.url');
         return Inertia::render('Roles/Admin/Sponsor/Detailsponsor', [
             'sponsors' => $sponsor,
-            'logo' => asset('storage/'.$sponsor->logo),
+            'logo' => asset('storage/' . $sponsor->logo),
             'baseUrl' => $baseUrl
         ]);
     }
@@ -115,7 +115,7 @@ class SponsorController extends Controller
 
         return Inertia::render('Roles/Admin/Sponsor/Editsponsor', [
             'sponsors' => $sponsor,
-            'logo' => asset('storage/'.$sponsor->logo)
+            'logo' => asset('storage/' . $sponsor->logo)
         ]);
 
     }
@@ -126,9 +126,9 @@ class SponsorController extends Controller
     public function update(Request $request, Sponsor $sponsor)
     {
         $logo = $sponsor->logo;
-        if(Request::file('logo')){
-            Storage::delete('public/'.$sponsor->logo);
-            $logo = Request::file('logo')->store('sponsors','public');
+        if (Request::file('logo')) {
+            Storage::delete('public/' . $sponsor->logo);
+            $logo = Request::file('logo')->store('sponsors', 'public');
         }
 
         $sponsor->update([
@@ -150,9 +150,9 @@ class SponsorController extends Controller
         //     'link_file' => 'required|string|max:255'
         // ]);
         // Sponsor::create([
-            // 'name' => Request::input('name'),
-            // 'logo' => $logo,
-            // 'link_file' => Request::input('link_file')
+        // 'name' => Request::input('name'),
+        // 'logo' => $logo,
+        // 'link_file' => Request::input('link_file')
         // ]);
         // $sponsor->update($validatedData);
         // $sponsor->update($request->validated());
@@ -164,7 +164,7 @@ class SponsorController extends Controller
     public function destroy(Sponsor $sponsor)
     {
         // dd($sponsor);
-        Storage::delete('public/'.$sponsor->logo);
+        Storage::delete('public/' . $sponsor->logo);
         $sponsor->delete();
         return redirect()->route('sponsor.index');
     }
