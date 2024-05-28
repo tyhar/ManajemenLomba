@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 //auth
 use Illuminate\Support\Facades\Auth;
+// use App\Http\Controllers\UserController;
 
 class User
 {
@@ -40,6 +41,11 @@ class User
         if($userRole==3)
         {
             return $next($request);
+        }
+        
+        if($userRole==4)
+        {
+            return redirect()->route('panelis');
         }
     }
 }

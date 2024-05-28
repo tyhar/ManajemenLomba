@@ -6,98 +6,119 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 
+//frontend
+import { reactive } from 'vue'
+import { router } from '@inertiajs/vue3'
+
 const form = useForm({
-    name: '',
-    email: '',
-    password: '',
-    password_confirmation: '',
+	name: '',
+	username: '',
+	email: '',
+	password: '',
+	password_confirmation: '',
 });
 
 const submit = () => {
-    form.post(route('register'), {
-        onFinish: () => form.reset('password', 'password_confirmation'),
-    });
+	form.post(route('register'), {
+		onFinish: () => form.reset('password', 'password_confirmation'),
+	});
 };
+
+//frontend
+$(document).ready(function () {
+	$("#show_hide_password a").on('click', function (event) {
+		event.preventDefault();
+		if ($('#show_hide_password input').attr("type") == "text") {
+			$('#show_hide_password input').attr('type', 'password');
+			$('#show_hide_password i').addClass("bx-hide");
+			$('#show_hide_password i').removeClass("bx-show");
+		} else if ($('#show_hide_password input').attr("type") == "password") {
+			$('#show_hide_password input').attr('type', 'text');
+			$('#show_hide_password i').removeClass("bx-hide");
+			$('#show_hide_password i').addClass("bx-show");
+		}
+	});
+});
 </script>
 
+
 <template>
-    <GuestLayout>
-        <Head title="Register" />
 
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="name" value="Name" />
-
-                <TextInput
-                    id="name"
-                    type="text"
-                    class="mt-1 block w-full"
-                    v-model="form.name"
-                    required
-                    autofocus
-                    autocomplete="name"
-                />
-
-                <InputError class="mt-2" :message="form.errors.name" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel for="email" value="Email" />
-
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autocomplete="username"
-                />
-
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-
-                <TextInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="new-password"
-                />
-
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel for="password_confirmation" value="Confirm Password" />
-
-                <TextInput
-                    id="password_confirmation"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password_confirmation"
-                    required
-                    autocomplete="new-password"
-                />
-
-                <InputError class="mt-2" :message="form.errors.password_confirmation" />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <Link
-                    :href="route('login')"
-                    class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                    Already registered?
-                </Link>
-
-                <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Register
-                </PrimaryButton>
-            </div>
-        </form>
-    </GuestLayout>
+	<body class="body-login">
+		<div class="card3 jarakm">
+			<div class="card2">
+				<div class="card-body">
+					<div class="border p-4 rounded">
+						<div class="text-center">
+							<h3>Buat Akun</h3>
+						</div>
+						<br><br>
+						<div class="form-body">
+							<form class="row g-3" @submit.prevent="submit">
+								<div class="col-12">
+									<input v-model="form.name" required type="text" class="form-control"
+										id="inputNamaLengkap" placeholder="Nama lengkap">
+									<InputError class=" mt-2" :message="form.errors.name" />
+								</div>
+								<div class="col-12">
+									<input v-model="form.username" required type="text" class="form-control"
+										id="inputUsername" placeholder="Username">
+								</div>
+								<div class="col-12">
+									<input v-model="form.email" required type="email" class="form-control"
+										id="inputEmailAddress" placeholder="Email">
+									<InputError class="mt-2" :message="form.errors.email" />
+								</div>
+								<div class="col-12">
+									<div class="input-group" id="show_hide_password">
+										<input id="password" v-model="form.password" required type="password"
+											class="form-control border-end-0" placeholder="Masukkan Password"> <a
+											href="javascript:;" class="input-group-text bg-transparent"><i
+												class='bx bx-hide'></i></a>
+									</div>
+								</div>
+								<div class="col-12">
+									<div class="input-group" id="show_hide_password">
+										<input id="password_confirmation" v-model="form.password_confirmation" required
+											class="form-control border-end-0" placeholder="Masukkan Password"> <a
+											href="javascript:;" class="input-group-text bg-transparent"><i
+												class='bx bx-hide'></i></a>
+									</div>
+								</div>
+								<div class="col-12 jarak-top-lebih12">
+									<div class="d-grid">
+										<button class="btn btn-primary w-100" :disabled="form.processing">
+											<i class='bx bx-user'></i>Register
+										</button>
+									</div>
+									<div class="login-separater text-center mb-4 jarak-top-kurang18">
+										<span>ATAU MASUK DENGAN EMAIL</span>
+										<hr />
+									</div>
+									<div class="d-grid jarak-top-kurang10">
+										<a class="btn shadow-sm btn-white" href="javascript:;"> <span
+												class="d-flex justify-content-center align-items-center">
+												<img class="me-2"
+													src="../../../../public/assets/images/icons/search.svg" width="16"
+													alt="Image Description">
+												<span>Masuk dengan Google</span>
+											</span>
+										</a>
+									</div>
+									<div class="text-center jarak-top-kurang12">
+										<br>
+										<p>
+											Sudah punya akun?
+											<a :href="route('login')">Login</a>
+										</p>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--end row-->
+	</body>
 </template>

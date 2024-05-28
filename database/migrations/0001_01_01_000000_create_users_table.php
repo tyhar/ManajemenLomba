@@ -13,12 +13,16 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            // $table->foreignId('lomba_id')->constrained()->default(1)->nullable();
             $table->string('name');
+            $table->string('username');
             $table->string('email')->unique();
+            $table->string('phone')->nullable();
+            $table->string('instansi')->nullable();
             //create roles authentication types
-            $table->tinyInteger('role')->default(3); // Users: 1-superadmin, 2-event_admin, 3-user
-            $table->timestamp('email_verified_at')->nullable();
+            $table->tinyInteger('role')->default(3); // Users: 1-superadmin,2-event_admin,3-user,4-panelis. default means when the value are null or unassigned it automatically set to default value. so if you changed the default value you have to migrate 
             $table->string('password');
+            $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

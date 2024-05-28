@@ -41,5 +41,10 @@ class EventAdmin
         {
             return redirect()->route('dashboard');
         }
+        
+        if($userRole==4)
+        {
+            return redirect()->route('panelis');
+        }
     }
 }

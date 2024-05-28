@@ -1,0 +1,121 @@
+<script setup>
+import { Link } from '@inertiajs/vue3';
+</script>
+<template>
+    <!--wrapper-->
+    <div class="wrapper">
+        <!--sidebar wrapper -->
+        <div class="sidebar-wrapper" data-simplebar="true">
+            <div class="sidebar-header">
+                <div>
+                    <a href="/">
+                        <img id="logo-img" src="/bootstrap/images/lg.png" class="lg2">
+                    </a>
+                </div>
+                <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
+            </div>
+            <!--navigation-->
+            <ul class="metismenu" id="menu">
+                <li>
+                    <a href="/dashboard">
+                        <div class="parent-icon"><i class='bx bx-category'></i>
+                        </div>
+                        <div class="menu-title">Overview</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="/daftarlomba">
+                        <div class="parent-icon"><i class="fadeIn animated bx bx-street-view"></i>
+                        </div>
+                        <div class="menu-title">Daftar Lomba</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="/profilpeserta">
+                        <div class="parent-icon"><i class="bx bx-user-circle"></i>
+                        </div>
+                        <div class="menu-title">Profil</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="/notifikasipeserta">
+                        <div class="parent-icon"><i class="bx bx-user-circle"></i>
+                        </div>
+                        <div class="menu-title">Notifikasi<span class="alert-count">1</span></div>
+                    </a>
+                </li>
+                <li>
+                    <a href="/reportpeserta">
+                        <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i>
+                        </div>
+                        <div class="menu-title">Report <span class="alert-count">1</span></div>
+                    </a>
+                </li>
+                <li>
+                    <a href="/">
+                        <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
+                        </div>
+                        <div class="menu-title">
+                            <Link class="menu-title" :href="route('logout')" method="post" as="button">
+                            Keluar
+                            </Link>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+            <!--end navigation-->
+        </div>
+        <!--end sidebar wrapper -->
+        <!--start header -->
+        <header>
+            <div class="topbar d-flex align-items-center">
+                <nav class="navbar navbar-expand">
+                    <div class="mobile-toggle-menu"><i class='bx bx-menu'></i>
+                    </div>
+                    <div class="search-bar flex-grow-1">
+                    </div>
+                    <div class="top-menu ms-auto">
+                        <ul class="navbar-nav align-items-center">
+                            <div class="user-info ps-3">
+                                <p class="user-name mb-0">Lionel Andres</p>
+                                <p class="user-role">leon</p>
+                            </div>
+                            <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
+                            </div>
+                            <li class="nav-item dropdown dropdown-large">
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <div class="header-notifications-list">
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown dropdown-large">
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <div class="header-message-list">
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </header>
+        <!--end header -->
+        <!--start page wrapper -->
+        <div class="page-wrapper">
+            <div class="page-content">
+                <div class="card-body btn-crud">
+                    <div class="keterangan-notif jarak-bottom-kurang20 c-mb30 bg-cred">
+                        <label>Mei 21</label>
+                        <label>Mohon maaf TIM anda gagal ke tahap selanjutnya untuk lomba ui/ux </label>
+                    </div>
+                    <div class="keterangan-notif jarak-bottom-kurang20 bg-cgreen">
+                        <label>Mei 21</label>
+                        <label>Selamat TIM anda telah terdaftar lomba ui/ux </label>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--end page wrapper -->
+    </div>
+</template>
