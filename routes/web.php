@@ -70,6 +70,7 @@ Route::middleware('auth','verified','user')->group(function () {
     Route::get('/notifikasipeserta', [UserController::class, 'notifikasipeserta']);
     Route::get('/reportpeserta', [UserController::class, 'reportpeserta']);
     Route::get('/detailtimreport', [UserController::class, 'detailtimreport']);
+    Route::get('/tahap2', [UserController::class, 'tahap2']);
     Route::get('/daftarlomba', [UserController::class, 'daftarlomba']);
     Route::get('/datatim', [UserController::class, 'datatim']);
     Route::get('/anggotatim', [UserController::class, 'anggotatim']);

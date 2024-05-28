@@ -43,6 +43,10 @@ class UserController extends Controller
     {
         return Inertia::render('Roles/User/Report/Detailtimreport');
     }
+    public function tahap2()
+    {
+        return Inertia::render('Roles/User/Report/Tahap2');
+    }
     public function daftarlomba()
     {
         return Inertia::render('Roles/User/Daftarlomba');
