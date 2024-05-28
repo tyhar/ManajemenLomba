@@ -17,11 +17,10 @@ defineProps({
             <div class="sidebar-header">
                 <div>
                     <a href="/">
-                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon">
+                        <img id="logo-img" src="/bootstrap/images/lg.png" class="lg2">
                     </a>
                 </div>
-                <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
-                </div>
+                <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
             </div>
             <!--navigation-->
             <ul class="metismenu" id="menu">
@@ -85,7 +84,7 @@ defineProps({
                         </div>
                         <div class="menu-title">
                             <Link class="menu-title" :href="route('logout')" method="post" as="button">
-                            Logout
+                            Keluar
                             </Link>
                         </div>
                     </a>
@@ -164,18 +163,18 @@ defineProps({
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- <tr>
-                                            <td>1</td>
-                                            <td>Lionel Andres </td>
-                                            <td>goat@gmail.com</td>
-                                            <td>08123456789</td>
-                                            <td>Mohon ijin min, saya tidak bisa login akun min, mohon solusinya</td>
-                                            <td class="border-none"><label>Belum Baca</label></td>
-                                            <td class="border-none">
-                                                <input type="checkbox">
-                                            </td>
-                                        </tr> -->
-                                    <tr v-for="message in messages" :key="message.id">
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Lionel Andres </td>
+                                        <td>goat@gmail.com</td>
+                                        <td>08123456789</td>
+                                        <td>Mohon ijin min, saya tidak bisa login akun min, mohon solusinya</td>
+                                        <td class="border-none"><label>Belum Baca</label></td>
+                                        <td class="border-none">
+                                            <input type="checkbox">
+                                        </td>
+                                    </tr>
+                                    <!-- <tr v-for="message in messages" :key="message.id">
                                         <td>{{ message.id }}</td>
                                         <td>{{ message.name }}</td>
                                         <td>{{ message.email }}</td>
@@ -185,7 +184,7 @@ defineProps({
                                         <td class="border-none">
                                             <input type="checkbox" checked>
                                         </td>
-                                    </tr>
+                                    </tr> -->
                                 </tbody>
                             </table>
                         </div>

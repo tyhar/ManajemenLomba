@@ -9,11 +9,10 @@ import { Link } from '@inertiajs/vue3';
             <div class="sidebar-header">
                 <div>
                     <a href="/">
-                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon">
+                        <img id="logo-img" src="/bootstrap/images/lg.png" class="lg2">
                     </a>
                 </div>
-                <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
-                </div>
+                <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
             </div>
             <!--navigation-->
             <ul class="metismenu" id="menu">
@@ -44,7 +43,7 @@ import { Link } from '@inertiajs/vue3';
                         </div>
                         <div class="menu-title">
                             <Link class="menu-title" :href="route('logout')" method="post" as="button">
-                            Logout
+                            Keluar
                             </Link>
                         </div>
                     </a>
@@ -105,8 +104,8 @@ import { Link } from '@inertiajs/vue3';
                         <label class="jarak-filterstatus">Filter by Status</label>
                         <select class="form-select2">
                             <option selected>Semua</option>
-                            <option>Belum Dibaca</option>
-                            <option>Sudah Dibaca</option>
+                            <option>Tidak Lolos</option>
+                            <option>Lolos</option>
                         </select>
                         <br><br>
                         <div class="table-responsive">

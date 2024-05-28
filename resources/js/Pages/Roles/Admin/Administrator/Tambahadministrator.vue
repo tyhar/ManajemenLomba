@@ -39,7 +39,8 @@ const submit = () => {
                     <div class="navbar-tambah">
                         <div class="navbar-left">
                             <a href="/">
-                                <img src="/bootstrap/images/logo.png" alt="Logo">
+                                <img src="/bootstrap/images/lg.png" alt="Logo"
+                                    style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>
@@ -73,61 +74,38 @@ const submit = () => {
                             <div class="row">
                                 <div class="col-md-6 margin-top10-crud">
                                     <label class="c-mb5-black"><b>Nama Lengkap</b></label>
-                                    <input
-                                        id="name" 
-                                        type="name" 
-                                        class="form-control"
-                                        v-model="form.name"
-                                    >
+                                    <input id="name" type="name" class="form-control" v-model="form.name">
                                 </div>
 
                                 <div class="col-md-6 margin-top10-crud">
                                     <label class="c-mb5-black"><b>Username</b></label>
-                                    <input
-                                        id="username"
-                                        type="username" 
-                                        class="form-control"
-                                        v-model="form.username"
-                                    >
+                                    <input id="username" type="username" class="form-control" v-model="form.username">
                                 </div>
                                 <div class="col-md-12 margin-top10-crud">
                                     <label class="c-mb5-black"><b>Email</b></label>
-                                    <input
-                                        id="email" 
-                                        type="email" 
-                                        class="form-control"
-                                        v-model="form.email"
-                                    >
+                                    <input id="email" type="email" class="form-control" v-model="form.email">
                                 </div>
                                 <div>
                                     <label for="inputChoosePassword"
                                         class="form-label warna-hitam"><b>Password</b></label>
                                     <div class="input-group" id="show_hide_password">
-                                        <input 
-                                            type="password" 
-                                            class="form-control border-end-0"
-                                            id="password"
-                                            v-model="form.password"
-                                        > 
-                                            <a href="javascript:;" class="input-group-text bg-transparent">
-                                                <i class='bx bx-hide'></i>
-                                            </a>
+                                        <input type="password" class="form-control border-end-0" id="password"
+                                            v-model="form.password">
+                                        <a href="javascript:;" class="input-group-text bg-transparent">
+                                            <i class='bx bx-hide'></i>
+                                        </a>
                                     </div>
                                 </div>
                                 <div>
                                     <label class="role-add "><b class="warna-hitam">Role</b></label>
-                                    <select 
-                                        class="form-select" 
-                                        id="role" 
-                                        v-model="form.role"
-                                    >
+                                    <select class="form-select" id="role" v-model="form.role">
                                         <option selected disabled>Pilih Role</option>
                                         <option :value="1">Admin</option>
                                         <option :value="4">Juri</option>
                                         <option :value="2">Petugas</option>
                                     </select>
                                 </div>
-                                <!-- <div>
+                                <div>
                                     <label class="role-add"><b class="warna-hitam">Lomba</b></label>
                                     <div>
                                         <div class="form-check">
@@ -143,18 +121,12 @@ const submit = () => {
                                             <label class="form-check-label" for="gridCheck">Sistem Keamanan Data</label>
                                         </div>
                                     </div>
-                                </div> -->
+                                </div>
                                 <div class="btn-posisi">
-                                    <button 
-                                        class="btn btn-primary button-tabel-right"
-                                        type="submit"
-                                    >
+                                    <button class="btn btn-primary button-tabel-right" type="submit">
                                         Tambah
                                     </button>
-                                    <a 
-                                        class="btn btn-danger button-tabel-left"
-                                        :href="route('administrator.index')"
-                                    >
+                                    <a class="btn btn-danger button-tabel-left" :href="route('administrator.index')">
                                         Batal
                                     </a>
                                 </div>

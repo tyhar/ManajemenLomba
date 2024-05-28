@@ -8,7 +8,7 @@
                     <div class="navbar-tambah">
                         <div class="navbar-left">
                             <a href="/">
-                                <img src="/bootstrap/images/logo.png" alt="Logo">
+                                <img src="/bootstrap/images/lg.png" alt="Logo" class="lg3">
                             </a>
                         </div>
                     </div>
@@ -21,7 +21,6 @@
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
                                 <p class="user-name mb-0">Habib Shohiburrotib</p>
-                                <p class="user-role">habib</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -186,5 +185,10 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+}
+
+.lg3 {
+    width: 100px;
+    margin-left: -15px;
 }
 </style>

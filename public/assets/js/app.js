@@ -124,3 +124,11 @@ $(function() {
 	}
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+    const toggleIcon = document.getElementById('menu-toggle');
+    const logoImg = document.getElementById('logo-img');
+
+    toggleIcon.addEventListener('click', function () {
+        logoImg.classList.toggle('margin-toggled');
+    });
+});

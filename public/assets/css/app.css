@@ -3904,7 +3904,8 @@ input.search-control-2::placeholder {
 /* Aturan CSS untuk tampilan mobile */
 @media (max-width: 767px) {
 	.card-height200 {
-		height: 310px;
+		height: 280px;
+		/* height: 310px; */
 	}
 	.btn-download {
 		margin-top: 150;
@@ -4182,4 +4183,27 @@ button.menu-title {
 
 body {
     background-color: #E4EDF3;
+}
+.bg-index {
+	background-color: #F5FAFE;
+}
+/* #logo-img {
+    width: 60px;
+    transition: margin-left 0.3s ease;
+} */
+
+#logo-img.margin-toggled {
+    margin-left: -10px !important;
+}
+
+.lg-index {
+	width: 90px;
+}
+.lg2 {
+	width: 80px; 
+	margin-left: 60px;
+}
+.lg3 {
+	width: 100px; 
+	margin-left: -15px;
 }
