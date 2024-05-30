@@ -43,7 +43,7 @@ import { Link } from '@inertiajs/vue3';
                         </div>
                         <div class="menu-title">
                             <Link class="menu-title" :href="route('logout')" method="post" as="button">
-                            Keluar
+                            Logout
                             </Link>
                         </div>
                     </a>
@@ -99,7 +99,7 @@ import { Link } from '@inertiajs/vue3';
                                     <img src="/bootstrap/images/desain.jpg" alt="New Image" class="border-radius">
                                     <label class="judul-overview">UI / UX</label>
                                     <a class="btn btn-primary btn-landing-page2" href="/tabelrangkingjuri">Lihat
-                                        Rangking</a>
+                                        Peserta</a>
                                 </div>
                             </div>
                             <div class="col">
@@ -107,7 +107,7 @@ import { Link } from '@inertiajs/vue3';
                                     <img src="/bootstrap/images/ar-vr.jpg" alt="New Image" class="border-radius">
                                     <label class="judul-overview">AR / VR</label>
                                     <a class="btn btn-primary btn-landing-page2" href="/tabelrangkingjuri">Lihat
-                                        Rangking</a>
+                                        Peserta</a>
                                 </div>
                             </div>
                             <div class="col">
@@ -116,7 +116,7 @@ import { Link } from '@inertiajs/vue3';
                                         class="border-radius">
                                     <label class="judul-overview">APLIKASI MOBILE</label>
                                     <a class="btn btn-primary btn-landing-page2" href="/tabelrangkingjuri">Lihat
-                                        Rangking</a>
+                                        Peserta</a>
                                 </div>
                             </div>
                             <div class="col">
@@ -125,7 +125,7 @@ import { Link } from '@inertiajs/vue3';
                                         class="border-radius">
                                     <label class="judul-overview">DESAIN WEBSITE</label>
                                     <a class="btn btn-primary btn-landing-page2" href="/tabelrangkingjuri">Lihat
-                                        Rangking</a>
+                                        Peserta</a>
                                 </div>
                             </div>
                             <div class="col">
@@ -134,7 +134,7 @@ import { Link } from '@inertiajs/vue3';
                                         class="border-radius">
                                     <label class="judul-overview">SISTEM KEAMANAN DATA</label>
                                     <a class="btn btn-primary btn-landing-page2" href="/tabelrangkingjuri">Lihat
-                                        Rangking</a>
+                                        Peserta</a>
                                 </div>
                             </div>
                             <div class="col">
@@ -142,7 +142,7 @@ import { Link } from '@inertiajs/vue3';
                                     <img src="/bootstrap/images/membuat-game.jpg" alt="New Image" class="border-radius">
                                     <label class="judul-overview">UI / UX</label>
                                     <a class="btn btn-primary btn-landing-page2" href="/tabelrangkingjuri">Lihat
-                                        Rangking</a>
+                                        Peserta</a>
                                 </div>
                             </div>
                         </div>

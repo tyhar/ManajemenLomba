@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('messages', function (Blueprint $table) {
+        Schema::create('visits', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email');
-            $table->string('value');
-            $table->string('phone');
-            $table->string('status')->nullable();
+            $table->integer('visit_count')->default(0); // Menambahkan default value
+            $table->string('visit_month', 20); // Membatasi panjang string
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('messages');
+        Schema::dropIfExists('visits');
     }
 };

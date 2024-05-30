@@ -1,6 +1,37 @@
-<script setup>
+<!-- <script setup>
+import { onMounted, ref, computed } from 'vue';
 import { Link } from '@inertiajs/vue3';
-</script>
+import { defineProps } from "vue";
+
+
+
+const props = defineProps({
+
+    name: {
+        type: String,
+        required: true,
+    },
+    username: {
+        type: String,
+        required: true,
+    },
+});
+
+const unreadCount = ref(0);
+
+onMounted(async () => {
+    try {
+        const response = await axios.get('/api/unread-messages');
+        unreadCount.value = response.data.unreadCount;
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+
+
+
+</script> -->
 <template>
     <!--wrapper-->
     <div class="wrapper">
@@ -58,9 +89,9 @@ import { Link } from '@inertiajs/vue3';
                 </li>
                 <li>
                     <a href="/pesan">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i>
-                        </div>
-                        <div class="menu-title">Pesan <span class="alert-count">1</span></div>
+                        <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i></div>
+                        <!-- Menampilkan jumlah pesan yang belum dibaca -->
+                        <div class="menu-title">Pesan <span class="alert-count">-</span></div>
                     </a>
                 </li>
                 <li>
@@ -76,7 +107,7 @@ import { Link } from '@inertiajs/vue3';
                         </div>
                         <div class="menu-title">
                             <Link class="menu-title" :href="route('logout')" method="post" as="button">
-                            Keluar
+                            Logout
                             </Link>
                         </div>
                     </a>
@@ -127,7 +158,7 @@ import { Link } from '@inertiajs/vue3';
                     <div class="card-body">
                         <h4 class="mb-0 jarak-top-kurang5">Tabel Berita</h4>
                         <hr class="c-mt10" />
-                        <button class="btn btn-success" style="margin-top: -7px;"
+                        <button class="btn btn-success jarak-top-kurang7"
                             onclick="window.location.href='/berita/tambah-berita'">Tambah Berita</button>
                         <hr class="c-mt10" />
                         <div class="table-responsive">
@@ -143,20 +174,22 @@ import { Link } from '@inertiajs/vue3';
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="berita in beritas">
+                                    <tr v-for="berita in beritas" :key="berita.id">
                                         <td>{{ berita.id }}</td>
                                         <td>{{ berita.judul }}</td>
                                         <td>{{ berita.deskripsi_awal }}</td>
                                         <td>{{ berita.penerbit }}</td>
                                         <td>{{ berita.tanggal_upload }}</td>
                                         <td class="btn-crud">
-                                            <button class="btn btn-secondary"
-                                                @click.prevent="detailberita(berita.id)"><i
-                                                    class="bi bi-eye"></i></button>
-                                            <button class="btn btn-primary" @click.prevent="editberita(berita.id)"><i
-                                                    class="bi bi-pencil-square"></i></button>
-                                            <button class="btn btn-danger" @click.prevent="destroy(berita.id)"><i
-                                                    class="bi bi-trash"></i></button>
+                                            <button class="btn btn-secondary" @click.prevent="detailberita(berita.id)">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-primary" @click.prevent="editberita(berita.id)">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </button>
+                                            <button class="btn btn-danger" @click.prevent="destroy(berita.id)">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -169,30 +202,31 @@ import { Link } from '@inertiajs/vue3';
         <!--end page wrapper -->
     </div>
 </template>
-
 <script>
-import { router } from '@inertiajs/vue3'
+import { Link, router } from '@inertiajs/vue3';
 
 export default {
+    components: {
+        Link,
+    },
     props: {
-        beritas: Object
+        beritas: Array,
+    },
+    methods: {
+        editberita(id) {
+            router.get('/berita/' + id + '/edit-berita');
+        },
+        detailberita(id) {
+            router.get('/berita/' + id + '/detail-berita');
+        },
+        destroy(id) {
+            router.delete('/berita/' + id);
+        },
+    },
+    mounted() {
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
     }
-}
-
-function editberita(id) {
-    router.get('/berita/' + id + '/edit-berita')
-}
-
-function detailberita(id) {
-    router.get('/berita/' + id + '/detail-berita')
-}
-
-function destroy(id) {
-    router.delete('/berita/' + id)
-}
-
-
-$(document).ready(function () {
-    $('#example').DataTable();
-});
+};
 </script>

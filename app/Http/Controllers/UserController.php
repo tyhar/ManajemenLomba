@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use App\Models\Lomba;
+use App\Models\User;
 // use Illuminate\Http\Request;
 // use App\Http\Requests\ProfileUpdateRequest;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -16,16 +19,40 @@ class UserController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Roles/User/Dashboard');
+
+       $lomba = Lomba::all();
+        $user = Auth::user();
+        Inertia::share('userData', [
+            'name' => $user->name,
+            'username' => $user->username,
+        ]);
+        return Inertia::render('Roles/User/Dashboard', [
+            'UserData' => $user,
+            'lombas' => $lomba,
+        ]);
+        
     }
 
     public function overviewpeserta()
     {
         return Inertia::render('Roles/User/Overviewpeserta');
     }
-    public function detailpeserta()
+    public function show($id)
     {
-        return Inertia::render('Roles/User/Detailpeserta');
+
+        $lomba = Lomba::findOrFail($id);
+        $user = Auth::user();
+        Inertia::share('userData', [
+            'name' => $user->name,
+            'username' => $user->username,
+        ]);
+        
+
+        return Inertia::render('Roles/User/Detailpeserta', [
+            'DataUser' => $user,
+            'lombax' => $lomba,
+
+        ]);
     }
     public function profilpeserta()
     {
@@ -59,4 +86,9 @@ class UserController extends Controller
     {
         return Inertia::render('Roles/User/Daftar/Pengumpulankarya');
     }
+
+
+
+
+    
 }

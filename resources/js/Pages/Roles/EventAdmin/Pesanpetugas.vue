@@ -1,5 +1,67 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
+import { onMounted, ref, computed } from 'vue';
+import { router } from "@inertiajs/vue3";
+import { defineProps } from "vue";
+import axios from 'axios';
+
+const props = defineProps({
+    messages: {
+        type: Array,
+        required: true,
+    },
+    name: {
+        type: String,
+        required: true,
+    },
+    username: {
+        type: String,
+        required: true,
+    },
+});
+
+
+const selectedStatus = ref('Semua');
+const unreadCount = ref(0);
+
+onMounted(async () => {
+    try {
+        const response = await axios.get('/api/unread-messages');
+        unreadCount.value = response.data.unreadCount;
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+const updateMessageStatus = async (id, currentStatus) => {
+    try {
+        const newStatus = currentStatus === 'belum_dibaca' ? 'sudah_dibaca' : 'belum_dibaca';
+
+        await router.patch(`/messages/${id}/status`, {
+            status: newStatus,
+        });
+
+        const message = props.messages.find(msg => msg.id === id);
+        if (message) {
+            message.status = newStatus;
+
+            if (newStatus === 'sudah_dibaca') {
+                unreadCount.value -= 1;
+            } else {
+                unreadCount.value += 1;
+            }
+        }
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+const filteredMessages = computed(() => {
+    if (selectedStatus.value === 'Semua') {
+        return props.messages;
+    }
+    return props.messages.filter(message => message.status === selectedStatus.value.toLowerCase());
+});
 </script>
 <template>
     <!--wrapper-->
@@ -41,7 +103,7 @@ import { Link } from '@inertiajs/vue3';
                     <a href="/pesanpetugas">
                         <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i>
                         </div>
-                        <div class="menu-title">Pesan <span class="alert-count">1</span></div>
+                        <div class="menu-title">Pesan <span class="alert-count">{{ unreadCount }}</span></div>
                     </a>
                 </li>
                 <li>
@@ -57,7 +119,7 @@ import { Link } from '@inertiajs/vue3';
                         </div>
                         <div class="menu-title">
                             <Link class="menu-title" :href="route('logout')" method="post" as="button">
-                            Keluar
+                            Logout
                             </Link>
                         </div>
                     </a>
@@ -77,7 +139,8 @@ import { Link } from '@inertiajs/vue3';
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Petugas</p>
+                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                                <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -115,10 +178,10 @@ import { Link } from '@inertiajs/vue3';
                         <h4 class="mb-0 jarak-top-kurang5">Tabel Pesan</h4>
                         <hr class="c-mt10" />
                         <label class="jarak-filterstatus">Filter by Status</label>
-                        <select class="form-select2">
-                            <option selected>Semua</option>
-                            <option>Belum Dibaca</option>
-                            <option>Sudah Dibaca</option>
+                        <select class="form-select2" v-model="selectedStatus">
+                            <option value="Semua" selected>Semua</option>
+                            <option value="belum_dibaca">Belum Dibaca</option>
+                            <option value="sudah_dibaca">Sudah Dibaca</option>
                         </select>
                         <br><br>
                         <div class="table-responsive">
@@ -135,26 +198,16 @@ import { Link } from '@inertiajs/vue3';
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Lionel Andres </td>
-                                        <td>goat@gmail.com</td>
-                                        <td>08123456789</td>
-                                        <td>Mohon ijin min, saya tidak bisa login akun min, mohon solusinya</td>
-                                        <td><label>Belum Baca</label></td>
-                                        <td class="border-none">
-                                            <input type="checkbox">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Cristiano Ikhsan </td>
-                                        <td>goat@gmail.com</td>
-                                        <td>08123456789</td>
-                                        <td>Mohon ijin min, saya tidak bisa login akun min, mohon solusinya</td>
-                                        <td><label>Sudah Baca</label></td>
-                                        <td class="border-none">
-                                            <input type="checkbox" checked>
+                                    <tr v-for="message in filteredMessages" :key="message.id">
+                                        <td>{{ message.id }}</td>
+                                        <td>{{ message.name }}</td>
+                                        <td>{{ message.email }}</td>
+                                        <td>{{ message.phone }}</td>
+                                        <td>{{ message.value }}</td>
+                                        <td>{{ message.status }}</td>
+                                        <td>
+                                            <input type="checkbox" :checked="message.status === 'sudah_dibaca'"
+                                                @change="() => updateMessageStatus(message.id, message.status)" />
                                         </td>
                                     </tr>
                                 </tbody>

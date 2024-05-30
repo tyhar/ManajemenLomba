@@ -1,6 +1,3 @@
-<script setup>
-import { Link } from '@inertiajs/vue3';
-</script>
 <template>
     <!--wrapper-->
     <div class="wrapper">
@@ -17,7 +14,7 @@ import { Link } from '@inertiajs/vue3';
             <!--navigation-->
             <ul class="metismenu" id="menu">
                 <li>
-                    <a href="/superadmin">
+                    <a :href="route('admin')">
                         <div class="parent-icon"><i class='bx bx-home-circle'></i>
                         </div>
                         <div class="menu-title">Dashboard</div>
@@ -30,7 +27,7 @@ import { Link } from '@inertiajs/vue3';
                         <div class="menu-title">Event</div>
                     </a>
                     <ul>
-                        <li class="jarak-dropdown"> <a href="/lomba">Lomba</a>
+                        <li class="jarak-dropdown"> <a :href="route('lomba.index')">Lomba</a>
                         </li>
                         <li class="jarak-dropdown"> <a href="/administrator">Administrator</a>
                         </li>
@@ -38,7 +35,7 @@ import { Link } from '@inertiajs/vue3';
                         </li>
                         <li class="jarak-dropdown"> <a href="/berita">Berita</a>
                         </li>
-                        <li class="jarak-dropdown"> <a href="/setting">Setting</a>
+                        <li class="jarak-dropdown"> <a :href="route('setting.index')">Setting</a>
                         </li>
                     </ul>
                 </li>
@@ -58,9 +55,9 @@ import { Link } from '@inertiajs/vue3';
                 </li>
                 <li>
                     <a href="/pesan">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i>
-                        </div>
-                        <div class="menu-title">Pesan <span class="alert-count">1</span></div>
+                        <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i></div>
+                        <!-- Menampilkan jumlah pesan yang belum dibaca -->
+                        <div class="menu-title">Pesan <span class="alert-count">{{ unreadCount }}</span></div>
                     </a>
                 </li>
                 <li>
@@ -76,14 +73,13 @@ import { Link } from '@inertiajs/vue3';
                         </div>
                         <div class="menu-title">
                             <Link class="menu-title" :href="route('logout')" method="post" as="button">
-                            Keluar
+                            Logout
                             </Link>
                         </div>
                     </a>
                 </li>
             </ul>
             <!--end navigation-->
-
         </div>
         <!--end sidebar wrapper -->
         <!--start header -->
@@ -97,8 +93,8 @@ import { Link } from '@inertiajs/vue3';
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>
-                                <p class="user-role">habib</p>
+                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                                <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -119,8 +115,6 @@ import { Link } from '@inertiajs/vue3';
                 </nav>
             </div>
         </header>
-        <!--end header -->
-        <!--start page wrapper -->
         <div class="page-wrapper">
             <div class="page-content">
                 <div class="ps-3">
@@ -135,36 +129,35 @@ import { Link } from '@inertiajs/vue3';
                     <div class="card-body">
                         <h4 class="mb-0 jarak-top-kurang5">Tabel Lomba</h4>
                         <hr class="c-mt10" />
-                        <a class="btn btn-success jarak-top-kurang7" href="/tambahlomba">Tambah Lomba</a>
-                        <a class="btn btn-info jarak-top-kurang7" href="/kriteria">Kriteria</a>
+                        <a class="btn btn-success jarak-top-kurang7" :href="route('lomba.create')">Tambah Lomba</a>
+                        <a class="btn btn-info jarak-top-kurang7" :href="route('kriteria.index')">Kriteria</a>
                         <hr class="c-mt10" />
                         <div class="table-responsive">
                             <table id="example" class="table mt-3  table-bordered">
                                 <thead class="table-dark">
                                     <tr>
                                         <th class="width-id">ID</th>
-                                        <th>Nama Lomba</th>
-                                        <th>Biaya Pendaftaran</th>
+                                        <th class="crud-width-150">Nama Lomba</th>
+                                        <th>Deskripsi</th>
                                         <th>Nama PJ</th>
                                         <th>Kontak PJ</th>
                                         <th class="crud-width-180">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Lomba Desain</td>
-                                        <td>Desain adalah</td>
-                                        <td>Leocris</td>
-                                        <td>29 Maret 2024</td>
+                                    <tr v-for="lomba in lombas.data" :key="lomba.id">
+                                        <td>{{ lomba.id }}</td>
+                                        <td>{{ lomba.name_lomba }}</td>
+                                        <td>{{ lomba.description }}</td>
+                                        <td>{{ lomba.pj }}</td>
+                                        <td>{{ lomba.kontak }}</td>
                                         <td class="btn-crud">
-                                            <button class="btn btn-secondary"
-                                                onclick="window.location.href='/detaillomba'"><i
-                                                    class="bi bi-eye"></i></button>
-                                            <button class="btn btn-primary"
-                                                onclick="window.location.href='/editlomba'"><i
-                                                    class="bi bi-pencil-square"></i></button>
-                                            <button class="btn btn-danger"><i class="bi bi-trash"></i></button>
+                                            <a class="btn btn-secondary" :href="route('lomba.show', lomba.id)"><i
+                                                    class="bi bi-eye"></i></a>
+                                            <a class="btn btn-primary" :href="route('lomba.edit', lomba.id)"><i
+                                                    class="bi bi-pencil-square"></i></a>
+                                            <button class="btn btn-danger"><i class="bi bi-trash"
+                                                    @click="deleteLomba(lomba.id)"></i></button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -179,8 +172,67 @@ import { Link } from '@inertiajs/vue3';
     <!--end wrapper-->
 </template>
 
-<script>
+
+
+<script setup>
+import { defineProps } from "vue";
+import { Link, useForm } from "@inertiajs/vue3";
+import Swal from 'sweetalert2';
+import { onMounted, ref, computed } from 'vue';
+
+const unreadCount = ref(0);
+
+onMounted(async () => {
+    try {
+        const response = await axios.get('/api/unread-messages');
+        unreadCount.value = response.data.unreadCount;
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+
+defineProps({
+    lombas: {
+        type: Array,
+        required: true
+
+    }
+
+});
+
+const deleteForm = useForm({});
+
+const deleteLomba = async (id) => {
+    // Menggunakan SweetAlert untuk konfirmasi penghapusan
+    Swal.fire({
+        icon: 'question',
+        title: 'Are you sure?',
+        text: 'Are you sure you want to delete this lomba?',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it',
+        cancelButtonText: 'Cancel',
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+            try {
+                await deleteForm.delete(route("lomba.destroy", id), { preserveScroll: true });
+                // Show success alert
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Lomba berhasil dihapus!',
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    });
+};
+
 $(document).ready(function () {
     $('#example').DataTable();
 });
+
+
+
 </script>

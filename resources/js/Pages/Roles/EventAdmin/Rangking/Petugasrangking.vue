@@ -77,7 +77,7 @@ import { Link } from '@inertiajs/vue3';
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Petugas</p>
+                                <p class="user-name mb-0">petugas</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -99,7 +99,6 @@ import { Link } from '@inertiajs/vue3';
             </div>
         </header>
         <!--end header -->
-
         <!--start page wrapper -->
         <div class="page-wrapper">
             <div class="page-content">
@@ -119,7 +118,7 @@ import { Link } from '@inertiajs/vue3';
                         <button class="btn btn-primary crud-width120">Lolos</button>
                         <br><br>
                         <div class="table-responsive">
-                            <table id="example" class="table table-bordered">
+                            <table class="table table-bordered">
                                 <thead class="table-dark">
                                     <tr>
                                         <th class="width-id">ID</th>
@@ -127,18 +126,18 @@ import { Link } from '@inertiajs/vue3';
                                         <th class="crud-width-180">Judul</th>
                                         <th class="crud-width100">Instansi</th>
                                         <th class="crud-width100">Hasil</th>
-                                        <th class="crud-width-150">Status</th>
-                                        <th class="crud-width-60">Aksi</th>
-                                        <th data-orderable="false">
+                                        <th class="crud-width-70">Status</th>
+                                        <th class="crud-width-70">Aksi</th>
+                                        <td class="crud-width-40">
                                             <input type="checkbox">
-                                        </th>
+                                        </td>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td>1</td>
-                                        <td>Start Green</td>
-                                        <td>Lomba Desain</td>
+                                        <td>Tim Design</td>
+                                        <td>Platform Pendidikan Interaktif</td>
                                         <td>UNS</td>
                                         <td>90</td>
                                         <td>Lolos</td>

@@ -1,3 +1,4 @@
+DetailLOMBA
 <template>
     <div class="wrapper">
         <!--start header -->
@@ -5,7 +6,7 @@
             <div class="c-topbar">
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
-                    <div class="navbar-tambah">
+                       <div class="navbar-tambah">
                         <div class="navbar-left">
                             <a href="/">
                                 <img src="/bootstrap/images/lg.png" alt="Logo"
@@ -21,13 +22,13 @@
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>
-                                <p class="user-role">habib</p>
+                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                                <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
                         </ul>
-                    </div>
+                    </div>		
                 </nav>
             </div>
         </header>
@@ -38,61 +39,93 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="mb-0">DETAIL LOMBA</h4>
-                        <hr />
+                        <hr/>
                         <div class="row">
                             <div class="col-md-6 c-mb10">
                                 <label class="c-mb5-black"><b>NAMA LOMBA</b></label>
-                                <div class="data-tim">Lomba Desain</div>
+                                <div class="data-tim" id="name">{{ lomba && lomba.name_lomba ? lomba.name_lomba : 'Nama Lomba tidak tersedia' }}</div>
                             </div>
                             <div class="col-md-6">
                                 <label class="c-mb5-black"><b>NAMA PJ</b></label>
-                                <div class="data-tim">Agung</div>
+                                <div class="data-tim" id="pj">{{ lomba && lomba.pj ? lomba.pj : 'Nama PJ tidak tersedia' }}</div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-6">
                                 <label class="c-mb5-black"><b>DESKRIPSI</b></label>
                                 <div class="col-12">
-                                    <div class="data-tim">Lomba Desain adalah ajang kompetitif di mana beberapa tim
-                                        bersaing dalam merancang dan menciptakan karya visual yang unik dan inovatif,
-                                        sesuai dengan tema yang ditentukan.</div>
+                                    <div class="data-tim" id="description">{{ lomba && lomba.description ? lomba.description : 'Deskripsi tidak tersedia' }}</div>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="c-mb5-black"><b>GAMBAR</b></label>
-                                    <div class="col-12">
-                                        <img src="/bootstrap/images/desain-website.jpg" width="150" />
+                                     <div class="col-12" id="picture">
+                                        <img :src="pictureUrl" alt="Gambar" width="200" >		
                                     </div>
                                 </div>
                                 <div class="col-md-6 jarak-sertifikat">
                                     <label class="c-mb5-black"><b>SERTIFIKAT</b></label>
-                                    <div class="col-12">
-                                        <img src="/bootstrap/images/sertifikat.png" width="150" />
-                                    </div>
+                              <div class="col-12" id="sertifikat">
+                                <img :src="sertifikatUrl" alt="Sertifikat" width="200" >	
+                               </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <label class="c-mb5-black"><b>KONTAK PJ</b></label>
-                                <div class="data-tim">085000000000</div>
-
+                                <div class="data-tim" id="kontak">{{ lomba && lomba.kontak ? lomba.kontak : 'Kontak PJ tidak tersedia' }}</div>
+     
                                 <label class="c-mb5-black"><b>TEMPAT</b></label>
-                                <div class="data-tim">Surakarta</div>
+                                <div class="data-tim" id="tempat">{{ lomba && lomba.tempat ? lomba.tempat : 'Tempat tidak tersedia' }}</div>
 
                                 <div class="margin-top5-crud">
                                     <label class="c-mb5-black"><b>BIAYA PENDAFTARAN</b></label>
-                                    <div class="data-tim">20.000</div>
-                                </div>
-                                <div class="margin-top5-crud">
-                                    <label class="c-mb5-black"><b>KRITERIA PENILAIAN</b></label>
-                                    <div class="data-tim">-</div>
-                                </div>
-                            </div>
+                                    <div class="data-tim" id="biaya_pendaftaran">{{ lomba && lomba.biaya_pendaftaran ? lomba.biaya_pendaftaran : 'Biaya Pendaftaran tidak tersedia' }}</div>
+                               </div>   
+                                <!-- Tambahkan bagian untuk menampilkan kriteria -->
+                                <label class="c-mb5-black"><b>KRITERIA PENILAIAN</b></label>
+                                <ul>
+                                    <li v-for="kriteria in lomba.kriteria" :key="kriteria.id">{{ kriteria.name_kriteria }}</li>
+                                </ul>
+                            </div>           
+                        </div>
                         </div>
                         <div class="btn-posisi">
-                            <button class="btn btn-danger btn-kembali"
-                                onclick="window.location.href='/lomba'">Kembali</button>
+                            <button class="btn btn-danger btn-kembali" @click="goBack()">Kembali</button>
                         </div>
                     </div>
                 </div>
-            </div>
+            
         </div>
         <!--end page wrapper -->
     </div>
 </template>
+
+
+<script setup>
+import { defineProps } from "vue";
+import { useForm, usePage } from '@inertiajs/vue3';
+
+// Mendefinisikan properti yang diterima oleh komponen
+const props = defineProps({
+    name: String,
+    username: String,
+    lomba: Object
+});
+
+// Menampilkan properti name dan username yang diterima
+console.log(props.name);
+console.log(props.username);
+
+// Mendeklarasikan variabel pictureUrl dan sertifikatUrl
+const pictureUrl = props.lomba && props.lomba.picture ? `/storage/${props.lomba.picture}` : null;
+const sertifikatUrl = props.lomba && props.lomba.sertifikat ? `/storage/${props.lomba.sertifikat}` : null;
+
+// Menampilkan URL gambar dan sertifikat jika tersedia
+console.log(pictureUrl);
+console.log(sertifikatUrl);
+
+
+const goBack = () => {
+    window.history.back();
+};
+
+</script>

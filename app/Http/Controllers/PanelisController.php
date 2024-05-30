@@ -45,5 +45,4 @@ class PanelisController extends Controller
     {
         return Inertia::render('Roles/Panelis/Lomba/Timdetailjuri');
     }
-
 }

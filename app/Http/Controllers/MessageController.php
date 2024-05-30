@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use App\Models\Message;
 // use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User; 
 
 class MessageController extends Controller
 {
@@ -14,20 +17,27 @@ class MessageController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+        $messages = Message::all()->map(function($message) use ($user) {
+            return [
+                'id' => $message->id,
+                'name' => $message->name,
+                'email' => $message->email,
+                'phone' => $message->phone,
+                'value' => $message->value,
+                'status' => $message->status,
+                'userData' => [
+                    'name' => $user->name,
+                    'username' => $user->username,
+                ],
+            ];
+        });
+    
         return Inertia::render('Roles/Admin/Pesan', [
-            'messages' => Message::all()->map(function($message) {
-                return [
-                    'id' => $message->id,
-                    'name' => $message->name,
-                    'email' => $message->email,
-                    'phone' => $message->phone,
-                    'value' => $message->value,
-                    'status' => $message->status,
-                ];
-            })
+            'messages' => $messages,
         ]);
     }
-
+    
     /**
      * Show the form for creating a new resource.
      */
@@ -64,6 +74,7 @@ class MessageController extends Controller
 
         // Create the message
         $message = Message::create($validatedData);
+        $unreadCount = Message::where('status', 'belum_dibaca')->count();
 
         // If everything is successful, redirect to a specific route
         return redirect()->route('welcome');
@@ -82,7 +93,8 @@ class MessageController extends Controller
      */
     public function edit(Message $message)
     {
-        //
+        $unreadCount = Message::where('status', 'belum_dibaca')->count();
+        return Inertia::render('Roles/Admin/Pesan');
     }
 
     /**
@@ -90,9 +102,10 @@ class MessageController extends Controller
      */
     public function update(Request $request, Message $message)
     {
-        //
-    }
-
+       //
+    } 
+    
+ 
     /**
      * Remove the specified resource from storage.
      */
@@ -101,4 +114,52 @@ class MessageController extends Controller
         $message->delete();
         return redirect()->route('pesan.index');
     }
+    public function getUnreadMessageCount()
+{
+    $unreadCount = Message::where('status', 'belum_dibaca')->count();
+    
+    return response()->json(['unreadCount' => $unreadCount]);
+}
+
+
+
+
+
+
+public function getAllMessageCount(): JsonResponse
+{
+    try {
+        $allCount = Message::count();
+        return response()->json(['allCount' => $allCount], 200);
+    } catch (\Exception $e) {
+        return response()->json(['error' => 'Failed to retrieve message count', 'message' => $e->getMessage()], 500);
+    }
+}
+
+public function getAllParticipants(): JsonResponse
+{
+    try {
+        $allParticipants = User::count(); // Ganti 'User' dengan model yang sesuai jika berbeda
+        return response()->json(['allParticipants' => $allParticipants], 200);
+    } catch (\Exception $e) {
+        return response()->json(['error' => 'Failed to retrieve participants', 'message' => $e->getMessage()], 500);
+    }
+}
+
+
+
+public function updateStatus(Request $request, Message $message)
+{
+    $request->validate([
+        'status' => 'required|in:sudah_dibaca,belum_dibaca',
+    ]);
+
+    $message->status = $request->status;
+    $message->save();
+
+    return redirect()->route('pesan.index');
+}
+
+
+
 }

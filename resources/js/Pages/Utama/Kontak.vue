@@ -1,8 +1,9 @@
 <script setup>
 import { reactive } from 'vue'
 import { Head, Link, useForm, router } from '@inertiajs/vue3'
+import Swal from 'sweetalert2'
 
-//backend navbar
+// Backend navbar
 defineProps({
     canLogin: {
         type: Boolean,
@@ -20,30 +21,29 @@ defineProps({
     },
 });
 
-//form data
+// Form data
 const form = useForm({
     name: null,
     email: null,
     phone: null,
     value: null,
-})
+});
 
 const submit = () => {
     form.post(route("pesan.store"), {
         preserveScroll: true,
+        onSuccess: () => {
+            Swal.fire({
+                title: 'Success!',
+                text: 'Pesan anda telah berhasil dikirim',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        }
     });
 };
-
-//not work
-// const submit = () => {
-//     form.post(route("pesan.store"), {
-//         preserveScroll: true,
-//     }).then(() => {
-//         // Reload the page after successful form submission
-//         window.location.reload();
-//     });
-// };
 </script>
+
 <template>
     <div class="bg-index">
         <nav class="navbar navbar-expand-lg main_menu">
@@ -59,7 +59,7 @@ const submit = () => {
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="/">Beranda</a>
+                            <a class="nav-link" href="/#">Beranda</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/#tentang-section">Tentang</a>
@@ -78,7 +78,7 @@ const submit = () => {
                         </li>
                         <li class="nav-item">
                             <!-- <a class="nav-link" href="/kontak">Kontak</a> -->
-                            <a class="nav-link" :href="route('pesan.create')">Kontak</a>
+                            <a class="nav-link active" :href="route('pesan.create')">Kontak</a>
                         </li>
                         <li class="nav-item">
                             <template v-if="!$page.props.auth.user">
@@ -99,7 +99,8 @@ const submit = () => {
                 </div>
             </div>
         </nav>
-
+        <!--MAIN MENU END-->
+        <!--BREADCRUMB START-->
         <section class="tf__breadcrumb" style="background: url(/bootstrap/images/home.jpg);">
             <div class="container">
                 <div class="row">
@@ -111,7 +112,8 @@ const submit = () => {
                 </div>
             </div>
         </section>
-
+        <!--BREADCRUMB END-->
+        <!--CONTACT PAGE START-->
         <section class="tf__contact_page mt_190 xs_mt_95">
             <div class="container">
                 <div class="row">
@@ -121,14 +123,22 @@ const submit = () => {
                                 <h5 class="c-mb-13">HUBUNGI KAMI</h5>
                             </div>
                             <form @submit.prevent="submit">
+                                <!-- <div class="mb-3">
+                                <label for="exampleFormControlInput1" class="form-label">Email address</label>
+                                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                            </div> -->
                                 <input class="form-control" id="nama" type="text" v-model="form.name"
                                     placeholder="Nama" />
                                 <input class="form-control" id="nama" type="email" v-model="form.email"
                                     placeholder="Email" />
                                 <input class="form-control" id="nomor" type="number" v-model="form.phone"
                                     placeholder="Nomor yang dapat dihubungi" />
-                                <textarea class="form-control" type="textarea" rows="5" v-model="form.value"
+                                <textarea class="form-control" rows="4" type="textarea" v-model="form.value"
                                     placeholder="Pesan" />
+                                <!-- <input id="nama" type="name" v-model="form.name" placeholder="Nama"/> -->
+                                <!-- <input id="email" type="email" v-model="form.email" placeholder="Email" /> -->
+                                <!-- <input id="phone" type="number" v-model="form.phone" placeholder="No. WhatsApp"/> -->
+                                <!-- <textarea id="pesan" type="textarea" v-model="form.value" placeholder="Pesan"/> -->
                                 <button type="submit" class="common_btn_2">Kirim</button>
                             </form>
                         </div>

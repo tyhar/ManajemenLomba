@@ -1,5 +1,22 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
+import { defineProps, ref, onMounted, computed } from 'vue';
+
+const { name, username, reg_lombas } = defineProps(['name', 'username', 'reg_lombas']);
+
+
+const props = {
+    name: {
+        type: String,
+    },
+    username: {
+        type: String,
+    },
+    reg_lombas: {
+        type: Array,
+    },
+};
+
 </script>
 <template>
     <!--wrapper-->
@@ -43,7 +60,7 @@ import { Link } from '@inertiajs/vue3';
                         </div>
                         <div class="menu-title">
                             <Link class="menu-title" :href="route('logout')" method="post" as="button">
-                            Keluar
+                            Logout
                             </Link>
                         </div>
                     </a>
@@ -63,7 +80,8 @@ import { Link } from '@inertiajs/vue3';
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Juri</p>
+                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                                <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -99,13 +117,13 @@ import { Link } from '@inertiajs/vue3';
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0 jarak-top-kurang5">Tabel Peserta</h4>
+                        <h4 class="mb-0 jarak-top-kurang5">Tabel Karya</h4>
                         <hr class="c-mt10" />
                         <label class="jarak-filterstatus">Filter by Status</label>
                         <select class="form-select2">
                             <option selected>Semua</option>
-                            <option>Belum Nilai</option>
-                            <option>Sudah Nilai</option>
+                            <option>Belum Dinilai</option>
+                            <option>Sudah Dinilai</option>
                         </select>
                         <br><br>
                         <div class="table-responsive">
@@ -113,37 +131,40 @@ import { Link } from '@inertiajs/vue3';
                                 <thead class="table-dark">
                                     <tr>
                                         <th class="width-id">ID</th>
-                                        <th class="crud-width130">Nama Tim</th>
-                                        <th class="crud-width-150">Judul</th>
+                                        <th class="crud-width-90">Nama Lomba</th>
+                                        <th class="crud-width120">Nama Tim</th>
+                                        <th class="crud-width120">Judul</th>
                                         <th class="crud-width-50">Status</th>
                                         <th class="crud-width-150">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Tim Design</td>
-                                        <td>Platform Pendidikan Interaktif</td>
-                                        <td>Belum Nilai</td>
+                                    <tr v-for="reg_lomba in reg_lombas" :key="reg_lomba?.id">
+                                        <td>{{ reg_lomba?.id }}</td>
+                                        <td>{{ reg_lomba?.lomba?.name_lomba }}</td>
+                                        <td>{{ reg_lomba?.team?.name_team }}</td>
+                                        <td>{{ reg_lomba?.submission?.title }}</td>
+                                        <td>{{ reg_lomba?.status }}</td>
                                         <td class="btn-crud">
-                                            <button class="btn btn-secondary"
-                                                onclick="window.location.href='/timdetailjuri'"><i
-                                                    class="bi bi-eye"></i></button>
-                                            <button class="btn btn-primary"
-                                                onclick="window.location.href='/editnilai'"><i
-                                                    class="bi bi-pencil-square"></i></button>
-                                            <button class="btn btn-primary" onclick="window.location.href='/nilai'">Beri
-                                                Nilai</button>
+                                            <a class="btn btn-secondary"
+                                                :href="route('value.show', reg_lomba?.team?.id)"><i
+                                                    class="bi bi-eye"></i></a>
+                                            <a class="btn btn-primary"
+                                                :href="route('value.edit', reg_lomba?.lomba?.id)"><i
+                                                    class="bi bi-pencil-square"></i></a>
+                                            <a class="btn btn-primary"
+                                                :href="route('create.value', reg_lomba?.lomba?.id)">Beri Nilai</a>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <!--end row-->
                 </div>
+                <!--end row-->
             </div>
-            <!--end page wrapper -->
         </div>
+        <!--end page wrapper -->
     </div>
+
 </template>
