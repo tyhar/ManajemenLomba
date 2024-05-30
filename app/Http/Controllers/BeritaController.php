@@ -131,4 +131,18 @@ class BeritaController extends Controller
             ],
         ]);
     }
+    public function detail(Request $request, Berita $berita)
+    {
+        return Inertia::render('Utama/Detail', [
+            // 'berita' => $berita
+            'berita' => [
+                'id' => $berita->id,
+                'judul' => $berita->judul,
+                'penerbit' => $berita->penerbit,
+                'deskripsi' => $berita->deskripsi,
+                'tanggal_upload' => Carbon::parse($berita->tanggal_upload)->translatedFormat('d F Y'),
+                'images' => $berita->images,
+            ],
+        ]);
+    }
 }

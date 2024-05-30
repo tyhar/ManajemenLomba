@@ -1,14 +1,13 @@
 <script setup>
-// import GuestLayout from '@/Layouts/GuestLayout.vue';
+import Swal from 'sweetalert2';
 import InputError from '@/Components/InputError.vue';
-// import InputLabel from '@/Components/InputLabel.vue';
-// import PrimaryButton from '@/Components/PrimaryButton.vue';
-// import TextInput from '@/Components/TextInput.vue';
 import { Head, useForm } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 defineProps({
 	status: {
 		type: String,
+		default: null,
 	},
 });
 
@@ -16,10 +15,21 @@ const form = useForm({
 	email: '',
 });
 
-const submit = () => {
-	form.post(route('password.email'));
+const submit = async () => {
+	try {
+		await form.post(route('password.email'));
+		Swal.fire({
+			title: 'Success!',
+			text: 'Please check your email to reset your password.',
+			icon: 'success',
+			confirmButtonText: 'OK'
+		});
+	} catch (error) {
+		// handle error if needed
+	}
 };
 </script>
+
 <template>
 
 	<body class="body-login">
@@ -44,7 +54,7 @@ const submit = () => {
 									<!-- <a type="button" onclick="window.location.href='/login'"class="btn btn-primary btn-lg">Kirim</a>  -->
 									<Button class="btn btn-primary w-100 c-mb-8" :disabled="form.processing">
 										<i class='bx bx-user'></i>Email Password Reset Link
-									</Button>
+									</button>
 									<a href="/login" class="btn btn-light w-100"
 										onclick="window.location.href='/login'"><i
 											class='bx bx-arrow-back me-1'></i>Kembali

@@ -1,5 +1,95 @@
 <script setup>
+
 import { Link } from '@inertiajs/vue3';
+// import { Head } from '@inertiajs/vue3';
+import { defineProps, ref, onMounted, computed } from 'vue';
+const unreadCount = ref(0);
+const allCount = ref(0);
+const allParticipants = ref(0);
+const verifiedParticipantsCount = ref(0);
+
+onMounted(async () => {
+    try {
+        const response = await axios.get('/api/unread-messages');
+        unreadCount.value = response.data.unreadCount;
+    } catch (error) {
+        console.error(error);
+    }
+    try {
+        const response = await axios.get('/api/all-participants');
+        allParticipants.value = response.data.allParticipants;
+    } catch (error) {
+        console.error(error);
+    }
+    try {
+        const response = await axios.get('/api/all-messages');
+        allCount.value = response.data.allCount;
+    } catch (error) {
+        console.error(error);
+    }
+
+});
+document.addEventListener("DOMContentLoaded", function () {
+    window.ApexCharts && (new ApexCharts(document.getElementById('bi-weekly-visit'), {
+        chart: {
+            type: "bar",
+            fontFamily: 'inherit',
+            height: 240,
+            parentHeightOffset: 0,
+            toolbar: {
+                show: false,
+            },
+            animations: {
+                enabled: false
+            },
+            stacked: true,
+        },
+        plotOptions: {
+            bar: {
+                columnWidth: '60%',
+            }
+        },
+        dataLabels: {
+            enabled: false,
+        },
+        fill: {
+            opacity: 1,
+        },
+        series: [{
+            name: "Jumlah Kunjungan",
+            data: [500, 200, 820, 500, 1000, 400, 500, 223, 125, 89, 260, 140]
+        }],
+        tooltip: {
+            theme: 'dark'
+        },
+        grid: {
+            padding: {
+                top: -20,
+                right: 0,
+                left: -4,
+                bottom: -4
+            },
+            strokeDashArray: 4,
+        },
+        xaxis: {
+            labels: {
+                padding: 0,
+            },
+            tooltip: {
+                enabled: false
+            },
+            axisBorder: {
+                show: false,
+            },
+            categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        },
+        yaxis: {
+            labels: {
+                padding: 4
+            },
+        },
+    })).render();
+});
 </script>
 <template>
     <!--wrapper-->
@@ -17,7 +107,7 @@ import { Link } from '@inertiajs/vue3';
             <!--navigation-->
             <ul class="metismenu" id="menu">
                 <li>
-                    <a href="/eventadmin">
+                    <a :href="route('eventadmin')">
                         <div class="parent-icon"><i class='bx bx-home-circle'></i>
                         </div>
                         <div class="menu-title">Dashboard</div>
@@ -41,7 +131,7 @@ import { Link } from '@inertiajs/vue3';
                     <a href="/pesanpetugas">
                         <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i>
                         </div>
-                        <div class="menu-title">Pesan <span class="alert-count">1</span></div>
+                        <div class="menu-title">Pesan <span class="alert-count">{{ unreadCount }}</span></div>
                     </a>
                 </li>
                 <li>
@@ -57,7 +147,7 @@ import { Link } from '@inertiajs/vue3';
                         </div>
                         <div class="menu-title">
                             <Link class="menu-title" :href="route('logout')" method="post" as="button">
-                            Keluar
+                            Logout
                             </Link>
                         </div>
                     </a>
@@ -77,7 +167,8 @@ import { Link } from '@inertiajs/vue3';
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Petugas</p>
+                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                                <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -109,7 +200,7 @@ import { Link } from '@inertiajs/vue3';
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
                                     <div>
-                                        <h5 class="mb-0"><b>1265 Partisipan</b></h5>
+                                        <h5 class="mb-0"><b>{{ allParticipants }} Partisipan</b></h5>
                                         <br>
                                         <p class="mb-0 font-13">1250 Verified</p>
                                     </div>
@@ -135,9 +226,9 @@ import { Link } from '@inertiajs/vue3';
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
                                     <div>
-                                        <h5 class="mb-0"><b>50 Pesan</b></h5>
+                                        <h5 class="mb-0"><b>{{ allCount }} Pesan</b></h5>
                                         <br>
-                                        <p class="mb-0 font-13">5 Pesan Belum di Buka</p>
+                                        <p class="mb-0 font-13"> {{ unreadCount }} Pesan Belum di Buka</p>
                                     </div>
                                 </div>
                             </div>

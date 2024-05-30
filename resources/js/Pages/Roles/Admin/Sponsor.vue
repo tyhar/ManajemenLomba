@@ -2,19 +2,31 @@
 import { Link } from '@inertiajs/vue3';
 import { useForm } from "@inertiajs/vue3";
 import { Head } from "@inertiajs/vue3";
+import { onMounted, ref, computed } from 'vue';
 import { router } from "@inertiajs/vue3";
 // import { usePage } from "@inertiajs/vue3";
 
-defineProps({
-    // sponsors: {
-    //     type: Object,
-    //     required: true,
-    // },
+const { name, username, sponsors } = defineProps(['name', 'username', 'sponsors']);
+
+console.log(name); // Contoh penggunaan di dalam script setup
+console.log(username);
+
+// Definisikan properti yang diterima oleh komponen
+const props = {
     sponsors: {
         type: Array,
     },
-});
+};
+const unreadCount = ref(0);
 
+onMounted(async () => {
+    try {
+        const response = await axios.get('/api/unread-messages');
+        unreadCount.value = response.data.unreadCount;
+    } catch (error) {
+        console.error(error);
+    }
+});
 const deleteForm = useForm({});
 
 const deleteSponsor = (id) => {
@@ -83,9 +95,9 @@ const deleteSponsor = (id) => {
                 </li>
                 <li>
                     <a href="/pesan">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i>
-                        </div>
-                        <div class="menu-title">Pesan <span class="alert-count">1</span></div>
+                        <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i></div>
+                        <!-- Menampilkan jumlah pesan yang belum dibaca -->
+                        <div class="menu-title">Pesan <span class="alert-count">{{ unreadCount }}</span></div>
                     </a>
                 </li>
                 <li>
@@ -101,7 +113,7 @@ const deleteSponsor = (id) => {
                         </div>
                         <div class="menu-title">
                             <Link class="menu-title" :href="route('logout')" method="post" as="button">
-                            Keluar
+                            Logout
                             </Link>
                         </div>
                     </a>
@@ -122,8 +134,8 @@ const deleteSponsor = (id) => {
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>
-                                <p class="user-role">habib</p>
+                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                                <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>

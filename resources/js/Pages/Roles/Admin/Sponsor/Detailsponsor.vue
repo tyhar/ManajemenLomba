@@ -7,16 +7,21 @@ import { Head } from "@inertiajs/vue3";
 import { router } from "@inertiajs/vue3";
 // import { defineProps } from '@vue/runtime-core';
 
-defineProps({
-    // sponsors: {
-    //     type: Object,
-    // },
-    // logo: {
-    //     type: String
-    // }
-    sponsors: Array,
-    baseUrl: String
-});
+
+const { name, username, sponsors } = defineProps(['name', 'username', 'sponsors']);
+
+console.log(name); // Contoh penggunaan di dalam script setup
+console.log(username);
+
+// Definisikan properti yang diterima oleh komponen
+const props = {
+    sponsors: {
+        type: Array,
+        baseUrl: String,
+    },
+};
+
+
 
 // const props = defineProps({
 //     sponsors: Object,
@@ -49,8 +54,8 @@ defineProps({
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>
-                                <p class="user-role">habib</p>
+                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                                <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -80,7 +85,7 @@ defineProps({
                                 <label class="c-mb5-black"><b>LOGO</b></label><br>
                                 <div>
                                     <img :src="'/storage/' + sponsors.logo" alt="Product Image"
-                                        class="img-fluid c-maxw400" />
+                                        class="form-control c-maxw400" />
                                 </div>
                             </div>
                         </div>

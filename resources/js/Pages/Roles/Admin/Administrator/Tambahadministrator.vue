@@ -1,20 +1,47 @@
 <script setup>
 import { useForm, Link, router } from "@inertiajs/vue3";
 import { reactive } from "vue";
+import Swal from 'sweetalert2';
+
+
+const { name, username, lombas } = defineProps(['name', 'username', 'lombas']);
+
+console.log(name); // Contoh penggunaan di dalam script setup
+console.log(username);
+
+const props = {
+    lombas: {
+        type: Array,
+    },
+};
 
 const form = useForm({
     name: null,
     username: null,
     email: null,
     password: null,
-    role: null,
+    role: "Pilih Role",
+    selectedLomba: [],
 });
 
-const submit = () => {
-    form.post(route("administrator.store"), {
-        preserveScroll: true,
-    });
-};
+function submit() {
+    // Menambahkan properti selectedCriteria ke dalam data yang disubmit
+    const formData = { ...form, selectedLomba: form.selectedLomba };
+    router.post('/administrator', formData)
+        .then(() => {
+            Swal.fire({
+                icon: 'success',
+                title: 'Sukses!',
+                text: 'Akun administrator berhasil ditambahkan.',
+                confirmButtonText: 'Ok'
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Handle error here
+        });
+}
+
 
 // const form = reactive({
 //   name: null,
@@ -28,6 +55,20 @@ const submit = () => {
 //     router.post(route("administrator.store"), form)
 // }
 
+$(document).ready(function () {
+    $("#show_hide_password a").on('click', function (event) {
+        event.preventDefault();
+        if ($('#show_hide_password input').attr("type") == "text") {
+            $('#show_hide_password input').attr('type', 'password');
+            $('#show_hide_password i').addClass("bx-hide");
+            $('#show_hide_password i').removeClass("bx-show");
+        } else if ($('#show_hide_password input').attr("type") == "password") {
+            $('#show_hide_password input').attr('type', 'text');
+            $('#show_hide_password i').removeClass("bx-hide");
+            $('#show_hide_password i').addClass("bx-show");
+        }
+    });
+});
 </script>
 <template>
     <div class="wrapper">
@@ -52,8 +93,8 @@ const submit = () => {
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>
-                                <p class="user-role">habib</p>
+                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                                <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -89,11 +130,9 @@ const submit = () => {
                                     <label for="inputChoosePassword"
                                         class="form-label warna-hitam"><b>Password</b></label>
                                     <div class="input-group" id="show_hide_password">
-                                        <input type="password" class="form-control border-end-0" id="password"
-                                            v-model="form.password">
-                                        <a href="javascript:;" class="input-group-text bg-transparent">
-                                            <i class='bx bx-hide'></i>
-                                        </a>
+                                        <input type="password" v-model="form.password" class="form-control border-end-0"
+                                            id="inputChoosePassword"> <a href="javascript:;"
+                                            class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
                                     </div>
                                 </div>
                                 <div>
@@ -108,17 +147,11 @@ const submit = () => {
                                 <div>
                                     <label class="role-add"><b class="warna-hitam">Lomba</b></label>
                                     <div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="gridCheck">
-                                            <label class="form-check-label" for="gridCheck">UI / UX</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="gridCheck">
-                                            <label class="form-check-label" for="gridCheck">AR / VR</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="gridCheck">
-                                            <label class="form-check-label" for="gridCheck">Sistem Keamanan Data</label>
+                                        <div class="form-check" v-for="lomba in lombas.data" :key="lomba.id">
+                                            <input class="form-check-input" type="checkbox" :id="'lomba' + lomba.id"
+                                                v-model="form.selectedLomba" :value="lomba.id">
+                                            <label class="form-check-label" :for="'lomba' + lomba.id">{{
+                                                lomba.name_lomba }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -140,20 +173,3 @@ const submit = () => {
         <!--end page wrapper -->
     </div>
 </template>
-
-<script>
-$(document).ready(function () {
-    $("#show_hide_password a").on('click', function (event) {
-        event.preventDefault();
-        if ($('#show_hide_password input').attr("type") == "text") {
-            $('#show_hide_password input').attr('type', 'password');
-            $('#show_hide_password i').addClass("bx-hide");
-            $('#show_hide_password i').removeClass("bx-show");
-        } else if ($('#show_hide_password input').attr("type") == "password") {
-            $('#show_hide_password input').attr('type', 'text');
-            $('#show_hide_password i').removeClass("bx-hide");
-            $('#show_hide_password i').addClass("bx-show");
-        }
-    });
-});
-</script>

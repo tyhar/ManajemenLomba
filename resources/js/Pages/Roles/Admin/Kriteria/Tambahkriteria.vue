@@ -1,10 +1,10 @@
 <template>
     <div class="wrapper">
-        <!--start header -->
+        <!-- Header -->
         <header>
             <div class="c-topbar">
                 <nav class="navbar navbar-expand">
-                    <!-- Navbar tambah untuk logo di kiri -->
+                    <!-- Navbar -->
                     <div class="navbar-tambah">
                         <div class="navbar-left">
                             <a href="/">
@@ -15,36 +15,35 @@
                     </div>
                     <!-- Mobile toggle menu -->
                     <!-- Search bar -->
-                    <div class="search-bar flex-grow-1">
-                    </div>
+                    <div class="search-bar flex-grow-1"></div>
                     <!-- Top menu -->
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>
-                                <p class="user-role">habib</p>
+                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                                <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
-                            <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
-                            </div>
+                            <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i></div>
                         </ul>
                     </div>
                 </nav>
             </div>
         </header>
-        <!--end header -->
-        <!--start page wrapper -->
+        <!-- End Header -->
+        <!-- Start Page Wrapper -->
         <div class="page-wrapper-new">
             <div class="page-content">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0">TAMBAH KRITERIA PENILAIAN</h4>
+                        <h4 class="mb-0">TAMBAH KRITERIA LOMBA</h4>
                         <hr />
-                        <form @submit.prevent="submit">
+                        <form @submit.prevent="submit" enctype="multipart/form-data">
                             <div class="row" v-for="(criteria, index) in form.kriteria" :key="index">
                                 <div class="c-mt10">
-                                    <label class="c-mb5-black"><b>Kriteria Penilaian</b></label>
+                                    <label class="c-mb5-black c-mt10"><b>Kriteria Penilaian</b></label>
                                     <div>
-                                        <input type="text" class="form-control label-8">
+                                        <input type="text" class="form-control label-8"
+                                            v-model="criteria.name_kriteria">
                                         <button class="btn btn-secondary" @click="removeKriteria(index)"
                                             v-if="form.kriteria.length > 1"><i class="fas fa-minus"></i></button>
                                     </div>
@@ -53,23 +52,26 @@
                             <button class="btn btn-secondary" @click="addKriteria"><i class="fas fa-plus"></i> Tambah
                                 Kriteria</button>
                             <div class="btn-posisi">
-                                <button class="btn btn-primary button-tabel-right"
-                                    onclick="window.location.href='/kriteria'">Simpan</button>
-                                <button class="btn btn-danger button-tabel-left"
-                                    onclick="window.location.href='/kriteria'">Batal</button>
+                                <button type="submit" class="btn btn-primary button-tabel-right">Tambah</button>
+                                <button class="btn btn-danger button-tabel-left" @click="goBack()">Batal</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        <!--end page wrapper -->
+        <!-- End Page Wrapper -->
     </div>
 </template>
 
 <script setup>
 import { reactive } from 'vue'
 import { useForm } from "@inertiajs/vue3";
+
+const { name, username } = defineProps(['name', 'username']);
+
+console.log(name); // Contoh penggunaan di dalam script setup
+console.log(username);
 
 const form = useForm({
     kriteria: [{ name_kriteria: '' }],
@@ -86,4 +88,13 @@ const removeKriteria = (index) => {
     form.kriteria.splice(index, 1);
 };
 
+const submit = () => {
+    form.post(route("kriteria.store"), {
+        preserveScroll: true,
+    });
+};
+
+const goBack = () => {
+    window.history.back();
+};
 </script>

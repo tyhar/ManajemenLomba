@@ -21,8 +21,8 @@
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>
-                                <p class="user-role">habib</p>
+                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                                <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -39,49 +39,24 @@
                     <div class="card-body">
                         <h4 class="mb-0">EDIT NILAI</h4>
                         <hr />
-                        <div class="row">
-                            <div class="col-md-6 c-mb10">
-                                <label class="c-mb5-black"><b>1. Kreativitas</b></label>
+                        <form @submit.prevent="submit">
+                            <div class="row" v-for="kriteria in kriterias" :key="kriteria.id">
+                                <div class="col-md-6 c-mb10">
+                                    <label class="c-mb5-black"><b>{{ kriteria.name_kriteria }}</b></label>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="c-mb5-black">Nilai</label>
+                                    <input type="text" class="form-control c-mb20" :id="'value_count_' + kriteria.id"
+                                        v-model="form.value_count[kriteria.id]">
+                                    <!-- Add hidden input to store kriteria_id -->
+                                    <input type="hidden" :name="'kriteria_id_' + kriteria.id" :value="kriteria.id">
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <label class="c-mb5-black">Nilai</label>
-                                <input type="namalomba" class="form-control c-mb20">
+                            <div class="btn-posisi">
+                                <button type="submit" class="btn btn-primary button-tabel-right">Simpan</button>
+                                <button class="btn btn-danger button-tabel-left" @click="goBack()">Batal</button>
                             </div>
-                            <div class="col-md-6 c-mb10">
-                                <label class="c-mb5-black"><b>2. Estetika dan Komposisi</b></label>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="c-mb5-black">Nilai</label>
-                                <input type="namalomba" class="form-control c-mb20">
-                            </div>
-                            <div class="col-md-6 c-mb10">
-                                <label class="c-mb5-black"><b>3. Kriteria 3</b></label>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="c-mb5-black">Nilai</label>
-                                <input type="namalomba" class="form-control c-mb20">
-                            </div>
-                            <div class="col-md-6 c-mb10">
-                                <label class="c-mb5-black"><b>4. Kriteria 4</b></label>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="c-mb5-black">Nilai</label>
-                                <input type="namalomba" class="form-control c-mb20">
-                            </div>
-                            <div class="col-md-6 c-mb10">
-                                <label class="c-mb5-black"><b>4. Kriteria 5</b></label>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="c-mb5-black">Nilai</label>
-                                <input type="namalomba" class="form-control c-mb20">
-                            </div>
-                        </div>
-                        <div class="btn-posisi">
-                            <button class="btn btn-primary button-tabel-right"
-                                onclick="window.location.href='/tabellomba'">Simpan</button>
-                            <button class="btn btn-danger button-tabel-left"
-                                onclick="window.location.href='/tabellomba'">Batal</button>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -89,3 +64,33 @@
         <!--end page wrapper -->
     </div>
 </template>
+
+<script setup>
+import { defineProps, ref, onMounted } from 'vue'
+import { router } from '@inertiajs/vue3'
+
+const props = defineProps(['kriterias', 'userValues']);
+
+const form = ref({
+    value_count: {}
+});
+
+onMounted(() => {
+    // Initialize form values with userValues
+    props.kriterias.forEach(kriteria => {
+        form.value_count[kriteria.id] = props.userValues[kriteria.id] || '';
+    });
+});
+
+const submit = () => {
+    router.put('/update-value-count', form.value_count, {
+        onSuccess: () => {
+            router.visit('/lombajuri');
+        }
+    });
+};
+
+const goBack = () => {
+    window.history.back();
+};
+</script>

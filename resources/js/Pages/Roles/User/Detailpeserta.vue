@@ -1,6 +1,3 @@
-<script setup>
-import { Link } from '@inertiajs/vue3';
-</script>
 <template>
     <div class="wrapper">
         <!--start header -->
@@ -24,8 +21,8 @@ import { Link } from '@inertiajs/vue3';
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>
-                                <p class="user-role">habib</p>
+                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                                <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -44,15 +41,18 @@ import { Link } from '@inertiajs/vue3';
                             <div class="row">
                                 <div class="col-md-7 label-left">
                                     <h5 class="judul-detail c-ml-25 c-mt10"><b>Tema Lomba</b></h5>
-                                    <div class="judul-lomba-index c-ml-25 warna-hitam"><b>Desain Website</b></div>
+                                    <div class="judul-lomba-index c-ml-25 warna-hitam" id="name_lomba">{{
+                                        lombax.name_lomba }}
+                                    </div>
                                 </div>
                                 <div>
                                     <div class="div-class">
                                         <a class="btn btn-pink c-mtkc" href="#">BUKU
                                             PANDUAN</a>
-                                        <a class="btn btn-success c-mtk margin-afkar1 warna-hitam" href="#">AJUKAN
+                                        <a class="btn btn-warning c-mtk margin-afkar1 warna-hitam" href="#">AJUKAN
                                             PERTANYAAN</a>
-                                        <a class="btn btn-primary c-mtk mg-t10 warna-hitam" href="/daftarlomba">DAFTAR
+                                        <a class="btn btn-success c-mtk mg-t10 warna-hitam"
+                                            :href="route('daftarlomba.index')">DAFTAR
                                             LOMBA</a>
                                     </div>
                                 </div>
@@ -62,9 +62,21 @@ import { Link } from '@inertiajs/vue3';
                 </div>
             </div>
         </div>
-        <div class="des-biru">
-            <a class="kont">Deskripsi</a>
+        <div class=" des-biru">
+            <a class="kont">{{ lombax.description }}</a>
         </div>
         <!--end page wrapper -->
     </div>
 </template>
+<script setup>
+import { defineProps } from "vue";
+import { useForm, usePage } from '@inertiajs/vue3';
+
+// Mendefinisikan properti yang diterima oleh komponen
+const props = defineProps({
+    name: String,
+    username: String,
+    lombax: Object,
+});
+
+</script>
