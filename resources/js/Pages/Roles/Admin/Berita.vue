@@ -1,6 +1,37 @@
-<script setup>
+<!-- <script setup>
+import { onMounted, ref, computed } from 'vue';
 import { Link } from '@inertiajs/vue3';
-</script>
+import { defineProps } from "vue";
+
+
+
+const props = defineProps({
+
+    name: {
+        type: String,
+        required: true,
+    },
+    username: {
+        type: String,
+        required: true,
+    },
+});
+
+const unreadCount = ref(0);
+
+onMounted(async () => {
+    try {
+        const response = await axios.get('/api/unread-messages');
+        unreadCount.value = response.data.unreadCount;
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+
+
+
+</script> -->
 <template>
     <!--wrapper-->
     <div class="wrapper">
@@ -9,11 +40,10 @@ import { Link } from '@inertiajs/vue3';
             <div class="sidebar-header">
                 <div>
                     <a href="/">
-                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon" >
+                        <img id="logo-img" src="/bootstrap/images/lg.png" class="lg2">
                     </a>
                 </div>
-                <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
-                </div>
+                <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
             </div>
             <!--navigation-->
             <ul class="metismenu" id="menu">
@@ -23,8 +53,8 @@ import { Link } from '@inertiajs/vue3';
                         </div>
                         <div class="menu-title">Dashboard</div>
                     </a>
-                    </li>
-                    <li>
+                </li>
+                <li>
                     <a href="javascript:;" class="has-arrow">
                         <div class="parent-icon"><i class="fadeIn animated bx bx-plus-circle"></i>
                         </div>
@@ -35,8 +65,6 @@ import { Link } from '@inertiajs/vue3';
                         </li>
                         <li class="jarak-dropdown"> <a href="/administrator">Administrator</a>
                         </li>
-                        <li class="jarak-dropdown"> <a href="/tim">Tim</a>
-                        </li>
                         <li class="jarak-dropdown"> <a href="/sponsor">Sponsor</a>
                         </li>
                         <li class="jarak-dropdown"> <a href="/berita">Berita</a>
@@ -46,17 +74,24 @@ import { Link } from '@inertiajs/vue3';
                     </ul>
                 </li>
                 <li>
-                <a href="/partisipan">
-                    <div class="parent-icon"><i class="fadeIn animated bx bx-street-view"></i>
-                    </div>
-                    <div class="menu-title">Partisipan</div>
-                </a>
+                    <a href="/tim">
+                        <div class="parent-icon"><i class="fadeIn animated lni lni-users"></i>
+                        </div>
+                        <div class="menu-title">Tim</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="/partisipan">
+                        <div class="parent-icon"><i class="fadeIn animated bx bx-street-view"></i>
+                        </div>
+                        <div class="menu-title">Partisipan</div>
+                    </a>
                 </li>
                 <li>
                     <a href="/pesan">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i>
-                        </div>
-                        <div class="menu-title">Pesan <span class="alert-count">1</span></div>
+                        <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i></div>
+                        <!-- Menampilkan jumlah pesan yang belum dibaca -->
+                        <div class="menu-title">Pesan <span class="alert-count">-</span></div>
                     </a>
                 </li>
                 <li>
@@ -71,36 +106,15 @@ import { Link } from '@inertiajs/vue3';
                         <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
                         </div>
                         <div class="menu-title">
-                            <Link class="menu-title"
-                                :href="route('logout')"
-                                method="post"
-                                as="button"
-                            >
-                                Logout
+                            <Link class="menu-title" :href="route('logout')" method="post" as="button">
+                            Logout
                             </Link>
                         </div>
                     </a>
                 </li>
-                <li>
-                    <a href="javascript:;" class="has-arrow">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-plus-circle"></i>
-                        </div>
-                        <div class="menu-title">SEMENTARA</div>
-                    </a>
-                    <ul>
-                        <li class="jarak-dropdown"> <a href="/dashboardjuri">JURI</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/dashboardpetugas">PETUGAS</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/overviewpeserta">PESERTA</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/index2">ADMIN</a>
-                        </li>
-                    </ul>
-                </li>
             </ul>
             <!--end navigation-->
-            
+
         </div>
         <!--end sidebar wrapper -->
         <!--start header -->
@@ -114,25 +128,25 @@ import { Link } from '@inertiajs/vue3';
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                            <p class="user-name mb-0">Habib Shohiburrotib</p>			
-                            <p class="user-role">habib</p>							
-                        </div>
-                        <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
-                        </div>
+                                <p class="user-name mb-0">Habib Shohiburrotib</p>
+                                <p class="user-role">habib</p>
+                            </div>
+                            <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
+                            </div>
                             <li class="nav-item dropdown dropdown-large">
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <div class="header-notifications-list">
                                     </div>
                                 </div>
                             </li>
-                            <li class="nav-item dropdown dropdown-large">	
+                            <li class="nav-item dropdown dropdown-large">
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <div class="header-message-list">
                                     </div>
                                 </div>
                             </li>
                         </ul>
-                    </div>		
+                    </div>
                 </nav>
             </div>
         </header>
@@ -143,32 +157,39 @@ import { Link } from '@inertiajs/vue3';
                 <div class="card">
                     <div class="card-body">
                         <h4 class="mb-0 jarak-top-kurang5">Tabel Berita</h4>
-                        <hr class="c-mt10" />		
-                        <button class="btn btn-success"  style="margin-top: -7px;" onclick="window.location.href='/tambahberita'">Tambah Berita</button>
+                        <hr class="c-mt10" />
+                        <button class="btn btn-success jarak-top-kurang7"
+                            onclick="window.location.href='/berita/tambah-berita'">Tambah Berita</button>
                         <hr class="c-mt10" />
                         <div class="table-responsive">
                             <table id="example" class="table mt-3  table-bordered">
                                 <thead class="table-dark">
-                                <tr>
-                                    <th class="width-id">ID</th>
-                                    <th class="crud-width100">Judul</th>
-                                    <th class="crud-width130">Deskripsi Awal</th>
-                                    <th class="crud-width-40">Penerbit</th>
-                                    <th class="crud-custom">Tanggal Upload</th>  
-                                    <th class="crud-width-150">Aksi</th>
-                                </tr>
+                                    <tr>
+                                        <th class="width-id">ID</th>
+                                        <th class="crud-width100">Judul</th>
+                                        <th class="crud-width-150">Deskripsi Awal</th>
+                                        <th class="crud-width-40">Penerbit</th>
+                                        <th class="crud-custom">Tanggal Upload</th>
+                                        <th class="crud-width130">Aksi</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Profil Ketua Emailkomp Periode 2024</td>
-                                        <td>Emailkomp adalah sebuah organisasi dibawah pengawasan langsung oleh Prodi Teknik Informatika</td>
-                                        <td>Admin</td>   
-                                        <td>February 27, 2024</td>
+                                    <tr v-for="berita in beritas" :key="berita.id">
+                                        <td>{{ berita.id }}</td>
+                                        <td>{{ berita.judul }}</td>
+                                        <td>{{ berita.deskripsi_awal }}</td>
+                                        <td>{{ berita.penerbit }}</td>
+                                        <td>{{ berita.tanggal_upload }}</td>
                                         <td class="btn-crud">
-                                            <button class="btn btn-secondary" onclick="window.location.href='/detailberita'"><i class="bi bi-eye"></i></button>
-                                            <button class="btn btn-primary" onclick="window.location.href='/editberita'"><i class="bi bi-pencil-square"></i></button>    
-                                            <button class="btn btn-danger" ><i class="bi bi-trash"></i></button>                              
+                                            <button class="btn btn-secondary" @click.prevent="detailberita(berita.id)">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-primary" @click.prevent="editberita(berita.id)">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </button>
+                                            <button class="btn btn-danger" @click.prevent="destroy(berita.id)">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -181,9 +202,31 @@ import { Link } from '@inertiajs/vue3';
         <!--end page wrapper -->
     </div>
 </template>
-    
 <script>
-$(document).ready(function() {
-    $('#example').DataTable();
-  } );
+import { Link, router } from '@inertiajs/vue3';
+
+export default {
+    components: {
+        Link,
+    },
+    props: {
+        beritas: Array,
+    },
+    methods: {
+        editberita(id) {
+            router.get('/berita/' + id + '/edit-berita');
+        },
+        detailberita(id) {
+            router.get('/berita/' + id + '/detail-berita');
+        },
+        destroy(id) {
+            router.delete('/berita/' + id);
+        },
+    },
+    mounted() {
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
+    }
+};
 </script>

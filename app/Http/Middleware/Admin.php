@@ -4,51 +4,59 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
-//auth
+use Illuminate\Http\RedirectResponse;
+use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
-// use App\Http\Controllers\AdminController;
 
 class Admin
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next)
     {
-        //auth check if not redirect login
-        if(!Auth::check())
-        {
-            return redirect()->route('login');
+        // Cek apakah pengguna terotentikasi
+        if (!Auth::check()) {
+            return $this->redirectToLogin();
         }
 
-        //get user role on $userrole var
+        // Berbagi data pengguna dengan Inertia
+        $this->shareUserData();
+
+        // Dapatkan peran pengguna
         $userRole = Auth::user()->role;
 
-        //passing request 
-        if($userRole==1)
-        {
-            return $next($request);
-        }
-
-        if($userRole==2)
-        {
-            return redirect()->route('eventadmin');
-        }
-        
-        if($userRole==3)
-        {
-            return redirect()->route('dashboard');
-        }
-
-        if($userRole==4)
-        {
-            return redirect()->route('panelis');
+        // Periksa peran pengguna dan arahkan sesuai kebutuhan
+        switch ($userRole) {
+            case 1:
+                return $next($request); // Admin
+            case 2:
+                return redirect()->route('eventadmin'); // Event Admin
+            case 3:
+                return redirect()->route('dashboard'); // User
+            case 4:
+                return redirect()->route('panelis'); // Panelis
+            default:
+                return $this->handleUnknownRole(); // Peran tidak dikenali
         }
     }
-    
 
+    private function redirectToLogin(): RedirectResponse
+    {
+        return redirect()->route('login');
+    }
 
+    private function shareUserData(): void
+    {
+        $user = Auth::user();
+        Inertia::share('userData', [
+            'name' => $user->name,
+            'username' => $user->username,
+        ]);
+    }
+
+    private function handleUnknownRole(): RedirectResponse
+    {
+        // Tindakan apa yang harus diambil jika peran pengguna tidak dikenali?
+        // Misalnya, alihkan ke halaman default atau tampilkan pesan kesalahan.
+        // Sebagai contoh, saya hanya akan mengarahkan ke halaman dashboard.
+        return redirect()->route('dashboard');
+    }
 }

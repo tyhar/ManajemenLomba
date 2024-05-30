@@ -9,7 +9,7 @@ class PanelisController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Roles/Panelis/Panelis');
+        return Inertia::render('Roles/Panelis/Dashboardjuri');
     }
     // public function dashboardjuri()
     // {
@@ -37,5 +37,12 @@ class PanelisController extends Controller
     {
         return Inertia::render('Roles/Panelis/Lomba/Nilai');
     }
-
+    public function editnilai()
+    {
+        return Inertia::render('Roles/Panelis/Lomba/Editnilai');
+    }
+    public function timdetailjuri()
+    {
+        return Inertia::render('Roles/Panelis/Lomba/Timdetailjuri');
+    }
 }

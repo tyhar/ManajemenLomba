@@ -1,143 +1,137 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
+import { defineProps, ref, onMounted, computed } from 'vue';
+import axios from 'axios';
+
+const unreadCount = ref(0);
+
+const props = defineProps({
+    teams: {
+        type: Object,
+        required: true
+    }
+});
+
+const filterStatus = ref('Semua');
+
+const filteredTeams = computed(() => {
+    if (filterStatus.value === 'Semua') {
+        return props.teams.data;
+    }
+    return props.teams.data.filter(team => {
+        const isVerified = team.status.toLowerCase() === 'verified';
+        return filterStatus.value === 'Verified' ? isVerified : !isVerified;
+    });
+});
+
+onMounted(async () => {
+    try {
+        const response = await axios.get('/api/unread-messages');
+        unreadCount.value = response.data.unreadCount;
+    } catch (error) {
+        console.error(error);
+    }
+});
 </script>
+
 <template>
-    <!--wrapper-->
     <div class="wrapper">
-        <!--sidebar wrapper -->
         <div class="sidebar-wrapper" data-simplebar="true">
             <div class="sidebar-header">
                 <div>
                     <a href="/">
-                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon">
+                        <img id="logo-img" src="/bootstrap/images/lg.png" class="lg2">
                     </a>
                 </div>
-                <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
-                </div>
+                <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
             </div>
-            <!--navigation-->
             <ul class="metismenu" id="menu">
                 <li>
-                    <a href="/eventadmin">
-                        <div class="parent-icon"><i class='bx bx-home-circle'></i>
-                        </div>
+                    <a :href="route('eventadmin')">
+                        <div class="parent-icon"><i class='bx bx-home-circle'></i></div>
                         <div class="menu-title">Dashboard</div>
                     </a>
                 </li>
                 <li>
                     <a href="/partisipanpetugas">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-user-circle c-font25"></i>
-                        </div>
+                        <div class="parent-icon"><i class="fadeIn animated bx bx-user-circle c-font25"></i></div>
                         <div class="menu-title">Partisipan</div>
                     </a>
                 </li>
                 <li>
                     <a href="/timpetugas">
-                        <div class="parent-icon"><i class="fadeIn animated lni lni-users"></i>
-                        </div>
+                        <div class="parent-icon"><i class="fadeIn animated lni lni-users"></i></div>
                         <div class="menu-title">Tim</div>
                     </a>
                 </li>
                 <li>
                     <a href="/pesanpetugas">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i>
-                        </div>
-                        <div class="menu-title">Pesan <span class="alert-count">1</span></div>
+                        <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i></div>
+                        <div class="menu-title">Pesan <span class="alert-count">{{ unreadCount }}</span></div>
                     </a>
                 </li>
                 <li>
                     <a href="/rangkingpetugas">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-trophy"></i>
-                        </div>
+                        <div class="parent-icon"><i class="fadeIn animated bx bx-trophy"></i></div>
                         <div class="menu-title">Rangking</div>
                     </a>
                 </li>
                 <li>
                     <a>
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
-                        </div>
+                        <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i></div>
                         <div class="menu-title">
-                            <Link class="menu-title"
-                                :href="route('logout')"
-                                method="post"
-                                as="button"
-                            >
-                                Logout
+                            <Link class="menu-title" :href="route('logout')" method="post" as="button">
+                            Logout
                             </Link>
                         </div>
                     </a>
                 </li>
-                <li>
-                    <a href="javascript:;" class="has-arrow">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-plus-circle"></i>
-                        </div>
-                        <div class="menu-title">SEMENTARA</div>
-                    </a>
-                    <ul>
-                        <li class="jarak-dropdown"> <a href="/dashboardjuri">JURI</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/eventadmin">PETUGAS</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/overviewpeserta">PESERTA</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/superadmin">ADMIN</a>
-                        </li>
-                    </ul>
-                </li>
             </ul>
-            <!--end navigation-->
         </div>
-        <!--end sidebar wrapper -->
-        <!--start header -->
+
         <header>
             <div class="topbar d-flex align-items-center">
                 <nav class="navbar navbar-expand">
-                    <div class="mobile-toggle-menu"><i class='bx bx-menu'></i>
-                    </div>
-                    <div class="search-bar flex-grow-1">
-                    </div>
+                    <div class="mobile-toggle-menu"><i class='bx bx-menu'></i></div>
+                    <div class="search-bar flex-grow-1"></div>
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Petugas</p>						
+                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                                <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
-                            <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
-                            </div>
+                            <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i></div>
                             <li class="nav-item dropdown dropdown-large">
                                 <div class="dropdown-menu dropdown-menu-end">
-                                    <div class="header-notifications-list">
-                                    </div>
+                                    <div class="header-notifications-list"></div>
                                 </div>
                             </li>
-                            <li class="nav-item dropdown dropdown-large">	
+                            <li class="nav-item dropdown dropdown-large">
                                 <div class="dropdown-menu dropdown-menu-end">
-                                    <div class="header-message-list">
-                                    </div>
+                                    <div class="header-message-list"></div>
                                 </div>
                             </li>
                         </ul>
-                    </div>		
+                    </div>
                 </nav>
             </div>
         </header>
-        <!--end header -->
 
-        <!--start page wrapper -->
         <div class="page-wrapper">
             <div class="page-content">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="mb-0 jarak-top-kurang5">Tabel Tim</h4>
-                        <hr class="c-mt10"/>		
-                        <button class="btn btn-primary btn-export">Export Excel</button>
-                        <label class="dropdown-crud">Filter by Status</label> 
-						<select class="form-select2">
-							<option selected>Semua</option>
-							<option>Verified</option>
+                        <hr class="c-mt10" />
+                        <a :href="route('export.team')" class="btn btn-primary btn-float-right">Export Excel</a>
+                        <label class="dropdown-crud">Filter by Status</label>
+                        <select class="form-select2" v-model="filterStatus">
+                            <option>Semua</option>
+                            <option>Verified</option>
                             <option>Unverified</option>
-						</select>
+                        </select>
                         <br><br>
-                        <div class="table-responsive">	
+                        <div class="table-responsive">
                             <table id="example" class="table table-bordered">
                                 <thead class="table-dark">
                                     <tr>
@@ -152,16 +146,22 @@ import { Link } from '@inertiajs/vue3';
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Start Green</td>
-                                        <td>Lomba Desain</td>
-                                        <td>0850000000</td>
-                                        <td>goat@gmail.com</td>
-                                        <td>Universitas</td>
-                                        <td>Verified</td>
+                                    <tr v-for="team in filteredTeams" :key="team.id">
+                                        <td>{{ team.id }}</td>
+                                        <td>{{ team.name_team }}</td>
+                                        <td>
+                                            <ul>
+                                                <li v-for="lomba in team.lomba" :key="lomba.id">{{ lomba.name_lomba }}
+                                                </li>
+                                            </ul>
+                                        </td>
+                                        <td>{{ team.phone }}</td>
+                                        <td>{{ team.email }}</td>
+                                        <td>{{ team.instansi }}</td>
+                                        <td>{{ team.status }}</td>
                                         <td class="btn-crud">
-                                            <button class="btn btn-secondary" onclick="window.location.href='/timdetail'"><i class="bi bi-eye"></i></button>
+                                            <a class="btn btn-secondary" :href="route('timpetugas.show', team.id)"><i
+                                                    class="bi bi-eye"></i></a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -171,6 +171,5 @@ import { Link } from '@inertiajs/vue3';
                 </div>
             </div>
         </div>
-        <!--end page wrapper --> 
     </div>
 </template>

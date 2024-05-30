@@ -1,84 +1,64 @@
 <script setup>
-//from backend
+import { computed, defineProps, ref, reactive } from 'vue';
 import Checkbox from '@/Components/Checkbox.vue';
-// import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
-// import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-// import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import Swal from 'sweetalert2';
 
-//from frontend
-import { reactive } from 'vue'
-import { router } from '@inertiajs/vue3'
-
-defineProps({
-    //from backend
+// Define props
+const props = defineProps({
     canResetPassword: {
         type: Boolean,
     },
     status: {
         type: String,
     },
-    //from frontend
-    errors: Object, // Corrected typo in prop name
+    errors: Object,
 });
 
-//from backend
+// Reactive state for CAPTCHA
+const captcha = reactive({
+    question: '',
+    answer: 0
+});
+let captchaInput = '';
+
+// Generate CAPTCHA
+function generateCaptcha() {
+    const num1 = Math.floor(Math.random() * 10) + 1;
+    const num2 = Math.floor(Math.random() * 10) + 1;
+    captcha.question = `${num1} x ${num2}?`;
+    captcha.answer = num1 * num2;
+}
+
+// Form state
 const form = useForm({
     email: '',
     password: '',
     remember: false,
 });
+const submit = () => {
+    form.post(route('login'), {
+        onFinish: () => form.reset('password'),
+    });
+};
 
-const captcha = reactive({
-	question: '',
-	answer: 0 // tambahkan properti untuk menyimpan jawaban CAPTCHA
-  })
-  
-  let captchaInput = ''
-  
-  // Metode untuk menghasilkan CAPTCHA
-  function generateCaptcha() {
-	const num1 = Math.floor(Math.random() * 10) + 1; // Angka acak 1-10
-	const num2 = Math.floor(Math.random() * 10) + 1; // Angka acak 1-10
-	captcha.question = `${num1} x ${num2}?`;
-	captcha.answer = num1 * num2; // Simpan jawaban CAPTCHA
-  }
-  
-  function submit() {
-	// Periksa apakah jawaban CAPTCHA benar
-	if (parseInt(captchaInput) === captcha.answer) {
-	  router.post('/login', form);
-   
-	} else {
-	  alert('Jawaban CAPTCHA salah. Silakan coba lagi.');
-	  generateCaptcha(); // Generate CAPTCHA baru setelah gagal
-	}
-  }
-  
-  function loginWithGoogle() {
-	// Redirect to Google OAuth URL
-	window.location.href = "/authorized/google";
-  }
-
-   // Panggil generateCaptcha saat komponen dimuat
-   generateCaptcha();
 //from frontend
 $(document).ready(function () {
-		$("#show_hide_password a").on('click', function (event) {
-			event.preventDefault();
-			if ($('#show_hide_password input').attr("type") == "text") {
-				$('#show_hide_password input').attr('type', 'password');
-				$('#show_hide_password i').addClass("bx-hide");
-				$('#show_hide_password i').removeClass("bx-show");
-			} else if ($('#show_hide_password input').attr("type") == "password") {
-				$('#show_hide_password input').attr('type', 'text');
-				$('#show_hide_password i').removeClass("bx-hide");
-				$('#show_hide_password i').addClass("bx-show");
-			}
-		});
-	});
+    $("#show_hide_password a").on('click', function (event) {
+        event.preventDefault();
+        if ($('#show_hide_password input').attr("type") == "text") {
+            $('#show_hide_password input').attr('type', 'password');
+            $('#show_hide_password i').addClass("bx-hide");
+            $('#show_hide_password i').removeClass("bx-show");
+        } else if ($('#show_hide_password input').attr("type") == "password") {
+            $('#show_hide_password input').attr('type', 'text');
+            $('#show_hide_password i').removeClass("bx-hide");
+            $('#show_hide_password i').addClass("bx-show");
+        }
+    });
+});
 </script>
 
 <template>
@@ -98,33 +78,26 @@ $(document).ready(function () {
                                         <div class="form-body">
                                             <form class="row g-3" @submit.prevent="submit">
                                                 <div class="col-12">
-                                                    <InputError class="mt-2" :message="errors.email" /> <!-- Corrected prop reference -->
                                                     <label for="email" class="form-label">Email</label>
-                                                    <input class="form-control"
-                                                        id="email"
-                                                        type="email"
-                                                        v-model="form.email"
-                                                        required
-                                                        autofocus
-                                                        autocomplete="username"
-                                                        placeholder="Enter Email" 
-                                                    />
-                                                    
+                                                    <input class="form-control" id="email" type="email"
+                                                        v-model="form.email" required autofocus autocomplete="username"
+                                                        placeholder="Enter Email" />
+                                                    <InputError class="mt-2" :message="errors.email" />
+                                                    <!-- Corrected prop reference -->
                                                 </div>
                                                 <div class="col-12">
-                                                    <InputError class="mt-2" :message="errors.password" /> <!-- Corrected prop reference -->
                                                     <label for="password" class="form-label">Password</label>
-													<div class="input-group" id="show_hide_password">
-														<input class="form-control border-end-0"
-															id="password"
-															type="password"  
-															v-model="form.password"
-															required
-															placeholder="Enter Password" 
-															autocomplete="current-password"
-														/> 
-														<a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
-													</div>
+                                                    <div class="input-group" id="show_hide_password">
+                                                        <input class="form-control border-end-0" id="password"
+                                                            type="password" v-model="form.password" required
+                                                            placeholder="Enter Password"
+                                                            autocomplete="current-password" />
+                                                        <InputError class="mt-2" :message="errors.password" />
+                                                        <!-- Corrected prop reference -->
+                                                        <a href="javascript:;"
+                                                            class="input-group-text bg-transparent"><i
+                                                                class='bx bx-hide'></i></a>
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-6 jarak-top-lebih4">
                                                     <!-- <div class="form-check form-switch">
@@ -133,21 +106,16 @@ $(document).ready(function () {
                                                     </div> -->
                                                 </div>
                                                 <div class="col-md-6 text-end jarak-top-lebih7">
-                                                    <Link
-                                                        v-if="canResetPassword"
-                                                        :href="route('password.request')"
-                                                        class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                                    >
-                                                        Lupa Password?
+                                                    <Link v-if="canResetPassword" :href="route('password.request')"
+                                                        class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                                    Lupa Password?
                                                     </Link>
                                                 </div>
-                                                <div class="col-12">
-													<label style="margin-right:5px ;">Hasil Dari</label>
-                                                    <label for="captcha" class="form-label">{{ captcha.question }}</label>
-                                                    <div class="input-group">
-                                                        <input v-model="captchaInput" type="text" class="form-control" id="captcha" placeholder="Enter Captcha">
-                                                    </div>
-                                                </div>
+                                                <!-- <div class="d-grid jarak-top-lebih10">
+                                                    <a class="btn shadow-sm btn-white" href="javascript:;">
+                                                        <span>Captcha</span>
+                                                    </a>
+                                                </div> -->
                                                 <div class="col-12">
                                                     <div class="d-grid jarak-top-kurang5">
                                                         <button class="btn btn-primary" :disabled="form.processing">
@@ -157,19 +125,22 @@ $(document).ready(function () {
                                                     </div>
                                                     <div class="login-separater text-center mb-4 jarak-top-kurang15">
                                                         <span>ATAU MASUK DENGAN EMAIL</span>
-                                                        <hr/>
+                                                        <hr />
                                                     </div>
                                                     <div class="d-grid jarak-top-kurang4">
-                                                        <a class="btn shadow-sm btn-white" href="#" @click="loginWithGoogle"> <span class="d-flex justify-content-center align-items-center">
-				                                   				<img class="me-2" src="../../../../public/assets/images/icons/search.svg" width="16" alt="Image Description">
-						                                      		<span >Masuk dengan Google</span>
-						                                      	  </span>
-						                                	</a>
+                                                        <a class="btn shadow-sm btn-white" href="javascript:;">
+                                                            <span
+                                                                class="d-flex justify-content-center align-items-center">
+                                                                <img class="me-2" src="assets/images/icons/search.svg"
+                                                                    width="16" alt="Image Description">
+                                                                <span>Masuk dengan Google</span>
+                                                            </span>
+                                                        </a>
                                                     </div>
                                                     <div class="text-center jarak-top-kurang10">
                                                         <br>
                                                         <p>
-                                                            Belum punya akun? 
+                                                            Belum punya akun?
                                                             <a :href="route('register')">Daftar disini</a>
                                                         </p>
                                                     </div>
@@ -185,10 +156,5 @@ $(document).ready(function () {
                 </div>
             </div>
         </div>
-        <!--=========================
-            LOGIN END
-        ==========================-->
-    </section>
+        </body>
 </template>
-
-
