@@ -8,7 +8,8 @@
                     <div class="navbar-tambah">
                         <div class="navbar-left">
                             <a href="/">
-                                <img src="/bootstrap/images/logo.png" alt="Logo">
+                                <img src="/bootstrap/images/lg.png" alt="Logo"
+                                    style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>
@@ -36,7 +37,7 @@
             <div class="page-content">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0">Edit Kriteria Lomba</h4>
+                        <h4 class="mb-0">EDIT KRITERIA PENILAIAN</h4>
                         <hr />
                         <div class="row">
                             <div class=" c-mb10">

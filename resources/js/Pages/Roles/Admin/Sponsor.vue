@@ -2,22 +2,30 @@
 import { Link } from '@inertiajs/vue3';
 import { useForm } from "@inertiajs/vue3";
 import { Head } from "@inertiajs/vue3";
+import { onMounted, ref, computed } from 'vue';
 import { router } from "@inertiajs/vue3";
 // import { usePage } from "@inertiajs/vue3";
 
-defineProps({
-    // sponsors: {
-    //     type: Object,
-    //     required: true,
-    // },
+const { name, username, sponsors } = defineProps(['name', 'username', 'sponsors']);
+
+console.log(name); // Contoh penggunaan di dalam script setup
+console.log(username);
+
+// Definisikan properti yang diterima oleh komponen
+const props = {
     sponsors: {
-        type: Array,
-    },
-    settings: {
         type: Array,
     },
 });
 
+onMounted(async () => {
+    try {
+        const response = await axios.get('/api/unread-messages');
+        unreadCount.value = response.data.unreadCount;
+    } catch (error) {
+        console.error(error);
+    }
+});
 const deleteForm = useForm({});
 
 const deleteSponsor = (id) => {
@@ -36,16 +44,11 @@ const deleteSponsor = (id) => {
         <div class="sidebar-wrapper" data-simplebar="true">
             <div class="sidebar-header">
                 <div>
-                    <a href="/" class="navbar-brand" v-for="setting in settings" :key="setting.id">
-                        <img
-                        :src="setting.logo1"
-                        :alt="setting.name"
-                        class="logo-icon"
-                        />
+                    <a href="/">
+                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon" >
                     </a>
                 </div>
-                <div class="toggle-icon ms-auto">
-                    <i class="fadeIn animated bx bx-menu"></i>
+                <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
                 </div>
             </div>
             <!--navigation-->
@@ -56,8 +59,8 @@ const deleteSponsor = (id) => {
                         </div>
                         <div class="menu-title">Dashboard</div>
                     </a>
-                    </li>
-                    <li>
+                </li>
+                <li>
                     <a href="javascript:;" class="has-arrow">
                         <div class="parent-icon"><i class="fadeIn animated bx bx-plus-circle"></i>
                         </div>
@@ -68,8 +71,6 @@ const deleteSponsor = (id) => {
                         </li>
                         <li class="jarak-dropdown"> <a href="/administrator">Administrator</a>
                         </li>
-                        <li class="jarak-dropdown"> <a href="/tim">Tim</a>
-                        </li>
                         <li class="jarak-dropdown"> <a href="/sponsor">Sponsor</a>
                         </li>
                         <li class="jarak-dropdown"> <a href="/berita">Berita</a>
@@ -79,17 +80,24 @@ const deleteSponsor = (id) => {
                     </ul>
                 </li>
                 <li>
-                <a href="/partisipan">
-                    <div class="parent-icon"><i class="fadeIn animated bx bx-street-view"></i>
-                    </div>
-                    <div class="menu-title">Partisipan</div>
-                </a>
+                    <a href="/tim">
+                        <div class="parent-icon"><i class="fadeIn animated lni lni-users"></i>
+                        </div>
+                        <div class="menu-title">Tim</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="/partisipan">
+                        <div class="parent-icon"><i class="fadeIn animated bx bx-street-view"></i>
+                        </div>
+                        <div class="menu-title">Partisipan</div>
+                    </a>
                 </li>
                 <li>
                     <a href="/pesan">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i>
-                        </div>
-                        <div class="menu-title">Pesan <span class="alert-count">1</span></div>
+                        <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i></div>
+                        <!-- Menampilkan jumlah pesan yang belum dibaca -->
+                        <div class="menu-title">Pesan <span class="alert-count">{{ unreadCount }}</span></div>
                     </a>
                 </li>
                 <li>
@@ -104,19 +112,15 @@ const deleteSponsor = (id) => {
                         <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
                         </div>
                         <div class="menu-title">
-                            <Link class="menu-title"
-                                :href="route('logout')"
-                                method="post"
-                                as="button"
-                            >
-                                Logout
+                            <Link class="menu-title" :href="route('logout')" method="post" as="button">
+                            Logout
                             </Link>
                         </div>
                     </a>
                 </li>
             </ul>
             <!--end navigation-->
-            
+
         </div>
         <!--end sidebar wrapper -->
         <!--start header -->
@@ -130,8 +134,8 @@ const deleteSponsor = (id) => {
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>			
-                                <p class="user-role">habib</p>							
+                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                                <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -141,14 +145,14 @@ const deleteSponsor = (id) => {
                                     </div>
                                 </div>
                             </li>
-                            <li class="nav-item dropdown dropdown-large">	
+                            <li class="nav-item dropdown dropdown-large">
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <div class="header-message-list">
                                     </div>
                                 </div>
                             </li>
                         </ul>
-                    </div>		
+                    </div>
                 </nav>
             </div>
         </header>
@@ -159,16 +163,13 @@ const deleteSponsor = (id) => {
                 <div class="card">
                     <div class="card-body">
                         <h4 class="mb-0 jarak-top-kurang5">Tabel Sponsor</h4>
-                        <hr class="c-mt10" />		
+                        <hr class="c-mt10" />
                         <!-- <button class="btn btn-success jarak-top-kurang7" onclick="window.location.href='sponsor/create'">Tambah Sponsor</button> -->
-                        <a 
-                            class="btn btn-success jarak-top-kurang7" 
-                            :href="route('sponsor.create')"
-                        >
+                        <a class="btn btn-success jarak-top-kurang7" :href="route('sponsor.create')">
                             Tambah Sponsor
                         </a>
-                        <hr class="c-mt10" />    
-                        <div class="table-responsive">	
+                        <hr class="c-mt10" />
+                        <div class="table-responsive">
                             <table id="example" class="table table-bordered">
                                 <thead class="table-dark">
                                     <tr>
@@ -180,11 +181,8 @@ const deleteSponsor = (id) => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr
-                                        v-for="sponsor in sponsors"
-                                        :key="sponsor.id"
-                                    >
-                                    <!-- <tr
+                                    <tr v-for="sponsor in sponsors" :key="sponsor.id">
+                                        <!-- <tr
                                         v-for="sponsor in sponsors.data"
                                         :key="sponsor.id"
                                     > -->
@@ -196,34 +194,26 @@ const deleteSponsor = (id) => {
                                         </td>
                                         <td>
                                             <!-- {{ sponsor.logo }} -->
-                                            <img :src="sponsor.logo" class="w-8 h-8 rounded" style="width: 120px;" alt="no image"/>
+                                            <img :src="sponsor.logo" class="w-8 h-8 rounded" style="width: 120px;"
+                                                alt="no image" />
                                         </td>
                                         <td>
                                             {{ sponsor.link_file }}
-                                        </td> 
+                                        </td>
                                         <td class="btn-crud">
-                                            <a 
-                                                class="btn btn-secondary"
-                                                :href="route('sponsor.show', sponsor.id)"
-                                            >
+                                            <a class="btn btn-secondary" :href="route('sponsor.show', sponsor.id)">
                                                 <i class="bi bi-eye"></i>
                                             </a>
-                                            <a 
-                                                class="btn btn-primary"
-                                                :href="route('sponsor.edit', sponsor.id)" 
-                                            >
+                                            <a class="btn btn-primary" :href="route('sponsor.edit', sponsor.id)">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
-                                            <button 
-                                                class="btn btn-danger"
-                                                @click="deleteSponsor(sponsor.id)" 
-                                            >
+                                            <button class="btn btn-danger" @click="deleteSponsor(sponsor.id)">
                                                 <i class="bi bi-trash"></i>
-                                            </button>                              
+                                            </button>
                                         </td>
                                     </tr>
                                 </tbody>
-                            </table>   
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -232,9 +222,9 @@ const deleteSponsor = (id) => {
         <!--end page wrapper -->
     </div>
 </template>
-    
+
 <script>
-$(document).ready(function() {
+$(document).ready(function () {
     $('#example').DataTable();
-  } );
+});
 </script>

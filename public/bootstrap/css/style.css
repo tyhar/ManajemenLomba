@@ -95,7 +95,7 @@ body {
 
 
 img {
-  /*  width: 100% !important;     */
+    /*  width: 100% !important;     */
     height: 100% !important;
     object-fit: cover !important;
 }
@@ -143,7 +143,7 @@ button {
 
 :root {
     --colorPrimary: #ff7f46;
-    --colorRed:#ae1c1c;
+    --colorRed: #ae1c1c;
     --colorBlue: #4582ff;
     --colorDarkBlue: #2E3A92;
     --colorGreen: #009f5a;
@@ -178,6 +178,7 @@ button {
     -o-transition: all linear .3s !important;
     -webkit-border-radius: 10px !important;
 }
+
 .common_btn6 {
     padding: 10px 15px !important;
     background: var(--colorPrimary) !important;
@@ -195,6 +196,7 @@ button {
     -o-transition: all linear .3s !important;
     -webkit-border-radius: 10px !important;
 }
+
 .common_btn7 {
     padding: 10px 15px !important;
     margin-top: 10px;
@@ -352,7 +354,7 @@ button {
 .tf__heading_area h5 {
     font-size: 25px;
     font-weight: 700;
-/* text-transform: uppercase; */
+    /* text-transform: uppercase; */
     color: var(--colorBlack);
     display: inline-block;
 }
@@ -373,10 +375,10 @@ button {
     -o-transform: translateY(-50%);
 }
 
-.tf__heading_area h5::before {
+/* .tf__heading_area h5::before {
     left: auto;
     right: -20px;
-}
+} */
 
 .tf__heading_area h2 {
     font-size: 40px;
@@ -6417,6 +6419,3 @@ button {
 /* ==================================
     PRIVACY POLICY END
 =================================== */
-
-
-

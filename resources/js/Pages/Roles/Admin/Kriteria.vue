@@ -6,33 +6,30 @@
             <div class="sidebar-header">
                 <div>
                     <a href="/">
-                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon">
+                        <img id="logo-img" src="/bootstrap/images/lg.png" class="lg2">
                     </a>
                 </div>
-                <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
-            </div>
+                <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
             </div>
             <!--navigation-->
             <ul class="metismenu" id="menu">
                 <li>
-                    <a href="/superadmin">
+                    <a :href="route('admin')">
                         <div class="parent-icon"><i class='bx bx-home-circle'></i>
                         </div>
                         <div class="menu-title">Dashboard</div>
                     </a>
-                    </li>
-                    <li>
+                </li>
+                <li>
                     <a href="javascript:;" class="has-arrow">
                         <div class="parent-icon"><i class="fadeIn animated bx bx-plus-circle"></i>
                         </div>
                         <div class="menu-title">Event</div>
                     </a>
                     <ul>
-                        <li class="jarak-dropdown"> <a href="/lomba">Lomba</a>
+                        <li class="jarak-dropdown"> <a :href="route('lomba.index')">Lomba</a>
                         </li>
                         <li class="jarak-dropdown"> <a href="/administrator">Administrator</a>
-                        </li>
-                        <li class="jarak-dropdown"> <a href="/tim">Tim</a>
                         </li>
                         <li class="jarak-dropdown"> <a href="/sponsor">Sponsor</a>
                         </li>
@@ -43,11 +40,18 @@
                     </ul>
                 </li>
                 <li>
-                <a href="/partisipan">
-                    <div class="parent-icon"><i class="fadeIn animated bx bx-street-view"></i>
-                    </div>
-                    <div class="menu-title">Partisipan</div>
-                </a>
+                    <a href="/tim">
+                        <div class="parent-icon"><i class="fadeIn animated lni lni-users"></i>
+                        </div>
+                        <div class="menu-title">Tim</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="/partisipan">
+                        <div class="parent-icon"><i class="fadeIn animated bx bx-user-circle c-font25"></i>
+                        </div>
+                        <div class="menu-title">Partisipan</div>
+                    </a>
                 </li>
                 <li>
                     <a href="/pesan">
@@ -64,18 +68,10 @@
                     </a>
                 </li>
                 <li>
-                    <a>
+                    <a href="/">
                         <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
                         </div>
-                        <div class="menu-title">
-                            <Link class="menu-title"
-                                :href="route('logout')"
-                                method="post"
-                                as="button"
-                            >
-                                Logout
-                            </Link>
-                        </div>
+                        <div class="menu-title">Logout</div>
                     </a>
                 </li>
             </ul>
@@ -93,8 +89,8 @@
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>
-                                <p class="user-role">habib</p>
+                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                                <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -131,8 +127,8 @@
                     <div class="card-body">
                         <h4 class="mb-0 jarak-top-kurang5">Tabel Kriteria</h4>
                         <hr class="c-mt10" />
-                        <a class="btn btn-success jarak-top-kurang7" href="/lomba">Lomba</a>
-                        <a class="btn btn-info jarak-top-kurang7" href="/tambahkriteria">Tambah Kriteria</a>
+                        <a class="btn btn-success jarak-top-kurang7" :href="route('lomba.index')">Lomba</a>
+                        <a class="btn btn-info jarak-top-kurang7" :href="route('kriteria.create')">Tambah Kriteria</a>
                         <hr class="c-mt10" />
                         <div class="table-responsive">
                             <table id="example" class="table mt-3  table-bordered">
@@ -140,21 +136,20 @@
                                     <tr>
                                         <th class="width-id2">ID</th>
                                         <th class="crud-width-400">Kritera</th>
-                                        <th class="crud-width100">Aksi</th>
+                                        <th class="crud-width120">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Lomba Desain</td>
+                                    <tr v-for="kriteria in kriterias.data" :key="kriteria.id">
+                                        <td>{{ kriteria.id }}</td>
+                                        <td>{{ kriteria.name_kriteria }}</td>
                                         <td class="btn-crud">
-                                            <button class="btn btn-secondary"
-                                                onclick="window.location.href='/detailkriteria'"><i
-                                                    class="bi bi-eye"></i></button>
-                                            <button class="btn btn-primary"
-                                                onclick="window.location.href='/editkriteria'"><i
-                                                    class="bi bi-pencil-square"></i></button>
-                                            <button class="btn btn-danger"><i class="bi bi-trash"></i></button>
+                                            <a class="btn btn-secondary" :href="route('kriteria.show', kriteria.id)"><i
+                                                    class="bi bi-eye"></i></a>
+                                            <a class="btn btn-primary" href="/editkriteria"><i
+                                                    class="bi bi-pencil-square"></i></a>
+                                            <button class="btn btn-danger"><i class="bi bi-trash"
+                                                    @click="deleteKriteria(kriteria.id)"></i></button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -165,21 +160,50 @@
             </div>
         </div>
         <!--end page wrapper -->
-        <!--start overlay-->
-        <div class="overlay toggle-icon"></div>
-        <!--end overlay-->
-        <!--Start Back To Top Button--> <a href="javaScript:;" class="back-to-top"><i
-                class='bx bxs-up-arrow-alt'></i></a>
-        <!--End Back To Top Button-->
     </div>
     <!--end wrapper-->
-    <!--start switcher-->
-
-    <!--end switcher-->
 </template>
 
-<script>
+
+<script setup>
+import { defineProps } from "vue";
+import { Link, useForm } from "@inertiajs/vue3";
+import Swal from 'sweetalert2';
+
+const { name, username, kriterias } = defineProps(['name', 'username', 'kriterias']);
+
+const deleteForm = useForm({});
+
+const deleteKriteria = (id) => {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            deleteForm.delete(route("kriteria.destroy", id), {
+                preserveScroll: true,
+                onSuccess: () => {
+                    Swal.fire(
+                        'Deleted!',
+                        'The criterion has been deleted.',
+                        'success'
+                    );
+                }
+            });
+        }
+    });
+};
+
 $(document).ready(function () {
     $('#example').DataTable();
 });
 </script>
+
+<style>
+/* Add any necessary styles */
+</style>

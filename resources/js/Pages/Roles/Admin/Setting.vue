@@ -19,19 +19,13 @@ defineProps({
         <div class="sidebar-wrapper" data-simplebar="true">
             <div class="sidebar-header">
                 <div>
-                    <a href="/" class="navbar-brand" v-for="setting in settings" :key="setting.id">
-                        <img
-                        :src="setting.logo1"
-                        :alt="setting.name"
-                        class="logo-icon"
-                        />
+                    <a href="/">
+                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon" >
                     </a>
                 </div>
-                <div class="toggle-icon ms-auto">
-                    <i class="fadeIn animated bx bx-menu"></i>
+                <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
                 </div>
             </div>
-            <!--navigation-->
             <ul class="metismenu" id="menu">
                 <li>
                     <a href="/superadmin">
@@ -99,8 +93,7 @@ defineProps({
                             <i class="fadeIn animated bx bx-log-out"></i>
                         </div>
                         <div class="menu-title">
-                            <Link
-                                class="menu-title"
+                            <Link class="menu-title"
                                 :href="route('logout')"
                                 method="post"
                                 as="button"
@@ -135,9 +128,8 @@ defineProps({
                             </div>
                             <li class="nav-item dropdown dropdown-large">
                                 <div class="dropdown-menu dropdown-menu-end">
-                                    <div
-                                        class="header-notifications-list"
-                                    ></div>
+                                    <div class="header-notifications-list">
+                                    </div>
                                 </div>
                             </li>
                             <li class="nav-item dropdown dropdown-large">
@@ -157,15 +149,10 @@ defineProps({
                 <div class="card">
                     <div class="card-body">
                         <h4 class="mb-0 jarak-top-kurang5">Setting Event</h4>
-                        <hr class="c-mt10" />
-                        <a
-                            class="btn btn-success jarak-top-kurang7"
-                            :href="route('setting.create')"
-                        >
-                            Tambah Event
-                        </a>
-                        <hr class="c-mt10" />
-                        <div class="table-responsive">
+                        <hr class="c-mt10" />		
+                        <button class="btn btn-success jarak-top-kurang7" onclick="window.location.href='/tambahsetting'">Tambah Event</button>
+                        <hr class="c-mt10" /> 	
+                        <div class="table-responsive">	     
                             <table id="example" class="table table-bordered">
                                 <thead class="table-dark">
                                     <tr>
@@ -187,35 +174,15 @@ defineProps({
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr
-                                        v-for="setting in settings"
-                                        :key="setting.id"
-                                    >                                        
-                                        <td>
-                                            {{ setting.id }}
-                                        </td>
-                                        <td>
-                                            {{ setting.name }}
-                                        </td>
-                                        <td>
-                                            {{ setting.judul }}
-                                        </td>
-                                        <td>
-                                            {{ setting.sub_judul }}
-                                        </td>                                   
-                                        <td>
-                                            {{ setting.mulai }}
-                                        </td>
-                                        <td>
-                                            {{ setting.berakhir }}
-                                        </td>
-                                        <td class="btn-crud">                                            
-                                            <a 
-                                                class="btn btn-primary"
-                                                :href="route('setting.edit', setting.id)" 
-                                            >
-                                                <i class="bi bi-pencil-square"></i>
-                                            </a>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>images1.jpg</td>
+                                        <td>Olinas</td>
+                                        <td>2024</td>
+                                        <td>April 1, 2024</td>
+                                        <td>April 20, 2024</td>
+                                        <td class="btn-crud">
+                                            <button class="btn btn-primary" onclick="window.location.href='/editsetting'"><i class="bi bi-pencil-square"></i></button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -229,3 +196,8 @@ defineProps({
     </div>
 </template>
 
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+  } );
+</script>

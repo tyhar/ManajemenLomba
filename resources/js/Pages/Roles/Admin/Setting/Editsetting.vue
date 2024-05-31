@@ -53,10 +53,7 @@ const submit = () => {
                     <div class="navbar-tambah">
                         <a href="/">
                             <div class="navbar-left">
-                                <img
-                                    src="/bootstrap/images/logo.png"
-                                    alt="Logo"
-                                />
+                                <img src="/bootstrap/images/logo.png" alt="Logo">
                             </div>
                         </a>
                     </div>
@@ -85,175 +82,54 @@ const submit = () => {
         <div class="page-wrapper-new">
             <div class="page-content">
                 <div class="card">
-                    <form @submit.prevent="submit">
-                        <div class="card-body">
-                            <h4 class="mb-0">Edit Event</h4>
-                            <hr />
+                    <div class="card-body">
+                        <h4 class="mb-0">Edit Event</h4>
+                        <hr/>
+                        <div>
+                            <div class="c-mb10">
+                                <label class="c-mb5-black"><b>Nama Event</b></label>
+                                <input type="email" class="form-control" value="Olinas">
+                            </div>  
+                            <div class="c-mb10">
+                                <label class="c-mb5-black"><b>Judul</b></label>
+                                <input type="email" class="form-control" value="OLINAS 2024">
+                            </div>
+                            <div class="c-mb10">
+                                <label class="c-mb5-black"><b>Sub Judul</b></label>
+                                <input type="email" class="form-control">
+                            </div>
+                            <div class="c-mb10">
+                                <label class="c-mb5-black"><b>Judul Deskripsi</b></label>
+                                <input type="email" class="form-control">
+                            </div>
                             <div>
-                                <div class="c-mb10">
-                                    <label for="name" class="c-mb5-black">
-                                        <b>Nama Event</b>
-                                    </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        v-model="form.name"
-                                        id="name"
-                                    />
-                                </div>
-                                <div class="c-mb10">
-                                    <label for="judul" class="c-mb5-black">
-                                        <b>Judul</b>
-                                    </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        v-model="form.judul"
-                                        id="judul"
-                                    />
-                                </div>
-                                <div class="c-mb10">
-                                    <label for="sub_judul" class="c-mb5-black">
-                                        <b>Sub Judul</b>
-                                    </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        v-model="form.sub_judul"
-                                        id="sub_judul"
-                                    />
-                                </div>
-                                <div class="c-mb10">
-                                    <label for="judul_des" class="c-mb5-black">
-                                        <b>Judul Deskripsi</b>
-                                    </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        v-model="form.judul_des"
-                                        id="judul_des"
-                                    />
-                                </div>
-                                <div class="c-mb10">
-                                    <label for="deskripsi" class="c-mb5-black">
-                                        <b>Deskripsi</b>
-                                    </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        v-model="form.deskripsi"
-                                        id="deskripsi"
-                                    />
-                                </div>
-                                <div class="c-mb10">
-                                    <label for="mulai" class="c-mb5-black">
-                                        <b>Tanggal Mulai</b>
-                                    </label>
-                                    <input
-                                        type="date"
-                                        class="form-control"
-                                        v-model="form.mulai"
-                                        id="mulai"
-                                    />
-                                </div>
-                                <div class="c-mb10">
-                                    <label for="berakhir" class="c-mb5-black">
-                                        <b>Tanggal Berakhir</b>
-                                    </label>
-                                    <input
-                                        type="date"
-                                        class="form-control"
-                                        v-model="form.berakhir"
-                                        id="berakhir"
-                                    />
-                                </div>
-                                <div class="c-mb10">
-                                    <label for="logo1" class="c-mb5-black">
-                                        <b>Logo 1</b>
-                                    </label>
-                                    <div class="m-2 p-2">
-                                        <!-- <img :src="logo" class="w-32 h-32" style="width: 500px;" /> -->
-                                        <img
-                                            :src="logo1"
-                                            alt="Product Image"
-                                            class="img-fluid"
-                                            style="display: flex; margin: auto"
-                                        />
-                                    </div>
-                                    <input
-                                        class="form-control"
-                                        type="file"
-                                        @input="form.logo1 = $event.target.files[0]"
-                                        id="logo1"
-                                    />
-                                    <p class="keterangan-foto">
-                                        Max 2 MB ( 180 x 55 px )
-                                    </p>
-                                </div>
-                                <div class="c-mb10">
-                                    <label for="logo2" class="c-mb5-black">
-                                        <b>Logo 2 (background)</b>
-                                    </label>
-                                    <div class="m-2 p-2">
-                                        <!-- <img :src="logo" class="w-32 h-32" style="width: 500px;" /> -->
-                                        <img
-                                            :src="logo2"
-                                            alt="Product Image"
-                                            class="img-fluid"
-                                            style="display: flex; margin: auto"
-                                        />
-                                    </div>
-                                    <input
-                                        class="form-control"
-                                        type="file"
-                                        @input="
-                                            form.logo2 = $event.target.files[0]
-                                        "
-                                        id="logo2"
-                                    />
-                                    <p class="keterangan-foto">
-                                        Max 2 MB ( 1200 x 800 px )
-                                    </p>
-                                </div>
-                                <div class="c-mb10">
-                                    <label for="logo3" class="c-mb5-black">
-                                        <b>Logo 3</b>
-                                    </label>
-                                    <div class="m-2 p-2">
-                                        <!-- <img :src="logo" class="w-32 h-32" style="width: 500px;" /> -->
-                                        <img
-                                            :src="logo3"
-                                            alt="Product Image"
-                                            class="img-fluid"
-                                            style="display: flex; margin: auto"
-                                        />
-                                    </div>
-                                    <input
-                                        class="form-control"
-                                        type="file"
-                                        @input="
-                                            form.logo3 = $event.target.files[0]
-                                        "
-                                        id="logo3"
-                                    />
-                                    <p class="keterangan-foto">
-                                        Max 2 MB ( 450 x 450 px )
-                                    </p>
+                                <label class="c-mb5-black"><b>Deskripsi</b></label>
+                                <div class="col-12">
+                                    <textarea class="form-control c-mb10" id="inputProductDescription" rows="4" value="Olinas adalah"></textarea>
                                 </div>
                             </div>
-                            <div class="btn-posisi">
-                                <button
-                                    type="submit"
-                                    class="btn btn-primary button-tabel-right"
-                                >
-                                    Update
-                                </button>
-                                <a
-                                    class="btn btn-danger button-tabel-left"
-                                    :href="route('setting.index')"
-                                >
-                                    Batal
-                                </a>
+                            <div>
+                                <label class="form-label warna-hitam"><b>Tanggal Mulai</b></label>
+								<input type="date" class="form-control label-8">
+                            </div>
+                            <div>
+                                <label class="form-label warna-hitam"><b>Tanggal Berakhir</b></label>
+								<input type="date" class="form-control label-8">
+                            </div>
+                            <div>
+                                <label for="formFile" class="form-label warna-hitam"><b>Logo 1</b></label>
+								<input class="form-control" type="file" id="formFile">
+                                <p class="keterangan-foto">Max 2 MB ( 180 x 55 px )</p>
+                            </div>
+                            <div>
+                                <label for="formFile" class="form-label warna-hitam jarak-top-lebih6"><b>Logo 2 (background)</b></label>
+								<input class="form-control" type="file" id="formFile">
+                                <p class="keterangan-foto">Max 2 MB ( 1200 x 800 px )</p>
+                            </div>
+                            <div>
+                                <label for="formFile" class="form-label warna-hitam jarak-top-lebih6"><b>Logo 3</b></label>
+								<input class="form-control" type="file" id="formFile">
+                                <p class="keterangan-foto">Max 2 MB ( 450 x 450 px )</p>
                             </div>
                         </div>
                     </form>

@@ -7,7 +7,7 @@ use Inertia\Inertia;
 // use App\Http\Requests\ProfileUpdateRequest;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 // use Illuminate\Http\RedirectResponse;
-// use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth;
 // use Illuminate\Support\Facades\Redirect;
 // use Inertia\Response;
 
@@ -15,7 +15,16 @@ class AdminController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Roles/Admin/Admin');
+        $user = Auth::user();
+        Inertia::share('userData', [
+            'name' => $user->name,
+            'username' => $user->username,
+        ]);
+        
+
+        return Inertia::render('Roles/Admin/Admin',[
+            'UserData' => $user,
+        ]);
     }
     public function partisipan()
     {
@@ -27,22 +36,22 @@ class AdminController extends Controller
     // }
 
     //LOMBA
-    public function lomba()
-    {
-        return Inertia::render('Roles/Admin/Lomba');
-    }
-    public function tambahlomba()
-    {
-        return Inertia::render('Roles/Admin/Lomba/Tambahlomba');
-    }
-    public function editlomba()
-    {
-        return Inertia::render('Roles/Admin/Lomba/Editlomba');
-    }
-    public function detaillomba()
-    {
-        return Inertia::render('Roles/Admin/Lomba/Detaillomba');
-    }
+    // public function lomba()
+    // {
+    //     return Inertia::render('Roles/Admin/Lomba');
+    // }
+    // public function tambahlomba()
+    // {
+    //     return Inertia::render('Roles/Admin/Lomba/Tambahlomba');
+    // }
+    // public function editlomba()
+    // {
+    //     return Inertia::render('Roles/Admin/Lomba/Editlomba');
+    // }
+    // public function detaillomba()
+    // {
+    //     return Inertia::render('Roles/Admin/Lomba/Detaillomba');
+    // }
 
     //KRITERIA
     public function kriteria()

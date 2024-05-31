@@ -30,11 +30,12 @@ const submit = () => {
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
-                        <a href="/">
-                            <div class="navbar-left">
-                                <img src="/bootstrap/images/logo.png" alt="Logo">
-                            </div>
-                        </a>
+                        <div class="navbar-left">
+                            <a href="/">
+                                <img src="/bootstrap/images/lg.png" alt="Logo"
+                                    style="width: 100px; margin-left: -15px;">
+                            </a>
+                        </div>
                     </div>
                     <!-- Mobile toggle menu -->
                     <!-- Search bar -->
@@ -61,162 +62,61 @@ const submit = () => {
         <div class="page-wrapper-new">
             <div class="page-content">
                 <div class="card">
-                    <form @submit.prevent="submit">
                     <div class="card-body">
                         <h4 class="mb-0">Tambah Event</h4>
-                        <hr />
+                        <hr/>
                         <div>
                             <div class="c-mb10">
-                                <label for="name" class="c-mb5-black">
-                                    <b>Nama Event</b>
-                                </label>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    v-model="form.name"
-                                    id="name"
-                                />
+                                <label class="c-mb5-black"><b>Nama Event</b></label>
+                                <input type="email" class="form-control" value="Olinas">
+                            </div>  
+                            <div class="c-mb10">
+                                <label class="c-mb5-black"><b>Judul</b></label>
+                                <input type="email" class="form-control" value="OLINAS 2024">
                             </div>
                             <div class="c-mb10">
-                                <label for="judul" class="c-mb5-black">
-                                    <b>Judul</b>
-                                </label>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    v-model="form.judul"
-                                    id="judul"
-                                />
+                                <label class="c-mb5-black"><b>Sub Judul</b></label>
+                                <input type="email" class="form-control">
                             </div>
                             <div class="c-mb10">
-                                <label for="sub_judul" class="c-mb5-black">
-                                    <b>Sub Judul</b>
-                                </label>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    v-model="form.sub_judul"
-                                    id="sub_judul"
-                                />
-                            </div>
-                            <div class="c-mb10">
-                                <label for="judul_des" class="c-mb5-black">
-                                    <b>Judul Deskripsi</b>
-                                </label>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    v-model="form.judul_des"
-                                    id="judul_des"
-                                />
-                            </div>
-                            <div class="c-mb10">
-                                <label for="deskripsi" class="c-mb5-black">
-                                    <b>Deskripsi</b>
-                                </label>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    v-model="form.deskripsi"
-                                    id="deskripsi"
-                                />
-                            </div>
-                            <div class="c-mb10">
-                                <label
-                                    for="mulai"
-                                    class="form-label warna-hitam"
-                                >
-                                    <b>Tanggal Mulai</b>
-                                </label>
-                                <input
-                                    type="date"
-                                    class="form-control label-8"
-                                    v-model="form.mulai"
-                                    id="mulai"
-                                />
-                            </div>
-                            <div class="c-mb10">
-                                <label
-                                    for="berakhir"
-                                    class="form-label warna-hitam"
-                                >
-                                    <b>Tanggal Berakhir</b>
-                                </label>
-                                <input
-                                    type="date"
-                                    class="form-control label-8"
-                                    v-model="form.berakhir"
-                                    id="berakhir"
-                                />
+                                <label class="c-mb5-black"><b>Judul Deskripsi</b></label>
+                                <input type="email" class="form-control">
                             </div>
                             <div>
-                                <label
-                                    for="logo1"
-                                    class="form-label warna-hitam"
-                                >
-                                    <b>Logo 1</b>
-                                </label>
-                                <input
-                                    class="form-control"
-                                    type="file"
-                                    @input="form.logo1 = $event.target.files[0]"
-                                    id="logo1"
-                                />
-                                <p class="keterangan-foto">
-                                    Max 2 MB ( 180 x 55 px )
-                                </p>
+                                <label class="c-mb5-black"><b>Deskripsi</b></label>
+                                <div class="col-12">
+                                    <textarea class="form-control c-mb10" id="inputProductDescription" rows="4" value="Olinas adalah"></textarea>
+                                </div>
                             </div>
                             <div>
-                                <label
-                                    for="logo2"
-                                    class="form-label warna-hitam"
-                                >
-                                    <b>Logo 2</b>
-                                </label>
-                                <input
-                                    class="form-control"
-                                    type="file"
-                                    @input="form.logo2 = $event.target.files[0]"
-                                    id="logo2"
-                                />
-                                <p class="keterangan-foto">
-                                    Max 2 MB ( 1200 x 800 px )
-                                </p>
+                                <label class="form-label warna-hitam"><b>Tanggal Mulai</b></label>
+								<input type="date" class="form-control label-8">
                             </div>
                             <div>
-                                <label
-                                    for="logo3"
-                                    class="form-label warna-hitam"
-                                >
-                                    <b>Logo 3</b>
-                                </label>
-                                <input
-                                    class="form-control"
-                                    type="file"
-                                    @input="form.logo3 = $event.target.files[0]"
-                                    id="logo3"
-                                />
-                                <p class="keterangan-foto">
-                                    Max 2 MB ( 450 x 450 px )
-                                </p>
+                                <label class="form-label warna-hitam"><b>Tanggal Berakhir</b></label>
+								<input type="date" class="form-control label-8">
+                            </div>
+                            <div>
+                                <label for="formFile" class="form-label warna-hitam"><b>Logo 1</b></label>
+								<input class="form-control" type="file" id="formFile">
+                                <p class="keterangan-foto">Max 2 MB ( 180 x 55 px )</p>
+                            </div>
+                            <div>
+                                <label for="formFile" class="form-label warna-hitam jarak-top-lebih6"><b>Logo 2 (background)</b></label>
+								<input class="form-control" type="file" id="formFile">
+                                <p class="keterangan-foto">Max 2 MB ( 1200 x 800 px )</p>
+                            </div>
+                            <div>
+                                <label for="formFile" class="form-label warna-hitam jarak-top-lebih6"><b>Logo 3</b></label>
+								<input class="form-control" type="file" id="formFile">
+                                <p class="keterangan-foto">Max 2 MB ( 450 x 450 px )</p>
                             </div>
                         </div>
                         <div class="btn-posisi">
-                            <button
-                                type="submit"
-                                class="btn btn-primary button-tabel-right"
-                            >
-                                Tambah
-                            </button>
-                            <a
-                                class="btn btn-danger button-tabel-left"
-                                :href="route('setting.index')"
-                            >
-                                Batal
-                            </a>
+                            <button class="btn btn-primary button-tabel-right" onclick="window.location.href='/setting'">Tambah</button>
+                            <button class="btn btn-danger button-tabel-left" onclick="window.location.href='/setting'">Batal</button>
                         </div>
                     </div>
-                    </form>
                 </div>
             </div>
         </div>

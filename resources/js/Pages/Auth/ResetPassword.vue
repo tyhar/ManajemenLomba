@@ -1,12 +1,8 @@
 <script setup>
-// import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
-// import InputLabel from '@/Components/InputLabel.vue';
-// import PrimaryButton from '@/Components/PrimaryButton.vue';
-// import TextInput from '@/Components/TextInput.vue';
 import { Head, useForm } from '@inertiajs/vue3';
-import { reactive } from 'vue'
-import { router } from '@inertiajs/vue3'
+import { ref } from 'vue';
+import Swal from 'sweetalert2';
 
 const props = defineProps({
     email: {
@@ -28,46 +24,53 @@ const form = useForm({
 
 const submit = () => {
     form.post(route('password.store'), {
-        onFinish: () => form.reset('password', 'password_confirmation'),
+        onFinish: () => {
+            form.reset('password', 'password_confirmation');
+            Swal.fire({
+                title: 'Success!',
+                text: 'Your password has been updated.',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        },
     });
 };
 
 //frontend
 $(document).ready(function () {
-    $("#show_hide_password a").on('click', function (event) {
+    $(".toggle-password").on('click', function (event) {
         event.preventDefault();
-        if ($('#show_hide_password input').attr("type") == "text") {
-            $('#show_hide_password input').attr('type', 'password');
-            $('#show_hide_password i').addClass("bx-hide");
-            $('#show_hide_password i').removeClass("bx-show");
-        } else if ($('#show_hide_password input').attr("type") == "password") {
-            $('#show_hide_password input').attr('type', 'text');
-            $('#show_hide_password i').removeClass("bx-hide");
-            $('#show_hide_password i').addClass("bx-show");
+        const inputField = $(this).siblings('input');
+        const icon = $(this).find('i');
+        if (inputField.attr("type") == "text") {
+            inputField.attr('type', 'password');
+            icon.addClass("bx-hide").removeClass("bx-show");
+        } else if (inputField.attr("type") == "password") {
+            inputField.attr('type', 'text');
+            icon.removeClass("bx-hide").addClass("bx-show");
         }
     });
 });
 </script>
-
 <template>
     <section style="background: url(../assets/images/login-images/bg-forgot-password.jpg);">
-		<div class="wrapper">
-			<div class="section-authentication-signin d-flex justify-content-center my-5 my-lg-1">
-				<div class="container-fluid jarak-top-lebih10">
-					<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
-						<div class="col mx-auto" style="padding-top: 130px;">
-							<div class="card">
-								<div class="card-body">
-									<div class="border p-4 rounded">
-										<div class="text-center">
-											<h3>Reset Password</h3>
-										</div>
-										<br>
-										<div class="form-body">
-											<form class="row g-3" @submit.prevent="submit">
-												<div class="col-12 jarak-top-lebih6">
-													<label for="email" value="Email" class="form-label">Email</label>
-													<input 
+        <div class="wrapper">
+            <div class="section-authentication-signin d-flex justify-content-center my-5 my-lg-1">
+                <div class="container-fluid jarak-top-lebih10">
+                    <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
+                        <div class="col mx-auto" style="padding-top: 130px;">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="border p-4 rounded">
+                                        <div class="text-center">
+                                            <h3>Reset Password</h3>
+                                        </div>
+                                        <br>
+                                        <div class="form-body">
+                                            <form class="row g-3" @submit.prevent="submit">
+                                                <div class="col-12 jarak-top-lebih6">
+                                                    <label for="email" class="form-label">Email</label>
+                                                    <input 
                                                         id="email" 
                                                         type="email" 
                                                         class="form-control"
@@ -77,11 +80,11 @@ $(document).ready(function () {
                                                         placeholder="Enter Email"
                                                     />
                                                     <InputError class="mt-2" :message="form.errors.email" />
-												</div>
-												<div class="col-12 jarak-top-lebih6">
-													<label for="password" value="Password" class="form-label">Password</label>
-													<div class="input-group" id="show_hide_password">
-														<input 
+                                                </div>
+                                                <div class="col-12 jarak-top-lebih6">
+                                                    <label for="password" class="form-label">Password</label>
+                                                    <div class="input-group">
+                                                        <input 
                                                             id="password" 
                                                             v-model="form.password"
                                                             required
@@ -90,14 +93,14 @@ $(document).ready(function () {
                                                             placeholder="Enter Password" 
                                                             autofocus autocomplete="new-password"
                                                         > 
-                                                        <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
+                                                        <a href="javascript:;" class="input-group-text bg-transparent toggle-password"><i class='bx bx-hide'></i></a>
                                                         <InputError class="mt-2" :message="form.errors.password" />
-													</div>
-												</div>
+                                                    </div>
+                                                </div>
                                                 <div class="col-12 jarak-top-lebih6">
-													<label for="password_confirmation" value="Confirm Password" class="form-label">Confirm Password</label>
-													<div class="input-group" id="show_hide_password">
-														<input 
+                                                    <label for="password_confirmation" class="form-label">Confirm Password</label>
+                                                    <div class="input-group">
+                                                        <input 
                                                             id="password_confirmation" 
                                                             v-model="form.password_confirmation"
                                                             required 
@@ -106,30 +109,27 @@ $(document).ready(function () {
                                                             placeholder="Confirm Password" 
                                                             autofocus autocomplete="new-password"
                                                         > 
-                                                        <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
+                                                        <a href="javascript:;" class="input-group-text bg-transparent toggle-password"><i class='bx bx-hide'></i></a>
                                                         <InputError class="mt-2" :message="form.errors.password_confirmation" />
-													</div>
-												</div>
-												<div class="col-12 jarak-top-lebih12">
-													<div class="d-grid">
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 jarak-top-lebih12">
+                                                    <div class="d-grid">
                                                         <button class="btn btn-primary" :disabled="form.processing">
                                                             Reset Password
                                                         </button>
-													</div>    
-													<!-- <div class="login-separater text-center mb-4 jarak-top-kurang18"> <span>ATAU MASUK DENGAN EMAIL</span>
-														<hr/>
-													</div> -->
-												</div>
-											</form>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!--end row-->
-				</div>
-			</div>
-		</div>
-	</section>
+                                                    </div>    
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end row-->
+                </div>
+            </div>
+        </div>
+    </section>
 </template>

@@ -8,7 +8,8 @@
                     <div class="navbar-tambah">
                         <div class="navbar-left">
                             <a href="/">
-                                <img src="/bootstrap/images/logo.png" alt="Logo">
+                                <img src="/bootstrap/images/lg.png" alt="Logo"
+                                    style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>
@@ -20,13 +21,13 @@
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>			
-                                <p class="user-role">habib</p>					
+                                <p class="user-name mb-0">Habib Shohiburrotib</p>
+                                <p class="user-role">habib</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
                         </ul>
-                    </div>		
+                    </div>
                 </nav>
             </div>
         </header>
@@ -36,43 +37,47 @@
             <div class="page-content">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0">Edit Berita</h4>
-                        <hr/>
-                        <div>
+                        <h4 class="mb-0">EDIT BERITA</h4>
+                        <hr />
+                        <form @submit.prevent="submit(berita.id)">
                             <div class="c-mb10">
                                 <label class="c-mb5-black"><b>Judul</b></label>
-                                <input type="email" class="form-control" value="Profil Ketua Emailkomp Periode 2024">
+                                <input type="text" class="form-control" v-model="form.judul">
                             </div>
                             <div>
                                 <label class="c-mb5-black"><b>Deskripsi Awal</b></label>
                                 <div class="col-12">
-                                    <textarea class="form-control c-mb10" id="inputProductDescription" rows="2" value="Emailkomp adalah sebuah organisasi dibawah pengawasan langsung oleh Prodi Teknik Informatika"></textarea>
+                                    <textarea class="form-control c-mb10" id="inputProductDescription" rows="2"
+                                        v-model="form.deskripsi_awal"></textarea>
                                 </div>
                             </div>
                             <div>
                                 <label class="c-mb5-black"><b>Deskripsi</b></label>
                                 <div class="col-12">
-                                    <textarea class="form-control c-mb10" id="inputProductDescription" rows="7" value="Emailkomp adalah sebuah organisasi dibawah pengawasan langsung oleh Prodi Teknik Informatika"></textarea>
+                                    <textarea class="form-control c-mb10" id="inputProductDescription" rows="7"
+                                        v-model="form.deskripsi"></textarea>
                                 </div>
                             </div>
                             <div class="c-mb10">
                                 <label class="c-mb5-black"><b>Penerbit</b></label>
-                                <input type="email" class="form-control" value="Admin">
+                                <input type="text" class="form-control" v-model="form.penerbit">
                             </div>
                             <div>
-                                <label class="form-label warna-hitam"><b>Upload</b></label>
-								<input type="date" class="form-control jarak-btn8">
+                                <label class="form-label warna-hitam"><b>Tanggal Upload</b></label>
+                                <input type="date" class="form-control jarak-btn8" v-model="form.tanggal_upload">
                             </div>
                             <div>
                                 <label for="formFile" class="form-label warna-hitam"><b>Upload Gambar</b></label>
-								<input class="form-control" type="file" id="formFile">
-                                <p class="keterangan-foto">Ukuran 500 x 500</p>
+                                <input class="form-control" type="file" id="formFile"
+                                    @input="form.images = $event.target.files[0]">
+                                <p class="keterangan-foto">Ukuran 640 x 500</p>
                             </div>
-                        </div>
-                        <div class="btn-posisi">
-                            <button class="btn btn-primary button-tabel-right" onclick="window.location.href='/berita'">Simpan</button>
-                            <button class="btn btn-danger button-tabel-left" onclick="window.location.href='/berita'">Batal</button>
-                        </div>
+                            <div class="btn-posisi">
+                                <button class="btn btn-primary button-tabel-right" type="submit">Simpan</button>
+                                <a class="btn btn-danger button-tabel-left"
+                                    onclick="window.location.href='/berita'">Batal</a>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -80,5 +85,33 @@
         <!--end page wrapper -->
     </div>
 </template>
-    
-   
+
+<script setup>
+import { useForm, router } from '@inertiajs/vue3';
+import { ref } from 'vue'
+
+const props = defineProps({
+    errors: Object,
+    berita: Object,
+})
+const selectedFile = ref(null)
+
+const form = useForm({
+    judul: props.berita.judul,
+    deskripsi_awal: props.berita.deskripsi_awal,
+    deskripsi: props.berita.deskripsi,
+    penerbit: props.berita.penerbit,
+    tanggal_upload: props.berita.tanggal_upload,
+    images: null,
+})
+function submit(id) {
+    router.post('/berita/' + id, {
+        _method: 'put',
+        form
+    });
+}
+
+const getSettingImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/admin/setting/${imageName}` : '';
+};
+</script>

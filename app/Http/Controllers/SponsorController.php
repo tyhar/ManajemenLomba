@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\SponsorResource;
 use App\Models\Sponsor;
-
-use App\Models\Setting;
 // use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 
 class SponsorController extends Controller
 {
@@ -41,39 +40,25 @@ class SponsorController extends Controller
                     'id' => $sponsor->id,
                     'name' => $sponsor->name,
                     'link_file' => $sponsor->link_file,
-                    'logo' => asset('storage/' . $sponsor->logo),
+                    'logo' => asset('storage/'.$sponsor->logo)
                 ];
-            }),
-            'settings' => Setting::all()->map(function($setting) {
-                return [
-                    'id' => $setting->id,
-                    'name' => $setting->name,
-                    'judul' => $setting->judul,
-                    'sub_judul' => $setting->sub_judul,
-                    'judul_des' => $setting->judul_des,
-                    'deskripsi' => $setting->deskripsi,
-                    'mulai' => $setting->mulai,
-                    'berakhir' => $setting->berakhir,
-                    'logo1' => asset('storage/' . $setting->logo1),
-                    'logo2' => asset('storage/' . $setting->logo2),
-                    'logo3' => asset('storage/' . $setting->logo3),
-                ];
-            }),
+            })
         ]);
     }
-
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        // $sponsors = SponsorResource::collection(Sponsor::all());
+        $user = Auth::user();
+        Inertia::share('userData', [
+            'name' => $user->name,
+            'username' => $user->username,
+        ]);
 
-        return Inertia::render('Roles/Admin/Sponsor/Tambahsponsor');
-
-        // return Inertia::render('Roles/Admin/Sponsor/Tambahsponsor',[
-        //     'sponsors' => $sponsors,
-        // ]);
+        return Inertia::render('Roles/Admin/Sponsor/Tambahsponsor', [
+            'UserData' => $user,
+        ]);
     }
 
     /**
@@ -98,7 +83,6 @@ class SponsorController extends Controller
             'link_file' => Request::input('link_file')
         ]);
 
-        dd($sponsor);
 
         return redirect()->route('sponsor.index');
     }
@@ -108,16 +92,17 @@ class SponsorController extends Controller
      */
     public function show(Sponsor $sponsor)
     {
-        // return Inertia::render('Roles/Admin/Sponsor/Detailsponsor', [
-        //     'sponsors' => SponsorResource::make($sponsor),
-        //     // dd($sponsor),
-        // ]);
-        // dd($sponsor);
+        $user = Auth::user();
+        Inertia::share('userData', [
+            'name' => $user->name,
+            'username' => $user->username,
+        ]);
         $baseUrl = config('app.url');
         return Inertia::render('Roles/Admin/Sponsor/Detailsponsor', [
             'sponsors' => $sponsor,
             'logo' => asset('storage/'.$sponsor->logo),
-            'baseUrl' => $baseUrl
+            'baseUrl' => $baseUrl,
+            'UserData' => $user,
         ]);
     }
 
@@ -126,13 +111,17 @@ class SponsorController extends Controller
      */
     public function edit(Sponsor $sponsor)
     {
-        // return Inertia::render('Roles/Admin/Sponsor/Editsponsor', [
-        //     'sponsors' => SponsorResource::make($sponsor),
-        // ]);
+        $user = Auth::user();
+        Inertia::share('userData', [
+            'sponsors' => SponsorResource::make($sponsor), 
+            'name' => $user->name,
+            'username' => $user->username,
+        ]);
 
         return Inertia::render('Roles/Admin/Sponsor/Editsponsor', [
             'sponsors' => $sponsor,
-            'logo' => asset('storage/'.$sponsor->logo)
+            'logo' => asset('storage/'.$sponsor->logo),
+            'UserData' => $user,
         ]);
 
     }

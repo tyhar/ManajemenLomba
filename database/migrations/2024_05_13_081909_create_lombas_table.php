@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateLombasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,17 @@ return new class extends Migration
     {
         Schema::create('lombas', function (Blueprint $table) {
             $table->id();
-            // $table->foreign('event_lomba_id')->references('id')->on('event_lombas');
-            $table->foreignId('event_lomba_id')->constrained('event_lombas')->default(1);
-            $table->string('name');
-            $table->string('description');
+            $table->string('name_lomba')->nullable();
+            $table->string('description')->nullable();
             $table->string('kontak')->nullable();
             $table->string('pj')->nullable();
             $table->string('tempat')->nullable();
             $table->string('picture')->nullable();
-            $table->string('link_file')->nullable();
-            $table->string('price')->nullable();
+            $table->string('sertifikat')->nullable();
+            $table->decimal('biaya_pendaftaran', 10, 3)->nullable();
             $table->timestamps();
         });
+
     }
 
     /**

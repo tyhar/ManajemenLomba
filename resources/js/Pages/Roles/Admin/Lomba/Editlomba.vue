@@ -8,7 +8,8 @@
                     <div class="navbar-tambah">
                         <div class="navbar-left">
                             <a href="/">
-                                <img src="/bootstrap/images/logo.png" alt="Logo">
+                                <img src="/bootstrap/images/lg.png" alt="Logo"
+                                    style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>
@@ -20,8 +21,8 @@
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>
-                                <p class="user-role">habib</p>
+                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                                <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -35,76 +36,134 @@
         <div class="page-wrapper-new">
             <div class="page-content">
                 <div class="card">
-                    <div class="card-body">
-                        <h4 class="mb-0">Edit Lomba</h4>
-                        <hr />
-                        <div class="row">
-                            <div class="col-md-6 c-mb10">
-                                <label class="c-mb5-black"><b>Nama Lomba</b></label>
-                                <input type="namalomba" class="form-control" value="Lomba Desain">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="c-mb5-black"><b>Nama PJ</b></label>
-                                <input type="email" class="form-control label-8">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="c-mb5-black"><b>Deskripsi</b></label>
-                                <div class="col-12">
-                                    <textarea class="form-control c-mb10" id="deskripsi" rows="4"
-                                        value="Lomba Desain adalah ajang kompetitif di mana beberapa tim bersaing dalam merancang dan menciptakan karya visual yang unik dan inovatif, sesuai dengan tema yang ditentukan."></textarea>
+                    <form @submit.prevent="submit" enctype="multipart/form-data">
+                        <div class="card-body">
+                            <h4 class="mb-0">EDIT LOMBA</h4>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-6 c-mb10">
+                                    <label class="c-mb5-black"><b>Nama Lomba</b></label>
+                                    <input type="text" class="form-control" v-model="form.name_lomba" id="name">
                                 </div>
-                                <div>
-                                    <label for="formFile" class="form-label judul-form"><b>Gambar</b></label>
-                                    <input class="form-control" type="file" id="formFile">
-                                    <p class="keterangan-foto">Ukuran 500 x 500</p>
+                                <div class="col-md-6 c-mb10">
+                                    <label class="c-mb5-black"><b>Nama PJ</b></label>
+                                    <input type="text" class="form-control" v-model="form.pj" id="pj">
                                 </div>
-                                <div>
-                                    <label for="formFile" class="form-label judul-form"><b>Sertifikat</b></label>
-                                    <input class="form-control" type="file" id="formFile">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="c-mb5-black"><b>Kontak PJ</b></label>
-                                <input type="email" class="form-control label-8" value="085000000000">
-
-                                <div>
-                                    <label class="c-mb5-black"><b>Tempat</b></label>
-                                    <input type="email" class="form-control">
-                                </div>
-                                <div class="c-mt10">
-                                    <label class="c-mb5-black"><b>Biaya Pendaftaran</b></label>
-                                    <input type="email" class="form-control label-8" value="20.000">
-                                </div>
-                                <div>
-                                    <label class="role-add"><b class="warna-hitam">Kriteria Lomba</b></label>
+                                <div class="col-md-6">
+                                    <label class="c-mb5-black"><b>Deskripsi</b></label>
+                                    <div class="col-12">
+                                        <textarea class="form-control c-mb10" id="deskripsi" rows="4"
+                                            v-model="form.description"></textarea>
+                                    </div>
                                     <div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="gridCheck">
-                                            <label class="form-check-label" for="gridCheck">Kreativitas</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="gridCheck">
-                                            <label class="form-check-label" for="gridCheck"> Kesesuaian Tahap
-                                                Pelaksanaan</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="gridCheck">
-                                            <label class="form-check-label" for="gridCheck">Potensi Produk</label>
+                                        <label for="picture" class="form-label judul-form"><b>Gambar</b></label>
+                                        <input type="file" id="picture" accept="image/*" class="form-control"
+                                            @input="form.picture = $event.target.files[0]">
+                                        <p class="keterangan-foto">Ukuran 500 x 500</p>
+                                    </div>
+                                    <div>
+                                        <label for="sertifikat" class="form-label judul-form"><b>Sertifikat</b></label>
+                                        <input type="file" id="sertifikat" accept="image/*" class="form-control"
+                                            @input="form.sertifikat = $event.target.files[0]">
+                                        <p class="keterangan-foto">Max 2 MB</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="c-mb5-black"><b>Kontak PJ</b></label>
+                                    <input type="number" class="form-control" v-model="form.kontak" id="kontak">
+                                    <div>
+                                        <label class="c-mb5-black"><b>Tempat</b></label>
+                                        <input type="text" class="form-control" v-model="form.tempat" id="tempat">
+                                    </div>
+                                    <div class="c-mt10">
+                                        <label class="c-mb5-black"><b>Biaya Pendaftaran</b></label>
+                                        <input type="text" class="form-control" v-model="form.biaya_pendaftaran"
+                                            id="biaya_pendaftaran">
+                                    </div>
+                                    <div>
+                                        <label class="role-add"><b class="warna-hitam">Kriteria Lomba</b></label>
+                                        <div>
+                                            <div class="form-check" v-for="kriteria in kriterias.data"
+                                                :key="kriteria.id">
+                                                <input class="form-check-input" type="checkbox"
+                                                    :id="'kriteria' + kriteria.id" v-model="form.selectedCriteria"
+                                                    :value="kriteria.id">
+                                                <label class="form-check-label" :for="'kriteria' + kriteria.id">{{
+                                                    kriteria.name_kriteria }} </label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="btn-posisi">
+                                <button type="submit" class="btn btn-primary button-tabel-right">
+                                    Update
+                                </button>
+                                <button class="btn btn-danger btn-kembali" @click="goBack()">Kembali</button>
+                            </div>
                         </div>
-                        <div class="btn-posisi">
-                            <button class="btn btn-primary button-tabel-right"
-                                onclick="window.location.href='/lomba'">Simpan</button>
-                            <button class="btn btn-danger button-tabel-left"
-                                onclick="window.location.href='/lomba'">Batal</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
         <!--end page wrapper -->
     </div>
 </template>
+<script setup>
+import { router, useForm, usePage } from "@inertiajs/vue3";
+import Swal from 'sweetalert2'; // Import SweetAlert
+
+const { name, username, kriterias } = defineProps(['name', 'username', 'kriterias']);
+
+const props = {
+    sponsors: {
+        type: Object,
+        default: () => ({}),
+    },
+    logo: {
+        type: String,
+    },
+};
+
+const lomba = usePage().props.lombas;
+
+const form = useForm({
+    name_lomba: lomba.data.name_lomba,
+    pj: lomba.data.pj,
+    description: lomba.data.description,
+    kontak: lomba.data.kontak,
+    tempat: lomba.data.tempat,
+    biaya_pendaftaran: lomba.data.biaya_pendaftaran,
+    picture: lomba.data.picture ? `/storage/${lomba.data.picture}` : null,
+    sertifikat: lomba.data.sertifikat ? `/storage/${lomba.data.sertifikat}` : null,
+    selectedCriteria: [],
+});
+
+async function submit() {
+    const formData = {
+        _method: 'put',
+        name_lomba: form.name_lomba,
+        pj: form.pj,
+        description: form.description,
+        tempat: form.tempat,
+        kontak: form.kontak,
+        picture: form.picture,
+        sertifikat: form.sertifikat,
+        biaya_pendaftaran: form.biaya_pendaftaran,
+        selectedCriteria: form.selectedCriteria,
+    };
+
+    try {
+        await router.post(`/lomba/${lomba.data.id}`, formData);
+        // Display SweetAlert on success
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Lomba berhasil diperbarui!',
+        });
+    } catch (error) {
+        console.error('Error:', error);
+        // Handle error if needed
+    }
+}
+</script>

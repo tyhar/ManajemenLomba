@@ -1,5 +1,6 @@
 <script setup>
 import { Head, Link } from "@inertiajs/vue3";
+import { router } from '@inertiajs/vue3'
 
 defineProps({
     canLogin: {
@@ -24,8 +25,19 @@ defineProps({
         type: Array,
         required: true,
     },
+    beritas: {
+        type: Array,
+        required: true,
+    },
 });
 
+function detail(id) {
+    router.get('/berita/' + id + '/detail')
+}
+
+const getBeritaImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/admin/berita/${imageName}` : '';
+};
 // console.log('Sponsors:', sponsors);
 
 //front-end
@@ -38,426 +50,230 @@ function handleImageError() {
 </script>
 
 <template>
-    <!--=================================
-       MAIN MENU START
-    ==================================-->
-   <nav class="navbar navbar-expand-lg main_menu">
-       <div class="container">
-           <a class="navbar-brand" href="#" v-for="setting in settings" :key="setting.id">
-               <img :src="setting.logo1"
-                    :alt="setting.name"
-                    class="img-fluid w-100">
-           </a>
-
-           
-           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-               aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-               <i class="far fa-bars menu_icon"></i>
-               <i class="far fa-times close_icon"></i>
-           </button>
-           <div class="collapse navbar-collapse" id="navbarNav">
-               <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                        <a class="nav-link active" href="/#">Beranda</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/#tentang-section">Tentang</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/#lomba-section">Lomba</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/#timeline-section">Timeline</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/#berita-section">Berita</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/#sponsor-section">Sponsor</a>
-                    </li>
-                    <li class="nav-item">
-                        <!-- <a class="nav-link" href="/kontak">Kontak</a> -->
-                        <a class="nav-link" :href="route('pesan.create')">Kontak</a>
-                    </li> 
-                    <li class="nav-item">
-                        <template v-if="!$page.props.auth.user">
-                            <div class="row">
-                            <div class="col">
-                                <a class="nav-link common_btn" href="/login">Login</a>
-                            </div>
-                            <!-- <div v-if="canRegister" class="col"></div> -->
-                            <div class="col">
-                                <a class="nav-link common_btn" href="/register">Register</a>
-                            </div>
-                            </div>
-                        </template>
-                        <template v-else>
-                            <a class="nav-link common_btn" href="/dashboard">Dashboard</a>
-                        </template>
-                    </li>
-               </ul>
-           </div>
-       </div>
-   </nav>
-   <!--=================================
-       MAIN MENU END
-   ==================================-->
-
-    <!--=================================
-       BANNER START
-   ==================================-->
-    <section
-        
-        
-        v-for="setting in settings"
-    :key="setting.id"
-    class="tf__banner"
-    :style="{ background: 'url(' + setting.logo2 + ')' }"
-
-    >
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-7 col-lg-8">
-                    <div class="tf__banner_text wow fadeInUp" v-for="setting in settings"
-                            :key="setting.id">
-                        <h1 style="font-size: 26px">
-                            <b>{{ setting.judul }}</b>
-                        </h1>
-                        <h1 style="font-size: 40px"><b>{{ setting.sub_judul }}</b></h1>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--=================================
-       BANNER END
-   ==================================-->
-    <br />
-    <!--=================================
-       ABOUT 2 START
-   ==================================-->
-    <section
-        id="tentang-section"
-        class="tf__home_2_about pt_100 pb_100"
-        style="background: url(bootstrap/images/about_2_bg.jpg)"
-    >
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-6 col-lg-6 wow fadeInLeft">
-                        <div
-                            v-for="setting in settings"
-                            :key="setting.id"
-                            class="tf__home_2_about_img"
-                        >
-                                <img
-                                    :src="setting.logo3"
-                                    :alt="setting.name"
-                                    class="img-fluid w-100"
-                                />
-                        </div>
-                </div>
-                <div class="col-xl-6 col-lg-6 wow fadeInRight">
-                    <div>
-                        <!-- <div class="tf__home_2_about_text"-->
-                        <div
-                            class="tf__heading_area tf__heading_area_left mb_25" v-for="setting in settings"
-                            :key="setting.id"
-                        >
-                            <h5>{{ setting.judul_des }}</h5>
-                        </div>
-
-
-
-                        
-
-
-                        <div v-for="setting in settings"
-                            :key="setting.id" class="sponsor-item2">
-    <p>{{ setting.deskripsi }}</p> <!-- Menampilkan teks dari properti name -->
-</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--=================================
-       ABOUT 2 END
-   ==================================-->
-
-    <!--=================================
-       CATEGORIES START
-   ==================================-->
-    <section id="lomba-section" class="tf__categories mt_95">
-        <div class="tf__activities_slider_area">
+    <div class="bg-index">
+        <nav class="navbar navbar-expand-lg main_menu">
             <div class="container">
+                <a class="navbar-brand" href="#" v-for="setting in settings" :key="setting.id">
+                    <img :src="setting.logo1" :alt="setting.name" class="lg-index">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="far fa-bars menu_icon"></i>
+                    <i class="far fa-times close_icon"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/#">Beranda</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/#tentang-section">Tentang</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/#lomba-section">Lomba</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/#timeline-section">Timeline</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/#berita-section">Berita</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/#sponsor-section">Sponsor</a>
+                        </li>
+                        <li class="nav-item">
+                            <!-- <a class="nav-link" href="/kontak">Kontak</a> -->
+                            <a class="nav-link" :href="route('pesan.create')">Kontak</a>
+                        </li>
+                        <li class="nav-item">
+                            <template v-if="!$page.props.auth.user">
+                                <div class="row">
+                                    <div class="col">
+                                        <a class="nav-link common_btn" href="/login">Login</a>
+                                    </div>
+                                    <!-- <div v-if="canRegister" class="col"></div> -->
+                                    <div class="col">
+                                        <a class="nav-link common_btn" href="/register">Register</a>
+                                    </div>
+                                </div>
+                            </template>
+                            <template v-else>
+                                <a class="nav-link common_btn" href="/dashboard">Dashboard</a>
+                            </template>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <section v-for="setting in settings" :key="setting.id" class="tf__banner"
+            :style="{ background: 'url(' + setting.logo2 + ')' }">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-7 col-lg-8">
+                        <div class="tf__banner_text wow fadeInUp" v-for="setting in settings" :key="setting.id">
+                            <h1 class="teks-judul"><b>{{ setting.judul }}</b></h1>
+                            <h1 class="teks-judul2"><b>{{ setting.sub_judul }}</b></h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <br />
+        <section id="tentang-section" class="tf__home_2_about pt_100 pb_100"
+            style="background: url(bootstrap/images/about_2_bg.jpg)">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 wow fadeInLeft">
+                        <div v-for="setting in settings" :key="setting.id" class="tf__home_2_about_img">
+                            <img :src="setting.logo3" :alt="setting.name" class="img-fluid w-100" />
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 wow fadeInRight">
+                        <div>
+                            <!-- <div class="tf__home_2_about_text"-->
+                            <div class="tf__heading_area tf__heading_area_left mb_25" v-for="setting in settings"
+                                :key="setting.id">
+                                <h5 class="jud">{{ setting.judul_des }}</h5>
+                            </div>
+                            <div v-for="setting in settings" :key="setting.id">
+                                <p class="tentang">{{ setting.deskripsi }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="lomba-section" class="tf__categories mt_95">
+            <div class="tf__activities_slider_area">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-6 col-md-8 col-lg-6 m-auto wow fadeInUp">
+                            <div class="tf__heading_area mb_15">
+                                <h5 class="judul-lomba-index">Lomba</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <!--breadcrumb-->
+                    <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
+                        <div class="col">
+                            <div class="card radius-15 card-overview">
+                                <img src="bootstrap/images/desain.jpg" alt="New Image" class="border-radius" />
+                                <button class="btn btn-danger btn-landing-page" href="#">
+                                    UI / UX
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card radius-15 card-overview">
+                                <img src="bootstrap/images/ar-vr.jpg" alt="New Image" class="border-radius" />
+                                <a class="btn btn-danger btn-landing-page" href="#">AR / VR
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card radius-15 card-overview">
+                                <img src="bootstrap/images/aplikasi-mobile.jpg" alt="New Image" class="border-radius" />
+                                <a class="btn btn-danger btn-landing-page" href="#">Aplikasi Mobile</a>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card radius-15 card-overview">
+                                <img src="bootstrap/images/desain-website.jpg" alt="New Image" class="border-radius" />
+                                <a class="btn btn-danger btn-landing-page" href="#">Desain Website
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card radius-15 card-overview">
+                                <img src="bootstrap/images/sistem-keamanan-data.jpg" alt="New Image"
+                                    class="border-radius" />
+                                <a class="btn btn-danger btn-landing-page" href="#">Sistem Keamanan Data
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card radius-15 card-overview">
+                                <img src="bootstrap/images/membuat-game.jpg" alt="New Image" class="border-radius" />
+                                <a class="btn btn-danger btn-landing-page" href="#">Membuat Game
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end row-->
+                </div>
+            </div>
+        </section>
+
+        <section id="timeline-section" class="tf__categories mt_95">
+            <div class="container jarak-container">
                 <div class="row">
                     <div class="col-xl-6 col-md-8 col-lg-6 m-auto wow fadeInUp">
                         <div class="tf__heading_area mb_15">
-                            <h5 class="judul-lomba-index">Lomba</h5>
+                            <h5 class="c-mb-40">Timeline</h5>
+                            <div class="card container-hg180-index">
+                                <div class="card-body p-4 text-center" v-for="setting in settings" :key="setting.id">
+                                    <h6 class="h6-landing-page1">
+                                        <b>Event OLINAS</b>
+                                    </h6>
+                                    <h6 class="h6-landing-page2">
+                                        <b>Tanggal Mulai : {{ setting.mulai }}</b>
+                                    </h6>
+                                    <h6 class="h6-landing-page2">
+                                        <b>Tanggal Berakhir : {{ setting.berakhir }}</b>
+                                    </h6>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!--breadcrumb-->
-                <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
-                    <div class="col">
-                        <div class="card radius-15 card-overview">
-                            <img
-                                src="bootstrap/images/desain.jpg"
-                                alt="New Image"
-                                class="border-radius"
-                            />
-                            <button
-                                class="btn btn-danger btn-landing-page"
-                                href="#"
-                            >
-                                UI / UX
+            </div>
+        </section>
+        <br /><br />
+
+        <section id="berita-section" class="tf__event mt_95">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-6 col-md-8 col-lg-6 m-auto wow fadeInUp">
+                        <div class="tf__heading_area mb_40">
+                            <h5>Berita</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="row event_slider">
+                    <div class="col-xl-4 wow fadeInUp" v-for="berita in beritas">
+                        <div class="tf__single_event">
+                            <button @click.prevent="detail(berita.id)">
+                                <div class="tf__single_courses_img">
+                                    <img :src="getBeritaImageUrl(berita.images)" alt="event" class="img-fluid w-100">
+                                </div>
+                                <div class="tf__single_event_text">
+                                    <a class="title">{{ berita.judul }}</a>
+                                    <p>{{ berita.deskripsi_awal }}</p>
+                                    <div class="tf__single_event_footer">
+                                        <span>{{ berita.tanggal_upload }}</span>
+                                    </div>
+                                </div>
                             </button>
                         </div>
                     </div>
-                    <div class="col">
-                        <div class="card radius-15 card-overview">
-                            <img
-                                src="bootstrap/images/ar-vr.jpg"
-                                alt="New Image"
-                                class="border-radius"
-                            />
-                            <a class="btn btn-danger btn-landing-page" href="#"
-                                >AR / VR
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card radius-15 card-overview">
-                            <img
-                                src="bootstrap/images/aplikasi-mobile.jpg"
-                                alt="New Image"
-                                class="border-radius"
-                            />
-                            <a class="btn btn-danger btn-landing-page" href="#"
-                                >Aplikasi Mobile</a
-                            >
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card radius-15 card-overview">
-                            <img
-                                src="bootstrap/images/desain-website.jpg"
-                                alt="New Image"
-                                class="border-radius"
-                            />
-                            <a class="btn btn-danger btn-landing-page" href="#"
-                                >Desain Website
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card radius-15 card-overview">
-                            <img
-                                src="bootstrap/images/sistem-keamanan-data.jpg"
-                                alt="New Image"
-                                class="border-radius"
-                            />
-                            <a class="btn btn-danger btn-landing-page" href="#"
-                                >Sistem Keamanan Data
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card radius-15 card-overview">
-                            <img
-                                src="bootstrap/images/membuat-game.jpg"
-                                alt="New Image"
-                                class="border-radius"
-                            />
-                            <a class="btn btn-danger btn-landing-page" href="#"
-                                >Membuat Game
-                            </a>
-                        </div>
-                    </div>
                 </div>
-                <!--end row-->
             </div>
-        </div>
-    </section>
-    <!--=================================
-       CATEGORIES END
-   ==================================-->
-    <section id="timeline-section" class="tf__categories mt_95">
-        <div class="container jarak-container">
-            <div class="row">
-                <div class="col-xl-6 col-md-8 col-lg-6 m-auto wow fadeInUp">
+        </section>
+
+        <section id="sponsor-section" class="tf__categories mt_95">
+            <div class="container">
+                <div class="row">
                     <div class="tf__heading_area mb_15">
-                        <h5 class="c-mb-40">Timeline</h5>
-                        <div class="card container-hg180-index">
-                            <div class="card-body p-4 text-center" v-for="setting in settings"
-                            :key="setting.id">
-                                <h6 class="h6-landing-page1">
-                                    <b>Event OLINAS</b>
-                                </h6>
-                                <h6 class="h6-landing-page2">
-                                    <b>Tanggal Mulai : {{ setting.mulai }}</b>
-                                </h6>
-                                <h6 class="h6-landing-page2">
-                                    <b>Tanggal Berakhir : {{ setting.berakhir }}</b>
-                                </h6>
-                            </div>  
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <br /><br />
-
-    <!--=================================
-       EVENT START
-    ==================================-->
-    <section id="berita-section" class="tf__event mt_95">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-6 col-md-8 col-lg-6 m-auto wow fadeInUp">
-                    <div class="tf__heading_area mb_40">
-                        <h5>Berita</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="row event_slider">
-                <div
-                    class="col-xl-4 wow fadeInUp"
-                    onclick="window.location.href='/informasiberita'"
-                >
-                    <div class="tf__single_event">
-                        <div class="tf__single_event_img">
-                            <img
-                                src="bootstrap/images/event_img_1.jpg"
-                                alt="event"
-                                class="img-fluid w-100"
-                            />
-                        </div>
-                        <div class="tf__single_event_text">
-                            <a class="title" href="/informasiberita"
-                                >Monitoring Perkembangan Projek Manajemen Lomba
-                                Prodi</a
-                            >
-                            <p>
-                                Platform yang sering kami gunakan untuk
-                                melakukan diskusi online selain whatsapp adalah
-                                discord
-                            </p>
-                            <div class="tf__single_event_footer">
-                                <span>27 Februari 2024</span>
+                        <h5> Sponsor</h5>
+                        <div class="sponsor-grid">
+                            <div v-for="sponsor in sponsors" :key="sponsor.id">
+                                <a :href="sponsor.link_file">
+                                    <img :src="sponsor.logo" :alt="sponsor.name" class="img-fluid" />
+                                </a>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div
-                    class="col-xl-4 wow fadeInUp"
-                    onclick="window.location.href='/informasiberita'"
-                >
-                    <div class="tf__single_event">
-                        <div class="tf__single_event_img">
-                            <img
-                                src="bootstrap/images/liburan.jpg"
-                                alt="event"
-                                class="img-fluid w-100"
-                            />
-                        </div>
-                        <div class="tf__single_event_text">
-                            <a class="title" href="/informasiberita"
-                                >Berlibur Sebagai Persiapan Sebelum Memulai
-                                Proyek</a
-                            >
-                            <p>
-                                Sebelum memulai proyek, kami melakukan liburan
-                                agar pikiran segar.
-                            </p>
-                            <div class="tf__single_event_footer">
-                                <span>29 Februari 2024</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div
-                    class="col-xl-4 wow fadeInUp"
-                    onclick="window.location.href='/informasiberita'"
-                >
-                    <div class="tf__single_event">
-                        <div class="tf__single_event_img">
-                            <img
-                                src="bootstrap/images/farel.png"
-                                alt="event"
-                                class="img-fluid w-100"
-                            />
-                        </div>
-                        <div class="tf__single_event_text">
-                            <a class="title" href="/informasiberita"
-                                >Profil Ketua Emailkomp Periode 2024</a
-                            >
-                            <p>
-                                Emailkomp adalah sebuah organisasi dibawah
-                                pengawasan langsung oleh Prodi Teknik
-                                Informatika
-                            </p>
-                            <div class="tf__single_event_footer">
-                                <span>12 Desember 2023</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div
-                    class="col-xl-4 wow fadeInUp"
-                    onclick="window.location.href='/informasiberita'"
-                >
-                    <div class="tf__single_event">
-                        <div class="tf__single_event_img">
-                            <img
-                                src="bootstrap/images/game.png"
-                                alt="event"
-                                class="img-fluid w-100"
-                            />
-                        </div>
-                        <div class="tf__single_event_text">
-                            <a class="title" href="/informasiberita"
-                                >Bermain Game Untuk Melatih Kekompakan Tim</a
-                            >
-                            <p>
-                                Hal yang sering kami lakukan ketika selesai
-                                diskusi yaitu bermain game gartic
-                            </p>
-                            <div class="tf__single_event_footer">
-                                <span>25 Februari 2024</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--=================================
-       EVENT END
-   ==================================-->
-
-    <section id="sponsor-section" class="tf__categories mt_95">
-        <div class="container">
-            <div class="row">
-                <div class="tf__heading_area mb_15">
-                    <h5>Sponsor</h5>
-                    <div class="sponsor-grid">
-                        <div
-                            v-for="sponsor in sponsors"
-                            :key="sponsor.id"
-                            class="sponsor-item2"
-                        >
-                            <a :href="sponsor.link_file">
-                                <img
-                                    :src="sponsor.logo"
-                                    :alt="sponsor.name"
-                                    class="img-fluid"
-                                    style="max-width: 200px"
-                                />
-                            </a>
-                        </div>
-                        <!-- <div class="sponsor-item">
+                            <!-- <div class="sponsor-item">
                             <img src="bootstrap/images/logo-sv.png" alt="about" class="img-fluid">
                         </div>
                         <div class="sponsor-item">
@@ -469,24 +285,16 @@ function handleImageError() {
                         <div class="sponsor-item">
                             <img src="bootstrap/images/em.png" alt="about" class="img-fluid">
                         </div> -->
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!--=================================
-       FOOTER START
-   ==================================-->
-    <footer class="tf__footer mt_100">
-        <div
-            class="text-center p-4"
-            style="background-color: #191e24f5; color: white"
-        >
-            Copyright ©2024 Tim Website OLINAS
-        </div>
-    </footer>
-    <!--=================================
-       FOOTER END
-   ==================================-->
+        <footer class="tf__footer mt_100">
+            <div class="text-center p-4 cfooter">
+                Copyright ©2024 Tim Website OLINAS
+            </div>
+        </footer>
+    </div>
 </template>

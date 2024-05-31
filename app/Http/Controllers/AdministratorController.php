@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Http\Resources\LombaResource;
+use App\Models\Lomba;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 
@@ -24,6 +26,11 @@ class AdministratorController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+        Inertia::share('userData', [
+            'name' => $user->name,
+            'username' => $user->username,
+        ]);
         return Inertia::render('Roles/Admin/Administrator', [
             'users' => User::all()->map(function($user) {
                 return [
@@ -31,7 +38,8 @@ class AdministratorController extends Controller
                     'name' => $user->name,
                     'username' => $user->username,
                     'email' => $user->email,
-                    'role' => $user->role
+                    'role' => $user->role,
+                    'UserData'=>$user,
                 ];
             }),
             'settings' => Setting::all()->map(function($setting) {
@@ -57,7 +65,19 @@ class AdministratorController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Roles/Admin/Administrator/Tambahadministrator');
+
+        $user = Auth::user();
+        Inertia::share('userData', [
+            'name' => $user->name,
+            'username' => $user->username,
+        ]);
+        $lomba = LombaResource::collection(Lomba::all());
+        return Inertia::render('Roles/Admin/Administrator/Tambahadministrator',
+        [
+            'UserData' => $user,
+            'lombas' => $lomba
+        ]);
+    
     }
 
     /**
@@ -81,8 +101,9 @@ class AdministratorController extends Controller
 
         $user = User::create($validatedData);
 
-        // dd($validatedData);
-        // dd($user);
+        if ($request->has('selectedLomba')) {
+            $user->lomba()->attach($request->input('selectedLomba'));
+        }
         return redirect()->route('administrator.index');
     }
 
@@ -91,11 +112,16 @@ class AdministratorController extends Controller
      */
     public function show($id)
     {
-        // dd($user);
-        $user = User::find($id);
+        $user = Auth::user();
+        Inertia::share('userData', [
+            'name' => $user->name,
+            'username' => $user->username,
+        ]);
+
+        $users = User::with('lomba')->find($id);
         return Inertia::render('Roles/Admin/Administrator/Detailadministrator', [
-            'users' => $user,
-            // dd($user)
+            'users' => $users,
+            'UserData' => $user
         ]);
     }
 

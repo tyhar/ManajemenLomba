@@ -5,12 +5,53 @@ import { Head } from "@inertiajs/vue3";
 defineProps({
     messages: {
         type: Array,
-    },settings: {
-        type: Array,
     },
 });
 
+
+const selectedStatus = ref('Semua');
+const unreadCount = ref(0);
+
+onMounted(async () => {
+  try {
+    const response = await axios.get('/api/unread-messages');
+    unreadCount.value = response.data.unreadCount;
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+const updateMessageStatus = async (id, currentStatus) => {
+  try {
+    const newStatus = currentStatus === 'belum_dibaca' ? 'sudah_dibaca' : 'belum_dibaca';
+
+    await router.patch(`/messages/${id}/status`, {
+      status: newStatus,
+    });
+
+    const message = props.messages.find(msg => msg.id === id);
+    if (message) {
+      message.status = newStatus;
+
+      if (newStatus === 'sudah_dibaca') {
+        unreadCount.value -= 1;
+      } else {
+        unreadCount.value += 1;
+      }
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const filteredMessages = computed(() => {
+  if (selectedStatus.value === 'Semua') {
+    return props.messages;
+  }
+  return props.messages.filter(message => message.status === selectedStatus.value.toLowerCase());
+});
 </script>
+
 <template>
     <!--wrapper-->
     <div class="wrapper">
@@ -18,12 +59,8 @@ defineProps({
         <div class="sidebar-wrapper" data-simplebar="true">
             <div class="sidebar-header">
                 <div>
-                    <a href="/" class="navbar-brand" v-for="setting in settings" :key="setting.id">
-                        <img
-                        :src="setting.logo1"
-                        :alt="setting.name"
-                        class="logo-icon"
-                        />
+                    <a href="/">
+                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon">
                     </a>
                 </div>
                 <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>

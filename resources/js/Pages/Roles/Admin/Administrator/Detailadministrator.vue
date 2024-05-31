@@ -4,26 +4,34 @@ import { useForm } from "@inertiajs/vue3";
 import { Head } from "@inertiajs/vue3";
 import { router } from "@inertiajs/vue3";
 
-defineProps({
-    users: Array,
-});
+const { name, username, users } = defineProps(['name', 'username', 'users']);
+
+console.log(name); // Contoh penggunaan di dalam script setup
+console.log(username);
+
+// Definisikan properti yang diterima oleh komponen
+const props = {
+    users: {
+        type: Array,
+    },
+};
 
 // Define the role names mapping
 const roleNames = {
-  1: 'Admin',
-  2: 'Petugas',
-  3: 'User',
-  4: 'Juri',
+    1: 'Admin',
+    2: 'Petugas',
+    3: 'User',
+    4: 'Juri',
 };
 
 // Create a function to get the role name based on the role number
 const getRoleName = (role) => {
-  return roleNames[role] || 'Unknown';
+    return roleNames[role] || 'Unknown';
 };
 
 // Function to view user details
 const viewDetails = (userId) => {
-  // Logic to navigate to user details page, if needed
+    // Logic to navigate to user details page, if needed
 };
 
 // Function to format date
@@ -50,7 +58,8 @@ const formatDate = (dateString) => {
                     <div class="navbar-tambah">
                         <div class="navbar-left">
                             <a href="/">
-                                <img src="/bootstrap/images/logo.png" alt="Logo">
+                                <img src="/bootstrap/images/lg.png" alt="Logo"
+                                    style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>
@@ -62,13 +71,13 @@ const formatDate = (dateString) => {
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>			
-                                <p class="user-role">habib</p>					
+                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                                <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
                         </ul>
-                    </div>		
+                    </div>
                 </nav>
             </div>
         </header>
@@ -79,39 +88,40 @@ const formatDate = (dateString) => {
                 <div class="card">
                     <div class="card-body">
                         <h4 class="mb-0">DETAIL ADMINISTRATOR</h4>
-                        <hr/>
+                        <hr />
                         <div class="row">
                             <div class="col-md-6 c-mb10">
-                                <label class="c-mb5-black"><b>Nama Lengkap</b></label>
+                                <label class="c-mb5-black"><b>NAMA LENGKAP</b></label>
                                 <div class="data-tim">{{ users.name }}</div>
                             </div>
                             <div class="col-md-6">
-                                <label class="c-mb5-black"><b>Username</b></label>
+                                <label class="c-mb5-black"><b>USERNAME</b></label>
                                 <div class="data-tim">{{ users.username }}</div>
                             </div>
-                            <!-- <div class="col-md-6">
-                                <label class="c-mb5-black"><b>Password</b></label>
-                                <div class="data-tim">{{ users.password }}</div>
-                            </div> -->
                             <div class="col-md-6">
-                                <label class="c-mb5-black"><b>Email</b></label>
+                                <label class="c-mb5-black"><b>PASSWORD</b></label>
+                                <div class="data-tim">*********</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="c-mb5-black"><b>EMAIL</b></label>
                                 <div class="data-tim">{{ users.email }}</div>
                             </div>
                             <div class="col-md-6">
-                                <label class="c-mb5-black"><b>Role</b></label>
+                                <label class="c-mb5-black"><b>ROLE</b></label>
                                 <div class="data-tim">{{ getRoleName(users.role) }}</div>
                             </div>
                             <div class="col-md-6">
-                                <label class="c-mb5-black"><b>Lomba</b></label>
-                                <div class="data-tim">Lomba Desain</div>
-                            </div>           
-                            <div class="col-md-6">
-                                <label class="c-mb5-black"><b>Tanggal Dibuat</b></label>
+                                <label class="c-mb5-black"><b>TANGGAL</b></label>
                                 <div class="data-tim">{{ formatDate(users.created_at) }}</div>
-                            </div>      
+                            </div>
                         </div>
+                        <label class="c-mb5-black"><b>LOMBA</b></label>
+                        <ul>
+                            <li v-for="lomba in users.lomba" :key="lomba.id">{{ lomba.name_lomba }}</li>
+                        </ul>
                         <div class="btn-posisi">
-                            <button class="btn btn-danger btn-kembali" onclick="window.location.href='/administrator'">Kembali</button>
+                            <button class="btn btn-danger btn-kembali"
+                                onclick="window.location.href='/administrator'">Kembali</button>
                         </div>
                     </div>
                 </div>
@@ -120,5 +130,3 @@ const formatDate = (dateString) => {
         <!--end page wrapper -->
     </div>
 </template>
-    
-   
