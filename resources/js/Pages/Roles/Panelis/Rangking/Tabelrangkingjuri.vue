@@ -17,13 +17,6 @@ import { Link } from '@inertiajs/vue3';
             <!--navigation-->
             <ul class="metismenu" id="menu">
                 <li>
-                    <a href="/panelis">
-                        <div class="parent-icon"><i class='bx bx-home-circle'></i>
-                        </div>
-                        <div class="menu-title">Dashboard</div>
-                    </a>
-                </li>
-                <li>
                     <a href="/lombajuri">
                         <div class="parent-icon"><i class="bx bx-award"></i>
                         </div>

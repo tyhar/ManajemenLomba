@@ -81,9 +81,10 @@ DetailLOMBA
                                     <div class="data-tim" id="biaya_pendaftaran">{{ lomba && lomba.biaya_pendaftaran ? lomba.biaya_pendaftaran : 'Biaya Pendaftaran tidak tersedia' }}</div>
                                </div>   
                                 <!-- Tambahkan bagian untuk menampilkan kriteria -->
-                                <label class="c-mb5-black"><b>KRITERIA PENILAIAN</b></label>
+                                <label class="c-mb5-black"><b>KRITERIA PENILAIAN (100/100%)</b></label>
                                 <ul>
-                                    <li v-for="kriteria in lomba.kriteria" :key="kriteria.id">{{ kriteria.name_kriteria }}</li>
+                                    <li v-for="kriteria in lomba.kriteria" :key="kriteria.id">{{ kriteria.name_kriteria }} 30% => static</li>
+        <!-- Kasih Persen -->
                                 </ul>
                             </div>           
                         </div>

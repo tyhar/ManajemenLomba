@@ -86,9 +86,9 @@ const submit = () => {
                                     <div class="col">
                                         <a class="nav-link common_btn" href="/login">Login</a>
                                     </div>
-                                    <div class="col">
+                                    <!-- <div class="col">
                                         <a class="nav-link common_btn" href="/register">Register</a>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </template>
                             <template v-else>
@@ -99,21 +99,8 @@ const submit = () => {
                 </div>
             </div>
         </nav>
-        <!--MAIN MENU END-->
-        <!--BREADCRUMB START-->
         <section class="tf__breadcrumb" style="background: url(/bootstrap/images/home.jpg);">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="tf__breadcrumb_text">
-                            <h2 class="c-kontak">Kontak</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </section>
-        <!--BREADCRUMB END-->
-        <!--CONTACT PAGE START-->
         <section class="tf__contact_page mt_190 xs_mt_95">
             <div class="container">
                 <div class="row">
@@ -123,32 +110,26 @@ const submit = () => {
                                 <h5 class="c-mb-13">HUBUNGI KAMI</h5>
                             </div>
                             <form @submit.prevent="submit">
-                                <!-- <div class="mb-3">
-                                <label for="exampleFormControlInput1" class="form-label">Email address</label>
-                                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-                            </div> -->
-                                <input class="form-control" id="nama" type="text" v-model="form.name"
-                                    placeholder="Nama" />
-                                <input class="form-control" id="nama" type="email" v-model="form.email"
+                                <input class="form-control ckontak" id="nama" type="text" v-model="form.name"
+                                    placeholder="Nama Lengkap" />
+                                <input class="form-control ckontak c-mtkc" id="nama" type="email" v-model="form.email"
                                     placeholder="Email" />
-                                <input class="form-control" id="nomor" type="number" v-model="form.phone"
-                                    placeholder="Nomor yang dapat dihubungi" />
-                                <textarea class="form-control" rows="4" type="textarea" v-model="form.value"
+                                <input class="form-control ckontak c-mtkc" id="nomor" type="number" v-model="form.phone"
+                                    placeholder="No. WhatsApp (cont. 085xxxxxxx)" />
+                                <textarea class="c-mtkc" rows="4" type="textarea" v-model="form.value"
                                     placeholder="Pesan" />
-                                <!-- <input id="nama" type="name" v-model="form.name" placeholder="Nama"/> -->
-                                <!-- <input id="email" type="email" v-model="form.email" placeholder="Email" /> -->
-                                <!-- <input id="phone" type="number" v-model="form.phone" placeholder="No. WhatsApp"/> -->
-                                <!-- <textarea id="pesan" type="textarea" v-model="form.value" placeholder="Pesan"/> -->
                                 <button type="submit" class="common_btn_2">Kirim</button>
                             </form>
                         </div>
                     </div>
-                    <div class="col-xl-12 wow fadeInUp">
-                        <div class="tf__contact_map mt_30">
-                            <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3012.4794374146772!2d110.98160354801688!3d-7.591865364294748!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a19d07a714fd3%3A0xaea18d5d16dea09d!2sWaduk%20Delingan!5e1!3m2!1sen!2sid!4v1711694566155!5m2!1sen!2sid"
-                                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-                                referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <div class="col-xxl-4 col-xl-5 col-lg-6 wow fadeInRight">
+                        <div class="col-xl-12 wow fadeInUp">
+                            <div class="tf__contact_map cmt_30">
+                                <iframe
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3012.4794374146772!2d110.98160354801688!3d-7.591865364294748!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a19d07a714fd3%3A0xaea18d5d16dea09d!2sWaduk%20Delingan!5e1!3m2!1sen!2sid!4v1711694566155!5m2!1sen!2sid"
+                                    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -118,17 +118,38 @@ const submit = () => {
                                     </label>
                                     <input type="text" class="form-control" v-model="form.deskripsi" id="deskripsi" />
                                 </div>
-                                <div class="c-mb10">
-                                    <label for="mulai" class="c-mb5-black">
-                                        <b>Tanggal Mulai</b>
-                                    </label>
-                                    <input type="date" class="form-control" v-model="form.mulai" id="mulai" />
-                                </div>
-                                <div class="c-mb10">
-                                    <label for="berakhir" class="c-mb5-black">
-                                        <b>Tanggal Berakhir</b>
-                                    </label>
-                                    <input type="date" class="form-control" v-model="form.berakhir" id="berakhir" />
+                                <div class="row">
+                                    <div class="col-md-5 c-mb10">
+                                        <label for="mulai" class="c-mb5-black">
+                                            <b>Tanggal Mulai</b>
+                                        </label>
+                                        <input type="date" class="form-control" v-model="form.mulai" id="mulai" />
+                                    </div>
+                                    <div class="col-md-2 dash-container">
+                                        <span class="dash">-</span>
+                                    </div>
+                                    <div class="col-md-5 c-mb10">
+                                        <label for="berakhir" class="c-mb5-black">
+                                            <b>Tanggal Berakhir</b>
+                                        </label>
+                                        <input type="date" class="form-control" v-model="form.berakhir" id="berakhir" />
+                                    </div>
+
+                                    <div class="c-mb10">
+                                        <label for="karya" class="form-label warna-hitam"><b>Pengumpulan
+                                                Karya</b></label>
+                                        <input type="date" class="form-control label-8 date370" id="karya" />
+                                    </div>
+                                    <div class="c-mb10">
+                                        <label for="finalis" class="form-label warna-hitam"><b>Pengumuman
+                                                Finalis</b></label>
+                                        <input type="date" class="form-control label-8 date370" id="finalis" />
+                                    </div>
+                                    <div class="c-mb10">
+                                        <label for="mulai" class="form-label warna-hitam"><b>Presentasi
+                                                Finalis</b></label>
+                                        <input type="date" class="form-control label-8 date370" />
+                                    </div>
                                 </div>
                                 <div class="c-mb10">
                                     <label for="logo1" class="c-mb5-black">
@@ -140,10 +161,10 @@ const submit = () => {
                                     </div>
                                     <input class="form-control" type="file" @input="form.logo1 = $event.target.files[0]"
                                         id="logo1" />
-                                    <p class="keterangan-foto">
-                                        Max 2 MB ( 180 x 55 px )
-                                    </p>
+                                    <p class="keterangan-foto f-italic">Max file size: 2MB (180 x 55 px)</p>
+                                    <p class="keterangan-foto f-italic">Format: .jpg, .png, .jpeg</p>
                                 </div>
+                                <br>
                                 <div class="c-mb10">
                                     <label for="logo2" class="c-mb5-black">
                                         <b>Logo 2 (background)</b>
@@ -155,10 +176,10 @@ const submit = () => {
                                     <input class="form-control" type="file" @input="
                                         form.logo2 = $event.target.files[0]
                                         " id="logo2" />
-                                    <p class="keterangan-foto">
-                                        Max 2 MB ( 1200 x 800 px )
-                                    </p>
+                                    <p class="keterangan-foto f-italic">Max file size: 2MB (1200 x 800 px)</p>
+                                    <p class="keterangan-foto f-italic">Format: .jpg, .png, .jpeg</p>
                                 </div>
+                                <br>
                                 <div class="c-mb10">
                                     <label for="logo3" class="c-mb5-black">
                                         <b>Logo 3</b>
@@ -170,9 +191,8 @@ const submit = () => {
                                     <input class="form-control" type="file" @input="
                                         form.logo3 = $event.target.files[0]
                                         " id="logo3" />
-                                    <p class="keterangan-foto">
-                                        Max 2 MB ( 450 x 450 px )
-                                    </p>
+                                    <p class="keterangan-foto f-italic">Max file size: 2MB (450 x 450 px)</p>
+                                    <p class="keterangan-foto f-italic">Format: .jpg, .png, .jpeg</p>
                                 </div>
                             </div>
                             <div class="btn-posisi">

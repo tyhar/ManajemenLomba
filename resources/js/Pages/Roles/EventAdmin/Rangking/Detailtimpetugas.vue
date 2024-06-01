@@ -40,10 +40,6 @@
                         <hr />
                         <div class="row">
                             <div class="col-md-3 c-mb10">
-                                <label class="c-mb5-black"><b>NAMA TIM</b></label>
-                                <div class="c-mb20">Lomba Desain</div>
-                            </div>
-                            <div class="col-md-2">
                                 <label class="c-mb5-black"><b>INSTASNSI</b></label>
                                 <div class="c-mb20">Universitas</div>
                             </div>
@@ -51,21 +47,21 @@
                                 <label class="c-mb5-black"><b>LOMBA</b></label>
                                 <div class="c-mb20">Lomba Desain</div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label class="c-mb5-black"><b>EMAIL</b></label>
                                 <div class="c-mb20">goat@gmail.com</div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <label class="c-mb5-black"><b>NO WHATSAPP</b></label>
                                 <div class="c-mb20">0850000000s</div>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="c-mb5-black"><b>PEMBAYARAN</b></label>
+                                <div class="c-mb20"><a href="#">Lihat Bukti</a></div>
                             </div>
                             <div class="col-md-3">
                                 <label class="c-mb5-black"><b>STATUS</b></label>
                                 <div class="c-mb20">Verified</div>
-                            </div>
-                            <div class="col-md-3">
-                                <label class="c-mb5-black"><b>PEMBAYARAN</b></label>
-                                <div class="c-mb20"><a href="#">Lihat Bukti</a></div>
                             </div>
                         </div>
                         <br><br><br>
@@ -145,23 +141,39 @@
                         </div>
                         <div class="card card-height400">
                             <div class="card-body p-4 text-center">
-                                <h6 class="sub-judul-tim"><b>PENGUMPULAN KARYA</b></h6>
+                                <h6 class="sub-judul-tim"><b>KARYA TIM</b></h6>
                                 <div class="row">
-                                    <div class="col-md-3 label-left">
+                                    <div class="col-md-4 label-left">
                                         <label class="jarak-teks05"><b>JUDUL</b></label>
-                                        <div class="c-mb20">Platform Pendidikan Interaktif</div>
+                                        <div class="c-mb20">OLIVIA merupakan singkatan dari Olimpiade Vokasi Indonesia,
+                                            sebuah ajang kompetisi tingkat nasional.</div>
                                     </div>
                                     <div class="col-md-3 label-left">
-                                        <label class="jarak-teks05"><b>DESKRIPSI</b></label>
-                                        <div class="c-mb20">Platform Pendidikan Interaktif “LearnXperience”</div>
+                                        <label class="jarak-teks05"><b>DOKUMEN</b></label>
+                                        <div class="c-mb20"><a href="#">Lihat Dokumen</a></div>
                                     </div>
                                     <div class="col-md-3 label-left">
-                                        <label class="jarak-teks05"><b>File</b></label>
+                                        <label class="jarak-teks05"><b>FILE</b></label>
                                         <div class="c-mb20"><a href="#">Lihat File</a></div>
                                     </div>
-                                    <div class="col-md-3 label-left">
-                                        <label class="jarak-teks05"><b>LINK VIDEO</b></label>
-                                        <div class="data-tim"><a href="#">Link Video</a></div>
+                                    <div class="col-md-2 label-left">
+                                        <label class="jarak-teks05"><b>LINK</b></label>
+                                        <div class="data-tim"><a href="#">Buka Link</a></div>
+                                    </div>
+                                    <div class="label-left">
+                                        <label class="jarak-teks05"><b>DESKRIPSI</b></label>
+                                        <div class="c-mb20 rata-tengah">OLIVIA merupakan singkatan
+                                            dari Olimpiade Vokasi Indonesia,
+                                            sebuah ajang kompetisi tingkat nasional bagi mahasiswa vokasi dari perguruan
+                                            tinggi negeri maupun swasta di seluruh Indonesia. OLIVIA ini diselenggarakan
+                                            oleh Forum Pendidikan Tinggi Vokasi Indonesia (FPTVI) sebagai wadah forum
+                                            pendidikan tinggi khusus bidang ilmu terapan atau vokasi yang memiliki
+                                            agenda rutin tahunan berupa kompetisi ilmiah mahasiswa antar perguruan
+                                            tinggi vokasi se-Indonesia. Kegiatan ini memiliki tujuan untuk meningkatkan
+                                            daya saing insan vokasi, terutama mahasiswa. Dengan berlandaskan pada
+                                            prinsip-prinsip kompetisi, seperti sportivitas, profesionalitas, dan
+                                            transparansi. Melalui OLIVIA ini, mahasiswa vokasi dari seluruh Indonesia
+                                            menyajikan karya hasil kreativitas dan inovasi mereka.</div>
                                     </div>
                                 </div>
                             </div>
@@ -170,7 +182,49 @@
                 </div>
             </div>
         </div>
-        <!--end page wrapper -->
+        <h5 class="c-ml-160 jarak-top-kurang18 jarak-bottom-kurang13">Hasil Penilaian OLINAS</h5>
+        <div class="page-wrapper-report">
+            <div class="page-content">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="warna-abu">Tema Lomba</h6>
+                        <h6 class="c-mb20">Judul Karya</h6>
+                        <div class="card">
+                            <h5 class="p-3">Penilaian</h5>
+                            <div class="card-body p-4 text-center">
+                                <div class="row">
+                                    <table class="table table-bordered jarak-top-kurang25">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th class="width-id">NO.</th>
+                                                <th class="crud-width-400 posisi-text">KRITERIA</th>
+                                                <th class="crud-width-40">NILAI</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th>1</th>
+                                                <td class="text-left">Kreativitas</td>
+                                                <td class="text-left"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>2</th>
+                                                <td class="text-left">Estetika dan Komposisi</td>
+                                                <td class="text-left"></td>
+                                            </tr>
+                                            <tr>
+                                                <th colspan="2" class="text-left">Total</th>
+                                                <td class="crud-width-40">0</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 

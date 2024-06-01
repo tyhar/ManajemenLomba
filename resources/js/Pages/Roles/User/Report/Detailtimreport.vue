@@ -44,10 +44,6 @@ import { Link } from '@inertiajs/vue3';
                         <hr />
                         <div class="row">
                             <div class="col-md-3 c-mb10">
-                                <label class="c-mb5-black"><b>NAMA TIM</b></label>
-                                <div class="c-mb20">Lomba Desain</div>
-                            </div>
-                            <div class="col-md-2">
                                 <label class="c-mb5-black"><b>INSTASNSI</b></label>
                                 <div class="c-mb20">Start Green</div>
                             </div>
@@ -55,19 +51,15 @@ import { Link } from '@inertiajs/vue3';
                                 <label class="c-mb5-black"><b>LOMBA</b></label>
                                 <div class="c-mb20">Lomba Desain</div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label class="c-mb5-black"><b>EMAIL</b></label>
                                 <div class="c-mb20">goat@gmail.com</div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <label class="c-mb5-black"><b>NO WHATSAPP</b></label>
                                 <div class="c-mb20">0850000000s</div>
                             </div>
-                            <div class="col-md-3">
-                                <label class="c-mb5-black"><b>STATUS</b></label>
-                                <div class="c-mb20">Verified</div>
-                            </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label class="c-mb5-black"><b>PEMBAYARAN</b></label>
                                 <div class="c-mb20"><a href="#">Lihat Bukti</a></div>
                             </div>
@@ -149,23 +141,40 @@ import { Link } from '@inertiajs/vue3';
                         </div>
                         <div class="card card-height400">
                             <div class="card-body p-4 text-center">
-                                <h6 class="sub-judul-tim"><b>PENGUMPULAN KARYA</b></h6>
+                                <h6 class="sub-judul-tim2"><b>KARYA TIM</b></h6>
+                                <hr />
                                 <div class="row">
-                                    <div class="col-md-3 label-left">
+                                    <div class="col-md-4 label-left">
                                         <label class="jarak-teks05"><b>JUDUL</b></label>
-                                        <div class="c-mb20">Platform Pendidikan Interaktif</div>
+                                        <div class="c-mb20">OLIVIA merupakan singkatan dari Olimpiade Vokasi Indonesia,
+                                            sebuah ajang kompetisi tingkat nasional.</div>
                                     </div>
                                     <div class="col-md-3 label-left">
-                                        <label class="jarak-teks05"><b>DESKRIPSI</b></label>
-                                        <div class="c-mb20">Platform Pendidikan Interaktif “LearnXperience”</div>
+                                        <label class="jarak-teks05"><b>DOKUMEN</b></label>
+                                        <div class="c-mb20"><a href="#">Lihat Dokumen</a></div>
                                     </div>
                                     <div class="col-md-3 label-left">
-                                        <label class="jarak-teks05"><b>File</b></label>
+                                        <label class="jarak-teks05"><b>FILE</b></label>
                                         <div class="c-mb20"><a href="#">Lihat File</a></div>
                                     </div>
-                                    <div class="col-md-3 label-left">
-                                        <label class="jarak-teks05"><b>LINK VIDEO</b></label>
-                                        <div class="data-tim"><a href="#">Link Video</a></div>
+                                    <div class="col-md-2 label-left">
+                                        <label class="jarak-teks05"><b>LINK</b></label>
+                                        <div class="data-tim"><a href="#">Buka Link</a></div>
+                                    </div>
+                                    <div class="label-left">
+                                        <label class="jarak-teks05"><b>DESKRIPSI</b></label>
+                                        <div class="c-mb20 rata-tengah">OLIVIA merupakan singkatan
+                                            dari Olimpiade Vokasi Indonesia,
+                                            sebuah ajang kompetisi tingkat nasional bagi mahasiswa vokasi dari perguruan
+                                            tinggi negeri maupun swasta di seluruh Indonesia. OLIVIA ini diselenggarakan
+                                            oleh Forum Pendidikan Tinggi Vokasi Indonesia (FPTVI) sebagai wadah forum
+                                            pendidikan tinggi khusus bidang ilmu terapan atau vokasi yang memiliki
+                                            agenda rutin tahunan berupa kompetisi ilmiah mahasiswa antar perguruan
+                                            tinggi vokasi se-Indonesia. Kegiatan ini memiliki tujuan untuk meningkatkan
+                                            daya saing insan vokasi, terutama mahasiswa. Dengan berlandaskan pada
+                                            prinsip-prinsip kompetisi, seperti sportivitas, profesionalitas, dan
+                                            transparansi. Melalui OLIVIA ini, mahasiswa vokasi dari seluruh Indonesia
+                                            menyajikan karya hasil kreativitas dan inovasi mereka.</div>
                                     </div>
                                 </div>
                             </div>

@@ -195,12 +195,12 @@ document.addEventListener("DOMContentLoaded", function () {
         <div class="page-wrapper">
             <div class="page-content">
                 <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
-                    <div class="col">
+                    <div class="col mr-k10">
                         <div class="card radius-10 border-start border-0 border-3 border-info">
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
                                     <div>
-                                        <h5 class="mb-0"><b>{{ allParticipants }} Partisipan</b></h5>
+                                        <h6 class="mb-0"><b>{{ allParticipants }} Partisipan</b></h6>
                                         <br>
                                         <p class="mb-0 font-13">1250 Verified</p>
                                     </div>
@@ -208,12 +208,12 @@ document.addEventListener("DOMContentLoaded", function () {
                             </div>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col mr-k10">
                         <div class="card radius-10 border-start border-0 border-3 border-success">
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
                                     <div>
-                                        <h5 class="mb-0"><b>987 Tim</b></h5>
+                                        <h6 class="mb-0"><b>987 Tim</b></h6>
                                         <br>
                                         <p class="mb-0 font-13">Semua Lomba</p>
                                     </div>
@@ -221,12 +221,12 @@ document.addEventListener("DOMContentLoaded", function () {
                             </div>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col mr-k10">
                         <div class="card radius-10 border-start border-0 border-3 border-danger">
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
                                     <div>
-                                        <h5 class="mb-0"><b>{{ allCount }} Pesan</b></h5>
+                                        <h6 class="mb-0"><b>{{ allCount }} Pesan</b></h6>
                                         <br>
                                         <p class="mb-0 font-13"> {{ unreadCount }} Pesan Belum di Buka</p>
                                     </div>
@@ -234,12 +234,12 @@ document.addEventListener("DOMContentLoaded", function () {
                             </div>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col csize">
                         <div class="card radius-10 border-start border-0 border-3 border-warning">
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
                                     <div>
-                                        <h5 class="mb-0"><b>30 Akun Adminis</b></h5>
+                                        <h6 class="mb-0"><b>30 Akun Administrator</b></h6>
                                         <br>
                                         <p class="mb-0 font-13">1 Akun Admin</p>
                                     </div>

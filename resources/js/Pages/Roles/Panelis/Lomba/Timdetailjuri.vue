@@ -37,97 +37,64 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="mb-0">DETAIL TIM {{ team.name_team }}</h4>
-                        <div v-if="isPopupVisible" class="popup">
-                            <div class="popup-content">
-                                <span class="close" @click="hidePopup">&times;</span>
-                                <h5>Input Notifikasi</h5>
-                                <hr />
-                                <div>
-                                    <label class="c-mb5-black c-ml20"><b>Deskripsi</b></label>
-                                    <div class="col-11">
-                                        <textarea class="form-control c-mb10 c-ml20" id="inputProductDescription"
-                                            rows="3" placeholder="Tulis Notifikasi"></textarea>
-                                    </div>
-                                    <button class="btn btn-primary crud-width100 btn-mid c-mt40"
-                                        onclick="window.location.href='timpetugas'">Kirim</button>
-                                </div>
-                            </div>
-                        </div>
+                        <button class="btn btn-primary crud-width-150 btn-petugas btn-verifikasi posisi-ver">Beri
+                            Nilai</button>
                         <hr />
                         <div class="row">
                             <div class="col-md-3 c-mb10" v-if="team">
-                                <label class="c-mb5-black"><b>NAMA TIM</b></label>
-                                <div class="c-mb20">{{ team.name_team }}</div>
-                            </div>
-                            <div class="col-md-2" v-if="team">
                                 <label class="c-mb5-black"><b>INSTANSI</b></label>
                                 <div class="c-mb20">{{ team.instansi }}</div>
                             </div>
-                            <div class="col-md-2" v-if="team">
-                                <label class="c-mb5-black"><b>LOMBA</b></label>
-                                <ul>
-                                    <li v-for="lomba in team.lomba" :key="lomba.id">{{ lomba.name_lomba }}</li>
-                                </ul>
+                            <div class="col-md-3" v-if="team">
+                                <label class="c-mb5-black"><b>KETUA</b></label>
+                                <div class="c-mb20">ASEP => static</div>
                             </div>
                             <div class="col-md-3" v-if="team">
                                 <label class="c-mb5-black"><b>EMAIL</b></label>
                                 <div class="c-mb20">{{ team.email }}</div>
                             </div>
-                            <div class="col-md-2" v-if="team">
+                            <div class="col-md-3" v-if="team">
                                 <label class="c-mb5-black"><b>NO WHATSAPP</b></label>
                                 <div class="c-mb20">{{ team.phone }}</div>
                             </div>
-                            <div class="col-md-3" v-if="team">
-                                <label class="c-mb5-black"><b>STATUS</b></label>
-                                <div class="c-mb20">{{ team.status }}</div>
-                            </div>
-                            <div class="col-md-3" v-if="team">
-                                <label class="c-mb5-black"><b>PEMBAYARAN</b></label>
-                                <div class="c-mb20"><a :href="`/datatimshow/${team.id}`">Lihat Bukti</a></div>
-                            </div>
                         </div>
                         <br><br><br>
-                        <div class="row row-cards justify-content-center">
-                            <div class="col-md-6 col-lg-3 crud-max-width260" v-for="member in members" :key="member.id">
-                                <div class="card">
-                                    <div class="card-header btn-crud">
-                                        <h6><b>{{ member.role }}</b></h6>
-                                    </div>
-                                    <div class="card-body p-4 text-center posisi-mb23">
-                                        <div class="btn-crud">
-                                            <img :src="member.user.photo ? `/storage/${member.user.photo}` : '/bootstrap/images/default2.png'"
-                                                height="120" alt="..." class="img-fluidc rounded">
-                                        </div>
-                                        <br>
-                                        <h6><b>{{ member.user.name }}</b></h6>
-                                        <br>
-                                        <div class="posisi-mb7">{{ member.user.nik }}</div>
-                                        <div class="text-muted">{{ member.user.instansi }}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
                         <div class="card card-height400">
                             <div class="card-body p-4 text-center">
-                                <h6 class="sub-judul-tim"><b>PENGUMPULAN KARYA</b></h6>
+                                <h6 class="sub-judul-tim"><b>KARYA TIM</b></h6>
+                                <hr />
                                 <div class="row">
-                                    <div class="col-md-3 label-left" v-if="submissions">
+                                    <div class="col-md-4 label-left" v-if="submissions">
                                         <label class="jarak-teks05"><b>JUDUL</b></label>
                                         <div class="c-mb20">{{ submissions.title }}</div>
                                     </div>
                                     <div class="col-md-3 label-left" v-if="submissions">
+                                        <label class="jarak-teks05"><b>DOKUMEN</b></label>
+                                        <div class="c-mb20"><a href="#">Lihat Dokumen</a></div>
+                                    </div>
+                                    <div class="col-md-3 label-left" v-if="submissions">
+                                        <label class="jarak-teks05"><b>FILE</b></label>
+                                        <div class="c-mb20"><a href="#">Lihat File</a></div>
+                                    </div>
+                                    <div class="col-md-2 label-left" v-if="submissions">
+                                        <label class="jarak-teks05"><b>LINK</b></label>
+                                        <div class="c-mb20"><a href="#">Buka Link</a></div>
+                                    </div>
+                                    <div class="label-left">
                                         <label class="jarak-teks05"><b>DESKRIPSI</b></label>
-                                        <div class="c-mb20">{{ submissions.description }}</div>
-                                    </div>
-                                    <div class="col-md-3 label-left" v-if="submissions">
-                                        <label class="jarak-teks05"><b>File</b></label>
-                                        <div class="data-tim"><a :href="`/submissionshow/${submissions.id}`">Lihat
-                                                File</a></div>
-                                    </div>
-                                    <div class="col-md-3 label-left" v-if="submissions">
-                                        <label class="jarak-teks05"><b>LINK VIDEO</b></label>
-                                        <div class="data-tim c-mb-70"><a :href="submissions.link" target="_blank">Link
-                                                Video</a></div>
+                                        <div class="c-mb20 rata-tengah">OLIVIA merupakan singkatan
+                                            dari Olimpiade Vokasi Indonesia,
+                                            sebuah ajang kompetisi tingkat nasional bagi mahasiswa vokasi dari perguruan
+                                            tinggi negeri maupun swasta di seluruh Indonesia. OLIVIA ini diselenggarakan
+                                            oleh Forum Pendidikan Tinggi Vokasi Indonesia (FPTVI) sebagai wadah forum
+                                            pendidikan tinggi khusus bidang ilmu terapan atau vokasi yang memiliki
+                                            agenda rutin tahunan berupa kompetisi ilmiah mahasiswa antar perguruan
+                                            tinggi vokasi se-Indonesia. Kegiatan ini memiliki tujuan untuk meningkatkan
+                                            daya saing insan vokasi, terutama mahasiswa. Dengan berlandaskan pada
+                                            prinsip-prinsip kompetisi, seperti sportivitas, profesionalitas, dan
+                                            transparansi. Melalui OLIVIA ini, mahasiswa vokasi dari seluruh Indonesia
+                                            menyajikan karya hasil kreativitas dan inovasi mereka.</div>
                                     </div>
                                 </div>
                             </div>

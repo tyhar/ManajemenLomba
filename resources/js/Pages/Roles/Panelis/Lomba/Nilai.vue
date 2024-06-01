@@ -37,10 +37,10 @@
             <form @submit.prevent="submit">
               <div class="row" v-for="kriteria in kriterias" :key="kriteria.id">
                 <div class="col-md-6 c-mb10">
-                  <label class="c-mb5-black"><b>{{ kriteria.name_kriteria }}</b></label>
+                  <label class="c-mb5-black"><b>1. {{ kriteria.name_kriteria }}</b></label>
                 </div>
                 <div class="col-md-6">
-                  <label class="c-mb5-black">Nilai</label>
+                  <label class="c-mb5-black">Nilai (Bobot Nilai 30% ) => static</label>
                   <input type="text" class="form-control c-mb20" :id="'value_count_' + kriteria.id"
                     v-model="form.value_count[kriteria.id]">
                   <!-- Add hidden input to store kriteria_id -->

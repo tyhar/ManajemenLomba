@@ -41,7 +41,7 @@ function handleImageError() {
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link active" href="/#">Beranda</a>
+                            <a class="nav-link" href="/#">Beranda</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/#tentang-section">Tentang</a>
@@ -53,7 +53,7 @@ function handleImageError() {
                             <a class="nav-link" href="/#timeline-section">Timeline</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/#berita-section">Berita</a>
+                            <a class="nav-link active" href="/#berita-section">Berita</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/#sponsor-section">Sponsor</a>
@@ -67,9 +67,9 @@ function handleImageError() {
                                     <div class="col">
                                         <a class="nav-link common_btn" href="/login">Login</a>
                                     </div>
-                                    <div class="col">
+                                    <!--<div class="col">
                                         <a class="nav-link common_btn" href="/register">Register</a>
-                                    </div>
+                                    </div>-->
                                 </div>
                             </template>
                             <template v-else>

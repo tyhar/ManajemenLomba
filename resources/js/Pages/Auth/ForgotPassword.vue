@@ -42,18 +42,19 @@ const submit = async () => {
 								<img src="assets/images/icons/forgot-2.png" width="120" />
 							</div>
 							<h5 class="mt-5 rata-kiri">Tidak ingat kata sandi?</h5>
-							<p class="text-lupa-pw rata-kiri">Masukkan Email anda yang terdaftar untuk mengatur ulang
-								kata sandi</p>
+							<p class="text-lupa-pw rata-kiri">Masukan ID email Anda yang terdaftar untuk mengatur kata
+								ulang sandi</p>
 							<form @submit.prevent="submit">
-								<div class="col-12 c-mb-13 c-mt10">
-									<input type="email" class="form-control" id="inputEmailAddress" v-model="form.email"
-										required placeholder="Masukkan Email" />
+								<div class="col-12 c-mb-13 c-mt10 rata-kiri">
+									<label class="form-label warna-hitam jb-k5">Email</label>
+									<input type="email" class="form-control jb-k5" id="inputEmailAddress"
+										v-model="form.email" required placeholder="Masukan Email" />
 									<InputError class="mt-2" :message="form.errors.email" />
 								</div>
 								<div class="d-grid">
 									<!-- <a type="button" onclick="window.location.href='/login'"class="btn btn-primary btn-lg">Kirim</a>  -->
 									<Button class="btn btn-primary w-100 c-mb-8" :disabled="form.processing">
-										<i class='bx bx-user'></i>Email Password Reset Link
+										Kirim
 									</button>
 									<a href="/login" class="btn btn-light w-100"
 										onclick="window.location.href='/login'"><i

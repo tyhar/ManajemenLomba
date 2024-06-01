@@ -70,7 +70,8 @@
                                 <label for="formFile" class="form-label warna-hitam"><b>Upload Gambar</b></label>
                                 <input class="form-control" type="file" id="formFile"
                                     @input="form.images = $event.target.files[0]">
-                                <p class="keterangan-foto">Ukuran 640 x 500</p>
+                                <p class="keterangan-foto f-italic">Max file size: 2MB (640 x 500 px)</p>
+                                <p class="keterangan-foto f-italic">Format: .jpg, .png, .jpeg</p>
                             </div>
                             <div class="btn-posisi">
                                 <button class="btn btn-primary button-tabel-right" type="submit">Simpan</button>

@@ -42,25 +42,27 @@
                         <form @submit.prevent="submit">
                             <div class="c-mb10">
                                 <label class="c-mb5-black"><b>Judul</b></label>
-                                <input type="text" class="form-control" v-model="form.judul" required>
+                                <input type="text" class="form-control" v-model="form.judul"
+                                    placeholder="Masukan judul berita" required>
                             </div>
                             <div>
                                 <label class="c-mb5-black"><b>Deskripsi Awal</b></label>
                                 <div class="col-12">
-                                    <textarea class="form-control c-mb10" id="inputProductDescription" rows="2"
-                                        v-model="form.deskripsi_awal" required></textarea>
+                                    <textarea class="c-mb10" id="descriptionaddl" rows="2" v-model="form.deskripsi_awal"
+                                        placeholder="Masukan deskripsi awal berita (max 20 kata)" required></textarea>
                                 </div>
                             </div>
                             <div>
                                 <label class="c-mb5-black"><b>Deskripsi</b></label>
                                 <div class="col-12">
-                                    <textarea class="form-control c-mb10" id="inputProductDescription" rows="5"
-                                        v-model="form.deskripsi" required></textarea>
+                                    <textarea class="c-mb10" id="descriptionaddl" rows="5" v-model="form.deskripsi"
+                                        placeholder="Masukan deskripsi berita" required></textarea>
                                 </div>
                             </div>
                             <div class="c-mb10">
                                 <label class="c-mb5-black"><b>Penerbit</b></label>
-                                <input type="text" class="form-control" v-model="form.penerbit" required>
+                                <input type="text" class="form-control" v-model="form.penerbit"
+                                    placeholder="Masukan penerbit berita" required>
                             </div>
                             <div>
                                 <label class="form-label warna-hitam"><b>Tanggal Upload</b></label>
@@ -70,7 +72,8 @@
                                 <label for="formFile" class="form-label warna-hitam"><b>Upload Gambar</b></label>
                                 <input class="form-control" type="file" id="formFile" v-on:change="onFileChange"
                                     required>
-                                <p class="keterangan-foto">Max 2 MB (640 x 500 px)</p>
+                                <p class="keterangan-foto f-italic">Max file size: 2MB (640 x 500 px)</p>
+                                <p class="keterangan-foto f-italic">Format: .jpg, .png, .jpeg</p>
                             </div>
                             <div class="btn-posisi">
                                 <button class="btn btn-primary button-tabel-right" type="submit">Tambah</button>

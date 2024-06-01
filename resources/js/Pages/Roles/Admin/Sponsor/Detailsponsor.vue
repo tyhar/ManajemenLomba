@@ -27,6 +27,9 @@ const props = {
 //     sponsors: Object,
 //     logo: String
 // });
+const goBack = () => {
+    window.history.back();
+};
 
 
 </script>
@@ -84,14 +87,12 @@ const props = {
                             <div class="c-mb10">
                                 <label class="c-mb5-black"><b>LOGO</b></label><br>
                                 <div>
-                                    <img :src="'/storage/' + sponsors.logo" alt="Product Image"
-                                        class="form-control c-maxw400" />
+                                    <img :src="'/storage/' + sponsors.logo" alt="Product Image" class="c-maxw400" />
                                 </div>
                             </div>
                         </div>
                         <div class="btn-posisi">
-                            <a class="btn btn-danger btn-kembali" :href="route('sponsor.index')">Kembali</a>
-                            <a class="btn btn-danger btn-kembali" :href="route('sponsor.edit', sponsors.id)">Edit</a>
+                            <button class="btn btn-danger btn-kembali" @click="goBack()">Kembali</button>
                         </div>
                     </div>
                 </div>
