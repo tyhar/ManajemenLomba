@@ -3,27 +3,52 @@
 namespace App\Http\Controllers;
 
 use Inertia\Inertia;
-// use Illuminate\Http\Request;
-// use App\Http\Requests\ProfileUpdateRequest;
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-// use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-// use Illuminate\Support\Facades\Redirect;
-// use Inertia\Response;
+use App\Models\User;
+use App\Models\Message;
+use App\Http\Resources\UserResource;
+use App\Models\Team;
+use App\Models\Visit;
+use App\Models\TeamMember;
+use App\Models\Lomba;
+use App\Models\Reg_Lomba;
+use App\Models\Submission;
+use Illuminate\Support\Facades\Redirect;
 
 class AdminController extends Controller
 {
     public function index()
     {
+        $teamcount = Team::count();
+     
+        $useradminis = User::whereIn('role', [1, 2, 4])->count();
+        $unreadCount = Message::where('status', 'belum_dibaca')->count();
+        $allCount = Message::count();
+        $visitData = Visit::all();
+        $allParticipants = User::count();
+
+        // Count users with role 1
+        $useradmin = User::where('role', 1)->count();
+
+        $userstatus = User::where('email_verification_status', 'verified')->count();
         $user = Auth::user();
+        
         Inertia::share('userData', [
             'name' => $user->name,
             'username' => $user->username,
         ]);
         
-
         return Inertia::render('Roles/Admin/Admin',[
             'UserData' => $user,
+            'userstatus' => $userstatus,
+            'teamcount' => $teamcount,
+            'useradminis' => $useradminis,
+            'useradmin' => $useradmin,
+            'unreadCount' => $unreadCount,
+            'allCount' => $allCount,
+            'visitData' => $visitData,
+            'allParticipants' => $allParticipants,
         ]);
     }
     public function partisipan()
