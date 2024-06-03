@@ -1,12 +1,16 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { Link } from "@inertiajs/vue3";
 import { useForm } from "@inertiajs/vue3";
 import { Head } from "@inertiajs/vue3";
-import { onMounted, ref, computed } from 'vue';
+import { onMounted, ref, computed } from "vue";
 import { router } from "@inertiajs/vue3";
 // import { usePage } from "@inertiajs/vue3";
 
-const { name, username, sponsors } = defineProps(['name', 'username', 'sponsors']);
+const { name, username, sponsors } = defineProps([
+    "name",
+    "username",
+    "sponsors",
+]);
 
 console.log(name); // Contoh penggunaan di dalam script setup
 console.log(username);
@@ -16,11 +20,11 @@ const props = {
     sponsors: {
         type: Array,
     },
-});
+};
 
 onMounted(async () => {
     try {
-        const response = await axios.get('/api/unread-messages');
+        const response = await axios.get("/api/unread-messages");
         unreadCount.value = response.data.unreadCount;
     } catch (error) {
         console.error(error);
@@ -45,110 +49,140 @@ const deleteSponsor = (id) => {
             <div class="sidebar-header">
                 <div>
                     <a href="/">
-                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon" >
+                        <img
+                            src="/bootstrap/images/logocb.png"
+                            class="logo-icon"
+                            alt="logo icon"
+                        />
                     </a>
                 </div>
-                <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
+                <div class="toggle-icon ms-auto">
+                    <i class="fadeIn animated bx bx-menu"></i>
                 </div>
             </div>
             <!--navigation-->
             <ul class="metismenu" id="menu">
                 <li>
                     <a :href="route('admin')">
-                        <div class="parent-icon"><i class='bx bx-home-circle'></i>
+                        <div class="parent-icon">
+                            <i class="bx bx-home-circle"></i>
                         </div>
                         <div class="menu-title">Dashboard</div>
                     </a>
                 </li>
                 <li>
                     <a href="javascript:;" class="has-arrow">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-plus-circle"></i>
+                        <div class="parent-icon">
+                            <i class="fadeIn animated bx bx-plus-circle"></i>
                         </div>
                         <div class="menu-title">Event</div>
                     </a>
                     <ul>
-                        <li class="jarak-dropdown"> <a href="/lomba">Lomba</a>
+                        <li class="jarak-dropdown">
+                            <a href="/lomba">Lomba</a>
                         </li>
-                        <li class="jarak-dropdown"> <a href="/administrator">Administrator</a>
+                        <li class="jarak-dropdown">
+                            <a href="/administrator">Administrator</a>
                         </li>
-                        <li class="jarak-dropdown"> <a href="/sponsor">Sponsor</a>
+                        <li class="jarak-dropdown">
+                            <a href="/sponsor">Sponsor</a>
                         </li>
-                        <li class="jarak-dropdown"> <a href="/berita">Berita</a>
+                        <li class="jarak-dropdown">
+                            <a href="/berita">Berita</a>
                         </li>
-                        <li class="jarak-dropdown"> <a href="/setting">Setting</a>
+                        <li class="jarak-dropdown">
+                            <a href="/setting">Setting</a>
                         </li>
                     </ul>
                 </li>
                 <li>
                     <a href="/tim">
-                        <div class="parent-icon"><i class="fadeIn animated lni lni-users"></i>
+                        <div class="parent-icon">
+                            <i class="fadeIn animated lni lni-users"></i>
                         </div>
                         <div class="menu-title">Tim</div>
                     </a>
                 </li>
                 <li>
                     <a href="/partisipan">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-street-view"></i>
+                        <div class="parent-icon">
+                            <i class="fadeIn animated bx bx-street-view"></i>
                         </div>
                         <div class="menu-title">Partisipan</div>
                     </a>
                 </li>
                 <li>
                     <a href="/pesan">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i></div>
+                        <div class="parent-icon">
+                            <i class="fadeIn animated bx bx-comment-detail"></i>
+                        </div>
                         <!-- Menampilkan jumlah pesan yang belum dibaca -->
-                        <div class="menu-title">Pesan <span class="alert-count">{{ unreadCount }}</span></div>
+                        <div class="menu-title">
+                            Pesan
+                            <span class="alert-count">{{ unreadCount }}</span>
+                        </div>
                     </a>
                 </li>
                 <li>
                     <a href="/rangking">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-trophy"></i>
+                        <div class="parent-icon">
+                            <i class="fadeIn animated bx bx-trophy"></i>
                         </div>
                         <div class="menu-title">Rangking</div>
                     </a>
                 </li>
                 <li>
                     <a>
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
+                        <div class="parent-icon">
+                            <i class="fadeIn animated bx bx-log-out"></i>
                         </div>
                         <div class="menu-title">
-                            <Link class="menu-title" :href="route('logout')" method="post" as="button">
-                            Logout
+                            <Link
+                                class="menu-title"
+                                :href="route('logout')"
+                                method="post"
+                                as="button"
+                            >
+                                Logout
                             </Link>
                         </div>
                     </a>
                 </li>
             </ul>
             <!--end navigation-->
-
         </div>
         <!--end sidebar wrapper -->
         <!--start header -->
         <header>
             <div class="topbar d-flex align-items-center">
                 <nav class="navbar navbar-expand">
-                    <div class="mobile-toggle-menu"><i class='bx bx-menu'></i>
+                    <div class="mobile-toggle-menu">
+                        <i class="bx bx-menu"></i>
                     </div>
-                    <div class="search-bar flex-grow-1">
-                    </div>
+                    <div class="search-bar flex-grow-1"></div>
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
-                                <p class="user-role">{{ $page.props.userData.username }}</p>
+                                <p class="user-name mb-0">
+                                    {{ $page.props.userData.name }}
+                                </p>
+                                <p class="user-role">
+                                    {{ $page.props.userData.username }}
+                                </p>
                             </div>
-                            <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
+                            <div class="parent-icon posisi-icon">
+                                <i class="bx bx-user-circle c-font48"></i>
                             </div>
                             <li class="nav-item dropdown dropdown-large">
                                 <div class="dropdown-menu dropdown-menu-end">
-                                    <div class="header-notifications-list">
-                                    </div>
+                                    <div
+                                        class="header-notifications-list"
+                                    ></div>
                                 </div>
                             </li>
                             <li class="nav-item dropdown dropdown-large">
                                 <div class="dropdown-menu dropdown-menu-end">
-                                    <div class="header-message-list">
-                                    </div>
+                                    <div class="header-message-list"></div>
                                 </div>
                             </li>
                         </ul>
@@ -165,7 +199,10 @@ const deleteSponsor = (id) => {
                         <h4 class="mb-0 jarak-top-kurang5">Tabel Sponsor</h4>
                         <hr class="c-mt10" />
                         <!-- <button class="btn btn-success jarak-top-kurang7" onclick="window.location.href='sponsor/create'">Tambah Sponsor</button> -->
-                        <a class="btn btn-success jarak-top-kurang7" :href="route('sponsor.create')">
+                        <a
+                            class="btn btn-success jarak-top-kurang7"
+                            :href="route('sponsor.create')"
+                        >
                             Tambah Sponsor
                         </a>
                         <hr class="c-mt10" />
@@ -181,7 +218,10 @@ const deleteSponsor = (id) => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="sponsor in sponsors" :key="sponsor.id">
+                                    <tr
+                                        v-for="sponsor in sponsors"
+                                        :key="sponsor.id"
+                                    >
                                         <!-- <tr
                                         v-for="sponsor in sponsors.data"
                                         :key="sponsor.id"
@@ -202,13 +242,36 @@ const deleteSponsor = (id) => {
                                             {{ sponsor.link_file }}
                                         </td>
                                         <td class="btn-crud">
-                                            <a class="btn btn-secondary" :href="route('sponsor.show', sponsor.id)">
+                                            <a
+                                                class="btn btn-secondary"
+                                                :href="
+                                                    route(
+                                                        'sponsor.show',
+                                                        sponsor.id
+                                                    )
+                                                "
+                                            >
                                                 <i class="bi bi-eye"></i>
                                             </a>
-                                            <a class="btn btn-primary" :href="route('sponsor.edit', sponsor.id)">
-                                                <i class="bi bi-pencil-square"></i>
+                                            <a
+                                                class="btn btn-primary"
+                                                :href="
+                                                    route(
+                                                        'sponsor.edit',
+                                                        sponsor.id
+                                                    )
+                                                "
+                                            >
+                                                <i
+                                                    class="bi bi-pencil-square"
+                                                ></i>
                                             </a>
-                                            <button class="btn btn-danger" @click="deleteSponsor(sponsor.id)">
+                                            <button
+                                                class="btn btn-danger"
+                                                @click="
+                                                    deleteSponsor(sponsor.id)
+                                                "
+                                            >
                                                 <i class="bi bi-trash"></i>
                                             </button>
                                         </td>
@@ -226,6 +289,6 @@ const deleteSponsor = (id) => {
 
 <script>
 $(document).ready(function () {
-    $('#example').DataTable();
+    $("#example").DataTable();
 });
 </script>

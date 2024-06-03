@@ -206,30 +206,98 @@ function handleImageError() {
             </div>
         </section>
 
-        <section id="timeline-section" class="tf__categories mt_95">
-            <div class="container jarak-container">
-                <div class="row">
-                    <div class="col-xl-6 col-md-8 col-lg-6 m-auto wow fadeInUp">
-                        <div class="tf__heading_area mb_15">
-                            <h5 class="c-mb-40">Timeline</h5>
-                            <div class="card container-hg180-index">
-                                <div class="card-body p-4 text-center" v-for="setting in settings" :key="setting.id">
-                                    <h6 class="h6-landing-page1">
-                                        <b>Event OLINAS</b>
-                                    </h6>
-                                    <h6 class="h6-landing-page2">
-                                        <b>Tanggal Mulai : {{ setting.mulai }}</b>
-                                    </h6>
-                                    <h6 class="h6-landing-page2">
-                                        <b>Tanggal Berakhir : {{ setting.berakhir }}</b>
-                                    </h6>
-                                </div>
+
+                    <!-- Timeline 4 - Bootstrap Brain Component -->
+            <section id="timeline-section"class="bsb-timeline-4 bg-light py-3 py-md-5 py-xl-8">
+            <div class="container">
+                <div class="row justify-content-center">
+                <!-- <div class="col-xl-6 col-md-8 col-lg-6 m-auto wow fadeInUp"> -->
+                    <div class="tf__heading_area mb_15">
+                    <h5 class="c-mb-40">Timeline</h5>
+                    <div class="card container-hgtl">
+                    <div class="card-body p-4 text-center">
+                                                
+                    <ul class="timeline">
+                    <li class="timeline-item left">
+                        <div class="timeline-body">
+                        <div class="timeline-meta">
+                            <div class="d-inline-flex flex-column px-2 py-1 text-success-emphasis bg-success-subtle border border-success-subtle rounded-2 text-md-end ">
+                            <span>27 Mei - 10 Juni 2024</span>
                             </div>
                         </div>
+                        <div class="timeline-content timeline-indicator">
+                            <div class="card border-0 shadow">
+                            <div class="card-body p-xl-4 ">
+                                <h3 class="cuyy">PENDAFTARAN</h3>
+                                <p class="card-text m-0 cuyyy">Powerful, extensible, and feature-packed frontend toolkit. Build and customize with Sass, utilize prebuilt grid system and components, and bring projects to life with powerful JavaScript plugins.</p>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    </li>
+                    <li class="timeline-item right">
+                        <div class="timeline-body">
+                        <div class="timeline-meta">
+                            <div class="d-inline-flex flex-column px-2 py-1 text-success-emphasis bg-success-subtle border border-success-subtle rounded-2 text-md-end">
+                            <span>15 Juni 2024</span>
+                            </div>
+                        </div>
+                        <div class="timeline-content timeline-indicator">
+                            <div class="card border-0 shadow">
+                            <div class="card-body p-xl-4">
+                                <h3 class="cuyy">PENGUMPULAN KARYA</h3>
+                                <p class="card-text m-0 cuyyy">Get started with Bootstrap, the world’s most popular framework for building responsive, mobile-first sites, with jsDelivr and a template starter page. Bootstrap 4 has no active support.</p>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    </li>
+                    <li class="timeline-item left">
+                        <div class="timeline-body">
+                        <div class="timeline-meta">
+                            <div class="d-inline-flex flex-column px-2 py-1 text-success-emphasis bg-success-subtle border border-success-subtle rounded-2 text-md-end">
+                            <span>15 Juni 2024</span>
+                            </div>
+                        </div>
+                        <div class="timeline-content timeline-indicator">
+                            <div class="card border-0 shadow">
+                            <div class="card-body p-xl-4">
+                                <h3 class="cuyy">PENGUMUMAN FINALIS</h3>
+                                <p class="card-text m-0 cuyyy">Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web. Bootstrap 3 has no active support.</p>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    </li>
+                    <li class="timeline-item right">
+                        <div class="timeline-body">
+                        <div class="timeline-meta">
+                            <div class="d-inline-flex flex-column px-2 py-1 text-success-emphasis bg-success-subtle border border-success-subtle rounded-2 text-md-end">
+                            <span>15 Juni 2024</span>
+                            </div>
+                        </div>
+                        <div class="timeline-content timeline-indicator">
+                            <div class="card border-0 shadow">
+                            <div class="card-body p-xl-4">
+                                <h3 class="cuyy">PRESENTAS FINAL</h3>
+                                <p class="card-text m-0 cuyyy">Sleek, intuitive, and powerful front-end framework for faster and easier web development. Bootstrap 2 is no longer officially supported.</p>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    </li>
+                    </ul>
+
+                    </div>
                     </div>
                 </div>
+
+                <!-- </div> -->
+                </div>
             </div>
-        </section>
+            </section>
+
+
         <br /><br />
 
         <section id="berita-section" class="tf__event mt_95">

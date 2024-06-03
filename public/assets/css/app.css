@@ -3205,6 +3205,21 @@ input.search-control-2::placeholder {
 	background-color: #4B87D0;
 }
 
+.container-hgtl {
+	height: 1200px;
+	width: 1100px;
+	background-color: #E4EDF3;
+	margin-left: 10px;
+}
+
+.cuyy {
+	text-align: left;
+}
+
+.cuyyy {
+	text-align: justify;
+}
+
 /* LANDING PAGE --TIMELINE */
 .h6-landing-page1 {
 	text-align: center;
