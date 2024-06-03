@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Inertia\Inertia;
@@ -16,11 +17,11 @@ class RegLombaController extends Controller
         $user = Auth::user();
         $users = User::all();
 
-        $submission = Submission::first(); 
+        $submission = Submission::first();
         Inertia::share('submission', [
             'title' => $submission->title,
-                'description' => $submission->description,
-                'link' => $submission->link,
+            'description' => $submission->description,
+            'link' => $submission->link,
         ]);
         return Inertia::render('Roles/User/Daftarlomba', [
             'userData' => $user,
@@ -29,27 +30,22 @@ class RegLombaController extends Controller
             'submission' => $submission,
         ]);
     }
+
     public function show($id)
     {
         // Fetch the submission record from the database
         $submission = Submission::findOrFail($id);
-    
+
         // Share user data with Inertia
         Inertia::share('userData', [
             'file' => $submission->file,
         ]);
-    
+
         // Return the Inertia view with the image URL
         return Inertia::render('Roles/User/Daftar/ImageFileSubmission', [
             'UserData' => $submission,
         ]);
-
     }
-    
-  
-
-
-
 
     public function store()
     {

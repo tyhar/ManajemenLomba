@@ -59,7 +59,7 @@ const props = {
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
                         </ul>
-                    </div>		
+                    </div>
                 </nav>
             </div>
         </header>
@@ -70,7 +70,7 @@ const props = {
                 <div class="card">
                     <div class="card-body">
                         <h4 class="mb-0">Detail Berita</h4>
-                        <hr/>
+                        <hr />
                         <div>
                             <div class="col-md-6 c-mb10">
                                 <label class="c-mb5-black"><b>Nama Sponsor</b></label>
@@ -83,19 +83,19 @@ const props = {
                             <div class="c-mb10">
                                 <label class="c-mb5-black"><b>Gambar</b></label><br>
                                 <div>
-                                    <img :src=" '/storage/' + sponsors.logo" alt="Product Image" class="img-fluid" style="display:flex; margin: auto;" />
+                                    <img :src="'/storage/' + sponsors.logo" alt="Product Image" class="img-fluid"
+                                        style="display:flex; margin: auto;" />
                                 </div>
                             </div>
                         </div>
-                            <div class="btn-posisi">
-                                <a class="btn btn-danger btn-kembali" :href="route('sponsor.index')">Kembali</a>
-                                <a class="btn btn-danger btn-kembali" :href="route('sponsor.edit', sponsors.id)">Edit</a>
-                            </div>
+                        <div class="btn-posisi">
+                            <a class="btn btn-danger btn-kembali" :href="route('sponsor.index')">Kembali</a>
+                            <a class="btn btn-danger btn-kembali" :href="route('sponsor.edit', sponsors.id)">Edit</a>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
         <!--end page wrapper -->
     </div>
 </template>
-   

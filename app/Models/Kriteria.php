@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,5 +17,4 @@ class Kriteria extends Model
     {
         return $this->belongsToMany(Lomba::class,'kriteria_lombas_');
     }
-
 }

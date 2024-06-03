@@ -66,7 +66,6 @@ class KriteriaController extends Controller
         return redirect()->route('kriteria.index')->with('success', 'Kriteria berhasil ditambahkan');
     }
 
-
 /**
  * Display the specified resource.
  */
@@ -77,8 +76,8 @@ public function show($kriteria)
         'name' => $user->name,
         'username' => $user->username,
     ]);
+    
     $kriteria = Kriteria::findOrFail($kriteria);
-
     // Kembalikan tampilan menggunakan Inertia dengan data kriteria
     return Inertia::render('Roles/Admin/Kriteria/Detailkriteria', [
         'kriteria' => $kriteria,
@@ -95,8 +94,6 @@ public function show($kriteria)
         return Inertia::render('Roles/Admin/Kriteria/Editkriteria', [
             'kriterias' => KriteriaResource::make($kriteria),
             'kriteria' => $kriteria,
-
-
         ]);
     }
 
@@ -120,20 +117,14 @@ public function show($kriteria)
     // Redirect ke halaman indeks kriteria setelah pembaruan berhasil
     return redirect()->route('kriteria.index')->with('success', 'Kriteria berhasil diperbarui');
 }
-
-    
-    
-
     /**
      * Remove the specified resource from storage.
      */
     public function destroy($kriteria)
     {
-
         $kriteria = Kriteria::findOrFail($kriteria);
         $kriteria->delete(); 
         
         return redirect()->route('kriteria.index');
-    }
-    
+    }   
 }

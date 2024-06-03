@@ -26,10 +26,12 @@ class Lomba extends Model
     {
         return $this->belongsToMany(Kriteria::class, 'kriteria_lombas_');
     }
-    public function user()
-    {
-        return $this->belongsToMany(User::class, 'user_lombas');
-    }
+
+    // public function user()
+    // {
+    //     return $this->hasMany(User::class);
+    // }
+
     public function teams()
     {
         return $this->belongsToMany(Team::class, 'team_lombas');

@@ -30,8 +30,6 @@ class StoreLombaRequest extends FormRequest
             'kontak' => ['required', 'string', 'max:255'],
             'tempat' => ['required', 'string', 'max:255'],
             'biaya_pendaftaran' => ['required', 'string', 'max:255'],
-            
-            
         ];
     }
 

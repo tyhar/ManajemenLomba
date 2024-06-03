@@ -131,7 +131,7 @@
                           <h4 class="mb-0 jarak-top-kurang5">Tabel Lomba</h4>
                           <hr class="c-mt10"/>		
                           <a class="btn btn-success jarak-top-kurang7" :href="route('lomba.create')">Tambah Lomba</a>
-                          <a class="btn btn-info jarak-top-kurang7" :href="route('kriteria.index')">Kriteria</a>
+                          <a class="btn btn-info jarak-top-kurang7" :href="route('kriteria.index')">Kriteria Penilaian</a>
                           <hr class="c-mt10" />
                           <div class="table-responsive">
                               <table id="example" class="table mt-3  table-bordered">

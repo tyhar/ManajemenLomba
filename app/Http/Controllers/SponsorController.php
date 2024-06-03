@@ -11,27 +11,34 @@ use Illuminate\Support\Facades\Auth;
 
 class SponsorController extends Controller
 {
+    // Inertia::share('userData', [
+    //     'name' => $user->name,
+    //     'username' => $user->username,
+    // ]);
+    // the 'userData' already been declared somewhere
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $user = Auth::user();
-        $sponsors = Sponsor::all()->map(function($sponsor) use ($user) {
+        // $user = Auth::user();
+        $sponsors = Sponsor::all()->map(function ($sponsor){
             return [
-                'UserData' => $user,
+                // 'UserData' => $user,
                 'id' => $sponsor->id,
                 'name' => $sponsor->name,
                 'link_file' => $sponsor->link_file,
-                'logo' => asset('storage/'.$sponsor->logo),
+                'logo' => asset('storage/' . $sponsor->logo),
             ];
         });
+
         return Inertia::render('Roles/Admin/Sponsor', [
             'sponsors' => $sponsors,
-            'userData' => [
-                'name' => $user->name,
-                'username' => $user->username,
-            ]
+            // 'userData' => [
+            //     'name' => $user->name,
+            //     'username' => $user->username,
+            // ]
         ]);
     }
     /**
@@ -40,10 +47,10 @@ class SponsorController extends Controller
     public function create()
     {
         $user = Auth::user();
-        Inertia::share('userData', [
-            'name' => $user->name,
-            'username' => $user->username,
-        ]);
+        // Inertia::share('userData', [
+        //     'name' => $user->name,
+        //     'username' => $user->username,
+        // ]);
 
         return Inertia::render('Roles/Admin/Sponsor/Tambahsponsor', [
             'UserData' => $user,
@@ -63,15 +70,21 @@ class SponsorController extends Controller
         // Sponsor::create($validated);
 
         // dd($request);
-        // store logo into sponsors folder inside public folder
-        $logo = Request::file('logo')->store('sponsors','public');
-    
+
+        // store 'logo' into 'public/sponsor'
+        $logo = Request::file('logo')->store('sponsors', 'public');
+        // $logo = $request->file('logo')->storePublicly('sponsors', 'public');
+
         $sponsor = Sponsor::create([
             'name' => Request::input('name'),
             'logo' => $logo,
             'link_file' => Request::input('link_file')
         ]);
-
+        // $sponsor = Sponsor::create([
+        //     'name' => $request->input('name'),
+        //     'logo' => $logo,
+        //     'link_file' => $request->input('link_file'),
+        // ]);
 
         return redirect()->route('sponsor.index');
     }
@@ -82,14 +95,15 @@ class SponsorController extends Controller
     public function show(Sponsor $sponsor)
     {
         $user = Auth::user();
-        Inertia::share('userData', [
-            'name' => $user->name,
-            'username' => $user->username,
-        ]);
+        // Inertia::share('userData', [
+        //     'name' => $user->name,
+        //     'username' => $user->username,
+        // ]);
+
         $baseUrl = config('app.url');
         return Inertia::render('Roles/Admin/Sponsor/Detailsponsor', [
             'sponsors' => $sponsor,
-            'logo' => asset('storage/'.$sponsor->logo),
+            'logo' => asset('storage/' . $sponsor->logo),
             'baseUrl' => $baseUrl,
             'UserData' => $user,
         ]);
@@ -101,18 +115,17 @@ class SponsorController extends Controller
     public function edit(Sponsor $sponsor)
     {
         $user = Auth::user();
-        Inertia::share('userData', [
-            'sponsors' => SponsorResource::make($sponsor), 
-            'name' => $user->name,
-            'username' => $user->username,
-        ]);
+        // Inertia::share('userData', [
+        //     'sponsors' => SponsorResource::make($sponsor),
+        //     'name' => $user->name,
+        //     'username' => $user->username,
+        // ]);
 
         return Inertia::render('Roles/Admin/Sponsor/Editsponsor', [
             'sponsors' => $sponsor,
-            'logo' => asset('storage/'.$sponsor->logo),
+            'logo' => asset('storage/' . $sponsor->logo),
             'UserData' => $user,
         ]);
-
     }
 
     /**
@@ -121,9 +134,9 @@ class SponsorController extends Controller
     public function update(Request $request, Sponsor $sponsor)
     {
         $logo = $sponsor->logo;
-        if(Request::file('logo')){
-            Storage::delete('public/'.$sponsor->logo);
-            $logo = Request::file('logo')->store('sponsors','public');
+        if (Request::file('logo')) {
+            Storage::delete('public/' . $sponsor->logo);
+            $logo = Request::file('logo')->store('sponsors', 'public');
         }
 
         $sponsor->update([
@@ -145,9 +158,9 @@ class SponsorController extends Controller
         //     'link_file' => 'required|string|max:255'
         // ]);
         // Sponsor::create([
-            // 'name' => Request::input('name'),
-            // 'logo' => $logo,
-            // 'link_file' => Request::input('link_file')
+        // 'name' => Request::input('name'),
+        // 'logo' => $logo,
+        // 'link_file' => Request::input('link_file')
         // ]);
         // $sponsor->update($validatedData);
         // $sponsor->update($request->validated());
@@ -159,7 +172,10 @@ class SponsorController extends Controller
     public function destroy(Sponsor $sponsor)
     {
         // dd($sponsor);
-        Storage::delete('public/'.$sponsor->logo);
+        // $sponsor = Sponsor::find($id);
+        // Storage::delete('public/'.$sponsor->logo);
+
+        Storage::delete('public/' . $sponsor->logo);
         $sponsor->delete();
         return redirect()->route('sponsor.index');
     }

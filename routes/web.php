@@ -60,24 +60,18 @@ Route::middleware('auth')->group(function () {
 // -> user atau peserta
 Route::middleware('auth','verified','user')->group(function () {
     Route::get('/dashboard', [UserController::class, 'index'])->name('dashboard');
-
-
-    
     Route::get('/detailpeserta/{id}', [UserController::class, 'show']);
-    
     Route::resource('profilpeserta', ProfilePesertaController::class)->only([
         'create','store',
     ]);
+
     Route::resource('submission', SubmissionController::class)->only([
         'create','store',
     ]);
 
-
     Route::get('/notifikasipeserta', [UserController::class, 'notifikasipeserta']);
     Route::get('/reportpeserta', [UserController::class, 'reportpeserta']);
     Route::get('/detailtimreport', [UserController::class, 'detailtimreport']);
-
-
     Route::resource('daftarlomba', RegLombaController::class)->only([
         'index', 'show', 'store',
     ]);

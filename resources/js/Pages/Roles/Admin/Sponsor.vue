@@ -1,22 +1,11 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
-import { useForm } from "@inertiajs/vue3";
+import { Link, useForm } from '@inertiajs/vue3';
+import { defineProps } from "vue";
 import { Head } from "@inertiajs/vue3";
-import { onMounted, ref, computed } from 'vue';
 import { router } from "@inertiajs/vue3";
+import { onMounted, ref, computed } from 'vue';
 // import { usePage } from "@inertiajs/vue3";
 
-const { name, username, sponsors } = defineProps(['name', 'username', 'sponsors']);
-
-console.log(name); // Contoh penggunaan di dalam script setup
-console.log(username);
-
-// Definisikan properti yang diterima oleh komponen
-const props = {
-    sponsors: {
-        type: Array,
-    },
-};
 const unreadCount = ref(0);
 
 onMounted(async () => {
@@ -27,6 +16,19 @@ onMounted(async () => {
     console.error(error);
   }
 });
+
+const { name, username, sponsors } = defineProps(['name', 'username', 'sponsors']);
+
+console.log(name); // Contoh penggunaan di dalam script setup
+console.log(username);
+
+// Definisikan properti yang diterima oleh komponen
+// const props = {
+//     sponsors: {
+//         type: Array,
+//     },
+// };
+
 const deleteForm = useForm({});
 
 const deleteSponsor = (id) => {

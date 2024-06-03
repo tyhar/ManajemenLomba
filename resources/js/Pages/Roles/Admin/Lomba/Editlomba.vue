@@ -134,16 +134,6 @@ import Swal from 'sweetalert2'; // Import SweetAlert
 
 const { name, username, kriterias } = defineProps(['name', 'username', 'kriterias']);
 
-const props = {
-    sponsors: {
-        type: Object,
-        default: () => ({}),
-    },
-    logo: {
-        type: String,
-    },
-};
-
 const lomba = usePage().props.lombas;
 
 const form = useForm({

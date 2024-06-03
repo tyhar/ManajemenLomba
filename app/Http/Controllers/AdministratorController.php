@@ -29,6 +29,7 @@ class AdministratorController extends Controller
             'name' => $user->name,
             'username' => $user->username,
         ]);
+        
         return Inertia::render('Roles/Admin/Administrator', [
             'users' => User::all()->map(function($user) {
                 return [
@@ -84,9 +85,9 @@ class AdministratorController extends Controller
 
         $user = User::create($validatedData);
 
-        if ($request->has('selectedLomba')) {
-            $user->lomba()->attach($request->input('selectedLomba'));
-        }
+        // if ($request->has('selectedLomba')) {
+        //     $user->lomba()->attach($request->input('selectedLomba'));
+        // }
         return redirect()->route('administrator.index');
     }
 
@@ -101,7 +102,8 @@ class AdministratorController extends Controller
             'username' => $user->username,
         ]);
 
-        $users = User::with('lomba')->find($id);
+        // $users = User::with('lomba')->find($id);
+        $users = User::find($id);
         return Inertia::render('Roles/Admin/Administrator/Detailadministrator', [
             'users' => $users,
             'UserData' => $user
@@ -129,10 +131,9 @@ class AdministratorController extends Controller
      */
     public function destroy($id)
     {
-        // dd($user);
+        // dd($id);
         $user = User::find($id);
         $user->delete();
-        // $user->delete();
         return redirect()->route('administrator.index');
     }
 }

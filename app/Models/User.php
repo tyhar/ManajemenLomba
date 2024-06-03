@@ -20,7 +20,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<int, string>
      */
     protected $fillable = [
-        // 'lomba_id',
+        // 'lomba_id_petugas',
         'name',
         'username',
         'email',
@@ -58,15 +58,16 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     //relasi untuk role eventlomba, spesifik per lombanya
-    public function lomba()
-    {
-        return  $this->belongsToMany(Lomba::class,'user_lombas');
-    }
+    // public function lomba()
+    // {
+    //     return  $this->belongsTo(Lomba::class,'lomba_id_petugas');
+    // }
 
     public function hasVerifiedEmail()
     {
         return $this->email_verification_status === 'verified';
     }
+
     public function markEmailAsVerified()
     {
         $this->email_verification_status = 'verified';

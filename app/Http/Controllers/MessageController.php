@@ -8,7 +8,7 @@ use App\Models\Message;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User; 
+use App\Models\User;
 
 class MessageController extends Controller
 {
@@ -18,7 +18,7 @@ class MessageController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $messages = Message::all()->map(function($message) use ($user) {
+        $messages = Message::all()->map(function ($message) use ($user) {
             return [
                 'id' => $message->id,
                 'name' => $message->name,
@@ -32,12 +32,12 @@ class MessageController extends Controller
                 ],
             ];
         });
-    
+
         return Inertia::render('Roles/Admin/Pesan', [
             'messages' => $messages,
         ]);
     }
-    
+
     /**
      * Show the form for creating a new resource.
      */
@@ -50,7 +50,7 @@ class MessageController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {    
+    {
         // $request = Message::create([
         //     'name' => Request::input('name'),
         //     'email' => Request::input('email'),
@@ -102,10 +102,9 @@ class MessageController extends Controller
      */
     public function update(Request $request, Message $message)
     {
-       //
-    } 
-    
- 
+        //
+    }
+
     /**
      * Remove the specified resource from storage.
      */
@@ -114,52 +113,43 @@ class MessageController extends Controller
         $message->delete();
         return redirect()->route('pesan.index');
     }
+
     public function getUnreadMessageCount()
-{
-    $unreadCount = Message::where('status', 'belum_dibaca')->count();
-    
-    return response()->json(['unreadCount' => $unreadCount]);
-}
+    {
+        $unreadCount = Message::where('status', 'belum_dibaca')->count();
 
-
-
-
-
-
-public function getAllMessageCount(): JsonResponse
-{
-    try {
-        $allCount = Message::count();
-        return response()->json(['allCount' => $allCount], 200);
-    } catch (\Exception $e) {
-        return response()->json(['error' => 'Failed to retrieve message count', 'message' => $e->getMessage()], 500);
+        return response()->json(['unreadCount' => $unreadCount]);
     }
-}
 
-public function getAllParticipants(): JsonResponse
-{
-    try {
-        $allParticipants = User::count(); // Ganti 'User' dengan model yang sesuai jika berbeda
-        return response()->json(['allParticipants' => $allParticipants], 200);
-    } catch (\Exception $e) {
-        return response()->json(['error' => 'Failed to retrieve participants', 'message' => $e->getMessage()], 500);
+    public function getAllMessageCount(): JsonResponse
+    {
+        try {
+            $allCount = Message::count();
+            return response()->json(['allCount' => $allCount], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to retrieve message count', 'message' => $e->getMessage()], 500);
+        }
     }
-}
 
+    public function getAllParticipants(): JsonResponse
+    {
+        try {
+            $allParticipants = User::count(); // Ganti 'User' dengan model yang sesuai jika berbeda
+            return response()->json(['allParticipants' => $allParticipants], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to retrieve participants', 'message' => $e->getMessage()], 500);
+        }
+    }
 
+    public function updateStatus(Request $request, Message $message)
+    {
+        $request->validate([
+            'status' => 'required|in:sudah_dibaca,belum_dibaca',
+        ]);
 
-public function updateStatus(Request $request, Message $message)
-{
-    $request->validate([
-        'status' => 'required|in:sudah_dibaca,belum_dibaca',
-    ]);
+        $message->status = $request->status;
+        $message->save();
 
-    $message->status = $request->status;
-    $message->save();
-
-    return redirect()->route('pesan.index');
-}
-
-
-
+        return redirect()->route('pesan.index');
+    }
 }

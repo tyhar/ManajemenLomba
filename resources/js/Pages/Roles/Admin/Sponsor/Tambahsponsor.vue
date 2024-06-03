@@ -8,14 +8,13 @@ const { name, username } = defineProps(['name', 'username']);
 console.log(name); // Contoh penggunaan di dalam script setup
 console.log(username);
 
-
-
 const form = useForm({
     name: "",
     logo: null,
     link_file: "",
 });
 
+//use inertia 'form' object
 const submit = () => {
     form.post(route("sponsor.store"), {
         preserveScroll: true,

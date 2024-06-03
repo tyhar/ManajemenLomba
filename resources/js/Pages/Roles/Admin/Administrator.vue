@@ -1,20 +1,21 @@
 <script setup>
-import { Link, useForm} from "@inertiajs/vue3";
+import { Link, useForm } from "@inertiajs/vue3";
 import { defineProps } from "vue";
 import { Head } from "@inertiajs/vue3";
-import { router  } from "@inertiajs/vue3";
+import { router } from "@inertiajs/vue3";
 import { onMounted, ref, computed } from 'vue';
-
+// import axios from 'axios';
+// import { Inertia } from '@inertiajs/vue3';
 
 const unreadCount = ref(0);
 
 onMounted(async () => {
-  try {
-    const response = await axios.get('/api/unread-messages');
-    unreadCount.value = response.data.unreadCount;
-  } catch (error) {
-    console.error(error);
-  }
+    try {
+        const response = await axios.get('/api/unread-messages');
+        unreadCount.value = response.data.unreadCount;
+    } catch (error) {
+        console.error(error);
+    }
 });
 // Mendefinisikan properti yang diterima oleh komponen
 const { name, username, users } = defineProps(['name', 'username', 'users']);
@@ -24,44 +25,58 @@ const selectedRole = ref('all');
 
 // Membuat properti terkomputasi untuk menyaring pengguna berdasarkan peran yang dipilih
 const filteredUsers = computed(() => {
-  if (selectedRole.value === 'all') {
-    return users; // Mengembalikan semua pengguna jika 'Semua' dipilih
-  } else {
-    return users.filter(user => user.role === parseInt(selectedRole.value));
-  }
+    if (selectedRole.value === 'all') {
+        return users; // Mengembalikan semua pengguna jika 'Semua' dipilih
+    } else {
+        return users.filter(user => user.role === parseInt(selectedRole.value));
+    }
 });
 
 // Fungsi untuk memperbarui daftar pengguna sesuai dengan peran yang dipilih
 const filterUsers = () => {
-  console.log('Selected Role:', selectedRole.value);
-  // Di sini Anda dapat menambahkan logika untuk memperbarui daftar pengguna dari server, jika diperlukan
+    console.log('Selected Role:', selectedRole.value);
+    // Di sini Anda dapat menambahkan logika untuk memperbarui daftar pengguna dari server, jika diperlukan
 };
 
 // Fungsi untuk menghapus administrator
+// const deleteAdministrator = async (id) => {
+//   if (confirm("Are you sure you want to delete this user?")) {
+//     try {
+//       await axios.delete(route('administrator.destroy', id));
+//       // Remove the user from the local list to update the UI
+//       users.value = users.value.filter(user => user.id !== id);
+//     } catch (error) {
+//       console.error("Error deleting the user:", error);
+//     }
+//   }
+// };
+
+const deleteForm = useForm({});
+
 const deleteAdministrator = (id) => {
-  if (confirm("Are you sure you want to delete this user?")) {
-    deleteForm.delete(route("administrator.destroy", id), {
-      preserveScroll: true,
-    });
-  }
+    if (confirm("Are you sure you want to delete this user?")) {
+        deleteForm.delete(route("administrator.destroy", id), {
+            preserveScroll: true,
+        });
+    }
 };
 
 // Objek untuk memetakan nama peran berdasarkan nomor peran
 const roleNames = {
-  1: 'Admin',
-  2: 'Petugas',
-  3: 'User',
-  4: 'Juri',
+    1: 'Admin',
+    2: 'Petugas',
+    3: 'User',
+    4: 'Juri',
 };
 
 // Fungsi untuk mendapatkan nama peran berdasarkan nomor peran
 const getRoleName = (role) => {
-  return roleNames[role] || 'Unknown';
+    return roleNames[role] || 'Unknown';
 };
 
 // Fungsi untuk melihat detail pengguna
 const viewDetails = (userId) => {
-  // Logika untuk menavigasi ke halaman detail pengguna, jika diperlukan
+    // Logika untuk menavigasi ke halaman detail pengguna, jika diperlukan
 };
 
 </script>
@@ -78,7 +93,7 @@ const viewDetails = (userId) => {
                     </a>
                 </div>
                 <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
-            </div>
+                </div>
             </div>
             <!--navigation-->
             <ul class="metismenu" id="menu">
@@ -88,8 +103,8 @@ const viewDetails = (userId) => {
                         </div>
                         <div class="menu-title">Dashboard</div>
                     </a>
-                    </li>
-                    <li>
+                </li>
+                <li>
                     <a href="javascript:;" class="has-arrow">
                         <div class="parent-icon"><i class="fadeIn animated bx bx-plus-circle"></i>
                         </div>
@@ -111,18 +126,18 @@ const viewDetails = (userId) => {
                     </ul>
                 </li>
                 <li>
-                <a href="/partisipan">
-                    <div class="parent-icon"><i class="fadeIn animated bx bx-street-view"></i>
-                    </div>
-                    <div class="menu-title">Partisipan</div>
-                </a>
+                    <a href="/partisipan">
+                        <div class="parent-icon"><i class="fadeIn animated bx bx-street-view"></i>
+                        </div>
+                        <div class="menu-title">Partisipan</div>
+                    </a>
                 </li>
                 <li>
                     <a href="/pesan">
-            <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i></div>
-            <!-- Menampilkan jumlah pesan yang belum dibaca -->
-            <div class="menu-title">Pesan <span class="alert-count">{{ unreadCount }}</span></div>
-          </a>
+                        <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i></div>
+                        <!-- Menampilkan jumlah pesan yang belum dibaca -->
+                        <div class="menu-title">Pesan <span class="alert-count">{{ unreadCount }}</span></div>
+                    </a>
                 </li>
                 <li>
                     <a href="/rangking">
@@ -136,143 +151,133 @@ const viewDetails = (userId) => {
                         <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
                         </div>
                         <div class="menu-title">
-                            <Link class="menu-title"
-                                :href="route('logout')"
-                                method="post"
-                                as="button"
-                            >
-                                Logout
+                            <Link class="menu-title" :href="route('logout')" method="post" as="button">
+                            Logout
                             </Link>
                         </div>
                     </a>
                 </li>
             </ul>
             <!--end navigation-->
-            
+
         </div>
         <!--end sidebar wrapper -->
-            <!--start header -->
-            <header>
-                <div class="topbar d-flex align-items-center">
-                    <nav class="navbar navbar-expand">
-                        <div class="mobile-toggle-menu"><i class='bx bx-menu'></i>
-                        </div>
-                        <div class="search-bar flex-grow-1">
-                        </div>
-                        <div class="top-menu ms-auto">
-                            <ul class="navbar-nav align-items-center">
-                                <div class="user-info ps-3">
+        <!--start header -->
+        <header>
+            <div class="topbar d-flex align-items-center">
+                <nav class="navbar navbar-expand">
+                    <div class="mobile-toggle-menu"><i class='bx bx-menu'></i>
+                    </div>
+                    <div class="search-bar flex-grow-1">
+                    </div>
+                    <div class="top-menu ms-auto">
+                        <ul class="navbar-nav align-items-center">
+                            <div class="user-info ps-3">
                                 <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
                                 <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
-                                <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
+                            <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
+                            </div>
+                            <li class="nav-item dropdown dropdown-large">
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <div class="header-notifications-list">
+                                    </div>
                                 </div>
-                                <li class="nav-item dropdown dropdown-large">
-                                    <div class="dropdown-menu dropdown-menu-end">
-                                        <div class="header-notifications-list">
-                                        </div>
+                            </li>
+                            <li class="nav-item dropdown dropdown-large">
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <div class="header-message-list">
                                     </div>
-                                </li>
-                                <li class="nav-item dropdown dropdown-large">	
-                                    <div class="dropdown-menu dropdown-menu-end">
-                                        <div class="header-message-list">
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>		
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </header>
+        <!--end header -->
+        <!--start page wrapper -->
+        <div class="page-wrapper">
+            <div class="page-content">
+                <div class="ps-3">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-0 p-0">
+                            <li class="breadcrumb-item">
+                            </li>
+                        </ol>
                     </nav>
                 </div>
-            </header>
-            <!--end header -->
-            <!--start page wrapper -->
-            <div class="page-wrapper">
-                <div class="page-content">
-                    <div class="ps-3">
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb mb-0 p-0">
-                                <li class="breadcrumb-item">
-                                </li>                             
-                            </ol>
-                        </nav>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="mb-0 jarak-top-kurang5">Tabel Administrator</h4>
-                            <hr class="c-mt10" />		
-                            <a 
-                                class="btn btn-success jarak-top-kurang7" 
-                                :href="route('administrator.create')"
-                            >
-                                Tambah Administrator
-                            </a>
-                            <hr class="c-mt10" />    
-                            <div class="table-responsive">
-                                <label class="dropdown-crud">Tampilkan Role</label> 
-                                <select class="form-select2" v-model="selectedRole" @change="filterUsers">
-                                    <option value="all" selected>Semua</option>
-                                    <option value="1">Admin</option>
-                                    <option value="4">Juri</option>
-                                    <option value="2">Petugas</option>
-                                </select>
-                                <br><br>  
-                                <table id="example" class="table table-bordered">
-                                    <thead class="table-dark">
-                                        <tr>
-                                            <th class="width-id">ID</th>
-                                            <th class="crud-width-90">Nama</th>
-                                            <th class="crud-width-70">Username</th>
-                                            <th class="crud-width-110">Email</th>
-                                            <th class="crud-width-50">Role</th>
-                                            <!-- <th class="crud-width-90">Lomba</th>
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="mb-0 jarak-top-kurang5">Tabel Administrator</h4>
+                        <hr class="c-mt10" />
+                        <a class="btn btn-success jarak-top-kurang7" :href="route('administrator.create')">
+                            Tambah Administrator
+                        </a>
+                        <hr class="c-mt10" />
+                        <div class="table-responsive">
+                            <label class="dropdown-crud">Tampilkan Role</label>
+                            <select class="form-select2" v-model="selectedRole" @change="filterUsers">
+                                <option value="all" selected>Semua</option>
+                                <option value="1">Admin</option>
+                                <option value="4">Juri</option>
+                                <option value="2">Petugas</option>
+                            </select>
+                            <br><br>
+                            <table id="example" class="table table-bordered">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th class="width-id">ID</th>
+                                        <th class="crud-width-90">Nama</th>
+                                        <th class="crud-width-70">Username</th>
+                                        <th class="crud-width-110">Email</th>
+                                        <th class="crud-width-50">Role</th>
+                                        <!-- <th class="crud-width-90">Lomba</th>
                                             <th class="crud-width-90">Tanggal</th> -->
-                                            <th class="crud-width-50">Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr
-                                            v-for="user in filteredUsers"
-                                            :key="user.id"
-                                        >
-                                            <td>{{ user.id }}</td>
-                                            <td>{{ user.name }}</td>
-                                            <td>{{ user.username }}</td>
-                                            <td>{{ user.email }}</td>
-                                            <td>{{ getRoleName(user.role) }}</td>
-                                            <!-- <td>Lomba Desain</td>
+                                        <th class="crud-width-50">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="user in filteredUsers" :key="user.id">
+                                        <td>{{ user.id }}</td>
+                                        <td>{{ user.name }}</td>
+                                        <td>{{ user.username }}</td>
+                                        <td>{{ user.email }}</td>
+                                        <td>{{ getRoleName(user.role) }}</td>
+                                        <!-- <td>Lomba Desain</td>
                                             <td>Maret 1, 2024</td> -->
-                                            <td class="btn-crud">
-                                                <a 
-                                                    class="btn btn-secondary"
-                                                    :href="route('administrator.show', user.id)"
-                                                >
-                                                    <i class="bi bi-eye"></i>
-                                                </a>  
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>   
-                            </div>
+                                        <td class="btn-crud">
+                                            <a class="btn btn-secondary" :href="route('administrator.show', user.id)">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                            <button class="btn btn-danger" @click="deleteAdministrator(user.id)">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
-            <!--end page wrapper -->
-            <!--start overlay-->
-            <div class="overlay toggle-icon"></div>
-            <!--end overlay-->
-            <!--Start Back To Top Button--> 
-            <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
-            <!--End Back To Top Button-->
         </div>
-        <!--end wrapper-->
-        <!--end wrapper-->
-        <!--start switcher-->
-        <!--end switcher-->
+        <!--end page wrapper -->
+        <!--start overlay-->
+        <div class="overlay toggle-icon"></div>
+        <!--end overlay-->
+        <!--Start Back To Top Button-->
+        <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
+        <!--End Back To Top Button-->
+    </div>
+    <!--end wrapper-->
+    <!--end wrapper-->
+    <!--start switcher-->
+    <!--end switcher-->
 </template>
 
 <script>
-$(document).ready(function() {
-      $('#example').DataTable();
-} );
+$(document).ready(function () {
+    $('#example').DataTable();
+});
 </script>

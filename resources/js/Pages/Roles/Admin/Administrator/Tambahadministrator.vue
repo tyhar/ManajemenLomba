@@ -3,7 +3,6 @@ import { useForm, Link, router } from "@inertiajs/vue3";
 import { reactive } from "vue";
 import Swal from 'sweetalert2';
 
-
 const { name, username, lombas } = defineProps(['name', 'username', 'lombas']);
 
 console.log(name); // Contoh penggunaan di dalam script setup
@@ -70,26 +69,19 @@ function submit() {
                             </a>
                         </div>
                     </div>
-                    <!-- Mobile toggle menu -->
-                    <!-- Search bar -->
-                    <div class="search-bar flex-grow-1">
-                    </div>
-                    <!-- Top menu -->
+                    <div class="search-bar flex-grow-1"></div>
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
                                 <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
                                 <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
-                            <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
-                            </div>
+                            <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i></div>
                         </ul>
                     </div>
                 </nav>
             </div>
         </header>
-        <!--end header -->
-        <!--start page wrapper -->
         <div class="page-wrapper-new">
             <div class="page-content">
                 <div class="card">
@@ -101,18 +93,17 @@ function submit() {
                                 <div class="col-md-6 margin-top10-crud">
                                     <label class="c-mb5-black"><b>Nama Lengkap</b></label>
                                     <input
-                                        id="name" 
-                                        type="name" 
+                                        id="name"
+                                        type="name"
                                         class="form-control"
                                         v-model="form.name"
                                     >
                                 </div>
-
                                 <div class="col-md-6 margin-top10-crud">
                                     <label class="c-mb5-black"><b>Username</b></label>
                                     <input
                                         id="username"
-                                        type="username" 
+                                        type="username"
                                         class="form-control"
                                         v-model="form.username"
                                     >
@@ -120,32 +111,31 @@ function submit() {
                                 <div class="col-md-12 margin-top10-crud">
                                     <label class="c-mb5-black"><b>Email</b></label>
                                     <input
-                                        id="email" 
-                                        type="email" 
+                                        id="email"
+                                        type="email"
                                         class="form-control"
                                         v-model="form.email"
                                     >
                                 </div>
                                 <div>
-                                    <label for="inputChoosePassword"
-                                        class="form-label warna-hitam"><b>Password</b></label>
+                                    <label for="inputChoosePassword" class="form-label warna-hitam"><b>Password</b></label>
                                     <div class="input-group" id="show_hide_password">
-                                        <input 
-                                            type="password" 
+                                        <input
+                                            type="password"
                                             class="form-control border-end-0"
                                             id="password"
                                             v-model="form.password"
-                                        > 
-                                            <a href="javascript:;" class="input-group-text bg-transparent">
-                                                <i class='bx bx-hide'></i>
-                                            </a>
+                                        >
+                                        <a href="javascript:;" class="input-group-text bg-transparent">
+                                            <i class='bx bx-hide'></i>
+                                        </a>
                                     </div>
                                 </div>
                                 <div>
-                                    <label class="role-add "><b class="warna-hitam">Role</b></label>
-                                    <select 
-                                        class="form-select" 
-                                        id="role" 
+                                    <label class="role-add"><b class="warna-hitam">Role</b></label>
+                                    <select
+                                        class="form-select"
+                                        id="role"
                                         v-model="form.role"
                                     >
                                         <option selected disabled>Pilih Role</option>
@@ -154,26 +144,20 @@ function submit() {
                                         <option :value="2">Petugas</option>
                                     </select>
                                 </div>
-                                <div>
-                               <label class="role-add"><b class="warna-hitam">Lomba</b></label>
-                              <div>   
-                         <div class="form-check" v-for="lomba in lombas.data" :key="lomba.id">
-                       <input class="form-check-input" type="checkbox" :id="'lomba' + lomba.id" v-model="form.selectedLomba" :value="lomba.id">
-                       <label class="form-check-label" :for="'lomba' + lomba.id">{{ lomba.name_lomba }}</label>
-                       </div>
-                         </div>
-                               </div>                                   
+                                <div v-if="form.role == 2">
+                                    <label class="role-add"><b class="warna-hitam">Lomba</b></label>
+                                    <div>
+                                        <div class="form-check" v-for="lomba in lombas.data" :key="lomba.id">
+                                            <input class="form-check-input" type="checkbox" :id="'lomba' + lomba.id" v-model="form.selectedLomba" :value="lomba.id">
+                                            <label class="form-check-label" :for="'lomba' + lomba.id">{{ lomba.name_lomba }}</label>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="btn-posisi">
-                                    <button 
-                                        class="btn btn-primary button-tabel-right"
-                                        type="submit"
-                                    >
+                                    <button class="btn btn-primary button-tabel-right" type="submit">
                                         Tambah
                                     </button>
-                                    <a 
-                                        class="btn btn-danger button-tabel-left"
-                                        :href="route('administrator.index')"
-                                    >
+                                    <a class="btn btn-danger button-tabel-left" :href="route('administrator.index')">
                                         Batal
                                     </a>
                                 </div>
@@ -183,10 +167,10 @@ function submit() {
                 </div>
             </div>
         </div>
-
-        <!--end page wrapper -->
     </div>
-    </template>
+</template>
+
+
 <script>
 $(document).ready(function () {
     $("#show_hide_password a").on('click', function (event) {
@@ -203,3 +187,4 @@ $(document).ready(function () {
     });
 });
 </script>
+
