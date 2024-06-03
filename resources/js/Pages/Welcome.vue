@@ -92,9 +92,9 @@ function handleImageError() {
                                         <a class="nav-link common_btn" href="/login">Login</a>
                                     </div>
                                     <!-- <div v-if="canRegister" class="col"></div> -->
-                                    <div class="col">
+                                    <!--<div class="col">
                                         <a class="nav-link common_btn" href="/register">Register</a>
-                                    </div>
+                                    </div>-->
                                 </div>
                             </template>
                             <template v-else>

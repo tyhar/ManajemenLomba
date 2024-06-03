@@ -115,23 +115,24 @@ $(document).ready(function () {
                             <div class="row">
                                 <div class="col-md-6 margin-top10-crud">
                                     <label class="c-mb5-black"><b>Nama Lengkap</b></label>
-                                    <input id="name" type="name" class="form-control" v-model="form.name">
+                                    <input id="name" type="name" class="form-control" v-model="form.name" required>
                                 </div>
 
                                 <div class="col-md-6 margin-top10-crud">
                                     <label class="c-mb5-black"><b>Username</b></label>
-                                    <input id="username" type="username" class="form-control" v-model="form.username">
+                                    <input id="username" type="username" class="form-control" v-model="form.username"
+                                        required>
                                 </div>
                                 <div class="col-md-12 margin-top10-crud">
                                     <label class="c-mb5-black"><b>Email</b></label>
-                                    <input id="email" type="email" class="form-control" v-model="form.email">
+                                    <input id="email" type="email" class="form-control" v-model="form.email" required>
                                 </div>
                                 <div>
                                     <label for="inputChoosePassword"
                                         class="form-label warna-hitam"><b>Password</b></label>
                                     <div class="input-group" id="show_hide_password">
                                         <input type="password" v-model="form.password" class="form-control border-end-0"
-                                            id="inputChoosePassword"> <a href="javascript:;"
+                                            id="inputChoosePassword" required> <a href="javascript:;"
                                             class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
                                     </div>
                                 </div>

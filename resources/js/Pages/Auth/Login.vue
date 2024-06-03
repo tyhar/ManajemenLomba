@@ -97,15 +97,17 @@ function togglePasswordVisibility() {
 									{{ $page.props.flash.message }}
 								</div> -->
                             <div class="col-12">
+                                <label for="inputEmailAddress" class="form-label warna-hitam">Email</label>
                                 <input class="form-control" id="email" type="email" v-model="form.email" required
-                                    placeholder="Enter Email" />
+                                    placeholder="Email atau Username" />
                                 <InputError class="mt-2" :message="errors.email" />
                             </div>
                             <div class="col-12 c-mlk10">
+                                <label for="inputEmailAddress" class="form-label warna-hitam">Password</label>
                                 <div class="input-group" id="show_hide_password">
                                     <input class="form-control border-end-0" id="password"
                                         :type="showPassword ? 'text' : 'password'" v-model="form.password" required
-                                        placeholder="Enter Password" />
+                                        placeholder="Masukan Password" />
                                     <InputError class="mt-2" :message="errors.password" />
                                     <a href="javascript:;" class="input-group-text bg-transparent"
                                         @click="togglePasswordVisibility">

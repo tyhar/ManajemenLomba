@@ -49,8 +49,6 @@
                                     <div class="div-class">
                                         <a class="btn btn-pink c-mtkc" href="#">BUKU
                                             PANDUAN</a>
-                                        <a class="btn btn-warning c-mtk margin-afkar1 warna-hitam" href="#">AJUKAN
-                                            PERTANYAAN</a>
                                         <a class="btn btn-success c-mtk mg-t10 warna-hitam"
                                             :href="route('daftarlomba.index')">DAFTAR
                                             LOMBA</a>

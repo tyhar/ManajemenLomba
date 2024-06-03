@@ -40,8 +40,12 @@
                         <h4 class="mb-0">EDIT KRITERIA PENILAIAN</h4>
                         <hr />
                         <div class="row">
-                            <div class=" c-mb10">
-                                <label class="c-mb5-black"><b>Nama Kriteria</b></label>
+                            <div class="col-md-6 c-mb10">
+                                <label class="c-mb5-black"><b>Kriteria Penilaian</b></label>
+                                <input type="namalomba" class="form-control">
+                            </div>
+                            <div class="col-md-6 c-mb10">
+                                <label class="c-mb5-black"><b>Bobot (%)</b></label>
                                 <input type="namalomba" class="form-control">
                             </div>
                         </div>

@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 
 class PanelisController extends Controller
 {
-    public function index()
-    {
-        return Inertia::render('Roles/Panelis/Dashboardjuri');
-    }
+    // public function index()
+    // {
+    //     return Inertia::render('Roles/Panelis/Dashboardjuri');
+    // }
     // public function dashboardjuri()
     // {
     //     return Inertia::render('Roles/Panelis/Dashboardjuri');

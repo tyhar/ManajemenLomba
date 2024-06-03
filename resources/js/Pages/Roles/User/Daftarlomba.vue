@@ -98,7 +98,7 @@
                     <div class="card-body">
                         <h4 class="mb-0 jarak-teks1">DAFTAR LOMBA CYBER SECURITY</h4>
                         <div class="card">
-                            <h5 class="p-3">INFO TIM LOMBA</h5>
+                            <h5 class="p-3">TIM LOMBA</h5>
                             <hr class="garis">
                             <div class="row">
                                 <div class="col-md-2 jarak-daftar-lomba" v-if="team">
@@ -110,22 +110,12 @@
                                     <div class="data-tim">{{ team.instansi }}</div>
                                 </div>
                                 <div class="col-md-2 jarak-daftar-lomba" v-if="team">
-                                    <label class="c-mb5-black"><b>LOMBA</b></label>
-                                    <ul>
-                                        <li v-for="lomba in team.lomba" :key="lomba.id">{{ lomba.name_lomba }}</li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-2 jarak-daftar-lomba" v-if="team">
                                     <label class="c-mb5-black"><b>EMAIL</b></label>
                                     <div class="data-tim">{{ team.email }}</div>
                                 </div>
                                 <div class="col-md-2 jarak-daftar-lomba" v-if="team">
                                     <label class="c-mb5-black"><b>NO WHATSAPP</b></label>
                                     <div class="data-tim">{{ team.phone }}</div>
-                                </div>
-                                <div class="col-md-2 jarak-daftar-lomba" v-if="team">
-                                    <label class="c-mb5-black"><b>STATUS</b></label>
-                                    <div class="data-tim">{{ team.status }}</div>
                                 </div>
                                 <div class="col-md-2 jarak-daftar-lomba" v-if="team">
                                     <label class="c-mb5-black"><b>PEMBAYARAN</b></label>
@@ -139,7 +129,7 @@
                             </div>
                         </div>
                         <div class="card">
-                            <h5 class="p-3">Input Anggota Tim</h5>
+                            <h5 class="p-3">ANGGOTA TIM</h5>
                             <div class="row row-cards jarak-data-peserta">
                                 <div class="col-md-6 col-lg-3 crud-max-width260" v-for="member in teamMembers"
                                     :key="member.id">
@@ -219,13 +209,13 @@
                             <h5 class="p-3">PENGUMPULAN KARYA</h5>
                             <div class="card-body p-4 text-center">
                                 <div class="row">
-                                    <div class="col-md-3 text-left" v-if="submissions">
+                                    <div class="col-md-4 text-left" v-if="submissions">
                                         <label class="jarak-teks05"><b>JUDUL</b></label>
                                         <div class="data-tim">{{ submissions.title }}</div>
                                     </div>
                                     <div class="col-md-3 text-left" v-if="submissions">
-                                        <label class="jarak-teks05"><b>DESKRIPSI</b></label>
-                                        <div class="data-tim">{{ submissions.description }}</div>
+                                        <label class="jarak-teks05"><b>DOKUMEN</b></label>
+                                        <div class="data-tim"><a href="#">Lihat Dokumen</a></div>
                                     </div>
                                     <div class="col-md-3 text-left" v-if="submissions">
                                         <label class="jarak-teks05"><b>File</b></label>
@@ -233,14 +223,17 @@
                                                 File</a>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 text-left" v-if="submissions">
-                                        <label class="jarak-teks05"><b>LINK VIDEO</b></label>
-                                        <div class="data-tim c-mb-70"> <a :href="submissions.link" target="_blank">Link
-                                                Video</a></div>
+                                    <div class="col-md-2 text-left" v-if="submissions">
+                                        <label class="jarak-teks05"><b>LINK</b></label>
+                                        <div class="data-tim c-mb-70"><a href="#">Buka Link</a></div>
                                     </div>
                                     <div>
                                         <button onclick="window.location.href='/pengumpulankarya'"
                                             class="btn btn-primary radius-5 isi-data jarak-isi-data">Isi Data</button>
+                                    </div>
+                                    <div class="text-left" v-if="submissions">
+                                        <label class="jarak-teks05"><b>DESKRIPSI</b></label>
+                                        <div class="c-mb20 rata-tengah">{{ submissions.description }}</div>
                                     </div>
                                 </div>
                             </div>

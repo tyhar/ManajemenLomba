@@ -236,12 +236,14 @@ Route::post('/notifications', [NotifikasiController::class, 'store'])->name('not
 // -> panelis atau juri
 
 Route::middleware('auth', 'verified', 'panelis')->group(function () {
-    Route::get('/panelis', [PanelisController::class, 'index'])->name('panelis');
+    // Route::get('/panelis', [PanelisController::class, 'index'])->name('panelis');
 
     Route::resource('lombajuri', LombaJuriController::class)->only([
         'index',
         'show',
-    ]);
+    ])->names([
+                'index' => 'panelis',
+            ]);
 
     Route::resource('value', ValueController::class)->only([
         'index',

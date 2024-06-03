@@ -42,23 +42,32 @@
               <div class="row">
                 <div>
                   <label class="jarak-input"><b>Judul</b></label>
-                  <input v-model="form.title" type="text" class="form-control" required>
+                  <input v-model="form.title" type="text" class="form-control" placeholder="Masukan judul karya"
+                    required>
                 </div>
                 <div>
                   <label class="jarak-input"><b>Deskripsi</b></label>
                   <div class="col-12">
-                    <textarea class="form-control" id="inputProductDescription" rows="4" style="margin-bottom: 10px;"
-                      v-model="form.description"></textarea>
+                    <textarea class="c-mb10" id="descriptionaddl" rows="4" v-model="form.description"
+                      placeholder="Masukan deskripsi karya" required></textarea>
                   </div>
                 </div>
                 <div>
                   <label class="jarak-input"><b>Link</b></label>
-                  <input v-model="form.link" type="text" class="form-control" required>
+                  <input v-model="form.link" type="text" class="form-control" placeholder="Masukan link karya" required>
                 </div>
                 <div>
                   <label for="formFile" class="form-label jarak-teks12"><b>File</b></label>
                   <input class="form-control" type="file" name="file" v-on:change="handleFileUpload">
                 </div>
+                <p class="keterangan-foto f-italic">Max file size: 20MB</p>
+                <p class="keterangan-foto f-italic">Format:????</p>
+                <div>
+                  <label for="formFile" class="form-label jarak-teks12"><b>Surat</b></label>
+                  <input class="form-control" type="file" name="file">
+                </div>
+                <p class="keterangan-foto f-italic">Max file size: 10MB</p>
+                <p class="keterangan-foto f-italic">Format: .pdf</p>
               </div>
               <div class="btn-posisi">
                 <button type="submit" class="btn btn-primary button-tabel-right">Simpan</button>

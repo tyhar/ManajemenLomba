@@ -148,9 +148,15 @@ const submit = () => {
                                                         alt="Profile" class="rounded-circle p-1 bg-primary" width="190"
                                                         height="150">
                                                 </div>
-                                                <input type="file" class="form-control form-control-sm btn-profil2"
+                                                <input type="file"
+                                                    class="form-control form-control-sm btn-profil2 img-profil"
                                                     @change="e => form.photo = e.target.files[0]">
                                             </div>
+                                            <div class="c-mtk">
+                                                <p class="keterangan-foto f-italic">Max file size: 2MB</p>
+                                                <p class="keterangan-foto f-italic">Format: .jpg, .png, .jpeg</p>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>

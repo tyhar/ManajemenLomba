@@ -135,17 +135,17 @@
                                 <thead class="table-dark">
                                     <tr>
                                         <th class="width-id2">ID</th>
-                                        <th class="crud-width-400">Kritera</th>
-                                        <th class="crud-width120">Aksi</th>
+                                        <th class="crud-width-290">Kritera</th>
+                                        <th class="crud-width-50">Bobot</th>
+                                        <th class="crud-width60">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-for="kriteria in kriterias.data" :key="kriteria.id">
                                         <td>{{ kriteria.id }}</td>
                                         <td>{{ kriteria.name_kriteria }}</td>
+                                        <td>20% => Static</td>
                                         <td class="btn-crud">
-                                            <a class="btn btn-secondary" :href="route('kriteria.show', kriteria.id)"><i
-                                                    class="bi bi-eye"></i></a>
                                             <a class="btn btn-primary" href="/editkriteria"><i
                                                     class="bi bi-pencil-square"></i></a>
                                             <button class="btn btn-danger"><i class="bi bi-trash"

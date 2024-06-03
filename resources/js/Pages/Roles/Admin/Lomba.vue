@@ -138,7 +138,7 @@
                                     <tr>
                                         <th class="width-id">ID</th>
                                         <th class="crud-width-150">Nama Lomba</th>
-                                        <th>Deskripsi</th>
+                                        <th>Biaya Pendaftaran</th>
                                         <th>Nama PJ</th>
                                         <th>Kontak PJ</th>
                                         <th class="crud-width-180">Aksi</th>
@@ -148,7 +148,7 @@
                                     <tr v-for="lomba in lombas.data" :key="lomba.id">
                                         <td>{{ lomba.id }}</td>
                                         <td>{{ lomba.name_lomba }}</td>
-                                        <td>{{ lomba.description }}</td>
+                                        <td>{{ lomba.biaya_pendaftaran }}</td>
                                         <td>{{ lomba.pj }}</td>
                                         <td>{{ lomba.kontak }}</td>
                                         <td class="btn-crud">

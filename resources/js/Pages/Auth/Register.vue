@@ -58,41 +58,47 @@ function loginWithGoogle() {
                         <div class="text-center">
                             <h3>Buat Akun</h3>
                         </div>
-                        <br><br>
+                        <br>
                         <form class="row g-3" @submit.prevent="submit">
                             <div class="col-12">
-                                <input v-model="form.name" type="text" class="form-control" id="inputNamaLengkap"
-                                    placeholder="Nama lengkap">
+                                <label for="inputEmailAddress" class="form-label warna-hitam jb-k5">Nama
+                                    Lengkap</label>
+                                <input v-model="form.name" type="text" class="form-control jb-k5" id="inputNamaLengkap"
+                                    placeholder="Masukan Nama Lengkap">
                             </div>
                             <div class="col-12">
-                                <input v-model="form.username" type="text" class="form-control" id="inputUsername"
-                                    placeholder="Username">
+                                <label for="inputUsername" class="form-label warna-hitam jb-k5">Username</label>
+                                <input v-model="form.username" type="text" class="form-control jb-k5" id="
+                                    inputUsername" placeholder="Masukan Username">
                             </div>
                             <div class="col-12">
-                                <input v-model="form.email" type="email" class="form-control" id="inputEmailAddress"
-                                    placeholder="Email">
+                                <label for="inputEmailAddress" class="form-label warna-hitam jb-k5">Email</label>
+                                <input v-model="form.email" type="email" class="form-control"
+                                    placeholder="Masukan Email">
                                 <InputError class="mt-2" :message="form.errors.email" />
                             </div>
-                            <div class="col-12 jarak-top-lebih6">
-                                <label for="password" value="Password" class="form-label">Password</label>
+                            <div class="col-12 jarak-top-lebih10">
+                                <label for="password" value="Password"
+                                    class="form-label warna-hitam jb-k5">Password</label>
                                 <div class="input-group" id="show_hide_password">
                                     <input id="password" v-model="form.password" required
                                         :type="showPassword ? 'text' : 'password'" class="form-control border-end-0"
-                                        placeholder="Enter Password" autofocus autocomplete="new-password">
+                                        placeholder="Masukan Password" autofocus autocomplete="new-password">
                                     <a href="javascript:;" class="input-group-text bg-transparent"
                                         @click="togglePasswordVisibility">
                                         <i :class="showPassword ? 'bx bx-show' : 'bx bx-hide'"></i>
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-12 jarak-top-lebih6">
-                                <label for="password_confirmation" value="Password" class="form-label">Confirm
+                            <div class="col-12 jarak-top-lebih10">
+                                <label for="password_confirmation" value="Password"
+                                    class="form-label warna-hitam jb-k5">Confirm
                                     Password</label>
                                 <div class="input-group" id="show_hide_password_confirmation">
                                     <input id="password_confirmation" v-model="form.password_confirmation" required
                                         :type="showPasswordConfirmation ? 'text' : 'password'"
-                                        class="form-control border-end-0" placeholder="Confirm Password" autofocus
-                                        autocomplete="new-password">
+                                        class="form-control border-end-0" placeholder="Masukan Password Kembali"
+                                        autofocus autocomplete="new-password">
                                     <a href="javascript:;" class="input-group-text bg-transparent"
                                         @click="togglePasswordConfirmationVisibility">
                                         <i :class="showPasswordConfirmation ? 'bx bx-show' : 'bx bx-hide'"></i>
@@ -102,7 +108,7 @@ function loginWithGoogle() {
                             <div class="col-12 jarak-top-lebih12">
                                 <div class="d-grid">
                                     <button class="btn btn-primary w-100" :disabled="form.processing">
-                                        <i class='bx bx-user'></i>Register
+                                        <i class='bx bx-user'></i>Registrasi
                                     </button>
                                 </div>
                                 <div class="login-separater text-center mb-4 jarak-top-kurang18">
@@ -121,8 +127,8 @@ function loginWithGoogle() {
                                 <div class="text-center jarak-top-kurang12">
                                     <br>
                                     <p>
-                                        Sudah punya akun?
-                                        <a :href="route('login')">Login</a>
+                                        Sudah memiliki akun?
+                                        <a :href="route('login')">Masuk disini</a>
                                     </p>
                                 </div>
                             </div>

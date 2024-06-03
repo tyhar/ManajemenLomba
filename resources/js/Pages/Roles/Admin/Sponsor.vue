@@ -194,8 +194,9 @@ const deleteSponsor = (id) => {
                                         </td>
                                         <td>
                                             <!-- {{ sponsor.logo }} -->
-                                            <img :src="sponsor.logo" class="w-8 h-8 rounded" style="width: 120px;"
-                                                alt="no image" />
+                                            <!-- <img :src="sponsor.logo" class="w-8 h-8 rounded" style="width: 120px;"
+                                                alt="no image" /> -->
+                                            NAMA FILE
                                         </td>
                                         <td>
                                             {{ sponsor.link_file }}

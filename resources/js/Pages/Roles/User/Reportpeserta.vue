@@ -81,17 +81,15 @@
             <div class="page-content">                
                     <div class="card card-height200">
                     <div class="card-body">
-                        <label class="keterangan jarak-bottom-kurang20">TIDAK LOLOS</label>
+                        <label class="keterangan1 jarak-bottom-kurang20">MENUNGGU</label>
+                        <!-- <label class="keterangan2 jarak-bottom-kurang20">TERVERIFIKASI</label>
+                        <label class="keterangan3 jarak-bottom-kurang20">TIDAK LOLOS</label>
+                        <label class="keterangan4 jarak-bottom-kurang20">TIDAK LOLOS</label> -->
                         <br><br>
                         <div class="row">
                             <div class="label-left">
                                 <h5 class="judul-report"><b>Poster Keamanan Data</b></h5>
                                 <div class="judul-lomba-index">Olinas Periode 2024</div>
-                                <!-- <div class="d-flex justify-content-end posisi-mb7 cnew">
-                                    <a class="btn btn-danger crud-width150" href="#">
-                                        <i class="bi bi-download icon-dow"></i>Upload
-                                    </a>
-                                </div> -->
                                 <div class="d-flex justify-content-end posisi-mb7 cnew">
                                     <a :href="downloadLink" class="btn btn-success crud-width150">
                                         <i class="bi bi-download icon-dow"></i>Download

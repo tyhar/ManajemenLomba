@@ -199,6 +199,7 @@ const viewDetails = (userId) => {
                                         <!-- <th class="crud-width-90">Lomba</th>
                                         <th class="crud-width-90">Tanggal</th> -->
                                         <th class="crud-width-50">Aksi</th>
+                                        <th class="crud-width-20">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -214,6 +215,9 @@ const viewDetails = (userId) => {
                                             <a class="btn btn-secondary" :href="route('administrator.show', user.id)">
                                                 <i class="bi bi-eye"></i>
                                             </a>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" />
                                         </td>
                                     </tr>
                                 </tbody>

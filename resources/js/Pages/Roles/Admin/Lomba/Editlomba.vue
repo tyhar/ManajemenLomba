@@ -59,13 +59,16 @@
                                         <label for="picture" class="form-label judul-form"><b>Gambar</b></label>
                                         <input type="file" id="picture" accept="image/*" class="form-control"
                                             @input="form.picture = $event.target.files[0]">
-                                        <p class="keterangan-foto">Ukuran 500 x 500</p>
+                                        <p class="keterangan-foto f-italic">Max file size: 2MB (500 x 500 px)</p>
+                                        <p class="keterangan-foto f-italic">Format: .jpg, .png, .jpeg</p>
                                     </div>
+                                    <br>
                                     <div>
                                         <label for="sertifikat" class="form-label judul-form"><b>Sertifikat</b></label>
                                         <input type="file" id="sertifikat" accept="image/*" class="form-control"
                                             @input="form.sertifikat = $event.target.files[0]">
-                                        <p class="keterangan-foto">Max 2 MB</p>
+                                        <p class="keterangan-foto f-italic">Max file size: 2MB (500 x 500 px)</p>
+                                        <p class="keterangan-foto f-italic">Format: .jpg, .png, .jpeg</p>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -81,7 +84,8 @@
                                             id="biaya_pendaftaran">
                                     </div>
                                     <div>
-                                        <label class="role-add"><b class="warna-hitam">Kriteria Lomba</b></label>
+                                        <label class="role-add"><b class="warna-hitam">Kriteria Penilaian
+                                                (0%/100%)</b></label>
                                         <div>
                                             <div class="form-check" v-for="kriteria in kriterias.data"
                                                 :key="kriteria.id">
