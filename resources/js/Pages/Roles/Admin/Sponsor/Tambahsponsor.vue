@@ -93,12 +93,12 @@ const submit = () => {
                                 <p class="keterangan-foto f-italic">Format: .jpg, .png, .jpeg</p>
                             </div>
                             <div class="btn-posisi">
-                                <button type="submit" class="btn btn-primary button-tabel-right">
-                                    Tambah
-                                </button>
-                                <a class="btn btn-danger button-tabel-left" :href="route('sponsor.index')">
+                                <a class="btn btn-danger button-left" :href="route('sponsor.index')">
                                     Batal
                                 </a>
+                                <button type="submit" class="btn btn-primary button-right">
+                                    Tambah
+                                </button>
                             </div>
                         </form>
                     </div>

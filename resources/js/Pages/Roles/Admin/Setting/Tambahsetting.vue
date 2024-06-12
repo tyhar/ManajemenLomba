@@ -89,8 +89,8 @@ const submit = () => {
                                 </div>
                                 <div class="c-mb10">
                                     <label for="deskripsi" class="c-mb5-black"><b>Deskripsi</b></label>
-                                    <input type="text" class="form-control" v-model="form.deskripsi"
-                                        placeholder="Masukan deskripsi event" id="deskripsi" required />
+                                    <textarea rows="4" v-model="form.deskripsi" placeholder="Masukan deskripsi event"
+                                        id="descriptionaddl" required></textarea>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5 c-mb10">
@@ -108,11 +108,22 @@ const submit = () => {
                                         <input type="date" class="form-control label-8" v-model="form.berakhir"
                                             id="berakhir" />
                                     </div>
-
+                                    <div class="c-mb10">
+                                        <label for="deskripsi" class="c-mb5-black"><b>Deskripsi Mulai
+                                                Pendaftaran</b></label>
+                                        <textarea rows="2" placeholder="Masukan deskripsi mulai pendaftaran"
+                                            id="descriptionaddl" required></textarea>
+                                    </div>
                                     <div class="c-mb10">
                                         <label for="karya" class="form-label warna-hitam"><b>Pengumpulan
                                                 Karya</b></label>
                                         <input type="date" class="form-control label-8 date370" id="karya" />
+                                    </div>
+                                    <div class="c-mb10">
+                                        <label for="deskripsi" class="c-mb5-black"><b>Deskripsi Pengumpulan
+                                                Karya</b></label>
+                                        <textarea rows="2" placeholder="Masukan deskripsi pengumpulan karya"
+                                            id="descriptionaddl" required></textarea>
                                     </div>
                                     <div class="c-mb10">
                                         <label for="finalis" class="form-label warna-hitam"><b>Pengumuman
@@ -120,9 +131,21 @@ const submit = () => {
                                         <input type="date" class="form-control label-8 date370" id="finalis" />
                                     </div>
                                     <div class="c-mb10">
+                                        <label for="deskripsi" class="c-mb5-black"><b>Deskripsi Pengumuan
+                                                Finalis</b></label>
+                                        <textarea rows="2" placeholder="Masukan deskripsi timeline" id="descriptionaddl"
+                                            required></textarea>
+                                    </div>
+                                    <div class="c-mb10">
                                         <label for="mulai" class="form-label warna-hitam"><b>Presentasi
                                                 Finalis</b></label>
                                         <input type="date" class="form-control label-8 date370" />
+                                    </div>
+                                    <div class="c-mb10">
+                                        <label for="deskripsi" class="c-mb5-black"><b>Deskripsi Presentasi
+                                                Finalis</b></label>
+                                        <textarea rows="2" placeholder="Masukan deskripsi timeline" id="descriptionaddl"
+                                            required></textarea>
                                     </div>
                                 </div>
                                 <div class="c-mb10">
@@ -171,12 +194,8 @@ const submit = () => {
                                 </div>
                             </div>
                             <div class="btn-posisi">
-                                <button type="submit" class="btn btn-primary button-tabel-right">
-                                    Tambah
-                                </button>
-                                <a class="btn btn-danger button-tabel-left" :href="route('setting.index')">
-                                    Batal
-                                </a>
+                                <a class="btn btn-danger button-left" :href="route('setting.index')">Batal</a>
+                                <button type="submit" class="btn btn-primary button-right">Tambah</button>
                             </div>
                         </div>
                     </form>

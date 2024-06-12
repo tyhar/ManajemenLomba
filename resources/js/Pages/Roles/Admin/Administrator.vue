@@ -141,7 +141,7 @@ const viewDetails = (userId) => {
                         </div>
                         <div class="menu-title">
                             <Link class="menu-title" :href="route('logout')" method="post" as="button">
-                            Logout
+                            Keluar
                             </Link>
                         </div>
                     </a>
@@ -198,7 +198,7 @@ const viewDetails = (userId) => {
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0 jarak-top-kurang5">Tabel Administrator</h4>
+                        <h4 class="mb-0 jarak-top-kurang5">TABEL ADMINISTRATOR</h4>
                         <hr class="c-mt10" />
                         <a class="btn btn-success jarak-top-kurang7" :href="route('administrator.create')">
                             Tambah Administrator

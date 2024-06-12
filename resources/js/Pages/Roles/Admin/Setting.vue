@@ -89,7 +89,7 @@ defineProps({
                         </div>
                         <div class="menu-title">
                             <Link class="menu-title" :href="route('logout')" method="post" as="button">
-                            Logout
+                            Keluar
                             </Link>
                         </div>
                     </a>
@@ -138,7 +138,7 @@ defineProps({
             <div class="page-content">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0 jarak-top-kurang5">Setting Event</h4>
+                        <h4 class="mb-0 jarak-top-kurang5">TABEL SETTING</h4>
                         <hr class="c-mt10" />
                         <a class="btn btn-success jarak-top-kurang7" :href="route('setting.create')">
                             Tambah Event

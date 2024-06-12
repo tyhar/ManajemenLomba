@@ -36,7 +36,7 @@ import { Link } from '@inertiajs/vue3';
                         </div>
                         <div class="menu-title">
                             <Link class="menu-title" :href="route('logout')" method="post" as="button">
-                            Logout
+                            Keluar
                             </Link>
                         </div>
                     </a>
@@ -92,15 +92,8 @@ import { Link } from '@inertiajs/vue3';
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0 jarak-top-kurang5">Tabel Ranking Lomba UI / UX</h4>
+                        <h4 class="mb-0 jarak-top-kurang5">TABEL RANGKING LOMBA UI / UX</h4>
                         <hr class="c-mt10" />
-                        <label class="jarak-filterstatus">Filter by Status</label>
-                        <select class="form-select2">
-                            <option selected>Semua</option>
-                            <option>Tidak Lolos</option>
-                            <option>Lolos</option>
-                        </select>
-                        <br><br>
                         <div class="table-responsive">
                             <table class="table table-bordered">
                                 <thead class="table-dark">
@@ -163,15 +156,8 @@ import { Link } from '@inertiajs/vue3';
                 </div>
                 <div class=" card">
                     <div class="card-body">
-                        <h4 class="mb-0 jarak-top-kurang5">Tabel Ranking Lomba AR / VR</h4>
+                        <h4 class="mb-0 jarak-top-kurang5">TABEL RANGKING LOMBA AR / VR</h4>
                         <hr class="c-mt10" />
-                        <label class="jarak-filterstatus">Filter by Status</label>
-                        <select class="form-select2">
-                            <option selected>Semua</option>
-                            <option>Tidak Lolos</option>
-                            <option>Lolos</option>
-                        </select>
-                        <br><br>
                         <div class="table-responsive">
                             <table class="table table-bordered">
                                 <thead class="table-dark">
@@ -195,7 +181,7 @@ import { Link } from '@inertiajs/vue3';
                                         <td></td>
                                         <td>Universitas</td>
                                         <td></td>
-                                        <td>Tidak Lolos</td>
+                                        <td>Lolos</td>
                                     </tr>
                                     <tr>
                                         <td class="radius-10 border-start border-0 border-3 border-primary">2</td>
@@ -205,7 +191,7 @@ import { Link } from '@inertiajs/vue3';
                                         <td></td>
                                         <td>Universitas</td>
                                         <td></td>
-                                        <td>Tidak Lolos</td>
+                                        <td>Lolos</td>
                                     </tr>
                                     <tr>
                                         <td class="radius-10 border-start border-0 border-3 border-primary">3</td>
@@ -215,7 +201,7 @@ import { Link } from '@inertiajs/vue3';
                                         <td></td>
                                         <td>Universitas</td>
                                         <td></td>
-                                        <td>Tidak Lolos</td>
+                                        <td>Lolos</td>
                                     </tr>
                                     <tr>
                                         <td class="radius-10 border-start border-0 border-3 border-warning">4</td>
@@ -225,7 +211,7 @@ import { Link } from '@inertiajs/vue3';
                                         <td></td>
                                         <td>Universitas</td>
                                         <td></td>
-                                        <td>Tidak Lolos</td>
+                                        <td>Lolos</td>
                                     </tr>
                                 </tbody>
                             </table>

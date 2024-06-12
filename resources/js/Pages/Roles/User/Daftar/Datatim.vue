@@ -69,8 +69,8 @@
                                 <p class="keterangan-foto f-italic">Format: .jpg, .png, .jpeg</p>
                             </div>
                             <div class="btn-posisi">
-                                <button type="submit" class="btn btn-primary button-tabel-right">Simpan</button>
-                                <button class="btn btn-danger button-tabel-left" @click="goBack()">Batal</button>
+                                <button class="btn btn-danger button-left" @click="goBack()">Batal</button>
+                                <button type="submit" class="btn btn-primary button-right">Simpan</button>
                             </div>
                         </form>
                     </div>

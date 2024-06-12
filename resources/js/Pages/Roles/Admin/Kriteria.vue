@@ -71,7 +71,7 @@
                     <a href="/">
                         <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
                         </div>
-                        <div class="menu-title">Logout</div>
+                        <div class="menu-title">Keluar</div>
                     </a>
                 </li>
             </ul>
@@ -125,7 +125,7 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0 jarak-top-kurang5">Tabel Kriteria</h4>
+                        <h4 class="mb-0 jarak-top-kurang5">TABEL KRITERIA</h4>
                         <hr class="c-mt10" />
                         <a class="btn btn-success jarak-top-kurang7" :href="route('lomba.index')">Lomba</a>
                         <a class="btn btn-info jarak-top-kurang7" :href="route('kriteria.create')">Tambah Kriteria</a>

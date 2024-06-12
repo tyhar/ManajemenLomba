@@ -57,8 +57,8 @@
                             <button class="btn btn-secondary" @click="addKriteria"><i class="fas fa-plus"></i> Tambah
                                 Kriteria</button>
                             <div class="btn-posisi">
-                                <button type="submit" class="btn btn-primary button-tabel-right">Tambah</button>
-                                <button class="btn btn-danger button-tabel-left" @click="goBack()">Batal</button>
+                                <button class="btn btn-danger button-left" @click="goBack()">Batal</button>
+                                <button type="submit" class="btn btn-primary button-right">Tambah</button>
                             </div>
                         </form>
                     </div>

@@ -98,8 +98,8 @@
                 </div>
               </div>
               <div class="btn-posisi">
-                <button type="submit" class="btn btn-primary button-tabel-right">Tambah</button>
-                <a class="btn btn-danger button-tabel-left" :href="route('lomba.index')">Batal</a>
+                <a class="btn btn-danger button-left" :href="route('lomba.index')">Batal</a>
+                <button type="submit" class="btn btn-primary button-right">Tambah</button>
               </div>
             </form>
           </div>

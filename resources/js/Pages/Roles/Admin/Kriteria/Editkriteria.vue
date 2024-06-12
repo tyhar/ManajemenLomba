@@ -50,10 +50,10 @@
                             </div>
                         </div>
                         <div class="btn-posisi">
-                            <button class="btn btn-primary button-tabel-right"
-                                onclick="window.location.href='/kriteria'">Simpan</button>
-                            <button class="btn btn-danger button-tabel-left"
+                            <button class="btn btn-danger button-left"
                                 onclick="window.location.href='/kriteria'">Batal</button>
+                            <button class="btn btn-primary button-right"
+                                onclick="window.location.href='/kriteria'">Simpan</button>
                         </div>
                     </div>
                 </div>

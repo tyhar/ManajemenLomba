@@ -104,7 +104,7 @@ onMounted(async () => {
                         </div>
                         <div class="menu-title">
                             <Link class="menu-title" :href="route('logout')" method="post" as="button">
-                            Logout
+                            Keluar
                             </Link>
                         </div>
                     </a>
@@ -159,14 +159,14 @@ onMounted(async () => {
                                 <div class="card radius-15 card-overview">
                                     <img src="/bootstrap/images/desain.jpg" alt="New Image" class="border-radius">
                                     <label class="judul-overview">UI / UX</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/tabeltim">Daftar Tim</a>
+                                    <a class="btn btn-primary btn-landing-page2" href="/tabeltim">Lihat Tim</a>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="card radius-15 card-overview">
                                     <img src="/bootstrap/images/ar-vr.jpg" alt="New Image" class="border-radius">
                                     <label class="judul-overview">AR / VR</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/tabeltim">Daftar Tim</a>
+                                    <a class="btn btn-primary btn-landing-page2" href="/tabeltim">Lihat Tim</a>
                                 </div>
                             </div>
                             <div class="col">
@@ -174,7 +174,7 @@ onMounted(async () => {
                                     <img src="/bootstrap/images/aplikasi-mobile.jpg" alt="New Image"
                                         class="border-radius">
                                     <label class="judul-overview">APLIKASI MOBILE</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/tabeltim">Daftar Tim</a>
+                                    <a class="btn btn-primary btn-landing-page2" href="/tabeltim">Lihat Tim</a>
                                 </div>
                             </div>
                             <div class="col">
@@ -182,7 +182,7 @@ onMounted(async () => {
                                     <img src="/bootstrap/images/desain-website.jpg" alt="New Image"
                                         class="border-radius">
                                     <label class="judul-overview">DESAIN WEBSITE</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/tabeltim">Daftar Tim</a>
+                                    <a class="btn btn-primary btn-landing-page2" href="/tabeltim">Lihat Tim</a>
                                 </div>
                             </div>
                             <div class="col">
@@ -190,14 +190,14 @@ onMounted(async () => {
                                     <img src="/bootstrap/images/sistem-keamanan-data.jpg" alt="New Image"
                                         class="border-radius">
                                     <label class="judul-overview">SISTEM KEAMANAN DATA</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/tabeltim">Daftar Tim</a>
+                                    <a class="btn btn-primary btn-landing-page2" href="/tabeltim">Lihat Tim</a>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="card radius-15 card-overview">
                                     <img src="/bootstrap/images/membuat-game.jpg" alt="New Image" class="border-radius">
                                     <label class="judul-overview">UI / UX</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/tabeltim">Daftar Tim</a>
+                                    <a class="btn btn-primary btn-landing-page2" href="/tabeltim">Lihat Tim</a>
                                 </div>
                             </div>
                         </div>

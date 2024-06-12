@@ -74,9 +74,8 @@
                                 <p class="keterangan-foto f-italic">Format: .jpg, .png, .jpeg</p>
                             </div>
                             <div class="btn-posisi">
-                                <button class="btn btn-primary button-tabel-right" type="submit">Simpan</button>
-                                <a class="btn btn-danger button-tabel-left"
-                                    onclick="window.location.href='/berita'">Batal</a>
+                                <a class="btn btn-danger button-left" onclick="window.location.href='/berita'">Batal</a>
+                                <button class="btn btn-primary button-right" type="submit">Simpan</button>
                             </div>
                         </form>
                     </div>

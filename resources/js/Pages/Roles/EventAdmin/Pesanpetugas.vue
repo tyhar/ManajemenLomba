@@ -119,7 +119,7 @@ const filteredMessages = computed(() => {
                         </div>
                         <div class="menu-title">
                             <Link class="menu-title" :href="route('logout')" method="post" as="button">
-                            Logout
+                            Keluar
                             </Link>
                         </div>
                     </a>
@@ -175,7 +175,7 @@ const filteredMessages = computed(() => {
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0 jarak-top-kurang5">Tabel Pesan</h4>
+                        <h4 class="mb-0 jarak-top-kurang5">TABEL PESAN</h4>
                         <hr class="c-mt10" />
                         <label class="jarak-filterstatus">Filter by Status</label>
                         <select class="form-select2" v-model="selectedStatus">

@@ -14,7 +14,7 @@
             <!--navigation-->
             <ul class="metismenu" id="menu">
                 <li>
-                    <a href="/index2">
+                    <a :href="route('admin')">
                         <div class="parent-icon"><i class='bx bx-home-circle'></i>
                         </div>
                         <div class="menu-title">Dashboard</div>
@@ -71,7 +71,7 @@
                     <a href="/">
                         <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
                         </div>
-                        <div class="menu-title">Logout</div>
+                        <div class="menu-title">Keluar</div>
                     </a>
                 </li>
             </ul>
@@ -124,7 +124,7 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0 jarak-top-kurang5">Tabel Rangking</h4>
+                        <h4 class="mb-0 jarak-top-kurang5">TABEL RANGKING UI / UX</h4>
                         <hr class="c-mt10" />
                         <label class="jarak-filterstatus">Filter by Status</label>
                         <select class="form-select2">

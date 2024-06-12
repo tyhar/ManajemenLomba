@@ -107,7 +107,7 @@ onMounted(async () => {
                         </div>
                         <div class="menu-title">
                             <Link class="menu-title" :href="route('logout')" method="post" as="button">
-                            Logout
+                            Keluar
                             </Link>
                         </div>
                     </a>
@@ -156,7 +156,7 @@ onMounted(async () => {
             <div class="page-content">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0 jarak-top-kurang5">Tabel Berita</h4>
+                        <h4 class="mb-0 jarak-top-kurang5">TABEL KRITERIA</h4>
                         <hr class="c-mt10" />
                         <button class="btn btn-success jarak-top-kurang7"
                             onclick="window.location.href='/berita/tambah-berita'">Tambah Berita</button>

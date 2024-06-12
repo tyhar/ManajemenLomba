@@ -125,12 +125,12 @@ const submit = () => {
                             <div class="btn-posisi">
                                 <!-- <button class="btn btn-primary button-tabel-right" onclick="window.location.href='/sponsor'">Tambah</button>
                                 <button class="btn btn-danger button-tabel-left" onclick="window.location.href='/sponsor'">Batal</button> -->
-                                <button type="submit" class="btn btn-primary button-tabel-right">
-                                    Update
-                                </button>
-                                <a class="btn btn-danger button-tabel-left" :href="route('sponsor.index')">
+                                <a class="btn btn-danger button-left" :href="route('sponsor.index')">
                                     Batal
                                 </a>
+                                <button type="submit" class="btn btn-primary button-right">
+                                    Update
+                                </button>
                             </div>
                         </form>
                     </div>
