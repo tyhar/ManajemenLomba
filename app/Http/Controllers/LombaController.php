@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\LombaResource;
 use App\Models\Lomba;
 use App\Models\User;
+use App\Models\Setting;
 use App\Models\Kriteria;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -23,9 +24,16 @@ class LombaController extends Controller
     {
         
         $lomba = LombaResource::collection(Lomba::all());
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });     
 
         return Inertia::render('Roles/Admin/Lomba', [
             'lombas' => $lomba,
+            'settings' => $settings,
         ]);
     }
 
@@ -36,10 +44,17 @@ class LombaController extends Controller
     {
 
         $kriteria = KriteriaResource::collection(Kriteria::all());
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });
 
           
         return Inertia::render('Roles/Admin/Lomba/Tambahlomba', [
             'kriteriaz' => $kriteria,
+            'settings' => $settings,
         ]);
             
      
@@ -89,6 +104,12 @@ class LombaController extends Controller
 
         // Ambil objek Lomba dari parameter metode
         $lomba = Lomba::with('kriteria')->find($lomba->id);
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });     
       
         // Buat variabel untuk menyimpan URL gambar dan sertifikat
         $pictureUrl = null;
@@ -130,6 +151,7 @@ class LombaController extends Controller
             'lomba' => $lomba,
             'pictureUrl' => $pictureUrl,
             'sertifikatUrl' => $sertifikatUrl,
+            'settings' => $settings,
         ]);
     }
     
@@ -141,6 +163,12 @@ class LombaController extends Controller
     {
         // Mengambil semua kriteria yang tersedia
         $kriteria = KriteriaResource::collection(Kriteria::all());
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });
         
         // // Mengambil ID kriteria yang telah dipilih sebelumnya untuk lomba ini
         // $selectedKriteriaIds = $lomba->kriteria()->pluck('id')->toArray();
@@ -149,6 +177,7 @@ class LombaController extends Controller
             'lombas' => LombaResource::make($lomba),    
             'lomba' => $lomba,
             'kriterias' => $kriteria,
+            'settings' => $settings,
             // 'selectedKriteria' => $selectedKriteriaIds,
         ]);
     }

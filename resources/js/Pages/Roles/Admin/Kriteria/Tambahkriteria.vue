@@ -6,9 +6,9 @@
                 <nav class="navbar navbar-expand">
                     <!-- Navbar -->
                     <div class="navbar-tambah">
-                        <div class="navbar-left">
+                        <div class="navbar-left" v-for="setting in settings" :key="setting.id">
                             <a href="/">
-                                <img src="/bootstrap/images/lg.png" alt="Logo"
+                                <img :src="setting.logo1" :alt="setting.name"
                                     style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
@@ -35,18 +35,23 @@
             <div class="page-content">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0">TAMBAH KRITERIA LOMBA</h4>
+                        <h4 class="mb-0">TAMBAH KRITERIA PENILAIAN</h4>
                         <hr />
                         <form @submit.prevent="submit" enctype="multipart/form-data">
                             <div class="row" v-for="(criteria, index) in form.kriteria" :key="index">
-                                <div class="c-mt10">
+                                <div class="col-md-6">
                                     <label class="c-mb5-black c-mt10"><b>Kriteria Penilaian</b></label>
-                                    <div>
-                                        <input type="text" class="form-control label-8"
-                                            v-model="criteria.name_kriteria">
-                                        <button class="btn btn-secondary" @click="removeKriteria(index)"
-                                            v-if="form.kriteria.length > 1"><i class="fas fa-minus"></i></button>
-                                    </div>
+                                    <input type="text" class="form-control label-8"
+                                        placeholder="Masukan kriteria penilaian" v-model="criteria.name_kriteria">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="c-mb5-black c-mt10"><b>Bobot (%)</b></label>
+                                    <input type="number" class="form-control label-8"
+                                        placeholder="Masukan bobot kriteria">
+                                </div>
+                                <div class="col-md-2 c-mt10 d-flex align-items-end">
+                                    <button class="btn btn-secondary" @click="removeKriteria(index)"
+                                        v-if="form.kriteria.length > 1"><i class="fas fa-minus"></i></button>
                                 </div>
                             </div>
                             <button class="btn btn-secondary" @click="addKriteria"><i class="fas fa-plus"></i> Tambah
@@ -68,7 +73,13 @@
 import { reactive } from 'vue'
 import { useForm } from "@inertiajs/vue3";
 
-const { name, username } = defineProps(['name', 'username']);
+const { name, username, settings } = defineProps(['name', 'username', 'settings']);
+
+const props = {
+    settings: {
+        type: Array,
+    },
+};
 
 console.log(name); // Contoh penggunaan di dalam script setup
 console.log(username);

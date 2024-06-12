@@ -6,7 +6,7 @@ import { Head } from "@inertiajs/vue3";
 import { usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/vue3";
 // import { inertia } from "@inertiajs/inertia";
-const { name, username, sponsor, logo } = defineProps(['name', 'username', 'kriterias', 'logo']);
+const { name, username, sponsor, logo, settings } = defineProps(['name', 'username', 'kriterias', 'logo', 'settings']);
 
 
 // console.log(name); // Contoh penggunaan di dalam script setup
@@ -19,6 +19,9 @@ const props = {
     },
     logo: {
         type: String, // Menentukan tipe data logo sebagai String
+    },
+    settings: {
+        type: Array,
     },
 };
 
@@ -61,10 +64,17 @@ const submit = () => {
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
-                        <div class="navbar-left">
+                        <div
+                            class="navbar-left"
+                            v-for="setting in settings"
+                            :key="setting.id"
+                        >
                             <a href="/">
-                                <img src="/bootstrap/images/lg.png" alt="Logo"
-                                    style="width: 100px; margin-left: -15px;">
+                                <img
+                                    :src="setting.logo1"
+                                    :alt="setting.name"
+                                    style="width: 100px; margin-left: -15px"
+                                />
                             </a>
                         </div>
                     </div>
@@ -96,18 +106,17 @@ const submit = () => {
                         <hr />
                         <form @submit.prevent="submit">
                             <div class="c-mb10">
-                                <label for="name" class="c-mb5-black">
-                                    <b>Nama Sponsor</b>
-                                </label>
-                                <input type="text" class="form-control" v-model="form.name" id="name">
+                                <label for="name" class="c-mb5-black"><b>Nama Sponsor</b></label>
+                                <input type="text" class="form-control" placeholder="Masukan nama sponsor"
+                                    v-model="form.name" id="name">
                             </div>
                             <div>
                                 <label for="link_file" class="c-mb5-black">
                                     <b>Link</b>
                                 </label>
                                 <div class="col-12">
-                                    <textarea class="form-control c-mb10" rows="2" v-model="form.link_file"
-                                        id="link_file"></textarea>
+                                    <textarea class="c-mb10" rows="2" v-model="form.link_file" id="descriptionaddl"
+                                        placeholder="Masukan link sponsor"></textarea>
                                 </div>
                             </div>
                             <div>
@@ -120,7 +129,8 @@ const submit = () => {
                                 </div>
                                 <input class="form-control" type="file" @input="form.logo = $event.target.files[0]"
                                     id="logo">
-                                <p class="keterangan-foto">Max 2 MB (200 x 200 px)</p>
+                                <p class="keterangan-foto f-italic">Max file size: 2MB (200 x 200 px)</p>
+                                <p class="keterangan-foto f-italic">Format: .jpg, .png, .jpeg</p>
                             </div>
                             <div class="btn-posisi">
                                 <!-- <button class="btn btn-primary button-tabel-right" onclick="window.location.href='/sponsor'">Tambah</button>

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use Inertia\Inertia;
+use App\Models\Setting;
 
 class ProfilePesertaController extends Controller
 {
@@ -23,9 +24,16 @@ class ProfilePesertaController extends Controller
             'phone' => $user->phone,
             'photo' => $user->photo,
         ]);
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });  
         
         return Inertia::render('Roles/User/Profilpeserta', [
             'UserData' => $user,
+            'settings' => $settings, 
             
         ]);
         

@@ -4,9 +4,9 @@
         <!--sidebar wrapper -->
         <div class="sidebar-wrapper" data-simplebar="true">
             <div class="sidebar-header">
-                <div>
+                <div v-for="setting in settings" :key="setting.id">
                     <a href="/">
-                        <img id="logo-img" src="/bootstrap/images/lg.png" class="lg2">
+                        <img id="logo-img" :src="setting.logo1" :alt="setting.name" class="lg2">
                     </a>
                 </div>
                 <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
@@ -138,7 +138,7 @@
                                     <tr>
                                         <th class="width-id">ID</th>
                                         <th class="crud-width-150">Nama Lomba</th>
-                                        <th>Deskripsi</th>
+                                        <th>Biaya Pendaftaran</th>
                                         <th>Nama PJ</th>
                                         <th>Kontak PJ</th>
                                         <th class="crud-width-180">Aksi</th>
@@ -148,7 +148,7 @@
                                     <tr v-for="lomba in lombas.data" :key="lomba.id">
                                         <td>{{ lomba.id }}</td>
                                         <td>{{ lomba.name_lomba }}</td>
-                                        <td>{{ lomba.description }}</td>
+                                        <td>{{ lomba.biaya_pendaftaran }}</td>
                                         <td>{{ lomba.pj }}</td>
                                         <td>{{ lomba.kontak }}</td>
                                         <td class="btn-crud">
@@ -196,8 +196,10 @@ defineProps({
     lombas: {
         type: Array,
         required: true
-
-    }
+    },
+    settings: {
+        type: Array,
+    },
 
 });
 

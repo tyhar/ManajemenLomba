@@ -7,13 +7,23 @@ use App\Models\User;
 use App\Http\Requests\StoreTeam;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Setting;
 
 class TeamController extends Controller
 {
     public function create()
     {
         $lombas = Lomba::all();
-        return Inertia::render('Roles/User/Daftar/Datatim', ['lombas' => $lombas]);
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });  
+        return Inertia::render('Roles/User/Daftar/Datatim', [
+            'lombas' => $lombas,
+            'settings' => $settings,
+        ]);
     }
 
     public function store(StoreTeam $request)

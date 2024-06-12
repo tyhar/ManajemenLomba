@@ -17,7 +17,7 @@ onMounted(async () => {
     }
 });
 // Mendefinisikan properti yang diterima oleh komponen
-const { name, username, users } = defineProps(['name', 'username', 'users']);
+const { name, username, users, settings } = defineProps(['name', 'username', 'users', 'settings']);
 
 // Menginisialisasi properti yang dibutuhkan untuk filter
 const selectedRole = ref('all');
@@ -72,9 +72,9 @@ const viewDetails = (userId) => {
         <!--sidebar wrapper -->
         <div class="sidebar-wrapper" data-simplebar="true">
             <div class="sidebar-header">
-                <div>
+                <div v-for="setting in settings" :key="setting.id">
                     <a href="/">
-                        <img id="logo-img" src="/bootstrap/images/lg.png" class="lg2">
+                        <img id="logo-img" :src="setting.logo1" :alt="setting.name" class="lg2">
                     </a>
                 </div>
                 <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
@@ -224,6 +224,7 @@ const viewDetails = (userId) => {
                                         <!-- <th class="crud-width-90">Lomba</th>
                                         <th class="crud-width-90">Tanggal</th> -->
                                         <th class="crud-width-50">Aksi</th>
+                                        <th class="crud-width-20">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -239,6 +240,9 @@ const viewDetails = (userId) => {
                                             <a class="btn btn-secondary" :href="route('administrator.show', user.id)">
                                                 <i class="bi bi-eye"></i>
                                             </a>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" />
                                         </td>
                                     </tr>
                                 </tbody>

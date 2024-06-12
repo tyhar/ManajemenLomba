@@ -4,9 +4,9 @@
         <!--sidebar wrapper -->
         <div class="sidebar-wrapper" data-simplebar="true">
             <div class="sidebar-header">
-                <div>
+                <div v-for="setting in settings" :key="setting.id">
                     <a href="/">
-                        <img id="logo-img" src="/bootstrap/images/lg.png" class="lg2">
+                        <img id="logo-img" :src="setting.logo1" :alt="setting.name" class="lg2">
                     </a>
                 </div>
                 <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
@@ -135,17 +135,17 @@
                                 <thead class="table-dark">
                                     <tr>
                                         <th class="width-id2">ID</th>
-                                        <th class="crud-width-400">Kritera</th>
-                                        <th class="crud-width120">Aksi</th>
+                                        <th class="crud-width-290">Kritera</th>
+                                        <th class="crud-width-50">Bobot</th>
+                                        <th class="crud-width60">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-for="kriteria in kriterias.data" :key="kriteria.id">
                                         <td>{{ kriteria.id }}</td>
                                         <td>{{ kriteria.name_kriteria }}</td>
+                                        <td>20% => Static</td>
                                         <td class="btn-crud">
-                                            <a class="btn btn-secondary" :href="route('kriteria.show', kriteria.id)"><i
-                                                    class="bi bi-eye"></i></a>
                                             <a class="btn btn-primary" href="/editkriteria"><i
                                                     class="bi bi-pencil-square"></i></a>
                                             <button class="btn btn-danger"><i class="bi bi-trash"
@@ -170,7 +170,13 @@ import { defineProps } from "vue";
 import { Link, useForm } from "@inertiajs/vue3";
 import Swal from 'sweetalert2';
 
-const { name, username, kriterias } = defineProps(['name', 'username', 'kriterias']);
+const { name, username, kriterias, settings } = defineProps(['name', 'username', 'kriterias', 'settings']);
+
+const props = {
+    settings: {
+        type: Array,
+    },
+};
 
 const deleteForm = useForm({});
 

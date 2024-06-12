@@ -2,7 +2,7 @@
 import { Link } from '@inertiajs/vue3';
 import { defineProps, ref, onMounted, computed } from 'vue';
 
-const { name, username, lombas, picture } = defineProps(['name', 'username', 'lombas', 'picture']);
+const { name, username, lombas, picture, settings } = defineProps(['name', 'username', 'lombas', 'picture', 'settings']);
 
 
 const props = {
@@ -16,6 +16,9 @@ const props = {
         type: Array,
     },
     picture: {
+        type: Object,
+    },
+    settings: {
         type: Object,
     },
 };
@@ -32,22 +35,15 @@ const props = {
         <!--sidebar wrapper -->
         <div class="sidebar-wrapper" data-simplebar="true">
             <div class="sidebar-header">
-                <div>
+                <div v-for="setting in settings" :key="setting.id">
                     <a href="/">
-                        <img id="logo-img" src="/bootstrap/images/lg.png" class="lg2">
+                        <img id="logo-img" :src="setting.logo1" :alt="setting.name" class="lg2">
                     </a>
                 </div>
                 <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
             </div>
             <!--navigation-->
             <ul class="metismenu" id="menu">
-                <li>
-                    <a href="/panelis">
-                        <div class="parent-icon"><i class='bx bx-home-circle'></i>
-                        </div>
-                        <div class="menu-title">Dashboard</div>
-                    </a>
-                </li>
                 <li>
                     <a href="/lombajuri">
                         <div class="parent-icon"><i class="bx bx-award"></i>
@@ -121,7 +117,7 @@ const props = {
                         <!--breadcrumb-->
                         <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
                             <div v-for="lomba in lombas" :key="lomba.id" class="col">
-                                <div class="card radius-15 card-overview">
+                                <div class="card radius-15 card-overview"><span class=" pcount">2/5</span>
                                     <img :src="lomba.picture ? `/storage/${lomba.picture}` : '/bootstrap/images/default.jpg'"
                                         class="border-radius">
                                     <label class="judul-overview">{{ lomba.name_lomba }}</label>

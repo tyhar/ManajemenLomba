@@ -17,6 +17,9 @@ const props = defineProps({
     username: {
         type: String,
         required: true,
+    },    
+    settings: {
+        type: Array,
     },
 });
 
@@ -69,9 +72,9 @@ const filteredMessages = computed(() => {
         <!--sidebar wrapper -->
         <div class="sidebar-wrapper" data-simplebar="true">
             <div class="sidebar-header">
-                <div>
+                <div v-for="setting in settings" :key="setting.id">
                     <a href="/">
-                        <img id="logo-img" src="/bootstrap/images/lg.png" class="lg2">
+                        <img id="logo-img" :src="setting.logo1" :alt="setting.name" class="lg2">
                     </a>
                 </div>
                 <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>

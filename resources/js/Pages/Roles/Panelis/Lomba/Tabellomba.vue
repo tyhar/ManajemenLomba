@@ -2,7 +2,7 @@
 import { Link } from '@inertiajs/vue3';
 import { defineProps, ref, onMounted, computed } from 'vue';
 
-const { name, username, reg_lombas } = defineProps(['name', 'username', 'reg_lombas']);
+const { name, username, reg_lombas, settings } = defineProps(['name', 'username', 'reg_lombas', 'settings']);
 
 
 const props = {
@@ -15,6 +15,9 @@ const props = {
     reg_lombas: {
         type: Array,
     },
+    settings: {
+    type: Array,
+  }
 };
 
 </script>
@@ -24,22 +27,15 @@ const props = {
         <!--sidebar wrapper -->
         <div class="sidebar-wrapper" data-simplebar="true">
             <div class="sidebar-header">
-                <div>
+                <div v-for="setting in settings" :key="setting.id">
                     <a href="/">
-                        <img id="logo-img" src="/bootstrap/images/lg.png" class="lg2">
+                        <img id="logo-img" :src="setting.logo1" :alt="setting.name" class="lg2">
                     </a>
                 </div>
                 <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
             </div>
             <!--navigation-->
             <ul class="metismenu" id="menu">
-                <li>
-                    <a href="/panelis">
-                        <div class="parent-icon"><i class='bx bx-home-circle'></i>
-                        </div>
-                        <div class="menu-title">Dashboard</div>
-                    </a>
-                </li>
                 <li>
                     <a href="/lombajuri">
                         <div class="parent-icon"><i class="bx bx-award"></i>
@@ -131,17 +127,17 @@ const props = {
                                 <thead class="table-dark">
                                     <tr>
                                         <th class="width-id">ID</th>
-                                        <th class="crud-width-90">Nama Lomba</th>
                                         <th class="crud-width120">Nama Tim</th>
+                                        <th class="crud-width-150">Judul</th>
                                         <th class="crud-width120">Judul</th>
                                         <th class="crud-width-50">Status</th>
-                                        <th class="crud-width-150">Aksi</th>
+                                        <th class="crud-width-90">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-for="reg_lomba in reg_lombas" :key="reg_lomba?.id">
                                         <td>{{ reg_lomba?.id }}</td>
-                                        <td>{{ reg_lomba?.lomba?.name_lomba }}</td>
+                                        <td></td>
                                         <td>{{ reg_lomba?.team?.name_team }}</td>
                                         <td>{{ reg_lomba?.submission?.title }}</td>
                                         <td>{{ reg_lomba?.status }}</td>
@@ -152,8 +148,6 @@ const props = {
                                             <a class="btn btn-primary"
                                                 :href="route('value.edit', reg_lomba?.lomba?.id)"><i
                                                     class="bi bi-pencil-square"></i></a>
-                                            <a class="btn btn-primary"
-                                                :href="route('create.value', reg_lomba?.lomba?.id)">Beri Nilai</a>
                                         </td>
                                     </tr>
                                 </tbody>

@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\SponsorResource;
 use App\Models\Sponsor;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
+
+// use App\Http\Resources\SettingResource;
 
 class SponsorController extends Controller
 {
@@ -25,13 +28,20 @@ class SponsorController extends Controller
                 'link_file' => $sponsor->link_file,
                 'logo' => asset('storage/'.$sponsor->logo),
             ];
-        });
+        });  
+        $settings = Setting::all()->map(function($setting) use ($user) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });        
         return Inertia::render('Roles/Admin/Sponsor', [
+            'settings' => $settings,
             'sponsors' => $sponsors,
             'userData' => [
                 'name' => $user->name,
-                'username' => $user->username,
-            ]
+                'username' => $user->username,                 
+            ]            
         ]);
     }
     /**
@@ -44,9 +54,16 @@ class SponsorController extends Controller
             'name' => $user->name,
             'username' => $user->username,
         ]);
+        $settings = Setting::all()->map(function($setting) use ($user) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });    
 
         return Inertia::render('Roles/Admin/Sponsor/Tambahsponsor', [
             'UserData' => $user,
+            'settings' => $settings,
         ]);
     }
 
@@ -87,11 +104,18 @@ class SponsorController extends Controller
             'username' => $user->username,
         ]);
         $baseUrl = config('app.url');
+        $settings = Setting::all()->map(function($setting) use ($user) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });    
         return Inertia::render('Roles/Admin/Sponsor/Detailsponsor', [
             'sponsors' => $sponsor,
             'logo' => asset('storage/'.$sponsor->logo),
             'baseUrl' => $baseUrl,
             'UserData' => $user,
+            'settings' => $settings,
         ]);
     }
 
@@ -106,11 +130,18 @@ class SponsorController extends Controller
             'name' => $user->name,
             'username' => $user->username,
         ]);
+        $settings = Setting::all()->map(function($setting) use ($user) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });    
 
         return Inertia::render('Roles/Admin/Sponsor/Editsponsor', [
             'sponsors' => $sponsor,
             'logo' => asset('storage/'.$sponsor->logo),
             'UserData' => $user,
+            'settings' => $settings,
         ]);
 
     }

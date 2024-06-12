@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Models\Lomba;
 use App\Models\User;
+use App\Models\Setting;
 // use Illuminate\Http\Request;
 // use App\Http\Requests\ProfileUpdateRequest;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -26,9 +27,16 @@ class UserController extends Controller
             'name' => $user->name,
             'username' => $user->username,
         ]);
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });   
         return Inertia::render('Roles/User/Dashboard', [
             'UserData' => $user,
             'lombas' => $lomba,
+            'settings' => $settings, 
         ]);
         
     }
@@ -46,45 +54,113 @@ class UserController extends Controller
             'name' => $user->name,
             'username' => $user->username,
         ]);
-        
-
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });           
         return Inertia::render('Roles/User/Detailpeserta', [
             'DataUser' => $user,
             'lombax' => $lomba,
-
+            'settings' => $settings, 
         ]);
     }
     public function profilpeserta()
     {
-        return Inertia::render('Roles/User/Profilpeserta');
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });   
+        return Inertia::render('Roles/User/Profilpeserta', [
+            'settings' => $settings, 
+        ]);
     }
     public function notifikasipeserta()
     {
-        return Inertia::render('Roles/User/Notifikasipeserta');
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });   
+        return Inertia::render('Roles/User/Notifikasipeserta', [
+            'settings' => $settings, 
+        ]);
     }
     public function reportpeserta()
     {
-        return Inertia::render('Roles/User/Reportpeserta');
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });   
+        return Inertia::render('Roles/User/Reportpeserta', [
+            'settings' => $settings, 
+        ]);
     }
     public function detailtimreport()
     {
-        return Inertia::render('Roles/User/Report/Detailtimreport');
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });   
+        return Inertia::render('Roles/User/Report/Detailtimreport', [
+            'settings' => $settings, 
+        ]);
     }
     public function daftarlomba()
     {
-        return Inertia::render('Roles/User/Daftarlomba');
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });   
+        return Inertia::render('Roles/User/Daftarlomba', [
+            'settings' => $settings, 
+        ]);
     }
     public function datatim()
     {
-        return Inertia::render('Roles/User/Daftar/Datatim');
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });   
+        return Inertia::render('Roles/User/Daftar/Datatim', [
+            'settings' => $settings, 
+        ]);
     }
     public function anggotatim()
     {
-        return Inertia::render('Roles/User/Daftar/Anggotatim');
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });   
+        return Inertia::render('Roles/User/Daftar/Anggotatim', [
+            'settings' => $settings, 
+        ]);
     }
     public function pengumpulankarya()
     {
-        return Inertia::render('Roles/User/Daftar/Pengumpulankarya');
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });   
+        return Inertia::render('Roles/User/Daftar/Pengumpulankarya', [
+            'settings' => $settings, 
+        ]);
     }
 
 

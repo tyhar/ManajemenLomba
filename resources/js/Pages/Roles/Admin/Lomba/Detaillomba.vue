@@ -7,9 +7,9 @@ DetailLOMBA
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                        <div class="navbar-tambah">
-                        <div class="navbar-left">
+                        <div class="navbar-left" v-for="setting in settings" :key="setting.id">
                             <a href="/">
-                                <img src="/bootstrap/images/lg.png" alt="Logo"
+                                <img :src="setting.logo1" :alt="setting.name"
                                     style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
@@ -81,9 +81,10 @@ DetailLOMBA
                                     <div class="data-tim" id="biaya_pendaftaran">{{ lomba && lomba.biaya_pendaftaran ? lomba.biaya_pendaftaran : 'Biaya Pendaftaran tidak tersedia' }}</div>
                                </div>   
                                 <!-- Tambahkan bagian untuk menampilkan kriteria -->
-                                <label class="c-mb5-black"><b>KRITERIA PENILAIAN</b></label>
+                                <label class="c-mb5-black"><b>KRITERIA PENILAIAN (100/100%)</b></label>
                                 <ul>
-                                    <li v-for="kriteria in lomba.kriteria" :key="kriteria.id">{{ kriteria.name_kriteria }}</li>
+                                    <li v-for="kriteria in lomba.kriteria" :key="kriteria.id">{{ kriteria.name_kriteria }} 30% => static</li>
+        <!-- Kasih Persen -->
                                 </ul>
                             </div>           
                         </div>
@@ -108,7 +109,8 @@ import { useForm, usePage } from '@inertiajs/vue3';
 const props = defineProps({
     name: String,
     username: String,
-    lomba: Object
+    lomba: Object,
+    settings: Array
 });
 
 // Menampilkan properti name dan username yang diterima

@@ -4,7 +4,7 @@ import { useForm } from "@inertiajs/vue3";
 import { Head } from "@inertiajs/vue3";
 import { router } from "@inertiajs/vue3";
 
-const { name, username, users } = defineProps(['name', 'username', 'users']);
+const { name, username, users, settings } = defineProps(['name', 'username', 'users', 'settings']);
 
 console.log(name); // Contoh penggunaan di dalam script setup
 console.log(username);
@@ -12,6 +12,9 @@ console.log(username);
 // Definisikan properti yang diterima oleh komponen
 const props = {
     users: {
+        type: Array,
+    },
+    settings: {
         type: Array,
     },
 };
@@ -56,9 +59,9 @@ const formatDate = (dateString) => {
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
-                        <div class="navbar-left">
+                        <div class="navbar-left" v-for="setting in settings" :key="setting.id">
                             <a href="/">
-                                <img src="/bootstrap/images/lg.png" alt="Logo"
+                                <img :src="setting.logo1" :alt="setting.name"
                                     style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>

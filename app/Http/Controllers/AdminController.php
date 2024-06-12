@@ -8,6 +8,7 @@ use Inertia\Inertia;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 // use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Setting;
 // use Illuminate\Support\Facades\Redirect;
 // use Inertia\Response;
 
@@ -20,10 +21,15 @@ class AdminController extends Controller
             'name' => $user->name,
             'username' => $user->username,
         ]);
-        
-
+        $settings = Setting::all()->map(function($setting) use ($user) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });        
         return Inertia::render('Roles/Admin/Admin',[
             'UserData' => $user,
+            'settings' => $settings,
         ]);
     }
     public function partisipan()
@@ -64,7 +70,15 @@ class AdminController extends Controller
     }
     public function editkriteria()
     {
-        return Inertia::render('Roles/Admin/Kriteria/Editkriteria');
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        }); 
+        return Inertia::render('Roles/Admin/Kriteria/Editkriteria',[
+            'settings' => $settings,
+        ]);
     }
     public function detailkriteria()
     {
@@ -88,15 +102,39 @@ class AdminController extends Controller
     //TIM
     public function tim()
     {
-        return Inertia::render('Roles/Admin/Tim');
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        }); 
+        return Inertia::render('Roles/Admin/Tim',[
+            'settings' => $settings,
+        ]);
     }
     public function tabeltim()
     {
-        return Inertia::render('Roles/Admin/Tim/Tabeltim');
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        }); 
+        return Inertia::render('Roles/Admin/Tim/Tabeltim',[
+            'settings' => $settings,
+        ]);
     }
     public function detailtim()
     {
-        return Inertia::render('Roles/Admin/Tim/Detailtim');
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        }); 
+        return Inertia::render('Roles/Admin/Tim/Detailtim',[
+            'settings' => $settings,
+        ]);
     }
 
     //SPONSOR
@@ -152,10 +190,26 @@ class AdminController extends Controller
     //RANKING
     public function rangking()
     {
-        return Inertia::render('Roles/Admin/Adminrangking');
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });      
+        return Inertia::render('Roles/Admin/Adminrangking', [
+            'settings' => $settings,    
+        ]);
     }
     public function tabelrangking()
     {
-        return Inertia::render('Roles/Admin/Rangking/Tabelrangking');
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });   
+        return Inertia::render('Roles/Admin/Rangking/Tabelrangking', [
+            'settings' => $settings,    
+        ]);
     }
 }

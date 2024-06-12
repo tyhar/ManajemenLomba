@@ -4,9 +4,9 @@
         <!--sidebar wrapper -->
         <div class="sidebar-wrapper" data-simplebar="true">
             <div class="sidebar-header">
-                <div>
+                <div v-for="setting in settings" :key="setting.id">
                     <a href="/">
-                        <img id="logo-img" src="/bootstrap/images/lg.png" class="lg2">
+                        <img id="logo-img" :src="setting.logo1" :alt="setting.name" class="lg2">
                     </a>
                 </div>
                 <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
@@ -81,17 +81,15 @@
             <div class="page-content">
                 <div class="card card-height200">
                     <div class="card-body">
-                        <label class="keterangan jarak-bottom-kurang20">TIDAK LOLOS</label>
+                        <label class="keterangan1 jarak-bottom-kurang20">MENUNGGU</label>
+                        <!-- <label class="keterangan2 jarak-bottom-kurang20">TERVERIFIKASI</label>
+                        <label class="keterangan3 jarak-bottom-kurang20">TIDAK LOLOS</label>
+                        <label class="keterangan4 jarak-bottom-kurang20">TIDAK LOLOS</label> -->
                         <br><br>
                         <div class="row">
                             <div class="label-left">
                                 <h5 class="judul-report"><b>Poster Keamanan Data</b></h5>
                                 <div class="judul-lomba-index">Olinas Periode 2024</div>
-                                <!-- <div class="d-flex justify-content-end posisi-mb7 cnew">
-                                    <a class="btn btn-danger crud-width150" href="#">
-                                        <i class="bi bi-download icon-dow"></i>Upload
-                                    </a>
-                                </div> -->
                                 <div class="d-flex justify-content-end posisi-mb7 cnew">
                                     <a :href="downloadLink" class="btn btn-success crud-width150">
                                         <i class="bi bi-download icon-dow"></i>Download
@@ -115,6 +113,12 @@
 <script setup>
 import { defineProps, ref, onMounted } from 'vue';
 import axios from 'axios';
+
+const props = defineProps({
+    settings: {
+        type: Array,
+    },
+});
 
 const notifCount = ref(0);
 

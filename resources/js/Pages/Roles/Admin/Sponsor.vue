@@ -6,7 +6,7 @@ import { onMounted, ref, computed } from 'vue';
 import { router } from "@inertiajs/vue3";
 // import { usePage } from "@inertiajs/vue3";
 
-const { name, username, sponsors } = defineProps(['name', 'username', 'sponsors']);
+const { name, username, sponsors, settings } = defineProps(['name', 'username', 'sponsors', 'settings']);
 
 console.log(name); // Contoh penggunaan di dalam script setup
 console.log(username);
@@ -16,7 +16,20 @@ const props = {
     sponsors: {
         type: Array,
     },
+    settings: {
+        type: Array,
+    },
 };
+
+// defineProps({
+//     settings: {
+//         type: Array,
+//     },
+//     sponsors: {
+//         type: Array,
+//     },
+// });
+
 const unreadCount = ref(0);
 
 onMounted(async () => {
@@ -44,9 +57,9 @@ const deleteSponsor = (id) => {
         <!--sidebar wrapper -->
         <div class="sidebar-wrapper" data-simplebar="true">
             <div class="sidebar-header">
-                <div>
-                    <a href="/">
-                        <img id="logo-img" src="/bootstrap/images/lg.png" class="lg2">
+                <div v-for="setting in settings" :key="setting.id">
+                    <a href="/">                        
+                        <img id="logo-img" :src="setting.logo1" class="lg2">
                     </a>
                 </div>
                 <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
@@ -194,8 +207,9 @@ const deleteSponsor = (id) => {
                                         </td>
                                         <td>
                                             <!-- {{ sponsor.logo }} -->
-                                            <img :src="sponsor.logo" class="w-8 h-8 rounded" style="width: 120px;"
-                                                alt="no image" />
+                                            <!-- <img :src="sponsor.logo" class="w-8 h-8 rounded" style="width: 120px;"
+                                                alt="no image" /> -->
+                                            NAMA FILE
                                         </td>
                                         <td>
                                             {{ sponsor.link_file }}

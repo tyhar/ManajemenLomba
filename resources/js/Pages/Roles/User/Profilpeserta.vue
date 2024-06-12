@@ -5,8 +5,15 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 
 // Define props
-const { userData } = defineProps(['userData']);
+const { userData, settings } = defineProps(['userData', 'settings']);
 const notifCount = ref(0);
+
+
+const props = {
+    settings: {
+        type: Array,
+    },
+};
 
 // Define form state using Inertia's useForm
 const form = useForm({
@@ -56,9 +63,9 @@ const submit = () => {
         <!--sidebar wrapper -->
         <div class="sidebar-wrapper" data-simplebar="true">
             <div class="sidebar-header">
-                <div>
+                <div v-for="setting in settings" :key="setting.id">
                     <a href="/">
-                        <img id="logo-img" src="/bootstrap/images/lg.png" class="lg2">
+                        <img id="logo-img" :src="setting.logo1" :alt="setting.name" class="lg2">
                     </a>
                 </div>
                 <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
@@ -148,9 +155,15 @@ const submit = () => {
                                                         alt="Profile" class="rounded-circle p-1 bg-primary" width="190"
                                                         height="150">
                                                 </div>
-                                                <input type="file" class="form-control form-control-sm btn-profil2"
+                                                <input type="file"
+                                                    class="form-control form-control-sm btn-profil2 img-profil"
                                                     @change="e => form.photo = e.target.files[0]">
                                             </div>
+                                            <div class="c-mtk">
+                                                <p class="keterangan-foto f-italic">Max file size: 2MB</p>
+                                                <p class="keterangan-foto f-italic">Format: .jpg, .png, .jpeg</p>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>

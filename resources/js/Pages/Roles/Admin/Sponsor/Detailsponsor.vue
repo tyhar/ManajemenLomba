@@ -8,7 +8,7 @@ import { router } from "@inertiajs/vue3";
 // import { defineProps } from '@vue/runtime-core';
 
 
-const { name, username, sponsors } = defineProps(['name', 'username', 'sponsors']);
+const { name, username, sponsors, settings } = defineProps(['name', 'username', 'sponsors', 'settings']);
 
 console.log(name); // Contoh penggunaan di dalam script setup
 console.log(username);
@@ -19,6 +19,9 @@ const props = {
         type: Array,
         baseUrl: String,
     },
+    settings: {
+        type: Array,
+    },
 };
 
 
@@ -27,6 +30,9 @@ const props = {
 //     sponsors: Object,
 //     logo: String
 // });
+const goBack = () => {
+    window.history.back();
+};
 
 
 </script>
@@ -39,10 +45,17 @@ const props = {
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
-                        <div class="navbar-left">
+                        <div
+                            class="navbar-left"
+                            v-for="setting in settings"
+                            :key="setting.id"
+                        >
                             <a href="/">
-                                <img src="/bootstrap/images/lg.png" alt="Logo"
-                                    style="width: 100px; margin-left: -15px;">
+                                <img
+                                    :src="setting.logo1"
+                                    :alt="setting.name"
+                                    style="width: 100px; margin-left: -15px"
+                                />
                             </a>
                         </div>
                     </div>
@@ -84,14 +97,12 @@ const props = {
                             <div class="c-mb10">
                                 <label class="c-mb5-black"><b>LOGO</b></label><br>
                                 <div>
-                                    <img :src="'/storage/' + sponsors.logo" alt="Product Image"
-                                        class="form-control c-maxw400" />
+                                    <img :src="'/storage/' + sponsors.logo" alt="Product Image" class="c-maxw400" />
                                 </div>
                             </div>
                         </div>
                         <div class="btn-posisi">
-                            <a class="btn btn-danger btn-kembali" :href="route('sponsor.index')">Kembali</a>
-                            <a class="btn btn-danger btn-kembali" :href="route('sponsor.edit', sponsors.id)">Edit</a>
+                            <button class="btn btn-danger btn-kembali" @click="goBack()">Kembali</button>
                         </div>
                     </div>
                 </div>

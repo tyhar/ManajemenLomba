@@ -4,9 +4,9 @@
             <div class="c-topbar">
                 <nav class="navbar navbar-expand">
                     <div class="navbar-tambah">
-                        <div class="navbar-left">
+                        <div class="navbar-left" v-for="setting in settings" :key="setting.id">
                             <a href="/">
-                                <img src="/bootstrap/images/lg.png" alt="Logo"
+                                <img :src="setting.logo1" :alt="setting.name"
                                     style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
@@ -34,7 +34,8 @@
                             <div class="row">
                                 <div class="col-md-6 c-mb10">
                                     <label class="jarak-input"><b>Nama Tim</b></label>
-                                    <input v-model="form.name_team" type="text" class="form-control" required>
+                                    <input v-model="form.name_team" type="text" class="form-control"
+                                        placeholder="Masukan nama tim anda" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="jarak-input"><b>Instansi</b></label>
@@ -64,6 +65,8 @@
                                     <input class="form-control" type="file" name="payment"
                                         v-on:change="handlePaymentUpload">
                                 </div>
+                                <p class="keterangan-foto f-italic">Max file size: 2MB (500 x 500 px)</p>
+                                <p class="keterangan-foto f-italic">Format: .jpg, .png, .jpeg</p>
                             </div>
                             <div class="btn-posisi">
                                 <button type="submit" class="btn btn-primary button-tabel-right">Simpan</button>
@@ -94,13 +97,16 @@ const form = reactive({
     payment: null,
 });
 
-const { name, username, lombas } = defineProps(['name', 'username', 'lombas']);
+const { name, username, lombas, settings } = defineProps(['name', 'username', 'lombas', 'settings']);
 
 // Definisikan properti yang diterima oleh komponen
 const props = {
     lombas: {
         type: Array,
         default: () => [],
+    },
+    settings: {
+        type: Array,
     },
 };
 

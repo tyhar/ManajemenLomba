@@ -6,9 +6,9 @@
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
-                        <div class="navbar-left">
+                        <div class="navbar-left" v-for="setting in settings" :key="setting.id">
                             <a href="/">
-                                <img src="/bootstrap/images/lg.png" alt="Logo"
+                                <img :src="setting.logo1" :alt="setting.name"
                                     style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
@@ -59,13 +59,16 @@
                                         <label for="picture" class="form-label judul-form"><b>Gambar</b></label>
                                         <input type="file" id="picture" accept="image/*" class="form-control"
                                             @input="form.picture = $event.target.files[0]">
-                                        <p class="keterangan-foto">Ukuran 500 x 500</p>
+                                        <p class="keterangan-foto f-italic">Max file size: 2MB (500 x 500 px)</p>
+                                        <p class="keterangan-foto f-italic">Format: .jpg, .png, .jpeg</p>
                                     </div>
+                                    <br>
                                     <div>
                                         <label for="sertifikat" class="form-label judul-form"><b>Sertifikat</b></label>
                                         <input type="file" id="sertifikat" accept="image/*" class="form-control"
                                             @input="form.sertifikat = $event.target.files[0]">
-                                        <p class="keterangan-foto">Max 2 MB</p>
+                                        <p class="keterangan-foto f-italic">Max file size: 2MB (500 x 500 px)</p>
+                                        <p class="keterangan-foto f-italic">Format: .jpg, .png, .jpeg</p>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -81,7 +84,8 @@
                                             id="biaya_pendaftaran">
                                     </div>
                                     <div>
-                                        <label class="role-add"><b class="warna-hitam">Kriteria Lomba</b></label>
+                                        <label class="role-add"><b class="warna-hitam">Kriteria Penilaian
+                                                (0%/100%)</b></label>
                                         <div>
                                             <div class="form-check" v-for="kriteria in kriterias.data"
                                                 :key="kriteria.id">
@@ -113,7 +117,7 @@
 import { router, useForm, usePage } from "@inertiajs/vue3";
 import Swal from 'sweetalert2'; // Import SweetAlert
 
-const { name, username, kriterias } = defineProps(['name', 'username', 'kriterias']);
+const { name, username, kriterias, settings } = defineProps(['name', 'username', 'kriterias', 'settings']);
 
 const props = {
     sponsors: {
@@ -122,6 +126,9 @@ const props = {
     },
     logo: {
         type: String,
+    },
+    settings: {
+        type: Array,
     },
 };
 

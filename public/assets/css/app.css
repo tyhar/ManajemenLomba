@@ -2723,6 +2723,10 @@ input.search-control-2::placeholder {
 	margin-bottom: 40px;
 }
 
+.sub-judul-tim2 {
+	text-align: left;
+}
+
 .judul-report {
 	margin-bottom: 20px;
 	color: black;
@@ -2933,6 +2937,10 @@ input.search-control-2::placeholder {
 	margin-top: -25px;
 }
 
+.jb-k5 {
+	margin-bottom: -5px;
+}
+
 .jarak-bottom-kurang13 {
 	margin-bottom: -13px;
 }
@@ -3045,7 +3053,7 @@ input.search-control-2::placeholder {
 }
 
 .card-height400 {
-	height: 400px;
+	min-height: 400px;
 }
 
 .label-left {
@@ -3209,6 +3217,20 @@ input.search-control-2::placeholder {
 	color: #8D8686;
 }
 
+.container-hgtl {
+	height: 1200px;
+	width: 1100px;
+	background-color: #E4EDF3;
+	margin-left: 10px;
+}
+
+.cuyy {
+	text-align: left;
+}
+
+.cuyyy {
+	text-align: justify;
+}
 
 /* LANDING PAGE --SPONSOR */
 .sponsor-grid {
@@ -3330,6 +3352,11 @@ input.search-control-2::placeholder {
 	text-align: left;
 }
 
+.rata-tengah {
+	text-align: justify;
+}
+
+
 /* Aturan CSS untuk tampilan mobile */
 @media (max-width: 767px) {
 	.body-login {
@@ -3379,6 +3406,9 @@ input.search-control-2::placeholder {
 
 
 /* CRUD --WIDTH */
+.crud-width-20 {
+	width: 20px;
+}
 
 .crud-width-40 {
 	width: 40px;
@@ -4064,8 +4094,56 @@ input.search-control-2::placeholder {
 
 }
 
-.keterangan {
+.keterangan-lolos {
+	background-color: rgb(16, 197, 16);
+	width: 300px;
+	text-align: center;
+	height: 40px;
+	color: white;
+	border-radius: 5px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.keterangan1 {
+	background-color: #B8B8B8;
+	width: 300px;
+	text-align: center;
+	height: 40px;
+	color: white;
+	border-radius: 5px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.keterangan2 {
+	background-color: #5FB7FD;
+	width: 300px;
+	text-align: center;
+	height: 40px;
+	color: white;
+	border-radius: 5px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.keterangan3 {
 	background-color: red;
+	width: 300px;
+	text-align: center;
+	height: 40px;
+	color: white;
+	border-radius: 5px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.keterangan4 {
+	background-color: #06d61b;
 	width: 300px;
 	text-align: center;
 	height: 40px;
@@ -4288,6 +4366,26 @@ button.menu-title {
 	right: 200px;
 }
 
+
+/* Aturan CSS untuk tampilan mobile */
+@media (max-width: 767px) {
+	.posisi-ver2 {
+		margin-top: 7px;
+		margin-left: 140px;
+		width: 200px;
+	}
+}
+
+/* Aturan CSS untuk tampilan desktop */
+@media (min-width: 768px) {
+	.posisi-ver2 {
+		position: absolute;
+		margin-top: -35px;
+		right: 10px;
+		width: 200px;
+	}
+}
+
 /* Aturan CSS untuk tampilan mobile */
 @media (max-width: 767px) {
 	.posisi-hr {
@@ -4417,4 +4515,99 @@ body {
 .tahap:hover {
 	background-color: #A0522D;
 	color: white;
+}
+
+.cmt_30 {
+	margin-top: -90px !important;
+}
+
+.cmt_300 {
+	margin-top: 40px !important;
+}
+
+.cmt_3000 {
+	margin-top: 100px !important;
+}
+
+/* Aturan CSS untuk tampilan mobile */
+@media (max-width: 767px) {
+	.cmt_30 {
+		margin-top: 30px !important;
+	}
+}
+
+.ckontak {
+	height: 45px;
+}
+
+/* Aturan CSS untuk tampilan desktop */
+@media (min-width: 768px) {
+	.csize {
+		max-width: 275px;
+		width: 100%;
+	}
+}
+
+#descriptionaddl {
+	padding-left: 12px;
+}
+
+.f-italic {
+	font-style: italic;
+}
+
+.dash-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.dash {
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.date370 {
+	max-width: 370px;
+	width: 100%;
+}
+
+.mr-k10 {
+	margin-right: -10px
+}
+
+.card-overview {
+	position: relative;
+}
+
+.pcount {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	background-color: red;
+	color: white;
+	width: 35px;
+	height: 35px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.img-profil {
+	width: 280px;
+	width: 100%;
+}
+
+.containerr {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 10px;
+}
+.boxx {
+	text-align: left;
+	width: 300px;
+	height: 100px;
+	box-sizing: border-box;
+	margin-bottom: 50px;
 }

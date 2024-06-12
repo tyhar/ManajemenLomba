@@ -6,9 +6,9 @@
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
-                        <div class="navbar-left">
+                        <div class="navbar-left" v-for="setting in settings" :key="setting.id">
                             <a href="/">
-                                <img src="/bootstrap/images/lg.png" alt="Logo"
+                                <img :src="setting.logo1" :alt="setting.name"
                                     style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
@@ -42,10 +42,10 @@
                         <form @submit.prevent="submit">
                             <div class="row" v-for="kriteria in kriterias" :key="kriteria.id">
                                 <div class="col-md-6 c-mb10">
-                                    <label class="c-mb5-black"><b>{{ kriteria.name_kriteria }}</b></label>
+                                    <label class="c-mb5-black"><b>1. {{ kriteria.name_kriteria }}</b></label>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="c-mb5-black">Nilai</label>
+                                    <label class="c-mb5-black">Nilai (Bobot Nilai 30% ) => static</label>
                                     <input type="text" class="form-control c-mb20" :id="'value_count_' + kriteria.id"
                                         v-model="form.value_count[kriteria.id]">
                                     <!-- Add hidden input to store kriteria_id -->
@@ -69,7 +69,7 @@
 import { defineProps, ref, onMounted } from 'vue'
 import { router } from '@inertiajs/vue3'
 
-const props = defineProps(['kriterias', 'userValues']);
+const props = defineProps(['kriterias', 'userValues', 'settings']);
 
 const form = ref({
     value_count: {}

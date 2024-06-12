@@ -6,12 +6,11 @@
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
-                        <div class="navbar-left">
-                            <a href="/">
-                                <img src="/bootstrap/images/lg.png" alt="Logo"
-                                    style="width: 100px; margin-left: -15px;">
-                            </a>
-                        </div>
+                        <div v-for="setting in settings" :key="setting.id">
+                    <a href="/">
+                        <img id="logo-img" :src="setting.logo1" :alt="setting.name" class="lg2">
+                    </a>
+                </div>
                     </div>
                     <!-- Mobile toggle menu -->
                     <!-- Search bar -->
@@ -49,8 +48,6 @@
                                     <div class="div-class">
                                         <a class="btn btn-pink c-mtkc" href="#">BUKU
                                             PANDUAN</a>
-                                        <a class="btn btn-warning c-mtk margin-afkar1 warna-hitam" href="#">AJUKAN
-                                            PERTANYAAN</a>
                                         <a class="btn btn-success c-mtk mg-t10 warna-hitam"
                                             :href="route('daftarlomba.index')">DAFTAR
                                             LOMBA</a>
@@ -77,6 +74,7 @@ const props = defineProps({
     name: String,
     username: String,
     lombax: Object,
+    settings: Object,
 });
 
 </script>

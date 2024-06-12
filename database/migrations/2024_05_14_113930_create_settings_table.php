@@ -19,6 +19,17 @@ return new class extends Migration {
             $table->string('deskripsi')->nullable();
             $table->date('mulai')->nullable();
             $table->date('berakhir')->nullable();
+            $table->string('des_pendaftaran')->nullable();
+            $table->date('pengumpulan')->nullable();
+            $table->string('des_pengumpulan')->nullable();
+            $table->date('pengumuman')->nullable();
+            $table->string('des_pengumuman')->nullable();
+            $table->date('presentasi')->nullable();
+            $table->string('des_presentasi')->nullable();
+            $table->string('whatsApp')->nullable();
+            $table->string('instagram')->nullable();
+            $table->string('email')->nullable();
+            $table->string('youtube')->nullable();
             $table->string('logo1')->nullable();
             $table->string('logo2')->nullable();
             $table->string('logo3')->nullable();

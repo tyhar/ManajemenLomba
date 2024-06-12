@@ -4,9 +4,9 @@
             <div class="c-topbar">
                 <nav class="navbar navbar-expand">
                     <div class="navbar-tambah">
-                        <div class="navbar-left">
+                        <div class="navbar-left" v-for="setting in settings" :key="setting.id">
                             <a href="/">
-                                <img src="/bootstrap/images/lg.png" alt="Logo"
+                                <img :src="setting.logo1" :alt="setting.name"
                                     style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
@@ -49,15 +49,13 @@
                                 </div>
                             </div>
                         </div>
+
                         <button class="btn btn-primary crud-width-150 btn-petugas btn-verifikasi posisi-ver"
                             @click="verifyTeam">Verifikasi</button>
+                        <!-- <label class="keterangan-lolos posisi-ver2">VERIFIKASI SUKSES</label> -->
                         <hr />
                         <div class="row">
                             <div class="col-md-3 c-mb10" v-if="team">
-                                <label class="c-mb5-black"><b>NAMA TIM</b></label>
-                                <div class="c-mb20">{{ team.name_team }}</div>
-                            </div>
-                            <div class="col-md-2" v-if="team">
                                 <label class="c-mb5-black"><b>INSTANSI</b></label>
                                 <div class="c-mb20">{{ team.instansi }}</div>
                             </div>
@@ -67,21 +65,21 @@
                                     <li v-for="lomba in team.lomba" :key="lomba.id">{{ lomba.name_lomba }}</li>
                                 </ul>
                             </div>
-                            <div class="col-md-3" v-if="team">
+                            <div class="col-md-2" v-if="team">
                                 <label class="c-mb5-black"><b>EMAIL</b></label>
                                 <div class="c-mb20">{{ team.email }}</div>
                             </div>
-                            <div class="col-md-2" v-if="team">
+                            <div class="col-md-3" v-if="team">
                                 <label class="c-mb5-black"><b>NO WHATSAPP</b></label>
                                 <div class="c-mb20">{{ team.phone }}</div>
+                            </div>
+                            <div class="col-md-2" v-if="team">
+                                <label class="c-mb5-black"><b>PEMBAYARAN</b></label>
+                                <div class="c-mb20"><a :href="`/datatimshow/${team.id}`">Lihat Bukti</a></div>
                             </div>
                             <div class="col-md-3" v-if="team">
                                 <label class="c-mb5-black"><b>STATUS</b></label>
                                 <div class="c-mb20">{{ team.status }}</div>
-                            </div>
-                            <div class="col-md-3" v-if="team">
-                                <label class="c-mb5-black"><b>PEMBAYARAN</b></label>
-                                <div class="c-mb20"><a :href="`/datatimshow/${team.id}`">Lihat Bukti</a></div>
                             </div>
                         </div>
                         <br><br><br>
@@ -107,25 +105,29 @@
                         </div>
                         <div class="card card-height400">
                             <div class="card-body p-4 text-center">
-                                <h6 class="sub-judul-tim"><b>PENGUMPULAN KARYA</b></h6>
+                                <h6 class="sub-judul-tim"><b>KARYA TIM</b></h6>
                                 <div class="row">
-                                    <div class="col-md-3 label-left" v-if="submissions">
+                                    <div class="col-md-4 label-left" v-if="submissions">
                                         <label class="jarak-teks05"><b>JUDUL</b></label>
                                         <div class="c-mb20">{{ submissions.title }}</div>
                                     </div>
-                                    <div class="col-md-3 label-left" v-if="submissions">
-                                        <label class="jarak-teks05"><b>DESKRIPSI</b></label>
-                                        <div class="c-mb20">{{ submissions.description }}</div>
+                                    <div class="col-md-3 label-left">
+                                        <label class="jarak-teks05"><b>DOKUMEN</b></label>
+                                        <div class="c-mb20"><a href="#">Lihat Dokumen</a></div>
                                     </div>
                                     <div class="col-md-3 label-left" v-if="submissions">
-                                        <label class="jarak-teks05"><b>File</b></label>
+                                        <label class="jarak-teks05"><b>FILE</b></label>
                                         <div class="data-tim"><a :href="`/submissionshow/${submissions.id}`">Lihat
                                                 File</a></div>
                                     </div>
-                                    <div class="col-md-3 label-left" v-if="submissions">
-                                        <label class="jarak-teks05"><b>LINK VIDEO</b></label>
-                                        <div class="data-tim c-mb-70"><a :href="submissions.link" target="_blank">Link
-                                                Video</a></div>
+                                    <div class="col-md-2 label-left" v-if="submissions">
+                                        <label class="jarak-teks05"><b>LINK</b></label>
+                                        <div class="data-tim c-mb-70"><a :href="submissions.link" target="_blank">Buka
+                                                Link</a></div>
+                                    </div>
+                                    <div class="label-left" v-if="submissions">
+                                        <label class="jarak-teks05"><b>DESKRIPSI</b></label>
+                                        <div class="c-mb20 rata-tengah">{{ submissions.title }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -142,7 +144,13 @@ import { defineProps, ref, reactive } from 'vue';
 import Swal from 'sweetalert2';
 import { router } from '@inertiajs/vue3';
 
-const { userData, members, team, submissions } = defineProps(['userData', 'members', 'team', 'submissions']);
+const { userData, members, team, submissions, settings } = defineProps(['userData', 'members', 'team', 'submissions', 'settings']);
+
+const props = {
+    settings: {
+        type: Array,
+    },
+};
 
 const form = reactive({
     description: ''

@@ -1,3 +1,14 @@
+<script setup>
+import { Link } from '@inertiajs/vue3';
+import { router } from "@inertiajs/vue3";
+// import { usePage } from "@inertiajs/vue3";
+
+defineProps({
+    settings: {
+        type: Array,
+    }
+});
+</script>
 <template>
     <div class="wrapper">
         <!--start header -->
@@ -6,9 +17,9 @@
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
-                        <div class="navbar-left">
+                        <div class="navbar-left" v-for="setting in settings" :key="setting.id">
                             <a href="/">
-                                <img src="/bootstrap/images/lg.png" alt="Logo"
+                                <img :src="setting.logo1" :alt="setting.name"
                                     style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
@@ -40,8 +51,12 @@
                         <h4 class="mb-0">EDIT KRITERIA PENILAIAN</h4>
                         <hr />
                         <div class="row">
-                            <div class=" c-mb10">
-                                <label class="c-mb5-black"><b>Nama Kriteria</b></label>
+                            <div class="col-md-6 c-mb10">
+                                <label class="c-mb5-black"><b>Kriteria Penilaian</b></label>
+                                <input type="namalomba" class="form-control">
+                            </div>
+                            <div class="col-md-6 c-mb10">
+                                <label class="c-mb5-black"><b>Bobot (%)</b></label>
                                 <input type="namalomba" class="form-control">
                             </div>
                         </div>

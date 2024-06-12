@@ -6,9 +6,9 @@
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
-                        <div class="navbar-left">
+                        <div class="navbar-left" v-for="setting in settings" :key="setting.id">
                             <a href="/">
-                                <img src="/bootstrap/images/lg.png" alt="Logo"
+                                <img :src="setting.logo1" :alt="setting.name"
                                     style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
@@ -70,7 +70,8 @@
                                 <label for="formFile" class="form-label warna-hitam"><b>Upload Gambar</b></label>
                                 <input class="form-control" type="file" id="formFile"
                                     @input="form.images = $event.target.files[0]">
-                                <p class="keterangan-foto">Ukuran 640 x 500</p>
+                                <p class="keterangan-foto f-italic">Max file size: 2MB (640 x 500 px)</p>
+                                <p class="keterangan-foto f-italic">Format: .jpg, .png, .jpeg</p>
                             </div>
                             <div class="btn-posisi">
                                 <button class="btn btn-primary button-tabel-right" type="submit">Simpan</button>
@@ -93,6 +94,7 @@ import { ref } from 'vue'
 const props = defineProps({
     errors: Object,
     berita: Object,
+    settings :Object,
 })
 const selectedFile = ref(null)
 

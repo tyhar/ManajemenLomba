@@ -17,7 +17,15 @@ class BeritaController extends Controller
     //BERITA
     public function tambahberita()
     {
-        return Inertia::render('Roles/Admin/Berita/Tambahberita');
+        $settings = Setting::all()->map(function($setting)  {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });    
+        return Inertia::render('Roles/Admin/Berita/Tambahberita', [
+            'settings' => $settings,
+        ]);
     }
 
     public function store(Request $request)
@@ -57,6 +65,12 @@ class BeritaController extends Controller
                     'tanggal_upload' => Carbon::parse($berita->tanggal_upload)->translatedFormat('d F Y'),
                 ];
             }),
+            'settings' => Setting::all()->map(function($setting) {
+                return [
+                    'id' => $setting->id,
+                    'logo1' => asset('storage/'.$setting->logo1),
+                ];
+            }),
         ]);
     }
 
@@ -74,9 +88,16 @@ class BeritaController extends Controller
 
     public function editberita(Berita $berita)
     {
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });    
         return Inertia::render('Roles/Admin/Berita/Editberita', [
 
             'berita' => $berita,
+            'settings' => $settings,
         ]);
     }
     public function update(Request $request, Berita $berita)
@@ -129,6 +150,12 @@ class BeritaController extends Controller
                 'tanggal_upload' => Carbon::parse($berita->tanggal_upload)->translatedFormat('d F Y'),
                 'images' => $berita->images,
             ],
+            'settings' => Setting::all()->map(function($setting) {
+                return [
+                    'id' => $setting->id,
+                    'logo1' => asset('storage/'.$setting->logo1),
+                ];
+            }),
         ]);
     }
     public function detail(Request $request, Berita $berita)
@@ -143,6 +170,12 @@ class BeritaController extends Controller
                 'tanggal_upload' => Carbon::parse($berita->tanggal_upload)->translatedFormat('d F Y'),
                 'images' => $berita->images,
             ],
+            'settings' => Setting::all()->map(function($setting) {
+                return [
+                    'id' => $setting->id,
+                    'logo1' => asset('storage/'.$setting->logo1),
+                ];
+            }),
         ]);
     }
 }

@@ -8,8 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Message;
 use App\Http\Resources\UserResource;
-
-
+use App\Models\Setting;
 
 
 
@@ -22,10 +21,17 @@ class EventAdminController extends Controller
             'name' => $user->name,
             'username' => $user->username,
         ]);
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });   
 
 
         return Inertia::render('Roles/EventAdmin/Dashboardpetugas', [
             'UserData' => $user,
+            'settings' => $settings, 
         ]);
     }
 
@@ -36,11 +42,17 @@ class EventAdminController extends Controller
 
 
         $user = UserResource::collection(User::all());
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });  
 
         return inertia::render('Roles/EventAdmin/Partisipanpetugas', [
 
             'partisipans' => $user,
-
+            'settings' => $settings,
         ]);
 
     }
@@ -50,11 +62,27 @@ class EventAdminController extends Controller
 
     public function timpetugas()
     {
-        return Inertia::render('Roles/EventAdmin/Timpetugas');
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });  
+        return Inertia::render('Roles/EventAdmin/Timpetugas', [
+            'settings' => $settings,
+        ]);
     }
     public function timdetail()
     {
-        return Inertia::render('Roles/EventAdmin/Tim/Timdetail');
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });  
+        return Inertia::render('Roles/EventAdmin/Tim/Timdetail', [
+            'settings' => $settings,
+        ]);
     }
 
 
@@ -75,24 +103,55 @@ class EventAdminController extends Controller
                 ],
             ];
         });
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });  
 
         return Inertia::render('Roles/EventAdmin/Pesanpetugas', [
             'messages' => $messages,
+            'settings' => $settings,
         ]);
     }
 
     public function rangkingpetugas()
     {
-        return Inertia::render('Roles/EventAdmin/Rangkingpetugas');
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });  
+        return Inertia::render('Roles/EventAdmin/Rangkingpetugas', [
+            'settings' => $settings,
+        ]);
     }
     public function petugasrangking()
     {
-        return Inertia::render('Roles/EventAdmin/Rangking/Petugasrangking');
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });  
+        return Inertia::render('Roles/EventAdmin/Rangking/Petugasrangking', [
+            'settings' => $settings,
+        ]);
     }
 
     public function detailtimpetugas()
     {
-        return Inertia::render('Roles/EventAdmin/Rangking/Detailtimpetugas');
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });  
+        return Inertia::render('Roles/EventAdmin/Rangking/Detailtimpetugas', [
+            'settings' => $settings,
+        ]);
     }
 
 }
