@@ -2,7 +2,7 @@
 import { Link } from '@inertiajs/vue3';
 import { defineProps, ref, onMounted, computed } from 'vue';
 
-const { name, username, lombas, picture } = defineProps(['name', 'username', 'lombas', 'picture']);
+const { name, username, lombas, picture, settings } = defineProps(['name', 'username', 'lombas', 'picture', 'settings']);
 
 
 const props = {
@@ -16,6 +16,9 @@ const props = {
         type: Array,
     },
     picture: {
+        type: Object,
+    },
+    settings: {
         type: Object,
     },
 };
@@ -32,9 +35,9 @@ const props = {
         <!--sidebar wrapper -->
         <div class="sidebar-wrapper" data-simplebar="true">
             <div class="sidebar-header">
-                <div>
+                <div v-for="setting in settings" :key="setting.id">
                     <a href="/">
-                        <img id="logo-img" src="/bootstrap/images/lg.png" class="lg2">
+                        <img id="logo-img" :src="setting.logo1" :alt="setting.name" class="lg2">
                     </a>
                 </div>
                 <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>

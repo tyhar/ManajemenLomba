@@ -4,9 +4,9 @@
         <!--sidebar wrapper -->
         <div class="sidebar-wrapper" data-simplebar="true">
             <div class="sidebar-header">
-                <div>
+                <div v-for="setting in settings" :key="setting.id">
                     <a href="/">
-                        <img id="logo-img" src="/bootstrap/images/lg.png" class="lg2">
+                        <img id="logo-img" :src="setting.logo1" :alt="setting.name" class="lg2">
                     </a>
                 </div>
                 <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
@@ -255,7 +255,7 @@ import { Link, useForm, router } from '@inertiajs/vue3';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 
-const { userData, users, team, submissions } = defineProps(['userData', 'users', 'team', 'submissions']);
+const { userData, users, team, submissions, settings } = defineProps(['userData', 'users', 'team', 'submissions', 'settings']);
 
 const notifCount = ref(0);
 
@@ -274,6 +274,9 @@ const props = {
         type: Object,
     },
     submissions: {
+        type: Object,
+    },
+    settings: {
         type: Object,
     },
 };

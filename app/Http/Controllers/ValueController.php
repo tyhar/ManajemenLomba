@@ -14,6 +14,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\ValueResource;
 use App\Http\Resources\KriteriaResource;
+use App\Models\Setting;
 
 class ValueController extends Controller
 {
@@ -90,11 +91,19 @@ class ValueController extends Controller
         // Fetch the team members related to the team
         $teamMembers = TeamMember::where('team_id', $team->id)->with('user')->get();
 
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });  
+
         return Inertia::render('Roles/Panelis/Lomba/Timdetailjuri', [
             'userData' => $user,
             'team' => $team,
             'submissions' => $submission,
             'members' => $teamMembers,
+            'settings' => $settings,
         ]);
     }
 

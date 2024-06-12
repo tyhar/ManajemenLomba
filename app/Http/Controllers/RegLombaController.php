@@ -11,6 +11,7 @@ use App\Models\Submission;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use App\Models\Setting;
 
 class RegLombaController extends Controller
 {
@@ -31,12 +32,20 @@ class RegLombaController extends Controller
         // Get team members if the user has a team
         $teamMembers = $team ? TeamMember::where('team_id', $team->id)->get() : [];
 
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });  
+
         return Inertia::render('Roles/User/Daftarlomba', [
             'userData' => $user,
             'users' => $users,
             'team' => $team,
             'submissions' => $submission,
             'members' => $teamMembers,
+            'settings' => $settings, 
         ]);
     }
 

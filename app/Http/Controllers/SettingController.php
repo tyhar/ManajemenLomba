@@ -29,6 +29,17 @@ class SettingController extends Controller
                     'deskripsi' => $setting->deskripsi,
                     'mulai' => $setting->mulai,
                     'berakhir' => $setting->berakhir,
+                    'des_pendaftaran' => $setting->des_pendaftaran,
+                    'pengumpulan' => $setting->pengumpulan,
+                    'des_pengumpulan' => $setting->des_pengumpulan,
+                    'pengumuman' => $setting->pengumuman,
+                    'des_pengumuman' => $setting->des_pengumuman,
+                    'presentasi' => $setting->presentasi,
+                    'des_presentasi' => $setting->des_presentasi,
+                    'whatsApp' => $setting->whatsApp,
+                    'instagram' => $setting->instagram,
+                    'email' => $setting->email,
+                    'youtube' => $setting->youtube,
                     'logo1' => asset('storage/'.$setting->logo1),
                     'logo2' => asset('storage/'.$setting->logo2),
                     'logo3' => asset('storage/'.$setting->logo3)
@@ -42,10 +53,15 @@ class SettingController extends Controller
      */
     public function create()
     {
-
-
-        return Inertia::render('Roles/Admin/Setting/Tambahsetting');
-
+        $settings = Setting::all()->map(function($setting)  {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });
+        return Inertia::render('Roles/Admin/Setting/Tambahsetting', [
+            'settings' => $settings,
+        ]);
     }
 
     /**
@@ -66,6 +82,17 @@ class SettingController extends Controller
             'deskripsi' => Request::input('deskripsi'),
             'mulai' => Request::input('mulai'),
             'berakhir' => Request::input('berakhir'),
+            'des_pendaftaran' => Request::input('des_pendaftaran'),
+            'pengumpulan' => Request::input('pengumpulan'),
+            'des_pengumpulan' => Request::input('des_pengumpulan'),
+            'pengumuman' => Request::input('pengumuman'),
+            'des_pengumuman' => Request::input('des_pengumuman'),
+            'presentasi' => Request::input('presentasi'),
+            'des_presentasi' => Request::input('des_presentasi'),
+            'whatsApp' => Request::input('whatsApp'),
+            'instagram' => Request::input('instagram'),
+            'email' => Request::input('email'),
+            'youtube' => Request::input('youtube'),
             'logo1' => $logo1,
             'logo2' => $logo2,
             'logo3' => $logo3
@@ -115,6 +142,17 @@ class SettingController extends Controller
             'deskripsi' => Request::input('deskripsi'),
             'mulai' => Request::input('mulai'),
             'berakhir' => Request::input('berakhir'),
+            'des_pendaftaran' => Request::input('des_pendaftaran'),
+            'pengumpulan' => Request::input('pengumpulan'),
+            'des_pengumpulan' => Request::input('des_pengumpulan'),
+            'pengumuman' => Request::input('pengumuman'),
+            'des_pengumuman' => Request::input('des_pengumuman'),
+            'presentasi' => Request::input('presentasi'),
+            'des_presentasi' => Request::input('des_presentasi'),
+            'whatsApp' => Request::input('whatsApp'),
+            'instagram' => Request::input('instagram'),
+            'email' => Request::input('email'),
+            'youtube' => Request::input('youtube'),
             'logo1' => $logo1,
             'logo2' => $logo2,
             'logo3' => $logo3

@@ -4,9 +4,9 @@
             <div class="c-topbar">
                 <nav class="navbar navbar-expand">
                     <div class="navbar-tambah">
-                        <div class="navbar-left">
+                        <div class="navbar-left" v-for="setting in settings" :key="setting.id">
                             <a href="/">
-                                <img src="/bootstrap/images/lg.png" alt="Logo"
+                                <img :src="setting.logo1" :alt="setting.name"
                                     style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
@@ -144,7 +144,13 @@ import { defineProps, ref, reactive } from 'vue';
 import Swal from 'sweetalert2';
 import { router } from '@inertiajs/vue3';
 
-const { userData, members, team, submissions } = defineProps(['userData', 'members', 'team', 'submissions']);
+const { userData, members, team, submissions, settings } = defineProps(['userData', 'members', 'team', 'submissions', 'settings']);
+
+const props = {
+    settings: {
+        type: Array,
+    },
+};
 
 const form = reactive({
     description: ''

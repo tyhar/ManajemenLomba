@@ -3,12 +3,16 @@ import { Link } from '@inertiajs/vue3';
 import { useForm } from "@inertiajs/vue3";
 import { Head } from "@inertiajs/vue3";
 
-const { name, username } = defineProps(['name', 'username']);
+const { name, username, settings } = defineProps(['name', 'username', 'settings']);
 
 console.log(name); // Contoh penggunaan di dalam script setup
 console.log(username);
 
-
+const props = {
+    settings: {
+        type: Array,
+    },
+};
 
 const form = useForm({
     name: "",
@@ -38,10 +42,17 @@ const submit = () => {
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
-                        <div class="navbar-left">
+                        <div
+                            class="navbar-left"
+                            v-for="setting in settings"
+                            :key="setting.id"
+                        >
                             <a href="/">
-                                <img src="/bootstrap/images/lg.png" alt="Logo"
-                                    style="width: 100px; margin-left: -15px;">
+                                <img
+                                    :src="setting.logo1"
+                                    :alt="setting.name"
+                                    style="width: 100px; margin-left: -15px"
+                                />
                             </a>
                         </div>
                     </div>

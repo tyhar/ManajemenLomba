@@ -4,6 +4,7 @@ use Inertia\Inertia;
 use App\Models\Sponsor;
 use App\Models\Setting;
 use App\Models\Berita;
+use App\Models\Lomba;
 use App\Http\Controllers\LogoController;
 use App\Http\Controllers\GoogleController;
 use Illuminate\Support\Facades\Route;
@@ -65,8 +66,19 @@ Route::get('/', function () {
                 'sub_judul' => $setting->sub_judul,
                 'judul_des' => $setting->judul_des,
                 'deskripsi' => $setting->deskripsi,
-                'mulai' => $setting->mulai,
-                'berakhir' => $setting->berakhir,
+                'mulai' => Carbon::parse($setting->mulai)->translatedFormat('d F Y'),
+                'berakhir' => Carbon::parse($setting->berakhir)->translatedFormat('d F Y'),
+                'des_pendaftaran' => $setting->des_pendaftaran,
+                'pengumpulan' => Carbon::parse($setting->pengumpulan)->translatedFormat('d F Y'),
+                'des_pengumpulan' => $setting->des_pengumpulan,
+                'pengumuman' => Carbon::parse($setting->pengumuman)->translatedFormat('d F Y'),
+                'des_pengumuman' => $setting->des_pengumuman,
+                'presentasi' => Carbon::parse($setting->presentasi)->translatedFormat('d F Y'),
+                'des_presentasi' => $setting->des_presentasi,
+                'whatsApp' => $setting->whatsApp,
+                'instagram' => $setting->instagram,
+                'email' => $setting->email,
+                'youtube' => $setting->youtube,
                 'logo1' => asset('storage/' . $setting->logo1),
                 'logo2' => asset('storage/' . $setting->logo2),
                 'logo3' => asset('storage/' . $setting->logo3),
@@ -79,6 +91,12 @@ Route::get('/', function () {
                 'deskripsi_awal' => $berita->deskripsi_awal,
                 'tanggal_upload' => Carbon::parse($berita->tanggal_upload)->translatedFormat('d F Y'),
                 'images' => $berita->images,
+            ];
+        }),
+        'lombas' => Lomba::all()->map(function ($lomba) {
+            return [
+                'name_lomba' => $lomba->name_lomba,
+                'picture' => $lomba->picture,
             ];
         }),
     ]);

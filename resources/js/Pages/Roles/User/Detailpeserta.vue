@@ -6,12 +6,11 @@
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
-                        <div class="navbar-left">
-                            <a href="/">
-                                <img src="/bootstrap/images/lg.png" alt="Logo"
-                                    style="width: 100px; margin-left: -15px;">
-                            </a>
-                        </div>
+                        <div v-for="setting in settings" :key="setting.id">
+                    <a href="/">
+                        <img id="logo-img" :src="setting.logo1" :alt="setting.name" class="lg2">
+                    </a>
+                </div>
                     </div>
                     <!-- Mobile toggle menu -->
                     <!-- Search bar -->
@@ -75,6 +74,7 @@ const props = defineProps({
     name: String,
     username: String,
     lombax: Object,
+    settings: Object,
 });
 
 </script>

@@ -3,6 +3,11 @@ import { Link } from '@inertiajs/vue3';
 import { useForm } from "@inertiajs/vue3";
 import { Head } from "@inertiajs/vue3";
 
+const props = defineProps({
+    settings: Object,
+    logo1: String,
+});
+
 const form = useForm({
     name: "",
     judul: "",
@@ -11,6 +16,17 @@ const form = useForm({
     deskripsi: "",
     mulai: "",
     berakhir: "",
+    des_pendaftaran: "",
+    pengumpulan: "",
+    des_pengumpulan: "",
+    pengumuman: "",
+    des_pengumuman: "",
+    presentasi: "",
+    des_presentasi: "",
+    whatsApp: "",
+    instagram: "",
+    email: "",
+    youtube: "",
     logo1: "",
     logo2: "",
     logo3: "",
@@ -30,9 +46,9 @@ const submit = () => {
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
-                        <div class="navbar-left">
+                        <div class="navbar-left" v-for="setting in settings" :key="setting.id">
                             <a href="/">
-                                <img src="/bootstrap/images/lg.png" alt="Logo"
+                                <img :src="setting.logo1" :alt="setting.name"
                                     style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
@@ -94,8 +110,7 @@ const submit = () => {
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5 c-mb10">
-                                        <label for="mulai" class="form-label warna-hitam"><b>Pendaftaran
-                                                Mulai</b></label>
+                                        <label for="mulai" class="form-label warna-hitam"><b>Pendaftaran Mulai</b></label>
                                         <input type="date" class="form-control label-8" v-model="form.mulai"
                                             id="mulai" />
                                     </div>
@@ -103,46 +118,69 @@ const submit = () => {
                                         <span class="dash">-</span>
                                     </div>
                                     <div class="col-md-5 c-mb10">
-                                        <label for="berakhir" class="form-label warna-hitam"><b>Pendaftaran
-                                                Berakhir</b></label>
+                                        <label for="berakhir" class="form-label warna-hitam"><b>Pendaftaran Berakhir</b></label>
                                         <input type="date" class="form-control label-8" v-model="form.berakhir"
                                             id="berakhir" />
                                     </div>
 
                                     <div class="c-mb10">
-                                        <label for="karya" class="form-label warna-hitam"><b>Pengumpulan
-                                                Karya</b></label>
-                                        <input type="date" class="form-control label-8 date370" id="karya" />
+                                    <label for="des_pendaftaran" class="c-mb5-black"><b>Deskripsi Pendaftaran</b></label>
+                                    <input type="text" class="form-control" v-model="form.des_pendaftaran"
+                                        placeholder="Masukan deskripsi pendaftaran" id="des_pendaftaran" required />
                                     </div>
+
                                     <div class="c-mb10">
-                                        <label for="finalis" class="form-label warna-hitam"><b>Pengumuman
-                                                Finalis</b></label>
-                                        <input type="date" class="form-control label-8 date370" id="finalis" />
+                                        <label for="pengumpulan" class="form-label warna-hitam"><b>Pengumpulan Karya</b></label>
+                                        <input type="date" class="form-control label-8 date370" v-model="form.pengumpulan" id="pengumpulan" />
                                     </div>
+
                                     <div class="c-mb10">
-                                        <label for="mulai" class="form-label warna-hitam"><b>Presentasi
+                                    <label for="des_pengumpulan" class="c-mb5-black"><b>Deskripsi Pengumpulan Karya</b></label>
+                                    <input type="text" class="form-control" v-model="form.des_pengumpulan"
+                                        placeholder="Masukan deskripsi pengumpulan karya" id="des_pengumpulan" required />
+                                    </div>
+
+                                    <div class="c-mb10">
+                                        <label for="pengumuman" class="form-label warna-hitam"><b>Pengumuman
                                                 Finalis</b></label>
-                                        <input type="date" class="form-control label-8 date370" />
+                                        <input type="date" class="form-control label-8 date370" v-model="form.pengumuman" id="pengumuman" />
+                                    </div>
+
+                                    <div class="c-mb10">
+                                    <label for="des_pengumuman" class="c-mb5-black"><b>Deskripsi Pengumuman Finalis</b></label>
+                                    <input type="text" class="form-control" v-model="form.des_pengumuman"
+                                        placeholder="Masukan deskripsi pengumuman finalis" id="des_pengumuman" required />
+                                    </div>
+
+                                    <div class="c-mb10">
+                                        <label for="presentasi" class="form-label warna-hitam"><b>Presentasi Finalis</b></label>
+                                        <input type="date" class="form-control label-8 date370" v-model="form.presentasi" id="presentasi" />
+                                    </div>
+
+                                    <div class="c-mb10">
+                                    <label for="des_presentasi" class="c-mb5-black"><b>Deskripsi Presentasi Finalis</b></label>
+                                    <input type="text" class="form-control" v-model="form.des_presentasi"
+                                        placeholder="Masukan deskripsi presentasi finalis" id="des_presentasi" required />
                                     </div>
                                 </div>
                                 <div class="c-mb10">
-                                    <label for="no_whatsapp" class="c-mb5-black"><b>No WhatsApp</b></label>
-                                    <input type="number" class="form-control" placeholder="Masukan no whatsapp"
-                                        id="no_whatsapp" required />
+                                    <label for="whatsApp" class="c-mb5-black"><b>No WhatsApp</b></label>
+                                    <input type="number" class="form-control" placeholder="Masukan no whatsapp" v-model="form.whatsApp"
+                                        id="whatsApp" required />
                                 </div>
                                 <div class="c-mb10">
                                     <label for="instagram" class="c-mb5-black"><b>Instagram</b></label>
-                                    <input type="text" class="form-control" placeholder="Masukan username instagram"
+                                    <input type="text" class="form-control" placeholder="Masukan username instagram" v-model="form.instagram"
                                         id="instagram" required />
                                 </div>
                                 <div class="c-mb10">
                                     <label for="email" class="c-mb5-black"><b>Email</b></label>
-                                    <input type="email" class="form-control"
+                                    <input type="email" class="form-control" v-model="form.email"
                                         placeholder="Masukan email yang dapat dihubungi" id="email" required />
                                 </div>
                                 <div class="c-mb10">
                                     <label for="youtube" class="c-mb5-black"><b>Youtube</b></label>
-                                    <input type="text" class="form-control" placeholder="Masukan link youtube"
+                                    <input type="text" class="form-control" placeholder="Masukan link youtube" v-model="form.youtube"
                                         id="youtube" required />
                                 </div>
                                 <div>

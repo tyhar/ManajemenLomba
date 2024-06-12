@@ -3217,6 +3217,20 @@ input.search-control-2::placeholder {
 	color: #8D8686;
 }
 
+.container-hgtl {
+	height: 1200px;
+	width: 1100px;
+	background-color: #E4EDF3;
+	margin-left: 10px;
+}
+
+.cuyy {
+	text-align: left;
+}
+
+.cuyyy {
+	text-align: justify;
+}
 
 /* LANDING PAGE --SPONSOR */
 .sponsor-grid {
@@ -4507,6 +4521,14 @@ body {
 	margin-top: -90px !important;
 }
 
+.cmt_300 {
+	margin-top: 40px !important;
+}
+
+.cmt_3000 {
+	margin-top: 100px !important;
+}
+
 /* Aturan CSS untuk tampilan mobile */
 @media (max-width: 767px) {
 	.cmt_30 {
@@ -4575,4 +4597,17 @@ body {
 .img-profil {
 	width: 280px;
 	width: 100%;
+}
+
+.containerr {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 10px;
+}
+.boxx {
+	text-align: left;
+	width: 300px;
+	height: 100px;
+	box-sizing: border-box;
+	margin-bottom: 50px;
 }

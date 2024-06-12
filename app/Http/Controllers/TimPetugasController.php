@@ -14,16 +14,26 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Resources\TeamResource;
+use App\Models\Setting;
+
 
 class TimPetugasController extends Controller
 {
     public function index()
     {
         $teams = Team::with('lomba')->get();
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });   
 
         return Inertia::render('Roles/EventAdmin/Timpetugas', [
-            'teams' => TeamResource::collection($teams)
+            'teams' => TeamResource::collection($teams),
+            'settings' => $settings
         ]);
+        
     }
  public function show($id)
     {
@@ -38,11 +48,19 @@ class TimPetugasController extends Controller
         // Fetch the team members related to the team
         $teamMembers = TeamMember::where('team_id', $team->id)->with('user')->get();
 
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });   
+
         return Inertia::render('Roles/EventAdmin/Tim/Timdetail', [
             'userData' => $user,
             'team' => $team,
             'submissions' => $submission,
             'members' => $teamMembers,
+            'settings' => $settings
         ]);
     }
     public function updateStatus(Request $request, $id)

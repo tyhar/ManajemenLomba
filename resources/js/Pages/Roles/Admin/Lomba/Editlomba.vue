@@ -6,9 +6,9 @@
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
-                        <div class="navbar-left">
+                        <div class="navbar-left" v-for="setting in settings" :key="setting.id">
                             <a href="/">
-                                <img src="/bootstrap/images/lg.png" alt="Logo"
+                                <img :src="setting.logo1" :alt="setting.name"
                                     style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
@@ -117,7 +117,7 @@
 import { router, useForm, usePage } from "@inertiajs/vue3";
 import Swal from 'sweetalert2'; // Import SweetAlert
 
-const { name, username, kriterias } = defineProps(['name', 'username', 'kriterias']);
+const { name, username, kriterias, settings } = defineProps(['name', 'username', 'kriterias', 'settings']);
 
 const props = {
     sponsors: {
@@ -126,6 +126,9 @@ const props = {
     },
     logo: {
         type: String,
+    },
+    settings: {
+        type: Array,
     },
 };
 

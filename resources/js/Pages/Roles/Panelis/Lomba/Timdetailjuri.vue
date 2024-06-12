@@ -5,13 +5,11 @@
             <div class="c-topbar">
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
-                    <div class="navbar-tambah">
-                        <div class="navbar-left">
-                            <a href="/">
-                                <img src="/bootstrap/images/lg.png" alt="Logo" class="lg3">
-                            </a>
-                        </div>
-                    </div>
+                    <div v-for="setting in settings" :key="setting.id">
+                    <a href="/">
+                        <img id="logo-img" :src="setting.logo1" :alt="setting.name" class="lg3">
+                    </a>
+                </div>
                     <!-- Mobile toggle menu -->
                     <!-- Search bar -->
                     <div class="search-bar flex-grow-1">
@@ -111,7 +109,7 @@ import { defineProps, ref, reactive } from 'vue';
 import Swal from 'sweetalert2';
 import { router } from '@inertiajs/vue3';
 
-const { userData, members, team, submissions } = defineProps(['userData', 'members', 'team', 'submissions']);
+const { userData, members, team, submissions, settings } = defineProps(['userData', 'members', 'team', 'submissions', 'settings']);
 
 const form = reactive({
     description: ''

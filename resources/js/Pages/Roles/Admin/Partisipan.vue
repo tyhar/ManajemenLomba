@@ -9,7 +9,10 @@ const filterStatus = ref('Semua');
 const props = defineProps({
   partisipans: {
     type: Object, // Assuming partisipans is an object with a 'data' array
-  }
+  },
+  settings: {
+        type: Array,
+    },
 });
 
 
@@ -39,11 +42,11 @@ onMounted(async () => {
     <!--sidebar wrapper -->
     <div class="sidebar-wrapper" data-simplebar="true">
       <div class="sidebar-header">
-        <div>
-          <a href="/">
-            <img id="logo-img" src="/bootstrap/images/lg.png" class="lg2">
-          </a>
-        </div>
+        <div v-for="setting in settings" :key="setting.id">
+                    <a href="/">                        
+                        <img id="logo-img" :src="setting.logo1" class="lg2">
+                    </a>
+                </div>
         <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
       </div>
       <!--navigation-->

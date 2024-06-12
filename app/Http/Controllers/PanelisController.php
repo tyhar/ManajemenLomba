@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use App\Models\Setting;
 
 class PanelisController extends Controller
 {
@@ -19,30 +20,86 @@ class PanelisController extends Controller
     //RANKING
     public function rangkingjuri()
     {
-        return Inertia::render('Roles/Panelis/Rangkingjuri');
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });  
+        return Inertia::render('Roles/Panelis/Rangkingjuri', [
+            'settings' => $settings,
+        ]);
     }
     public function tabelrangkingjuri()
     {
-        return Inertia::render('Roles/Panelis/Rangking/Tabelrangkingjuri');
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });  
+        return Inertia::render('Roles/Panelis/Rangking/Tabelrangkingjuri', [
+            'settings' => $settings,
+        ]);
     }
     public function lombajuri()
     {
-        return Inertia::render('Roles/Panelis/Lombajuri');
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });  
+        return Inertia::render('Roles/Panelis/Lombajuri', [
+            'settings' => $settings,
+        ]);
     }
     public function tabellomba()
     {
-        return Inertia::render('Roles/Panelis/Lomba/Tabellomba');
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });  
+        return Inertia::render('Roles/Panelis/Lomba/Tabellomba', [
+            'settings' => $settings,
+        ]);
     }
     public function nilai()
     {
-        return Inertia::render('Roles/Panelis/Lomba/Nilai');
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });  
+        return Inertia::render('Roles/Panelis/Lomba/Nilai', [
+            'settings' => $settings,
+        ]);
     }
     public function editnilai()
     {
-        return Inertia::render('Roles/Panelis/Lomba/Editnilai');
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });  
+        return Inertia::render('Roles/Panelis/Lomba/Editnilai', [
+            'settings' => $settings,
+        ]);
     }
     public function timdetailjuri()
     {
-        return Inertia::render('Roles/Panelis/Lomba/Timdetailjuri');
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });  
+        return Inertia::render('Roles/Panelis/Lomba/Timdetailjuri', [
+            'settings' => $settings,
+        ]);
     }
 }

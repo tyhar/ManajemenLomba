@@ -7,6 +7,7 @@ use App\Models\Notifikasi;
 use App\Models\Team;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Setting;
 
 class NotifikasiController extends Controller
 {
@@ -22,9 +23,17 @@ class NotifikasiController extends Controller
             $query->where('user_id', $user->id);
         })->get();
 
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });  
+
         return Inertia::render('Roles/User/Notifikasipeserta', [
             'notifikasis' => $notifikasis,
             'isVerified' => $team && $team->status === 'verified', // Properti isVerified berdasarkan status tim
+            'settings' => $settings, 
         ]);
     }
 

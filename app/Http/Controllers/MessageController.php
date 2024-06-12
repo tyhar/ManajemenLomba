@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use App\Models\Message;
+use App\Models\Setting;
 // use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
@@ -32,9 +33,16 @@ class MessageController extends Controller
                 ],
             ];
         });
+        $settings = Setting::all()->map(function($setting) use ($user) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });     
     
         return Inertia::render('Roles/Admin/Pesan', [
             'messages' => $messages,
+            'settings' => $settings,
         ]);
     }
     
@@ -42,10 +50,22 @@ class MessageController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
-    {
-        return Inertia::render('Utama/Kontak');
-    }
+{
+    $settings = Setting::all()->map(function ($setting) {
+        return [
+            'id' => $setting->id,
+            'whatsApp' => $setting->whatsApp,
+            'instagram' => $setting->instagram,
+            'email' => $setting->email,
+            'youtube' => $setting->youtube,
+            'logo1' => asset('storage/' . $setting->logo1),
+        ];
+    });
 
+    return Inertia::render('Utama/Kontak', [
+        'settings' => $settings,
+    ]);
+}
     /**
      * Store a newly created resource in storage.
      */
@@ -94,7 +114,9 @@ class MessageController extends Controller
     public function edit(Message $message)
     {
         $unreadCount = Message::where('status', 'belum_dibaca')->count();
-        return Inertia::render('Roles/Admin/Pesan');
+        return Inertia::render('Roles/Admin/Pesan', [
+            'settings' => $settings,                          
+        ]);
     }
 
     /**

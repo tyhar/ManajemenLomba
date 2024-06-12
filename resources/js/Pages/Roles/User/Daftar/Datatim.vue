@@ -4,9 +4,9 @@
             <div class="c-topbar">
                 <nav class="navbar navbar-expand">
                     <div class="navbar-tambah">
-                        <div class="navbar-left">
+                        <div class="navbar-left" v-for="setting in settings" :key="setting.id">
                             <a href="/">
-                                <img src="/bootstrap/images/lg.png" alt="Logo"
+                                <img :src="setting.logo1" :alt="setting.name"
                                     style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
@@ -97,13 +97,16 @@ const form = reactive({
     payment: null,
 });
 
-const { name, username, lombas } = defineProps(['name', 'username', 'lombas']);
+const { name, username, lombas, settings } = defineProps(['name', 'username', 'lombas', 'settings']);
 
 // Definisikan properti yang diterima oleh komponen
 const props = {
     lombas: {
         type: Array,
         default: () => [],
+    },
+    settings: {
+        type: Array,
     },
 };
 

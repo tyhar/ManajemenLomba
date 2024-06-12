@@ -6,11 +6,12 @@
         <nav class="navbar navbar-expand">
           <!-- Navbar tambah untuk logo di kiri -->
           <div class="navbar-tambah">
-            <div class="navbar-left">
-              <a href="/">
-                <img src="/bootstrap/images/lg.png" alt="Logo" style="width: 100px; margin-left: -15px;">
-              </a>
-            </div>
+            <div class="navbar-left" v-for="setting in settings" :key="setting.id">
+                            <a href="/">
+                                <img :src="setting.logo1" :alt="setting.name"
+                                    style="width: 100px; margin-left: -15px;">
+                            </a>
+                        </div>
           </div>
           <!-- Mobile toggle menu -->
           <!-- Search bar -->
@@ -73,6 +74,10 @@ const props = defineProps({
     required: true
   },
   kriterias: {
+    type: Array,
+    required: true
+  },
+  settings: {
     type: Array,
     required: true
   }

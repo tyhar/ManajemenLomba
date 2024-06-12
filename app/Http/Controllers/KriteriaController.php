@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\KriteriaResource;
 use App\Models\Kriteria;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
@@ -21,10 +22,17 @@ class KriteriaController extends Controller
             'username' => $user->username,
         ]);
         $kriteria = KriteriaResource::collection(Kriteria::all());
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });     
 
         return Inertia::render('Roles/Admin/Kriteria', [
             'kriterias' => $kriteria,
             'UserData' => $user,
+            'settings' => $settings,
         ]);
     }
 
@@ -38,9 +46,16 @@ class KriteriaController extends Controller
             'name' => $user->name,
             'username' => $user->username,
         ]);
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });     
 
         return Inertia::render('Roles/Admin/Kriteria/Tambahkriteria',[
            'UserData' => $user,
+           'settings' => $settings,
         ]);
     }
 
@@ -78,11 +93,18 @@ public function show($kriteria)
         'username' => $user->username,
     ]);
     $kriteria = Kriteria::findOrFail($kriteria);
+    $settings = Setting::all()->map(function($setting) {
+        return [
+            'id' => $setting->id,
+            'logo1' => asset('storage/'.$setting->logo1),
+        ];
+    }); 
 
     // Kembalikan tampilan menggunakan Inertia dengan data kriteria
     return Inertia::render('Roles/Admin/Kriteria/Detailkriteria', [
         'kriteria' => $kriteria,
         'UserData' => $user,
+        'settings' => $settings,
     ]);
 }
 
@@ -92,9 +114,17 @@ public function show($kriteria)
      */
     public function edit(Kriteria $kriteria)
     {
+        $settings = Setting::all()->map(function($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        }); 
+        
         return Inertia::render('Roles/Admin/Kriteria/Editkriteria', [
             'kriterias' => KriteriaResource::make($kriteria),
             'kriteria' => $kriteria,
+            'settings' => $settings,
 
 
         ]);

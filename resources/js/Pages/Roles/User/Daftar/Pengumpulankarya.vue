@@ -6,11 +6,12 @@
         <nav class="navbar navbar-expand">
           <!-- Navbar tambah untuk logo di kiri -->
           <div class="navbar-tambah">
-            <div class="navbar-left">
-              <a href="/">
-                <img src="/bootstrap/images/lg.png" alt="Logo" style="width: 100px; margin-left: -15px;">
-              </a>
-            </div>
+            <div class="navbar-left lg2" v-for="setting in settings" :key="setting.id" >
+                            <a href="/">
+                                <img :src="setting.logo1" :alt="setting.name"
+                                    style="width: 100px; margin-left: -15px;">
+                            </a>
+                        </div>
           </div>
           <!-- Mobile toggle menu -->
           <!-- Search bar -->
@@ -97,7 +98,7 @@ const form = reactive({
 });
 
 // Destructure props
-const { name, username } = defineProps(['name', 'username']);
+const { name, username, settings } = defineProps(['name', 'username', 'settings']);
 
 // Handle file upload
 const handleFileUpload = (event) => {

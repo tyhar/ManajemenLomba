@@ -7,6 +7,7 @@ use App\Http\Resources\LombaResource;
 use App\Models\Lomba;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use App\Models\Setting;
 // use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
@@ -29,7 +30,15 @@ class AdministratorController extends Controller
             'name' => $user->name,
             'username' => $user->username,
         ]);
+        $settings = Setting::all()->map(function($setting) use ($user) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });      
+
         return Inertia::render('Roles/Admin/Administrator', [
+            'settings' => $settings,
             'users' => User::all()->map(function($user) {
                 return [
                     'id' => $user->id,
@@ -55,9 +64,16 @@ class AdministratorController extends Controller
             'username' => $user->username,
         ]);
         $lomba = LombaResource::collection(Lomba::all());
+        $settings = Setting::all()->map(function($setting) use ($user) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });     
         return Inertia::render('Roles/Admin/Administrator/Tambahadministrator',
         [
             'UserData' => $user,
+            'settings' => $settings,
             'lombas' => $lomba
         ]);
     
@@ -102,8 +118,15 @@ class AdministratorController extends Controller
         ]);
 
         $users = User::with('lomba')->find($id);
+        $settings = Setting::all()->map(function($setting) use ($user) {
+            return [
+                'id' => $setting->id,
+                'logo1' => asset('storage/'.$setting->logo1),
+            ];
+        });     
         return Inertia::render('Roles/Admin/Administrator/Detailadministrator', [
             'users' => $users,
+            'settings' => $settings,
             'UserData' => $user
         ]);
     }

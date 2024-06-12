@@ -6,7 +6,7 @@ import { Head } from "@inertiajs/vue3";
 import { usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/vue3";
 // import { inertia } from "@inertiajs/inertia";
-const { name, username, sponsor, logo } = defineProps(['name', 'username', 'kriterias', 'logo']);
+const { name, username, sponsor, logo, settings } = defineProps(['name', 'username', 'kriterias', 'logo', 'settings']);
 
 
 // console.log(name); // Contoh penggunaan di dalam script setup
@@ -19,6 +19,9 @@ const props = {
     },
     logo: {
         type: String, // Menentukan tipe data logo sebagai String
+    },
+    settings: {
+        type: Array,
     },
 };
 
@@ -61,10 +64,17 @@ const submit = () => {
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
-                        <div class="navbar-left">
+                        <div
+                            class="navbar-left"
+                            v-for="setting in settings"
+                            :key="setting.id"
+                        >
                             <a href="/">
-                                <img src="/bootstrap/images/lg.png" alt="Logo"
-                                    style="width: 100px; margin-left: -15px;">
+                                <img
+                                    :src="setting.logo1"
+                                    :alt="setting.name"
+                                    style="width: 100px; margin-left: -15px"
+                                />
                             </a>
                         </div>
                     </div>
