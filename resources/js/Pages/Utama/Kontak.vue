@@ -101,14 +101,33 @@ const submit = () => {
         </nav>
         <section class="tf__breadcrumb" style="background: url(/bootstrap/images/home.jpg);">
         </section>
-        <section class="tf__contact_page mt_190 xs_mt_95">
+        <section class="tf__contact_page mt_190">
             <div class="container">
                 <div class="row">
+                    <div class="tf__heading_area tf__heading_area_left mb_25">
+                        <h5 class="c-mb-13 text30">INFORMASI KONTAK</h5>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-c3">
+                            <h6 class="c-mb-13"><b>WhatsApp</b></h6>
+                            <h6 class="c-mb20">089521915485</h6>
+                        </div>
+                        <div class="col-md-3">
+                            <h6 class="c-mb-13"><b>Instagram</b></h6>
+                            <h6 class="c-mb20">@OLINAS_2024</h6>
+                        </div>
+                        <div class="col-md-3">
+                            <h6 class="c-mb-13"><b>Email</b></h6>
+                            <h6 class="c-mb20">olinas2024.gmail.com</h6>
+                        </div>
+                        <div class="col-md-2">
+                            <h6 class="c-mb-13"><b>Youtube</b></h6>
+                            <h6 class="c-mb20">@OLINAS_2024</h6>
+                        </div>
+                    </div>
+                    <br><br><br><br><br>
                     <div class="col-xxl-8 col-xl-7  wow fadeInLeft">
                         <div class="tf__contact_form">
-                            <div class="tf__heading_area tf__heading_area_left mb_25">
-                                <h5 class="c-mb-13">HUBUNGI KAMI</h5>
-                            </div>
                             <form @submit.prevent="submit">
                                 <input class="form-control ckontak" id="nama" type="text" v-model="form.name"
                                     placeholder="Nama Lengkap" />

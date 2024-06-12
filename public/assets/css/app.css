@@ -3131,6 +3131,10 @@ input.search-control-2::placeholder {
 	height: 20px;
 }
 
+.text30 {
+	font-size: 30px !important
+}
+
 /* JARAK BOTTOM*/
 .c-mb-8 {
 	margin-bottom: 8px;
@@ -4504,8 +4508,27 @@ body {
 }
 
 .cmt_30 {
-	margin-top: -90px !important;
+	margin-top: -100px !important;
 }
+
+/* Aturan CSS untuk tampilan mobile */
+@media (max-width: 767px) {
+	.cmt_118 {
+		margin-top: 30px !important;
+	}
+}
+
+.ckontak {
+	height: 45px;
+}
+
+/* Aturan CSS untuk tampilan desktop */
+@media (min-width: 768px) {
+	.cmt_118 {
+		margin-top: 118px !important;
+	}
+}
+
 
 /* Aturan CSS untuk tampilan mobile */
 @media (max-width: 767px) {
@@ -4575,4 +4598,16 @@ body {
 .img-profil {
 	width: 280px;
 	width: 100%;
+}
+
+.cuyy {
+	text-align: left;
+}
+
+.cuyyy {
+	text-align: justify;
+}
+
+.bg-timeline {
+	background-color: #E4EDF3;
 }

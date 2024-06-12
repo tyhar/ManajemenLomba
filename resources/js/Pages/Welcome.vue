@@ -205,32 +205,109 @@ function handleImageError() {
                 </div>
             </div>
         </section>
-
-        <section id="timeline-section" class="tf__categories mt_95">
-            <div class="container jarak-container">
-                <div class="row">
-                    <div class="col-xl-6 col-md-8 col-lg-6 m-auto wow fadeInUp">
-                        <div class="tf__heading_area mb_15">
-                            <h5 class="c-mb-40">Timeline</h5>
-                            <div class="card container-hg180-index">
-                                <div class="card-body p-4 text-center" v-for="setting in settings" :key="setting.id">
-                                    <h6 class="h6-landing-page1">
-                                        <b>Event OLINAS</b>
-                                    </h6>
-                                    <h6 class="h6-landing-page2">
-                                        <b>Tanggal Mulai : {{ setting.mulai }}</b>
-                                    </h6>
-                                    <h6 class="h6-landing-page2">
-                                        <b>Tanggal Berakhir : {{ setting.berakhir }}</b>
-                                    </h6>
-                                </div>
+        <br>
+        <!-- Timeline 4 - Bootstrap Brain Component -->
+        <section id="timeline-section" class="bsb-timeline-4">
+            <div class="container">
+                <div class="row justify-content-center" v-for="setting in settings" :key="setting.id">
+                    <!-- <div class="col-xl-6 col-md-8 col-lg-6 m-auto wow fadeInUp"> -->
+                    <div class="tf__heading_area mb_15">
+                        <h5 class="c-mb-40">Timeline</h5>
+                        <div class="card bg-timeline">
+                            <div class="card-body p-4 text-center">
+                                <ul class="timeline">
+                                    <li class="timeline-item left">
+                                        <div class="timeline-body">
+                                            <div class="timeline-meta">
+                                                <div
+                                                    class="d-inline-flex flex-column px-2 py-1 text-success-emphasis bg-success-subtle border border-success-subtle rounded-2 text-md-end">
+                                                    <span>27 Mei - 10 Juni 2024</span>
+                                                </div>
+                                            </div>
+                                            <div class="timeline-content timeline-indicator">
+                                                <div class="card border-0 shadow">
+                                                    <div class="card-body p-xl-4">
+                                                        <h3 class="cuyy">PENDAFTARAN</h3>
+                                                        <p class="card-text m-0 cuyyy">Peserta mendaftar secara online
+                                                            dengan
+                                                            mengisi formulir dan memenuhi persyaratan sebelum batas
+                                                            waktu.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="timeline-item right">
+                                        <div class="timeline-body">
+                                            <div class="timeline-meta">
+                                                <div
+                                                    class="d-inline-flex flex-column px-2 py-1 text-success-emphasis bg-success-subtle border border-success-subtle rounded-2 text-md-end">
+                                                    <span>15 Juni 2024</span>
+                                                </div>
+                                            </div>
+                                            <div class="timeline-content timeline-indicator">
+                                                <div class="card border-0 shadow">
+                                                    <div class="card-body p-xl-4">
+                                                        <h3 class="cuyy">PENGUMPULAN KARYA</h3>
+                                                        <p class="card-text m-0 cuyyy">Peserta mengirimkan karya sesuai
+                                                            pedoman
+                                                            dan format yang ditentukan melalui platform yang ditunjuk
+                                                            sebelum
+                                                            batas waktu.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="timeline-item left">
+                                        <div class="timeline-body">
+                                            <div class="timeline-meta">
+                                                <div
+                                                    class="d-inline-flex flex-column px-2 py-1 text-success-emphasis bg-success-subtle border border-success-subtle rounded-2 text-md-end">
+                                                    <span>15 Juni 2024</span>
+                                                </div>
+                                            </div>
+                                            <div class="timeline-content timeline-indicator">
+                                                <div class="card border-0 shadow">
+                                                    <div class="card-body p-xl-4">
+                                                        <h3 class="cuyy">PENGUMUMAN FINALIS</h3>
+                                                        <p class="card-text m-0 cuyyy">Daftar finalis diumumkan di situs
+                                                            web
+                                                            resmi dan media sosial penyelenggara setelah penilaian
+                                                            karya.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="timeline-item right">
+                                        <div class="timeline-body">
+                                            <div class="timeline-meta">
+                                                <div
+                                                    class="d-inline-flex flex-column px-2 py-1 text-success-emphasis bg-success-subtle border border-success-subtle rounded-2 text-md-end">
+                                                    <span>27 Juni 2024</span>
+                                                </div>
+                                            </div>
+                                            <div class="timeline-content timeline-indicator">
+                                                <div class="card border-0 shadow">
+                                                    <div class="card-body p-xl-4">
+                                                        <h3 class="cuyy">PRESENTAS FINAL</h3>
+                                                        <p class="card-text m-0 cuyyy">Finalis mempresentasikan karya
+                                                            mereka di
+                                                            hadapan dewan juri, menjelaskan ide dan menjawab pertanyaan.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        <br /><br />
 
         <section id="berita-section" class="tf__event mt_95">
             <div class="container">
@@ -273,18 +350,6 @@ function handleImageError() {
                                     <img :src="sponsor.logo" :alt="sponsor.name" class="img-fluid" />
                                 </a>
                             </div>
-                            <!-- <div class="sponsor-item">
-                            <img src="bootstrap/images/logo-sv.png" alt="about" class="img-fluid">
-                        </div>
-                        <div class="sponsor-item">
-                            <img src="bootstrap/images/UNS.png" alt="about" class="img-fluid">
-                        </div>
-                        <div class="sponsor-item">
-                            <img src="bootstrap/images/d3ti.png" alt="about" class="img-fluid">
-                        </div>
-                        <div class="sponsor-item">
-                            <img src="bootstrap/images/em.png" alt="about" class="img-fluid">
-                        </div> -->
                         </div>
                     </div>
                 </div>
@@ -298,3 +363,9 @@ function handleImageError() {
         </footer>
     </div>
 </template>
+
+<!-- <style scoped>
+.card {
+    background-color: #E4EDF3;
+}
+</style> -->
