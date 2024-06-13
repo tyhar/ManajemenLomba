@@ -96,7 +96,7 @@ onMounted(async () => {
                     <a href="/">
                         <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
                         </div>
-                        <div class="menu-title">Logout</div>
+                        <div class="menu-title">Keluar</div>
                     </a>
                 </li>
             </ul>

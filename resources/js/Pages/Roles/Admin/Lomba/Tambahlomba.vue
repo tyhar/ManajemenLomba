@@ -6,15 +6,11 @@
                 <nav class="navbar navbar-expand">
                     <!-- Navbar -->
                     <div class="navbar-tambah">
-                        <div
-                            class="navbar-left"
-                            v-for="setting in settings"
-                            :key="setting.id"
-                        >
+                        <div class="navbar-left">
                             <a href="/">
                                 <img
-                                    :src="setting.logo1"
-                                    :alt="setting.name"
+                                    src="/bootstrap/images/lg.png"
+                                    alt="Logo"
                                     style="width: 100px; margin-left: -15px"
                                 />
                             </a>
@@ -216,17 +212,17 @@
                                 </div>
                             </div>
                             <div class="btn-posisi">
-                                <button
-                                    type="submit"
-                                    class="btn btn-primary button-tabel-right"
-                                >
-                                    Tambah
-                                </button>
                                 <a
-                                    class="btn btn-danger button-tabel-left"
+                                    class="btn btn-danger button-left"
                                     :href="route('lomba.index')"
                                     >Batal</a
                                 >
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary button-right"
+                                >
+                                    Tambah
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -254,11 +250,10 @@ const form = reactive({
     selectedCriteria: [],
 });
 
-const { name, username, kriteriaz, settings } = defineProps([
+const { name, username, kriteriaz } = defineProps([
     "name",
     "username",
     "kriteriaz",
-    "settings",
 ]);
 
 // Definisikan properti yang diterima oleh komponen
@@ -266,9 +261,6 @@ const props = {
     kriteriaz: {
         type: Array,
         default: () => [],
-    },
-    settings: {
-        type: Array,
     },
 };
 // const form = useForm({

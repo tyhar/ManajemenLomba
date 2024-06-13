@@ -207,6 +207,7 @@ const props = defineProps({
                                             <tr>
                                                 <th class="width-id">NO.</th>
                                                 <th class="crud-width-400 posisi-text">KRITERIA</th>
+                                                <th class="crud-width-40">BOBOT</th>
                                                 <th class="crud-width-40">NILAI</th>
                                             </tr>
                                         </thead>
@@ -222,7 +223,7 @@ const props = defineProps({
                                                 <td class="text-left"></td>
                                             </tr>
                                             <tr>
-                                                <th colspan="2" class="text-left">Total</th>
+                                                <th colspan="3" class="text-left">Total</th>
                                                 <td class="crud-width-40">0</td>
                                             </tr>
                                         </tbody>

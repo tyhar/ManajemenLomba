@@ -63,7 +63,7 @@ defineProps({
                         </div>
                         <div class="menu-title">
                             <Link class="menu-title" :href="route('logout')" method="post" as="button">
-                            Logout
+                            Keluar
                             </Link>
                         </div>
                     </a>
@@ -118,7 +118,7 @@ defineProps({
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0 jarak-top-kurang5">Tabel Rangking</h4>
+                        <h4 class="mb-0 jarak-top-kurang5">TABEL RANGKING UI / UX</h4>
                         <hr class="c-mt10" />
                         <button class="btn btn-danger">Tidak lolos</button>
                         <button class="btn btn-primary crud-width120">Lolos</button>

@@ -84,7 +84,7 @@ onMounted(async () => {
                         <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i></div>
                         <div class="menu-title">
                             <Link class="menu-title" :href="route('logout')" method="post" as="button">
-                            Logout
+                            Keluar
                             </Link>
                         </div>
                     </a>
@@ -124,7 +124,7 @@ onMounted(async () => {
             <div class="page-content">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0 jarak-top-kurang5">Tabel Tim</h4>
+                        <h4 class="mb-0 jarak-top-kurang5">TABEL TIM UI / UX</h4>
                         <hr class="c-mt10" />
                         <a :href="route('export.team')" class="btn btn-primary btn-float-right">Export Excel</a>
                         <label class="dropdown-crud">Filter by Status</label>

@@ -63,7 +63,7 @@ const props = defineProps({
                         </div>
                         <div class="menu-title">
                             <Link class="menu-title" :href="route('logout')" method="post" as="button">
-                            Logout
+                            Keluar
                             </Link>
                         </div>
                     </a>
@@ -118,7 +118,7 @@ const props = defineProps({
                                     <img src="/bootstrap/images/desain.jpg" alt="New Image" class="border-radius">
                                     <label class="judul-overview">UI / UX</label>
                                     <a class="btn btn-primary btn-landing-page2" href="/petugasrangking">Lihat
-                                        Peserta</a>
+                                        Rangking</a>
                                 </div>
                             </div>
                             <div class="col">
@@ -126,7 +126,7 @@ const props = defineProps({
                                     <img src="/bootstrap/images/ar-vr.jpg" alt="New Image" class="border-radius">
                                     <label class="judul-overview">AR / VR</label>
                                     <a class="btn btn-primary btn-landing-page2" href="/petugasrangking">Lihat
-                                        Peserta</a>
+                                        Rangking</a>
                                 </div>
                             </div>
                             <div class="col">
@@ -135,7 +135,7 @@ const props = defineProps({
                                         class="border-radius">
                                     <label class="judul-overview">APLIKASI MOBILE</label>
                                     <a class="btn btn-primary btn-landing-page2" href="/petugasrangking">Lihat
-                                        Peserta</a>
+                                        Rangking</a>
                                 </div>
                             </div>
                             <div class="col">
@@ -144,7 +144,7 @@ const props = defineProps({
                                         class="border-radius">
                                     <label class="judul-overview">DESAIN WEBSITE</label>
                                     <a class="btn btn-primary btn-landing-page2" href="/petugasrangking">Lihat
-                                        Peserta</a>
+                                        Rangking</a>
                                 </div>
                             </div>
                             <div class="col">
@@ -153,7 +153,7 @@ const props = defineProps({
                                         class="border-radius">
                                     <label class="judul-overview">SISTEM KEAMANAN DATA</label>
                                     <a class="btn btn-primary btn-landing-page2" href="/petugasrangking">Lihat
-                                        Peserta</a>
+                                        Rangking</a>
                                 </div>
                             </div>
                             <div class="col">
@@ -161,7 +161,7 @@ const props = defineProps({
                                     <img src="/bootstrap/images/membuat-game.jpg" alt="New Image" class="border-radius">
                                     <label class="judul-overview">UI / UX</label>
                                     <a class="btn btn-primary btn-landing-page2" href="/petugasrangking">Lihat
-                                        Peserta</a>
+                                        Rangking</a>
                                 </div>
                             </div>
                         </div>

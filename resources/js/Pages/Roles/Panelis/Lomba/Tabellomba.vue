@@ -56,7 +56,7 @@ const props = {
                         </div>
                         <div class="menu-title">
                             <Link class="menu-title" :href="route('logout')" method="post" as="button">
-                            Logout
+                            Keluar
                             </Link>
                         </div>
                     </a>
@@ -113,7 +113,7 @@ const props = {
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0 jarak-top-kurang5">Tabel Karya</h4>
+                        <h4 class="mb-0 jarak-top-kurang5">TABEL KARYA</h4>
                         <hr class="c-mt10" />
                         <label class="jarak-filterstatus">Filter by Status</label>
                         <select class="form-select2">

@@ -171,7 +171,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
                         </div>
                         <Link class="menu-title" :href="route('logout')" method="post" as="button">
-                        Logout
+                        Keluar
                         </Link>
                     </a>
                 </li>

@@ -1,4 +1,5 @@
 <script setup>
+
 import { Link } from "@inertiajs/vue3";
 import { useForm } from "@inertiajs/vue3";
 import { Head } from "@inertiajs/vue3";
@@ -9,7 +10,7 @@ const props = defineProps({
     settings: Object,
     logo1: String,
     logo2: String,
-    logo3: String,
+    logo3: String
 });
 
 const form = useForm({
@@ -20,17 +21,6 @@ const form = useForm({
     deskripsi: props.settings.deskripsi,
     mulai: props.settings.mulai,
     berakhir: props.settings.berakhir,
-    des_pendaftaran: props.settings.des_pendaftaran,
-    pengumpulan: props.settings.pengumpulan,
-    des_pengumpulan: props.settings.des_pengumpulan,
-    pengumuman: props.settings.pengumuman,
-    des_pengumuman: props.settings.des_pengumuman,
-    presentasi: props.settings.presentasi,
-    des_presentasi: props.settings.des_presentasi,
-    whatsApp: props.settings.whatsApp,
-    instagram: props.settings.instagram,
-    email: props.settings.email,
-    youtube: props.settings.youtube,
     logo1: null,
     logo2: null,
     logo3: null,
@@ -47,17 +37,6 @@ const submit = () => {
         deskripsi: form.deskripsi,
         mulai: form.mulai,
         berakhir: form.berakhir,
-        des_pendaftaran: form.des_pendaftaran,
-        pengumpulan: form.pengumpulan,
-        des_pengumpulan: form.des_pengumpulan,
-        pengumuman: form.pengumuman,
-        des_pengumuman: form.des_pengumuman,
-        presentasi: form.presentasi,
-        des_presentasi: form.des_presentasi,
-        whatsApp: form.whatsApp,
-        instagram: form.instagram,
-        email: form.email,
-        youtube: form.youtube,
         logo1: form.logo1,
         logo2: form.logo2,
         logo3: form.logo3,
@@ -74,11 +53,8 @@ const submit = () => {
                     <div class="navbar-tambah">
                         <div class="navbar-left">
                             <a href="/">
-                                <img
-                                    :src="logo1"
-                                    alt="Logo"
-                                    style="width: 100px; margin-left: -15px"
-                                />
+                                <img src="/bootstrap/images/lg.png" alt="Logo"
+                                    style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>
@@ -116,329 +92,136 @@ const submit = () => {
                                     <label for="name" class="c-mb5-black">
                                         <b>Nama Event</b>
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        v-model="form.name"
-                                        id="name"
-                                    />
+                                    <input type="text" class="form-control" v-model="form.name" id="name" />
                                 </div>
                                 <div class="c-mb10">
                                     <label for="judul" class="c-mb5-black">
                                         <b>Judul</b>
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        v-model="form.judul"
-                                        id="judul"
-                                    />
+                                    <input type="text" class="form-control" v-model="form.judul" id="judul" />
                                 </div>
                                 <div class="c-mb10">
                                     <label for="sub_judul" class="c-mb5-black">
                                         <b>Sub Judul</b>
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        v-model="form.sub_judul"
-                                        id="sub_judul"
-                                    />
+                                    <input type="text" class="form-control" v-model="form.sub_judul" id="sub_judul" />
                                 </div>
                                 <div class="c-mb10">
                                     <label for="judul_des" class="c-mb5-black">
                                         <b>Judul Deskripsi</b>
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        v-model="form.judul_des"
-                                        id="judul_des"
-                                    />
+                                    <input type="text" class="form-control" v-model="form.judul_des" id="judul_des" />
                                 </div>
                                 <div class="c-mb10">
                                     <label for="deskripsi" class="c-mb5-black">
                                         <b>Deskripsi</b>
                                     </label>
-                                    <textarea
-                                        rows="4"
-                                        type="textarea"
-                                        v-model="form.deskripsi"
-                                        id="deskripsi"
-                                    />
+                                    <textarea rows="4" v-model="form.deskripsi" placeholder="Masukan deskripsi event"
+                                        id="descriptionaddl" required></textarea>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5 c-mb10">
                                         <label for="mulai" class="c-mb5-black">
                                             <b>Tanggal Mulai</b>
                                         </label>
-                                        <input
-                                            type="date"
-                                            class="form-control"
-                                            v-model="form.mulai"
-                                            id="mulai"
-                                        />
+                                        <input type="date" class="form-control" v-model="form.mulai" id="mulai" />
                                     </div>
                                     <div class="col-md-2 dash-container">
                                         <span class="dash">-</span>
                                     </div>
                                     <div class="col-md-5 c-mb10">
-                                        <label
-                                            for="berakhir"
-                                            class="c-mb5-black"
-                                        >
+                                        <label for="berakhir" class="c-mb5-black">
                                             <b>Tanggal Berakhir</b>
                                         </label>
-                                        <input
-                                            type="date"
-                                            class="form-control"
-                                            v-model="form.berakhir"
-                                            id="berakhir"
-                                        />
+                                        <input type="date" class="form-control" v-model="form.berakhir" id="berakhir" />
                                     </div>
                                     <div class="c-mb10">
-                                        <label
-                                            for="des_pendaftaran"
-                                            class="c-mb5-black"
-                                        >
-                                            <b>Deskripsi Pendaftaran</b>
-                                        </label>
-                                        <textarea
-                                            rows="2"
-                                            type="textarea"
-                                            v-model="form.des_pendaftaran"
-                                            id="des_pendaftaran"
-                                        />
-                                    </div>
-
-                                    <div class="c-mb10">
-                                        <label
-                                            for="pengumpulan"
-                                            class="form-label warna-hitam"
-                                            ><b>Pengumpulan Karya</b></label
-                                        >
-                                        <input
-                                            type="date"
-                                            class="form-control label-8 date370"
-                                            v-model="form.pengumpulan"
-                                            id="pengumpulan"
-                                        />
-                                    </div>
-
-                                    <div class="c-mb10">
-                                        <label
-                                            for="des_pengumpulan"
-                                            class="c-mb5-black"
-                                        >
-                                            <b>Deskripsi pengumpulan Karya</b>
-                                        </label>
-                                        <textarea
-                                            rows="2"
-                                            type="textarea"
-                                            v-model="form.des_pengumpulan"
-                                            id="des_pengumpulan"
-                                        />
+                                        <label for="deskripsi" class="c-mb5-black"><b>Deskripsi Mulai
+                                                Pendaftaran</b></label>
+                                        <textarea rows="2" placeholder="Masukan deskripsi mulai pendaftaran"
+                                            id="descriptionaddl" required></textarea>
                                     </div>
                                     <div class="c-mb10">
-                                        <label
-                                            for="pengumuman"
-                                            class="form-label warna-hitam"
-                                            ><b>Pengumuman Finalis</b></label
-                                        >
-                                        <input
-                                            type="date"
-                                            class="form-control label-8 date370"
-                                            v-model="form.pengumuman"
-                                            id="pengumuman"
-                                        />
+                                        <label for="karya" class="form-label warna-hitam"><b>Pengumpulan
+                                                Karya</b></label>
+                                        <input type="date" class="form-control label-8 date370" id="karya" />
                                     </div>
                                     <div class="c-mb10">
-                                        <label
-                                            for="des_pengumuman"
-                                            class="c-mb5-black"
-                                        >
-                                            <b>Deskripsi Pengumuman Finalis</b>
-                                        </label>
-                                        <textarea
-                                            rows="2"
-                                            type="textarea"
-                                            v-model="form.des_pengumuman"
-                                            id="des_pengumuman"
-                                        />
+                                        <label for="deskripsi" class="c-mb5-black"><b>Deskripsi Pengumpulan
+                                                Karya</b></label>
+                                        <textarea rows="2" placeholder="Masukan deskripsi pengumpulan karya"
+                                            id="descriptionaddl" required></textarea>
                                     </div>
                                     <div class="c-mb10">
-                                        <label
-                                            for="Presentasi"
-                                            class="form-label warna-hitam"
-                                            ><b>Presentasi Finalis</b></label
-                                        >
-                                        <input
-                                            type="date"
-                                            class="form-control label-8 date370"
-                                            v-model="form.presentasi"
-                                            id="presentasi"
-                                        />
+                                        <label for="finalis" class="form-label warna-hitam"><b>Pengumuman
+                                                Finalis</b></label>
+                                        <input type="date" class="form-control label-8 date370" id="finalis" />
+                                    </div>
+                                    <div class="c-mb10">
+                                        <label for="deskripsi" class="c-mb5-black"><b>Deskripsi Pengumuan
+                                                Finalis</b></label>
+                                        <textarea rows="2" placeholder="Masukan deskripsi timeline" id="descriptionaddl"
+                                            required></textarea>
+                                    </div>
+                                    <div class="c-mb10">
+                                        <label for="mulai" class="form-label warna-hitam"><b>Presentasi
+                                                Finalis</b></label>
+                                        <input type="date" class="form-control label-8 date370" />
+                                    </div>
+                                    <div class="c-mb10">
+                                        <label for="deskripsi" class="c-mb5-black"><b>Deskripsi Presentasi
+                                                Finalis</b></label>
+                                        <textarea rows="2" placeholder="Masukan deskripsi timeline" id="descriptionaddl"
+                                            required></textarea>
                                     </div>
                                 </div>
-                                <div class="c-mb10">
-                                    <label
-                                        for="des_presentasi"
-                                        class="c-mb5-black"
-                                    >
-                                        <b>Deskripsi Presentasi Finalis</b>
-                                    </label>
-                                    <textarea
-                                            rows="2"
-                                            type="textarea"
-                                        v-model="form.des_presentasi"
-                                        id="des_presentasi"
-                                    />
-                                </div>
-
-                                <!-- baru -->
-                                <div class="c-mb10">
-                                    <label for="whatsApp" class="c-mb5-black">
-                                        <b>No WhatsApp</b>
-                                    </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        v-model="form.whatsApp"
-                                        id="whatsApp"
-                                    />
-                                </div>
-                                <div class="c-mb10">
-                                    <label for="instagram" class="c-mb5-black">
-                                        <b>Instagram</b>
-                                    </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        v-model="form.instagram"
-                                        id="instagram"
-                                    />
-                                </div>
-                                <div class="c-mb10">
-                                    <label for="email" class="c-mb5-black">
-                                        <b>Email</b>
-                                    </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        v-model="form.email"
-                                        id="email"
-                                    />
-                                </div>
-                                <div class="c-mb10">
-                                    <label for="youtube" class="c-mb5-black">
-                                        <b>Youtube</b>
-                                    </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        v-model="form.youtube"
-                                        id="youtube"
-                                    />
-                                </div>
-                                <!-- baru -->
-
                                 <div class="c-mb10">
                                     <label for="logo1" class="c-mb5-black">
                                         <b>Logo 1</b>
                                     </label>
                                     <div class="m-2 p-2">
                                         <!-- <img :src="logo" class="w-32 h-32" style="width: 500px;" /> -->
-                                        <img
-                                            :src="logo1"
-                                            alt="Product Image"
-                                            class="img-fluid c-maxw400new"
-                                        />
+                                        <img :src="logo1" alt="Product Image" class="img-fluid c-maxw400new" />
                                     </div>
-                                    <input
-                                        class="form-control"
-                                        type="file"
-                                        @input="
-                                            form.logo1 = $event.target.files[0]
-                                        "
-                                        id="logo1"
-                                    />
-                                    <p class="keterangan-foto f-italic">
-                                        Max file size: 2MB (180 x 55 px)
-                                    </p>
-                                    <p class="keterangan-foto f-italic">
-                                        Format: .jpg, .png, .jpeg
-                                    </p>
+                                    <input class="form-control" type="file" @input="form.logo1 = $event.target.files[0]"
+                                        id="logo1" />
+                                    <p class="keterangan-foto f-italic">Max file size: 2MB (180 x 55 px)</p>
+                                    <p class="keterangan-foto f-italic">Format: .jpg, .png, .jpeg</p>
                                 </div>
-                                <br />
+                                <br>
                                 <div class="c-mb10">
                                     <label for="logo2" class="c-mb5-black">
                                         <b>Logo 2 (background)</b>
                                     </label>
                                     <div class="m-2 p-2">
                                         <!-- <img :src="logo" class="w-32 h-32" style="width: 500px;" /> -->
-                                        <img
-                                            :src="logo2"
-                                            alt="Product Image"
-                                            class="img-fluid c-maxw400new"
-                                        />
+                                        <img :src="logo2" alt="Product Image" class="img-fluid c-maxw400new" />
                                     </div>
-                                    <input
-                                        class="form-control"
-                                        type="file"
-                                        @input="
-                                            form.logo2 = $event.target.files[0]
-                                        "
-                                        id="logo2"
-                                    />
-                                    <p class="keterangan-foto f-italic">
-                                        Max file size: 2MB (1200 x 800 px)
-                                    </p>
-                                    <p class="keterangan-foto f-italic">
-                                        Format: .jpg, .png, .jpeg
-                                    </p>
+                                    <input class="form-control" type="file" @input="
+                                        form.logo2 = $event.target.files[0]
+                                        " id="logo2" />
+                                    <p class="keterangan-foto f-italic">Max file size: 2MB (1200 x 800 px)</p>
+                                    <p class="keterangan-foto f-italic">Format: .jpg, .png, .jpeg</p>
                                 </div>
-                                <br />
+                                <br>
                                 <div class="c-mb10">
                                     <label for="logo3" class="c-mb5-black">
                                         <b>Logo 3</b>
                                     </label>
                                     <div class="m-2 p-2">
                                         <!-- <img :src="logo" class="w-32 h-32" style="width: 500px;" /> -->
-                                        <img
-                                            :src="logo3"
-                                            alt="Product Image"
-                                            class="img-fluid c-maxw400new"
-                                        />
+                                        <img :src="logo3" alt="Product Image" class="img-fluid c-maxw400new" />
                                     </div>
-                                    <input
-                                        class="form-control"
-                                        type="file"
-                                        @input="
-                                            form.logo3 = $event.target.files[0]
-                                        "
-                                        id="logo3"
-                                    />
-                                    <p class="keterangan-foto f-italic">
-                                        Max file size: 2MB (450 x 450 px)
-                                    </p>
-                                    <p class="keterangan-foto f-italic">
-                                        Format: .jpg, .png, .jpeg
-                                    </p>
+                                    <input class="form-control" type="file" @input="
+                                        form.logo3 = $event.target.files[0]
+                                        " id="logo3" />
+                                    <p class="keterangan-foto f-italic">Max file size: 2MB (450 x 450 px)</p>
+                                    <p class="keterangan-foto f-italic">Format: .jpg, .png, .jpeg</p>
                                 </div>
                             </div>
                             <div class="btn-posisi">
-                                <button
-                                    type="submit"
-                                    class="btn btn-primary button-tabel-right"
-                                >
-                                    Update
-                                </button>
-                                <a
-                                    class="btn btn-danger button-tabel-left"
-                                    :href="route('setting.index')"
-                                >
-                                    Batal
-                                </a>
+                                <a class="btn btn-danger button-left" :href="route('setting.index')">Batal</a>
+                                <button type="submit" class="btn btn-primary button-right">Update</button>
                             </div>
                         </div>
                     </form>

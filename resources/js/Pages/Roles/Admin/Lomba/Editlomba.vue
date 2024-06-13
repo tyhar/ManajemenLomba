@@ -100,10 +100,8 @@
                                 </div>
                             </div>
                             <div class="btn-posisi">
-                                <button type="submit" class="btn btn-primary button-tabel-right">
-                                    Update
-                                </button>
-                                <button class="btn btn-danger btn-kembali" @click="goBack()">Kembali</button>
+                                <button class="btn btn-danger button-left" @click="goBack()">Kembali</button>
+                                <button type="submit" class="btn btn-primary button-right">Update</button>
                             </div>
                         </div>
                     </form>

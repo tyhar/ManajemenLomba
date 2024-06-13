@@ -160,12 +160,8 @@ $(document).ready(function () {
                                     </div>
                                 </div>
                                 <div class="btn-posisi">
-                                    <button class="btn btn-primary button-tabel-right" type="submit">
-                                        Tambah
-                                    </button>
-                                    <a class="btn btn-danger button-tabel-left" :href="route('administrator.index')">
-                                        Batal
-                                    </a>
+                                    <a class="btn btn-danger button-left" :href="route('administrator.index')">Batal</a>
+                                    <button class="btn btn-primary button-right" type="submit">Tambah</button>
                                 </div>
                             </div>
                         </form>

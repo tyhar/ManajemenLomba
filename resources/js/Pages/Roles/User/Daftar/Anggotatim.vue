@@ -84,10 +84,10 @@ import { Link } from '@inertiajs/vue3';
                             </div>
                         </div>
                         <div style="display: flex;">
-                            <button class="btn btn-primary button-tabel-right"
-                                onclick="window.location.href='/daftarlomba'">Tambah</button>
-                            <button class="btn btn-danger button-tabel-left"
+                            <button class="btn btn-danger button-left"
                                 onclick="window.location.href='/daftarlomba'">Batal</button>
+                            <button class="btn btn-primary button-right"
+                                onclick="window.location.href='/daftarlomba'">Tambah</button>
                         </div>
                     </div>
                 </div>

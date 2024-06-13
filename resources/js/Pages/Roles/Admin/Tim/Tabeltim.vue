@@ -71,7 +71,7 @@
                     <a href="/">
                         <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
                         </div>
-                        <div class="menu-title">Logout</div>
+                        <div class="menu-title">Keluar</div>
                     </a>
                 </li>
             </ul>
@@ -117,7 +117,7 @@
             <div class="page-content">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0 jarak-top-kurang5">Tabel Tim</h4>
+                        <h4 class="mb-0 jarak-top-kurang5">TABEL TIM UI / UX</h4>
                         <hr class="c-mt10" />
                         <button class="btn btn-primary btn-export">Export Excel</button>
                         <label class="dropdown-crud">Filter by Status</label>

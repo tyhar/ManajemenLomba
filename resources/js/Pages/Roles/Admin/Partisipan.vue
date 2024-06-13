@@ -100,7 +100,7 @@ onMounted(async () => {
             </div>
             <div class="menu-title">
               <Link class="menu-title" :href="route('logout')" method="post" as="button">
-              Logout
+              Keluar
               </Link>
             </div>
           </a>
@@ -150,7 +150,7 @@ onMounted(async () => {
         </div>
         <div class="card">
           <div class="card-body">
-            <h4 class="mb-0 jarak-top-kurang5">Tabel Partisipan</h4>
+            <h4 class="mb-0 jarak-top-kurang5">TABEL PARTISIPAN</h4>
             <hr class="c-mt10" />
             <a :href="route('export.partisipan')" class="btn btn-primary btn-float-right">Export Excel</a>
             <label class="jarak-filterstatus">Filter by Status</label>
