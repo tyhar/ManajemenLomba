@@ -3,27 +3,27 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\TeamMember;
-use App\Models\Team;
-use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
 class TeamMemberController extends Controller
 {
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
         // Get the authenticated user
         $user = Auth::user();
 
-        // Ensure the user is associated with a team
-        if (!$user->team) {
+        // Find the team by ID and get the team ID
+        $team = $user->team()->where('id', $id)->first();
+
+        if (!$team) {
             return response()->json([
                 'success' => false,
-                'message' => 'User is not associated with any team'
-            ], 400);
+                'message' => 'Team not found'
+            ], 404);
         }
 
-        $teamId = $user->team->id;
+        $teamId = $team->id;
 
         // Validate the request
         $validator = Validator::make($request->all(), [
@@ -54,6 +54,6 @@ class TeamMemberController extends Controller
             ]);
         }
 
-        return redirect()->route('daftarlomba.index');
+        return redirect()->route('dashboard');
     }
 }

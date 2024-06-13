@@ -7,12 +7,12 @@ import { defineProps } from "vue";
 
 const unreadCount = ref(0);
 onMounted(async () => {
-  try {
-    const response = await axios.get('/api/unread-messages');
-    unreadCount.value = response.data.unreadCount;
-  } catch (error) {
-    console.error(error);
-  }
+    try {
+        const response = await axios.get('/api/unread-messages');
+        unreadCount.value = response.data.unreadCount;
+    } catch (error) {
+        console.error(error);
+    }
 });
 
 
@@ -25,11 +25,10 @@ onMounted(async () => {
             <div class="sidebar-header">
                 <div>
                     <a href="/">
-                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon" >
+                        <img id="logo-img" src="/bootstrap/images/lg.png" class="lg2">
                     </a>
                 </div>
-                <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
-                </div>
+                <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
             </div>
             <!--navigation-->
             <ul class="metismenu" id="menu">
@@ -39,8 +38,8 @@ onMounted(async () => {
                         </div>
                         <div class="menu-title">Dashboard</div>
                     </a>
-                    </li>
-                    <li>
+                </li>
+                <li>
                     <a href="javascript:;" class="has-arrow">
                         <div class="parent-icon"><i class="fadeIn animated bx bx-plus-circle"></i>
                         </div>
@@ -65,7 +64,7 @@ onMounted(async () => {
                         </div>
                         <div class="menu-title">Tim</div>
                     </a>
-                </li>   
+                </li>
                 <li>
                     <a href="/partisipan">
                         <div class="parent-icon"><i class="fadeIn animated bx bx-user-circle c-font25"></i>
@@ -75,10 +74,10 @@ onMounted(async () => {
                 </li>
                 <li>
                     <a href="/pesan">
-            <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i></div>
-            <!-- Menampilkan jumlah pesan yang belum dibaca -->
-            <div class="menu-title">Pesan <span class="alert-count">{{ unreadCount }}</span></div>
-          </a>
+                        <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i></div>
+                        <!-- Menampilkan jumlah pesan yang belum dibaca -->
+                        <div class="menu-title">Pesan <span class="alert-count">{{ unreadCount }}</span></div>
+                    </a>
                 </li>
                 <li>
                     <a href="/rangking">
@@ -91,7 +90,7 @@ onMounted(async () => {
                     <a href="/">
                         <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
                         </div>
-                        <div class="menu-title">Logout</div>
+                        <div class="menu-title">Keluar</div>
                     </a>
                 </li>
             </ul>
@@ -120,23 +119,23 @@ onMounted(async () => {
                                     </div>
                                 </div>
                             </li>
-                            <li class="nav-item dropdown dropdown-large">	
+                            <li class="nav-item dropdown dropdown-large">
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <div class="header-message-list">
                                     </div>
                                 </div>
                             </li>
                         </ul>
-                    </div>		
+                    </div>
                 </nav>
             </div>
         </header>
         <!--end header -->
-		<!--start page wrapper -->
-		<div class="page-wrapper">
-			<div class="page-content">
-				<!--breadcrumb-->
-				<div class="tf__activities_slider_area">
+        <!--start page wrapper -->
+        <div class="page-wrapper">
+            <div class="page-content">
+                <!--breadcrumb-->
+                <div class="tf__activities_slider_area">
                     <div class="container">
                         <!--breadcrumb-->
                         <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
@@ -144,52 +143,61 @@ onMounted(async () => {
                                 <div class="card radius-15 card-overview">
                                     <img src="/bootstrap/images/desain.jpg" alt="New Image" class="border-radius">
                                     <label class="judul-overview">UI / UX</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Lihat Rangking</a>
+                                    <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Lihat
+                                        Rangking</a>
                                 </div>
                             </div>
                             <div class="col">
-                                    <div class="card radius-15 card-overview">
-                                        <img src="/bootstrap/images/ar-vr.jpg" alt="New Image" class="border-radius">
-                                        <label class="judul-overview">AR / VR</label>
-                                        <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Lihat Rangking</a>
-                                    </div>
+                                <div class="card radius-15 card-overview">
+                                    <img src="/bootstrap/images/ar-vr.jpg" alt="New Image" class="border-radius">
+                                    <label class="judul-overview">AR / VR</label>
+                                    <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Lihat
+                                        Rangking</a>
                                 </div>
-                                <div class="col">
-                                    <div class="card radius-15 card-overview">
-                                        <img src="/bootstrap/images/aplikasi-mobile.jpg" alt="New Image" class="border-radius">
-                                        <label class="judul-overview">APLIKASI MOBILE</label>
-                                        <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Lihat Rangking</a>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="card radius-15 card-overview">
-                                        <img src="/bootstrap/images/desain-website.jpg" alt="New Image" class="border-radius">
-                                        <label class="judul-overview">DESAIN WEBSITE</label>
-                                        <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Lihat Rangking</a>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="card radius-15 card-overview">
-                                        <img src="/bootstrap/images/sistem-keamanan-data.jpg" alt="New Image" class="border-radius">
-                                        <label class="judul-overview">SISTEM KEAMANAN DATA</label>
-                                        <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Lihat Rangking</a>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="card radius-15 card-overview">
-                                        <img src="/bootstrap/images/membuat-game.jpg" alt="New Image" class="border-radius">
-                                        <label class="judul-overview">UI / UX</label>
-                                        <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Lihat Rangking</a>
-                                    </div>
-                                </div> 
                             </div>
+                            <div class="col">
+                                <div class="card radius-15 card-overview">
+                                    <img src="/bootstrap/images/aplikasi-mobile.jpg" alt="New Image"
+                                        class="border-radius">
+                                    <label class="judul-overview">APLIKASI MOBILE</label>
+                                    <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Lihat
+                                        Rangking</a>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card radius-15 card-overview">
+                                    <img src="/bootstrap/images/desain-website.jpg" alt="New Image"
+                                        class="border-radius">
+                                    <label class="judul-overview">DESAIN WEBSITE</label>
+                                    <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Lihat
+                                        Rangking</a>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card radius-15 card-overview">
+                                    <img src="/bootstrap/images/sistem-keamanan-data.jpg" alt="New Image"
+                                        class="border-radius">
+                                    <label class="judul-overview">SISTEM KEAMANAN DATA</label>
+                                    <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Lihat
+                                        Rangking</a>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card radius-15 card-overview">
+                                    <img src="/bootstrap/images/membuat-game.jpg" alt="New Image" class="border-radius">
+                                    <label class="judul-overview">UI / UX</label>
+                                    <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Lihat
+                                        Rangking</a>
+                                </div>
+                            </div>
+                        </div>
                         <!--end row-->
                     </div>
-                </div>				
+                </div>
                 <!--end row-->
-			</div>
-		</div>
-	
-	</div>
-	<!--end switcher-->      
+            </div>
+        </div>
+
+    </div>
+    <!--end switcher-->
 </template>

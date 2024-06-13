@@ -2,14 +2,17 @@
 
 use Inertia\Inertia;
 use App\Models\Sponsor;
+use App\Models\Setting;
+use App\Models\Berita;
 use App\Http\Controllers\LogoController;
 use App\Http\Controllers\GoogleController;
 use Illuminate\Support\Facades\Route;
-
+use Carbon\Carbon;
 //controllers
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\SettingEventController;
+// use App\Http\Controllers\SettingEventController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PanelisController;
@@ -28,6 +31,21 @@ use App\Http\Controllers\TeamController;
 use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\RegLombaController;
 use App\Http\Controllers\TeamMemberController;
+use App\Http\Controllers\CertificateController;
+use App\Http\Controllers\TimPetugasController;
+use App\Http\Controllers\TimSubmissionController;
+use App\Http\Controllers\TimPaymentController;
+use App\Http\Controllers\NotifikasiController;
+use App\Http\Controllers\LombaJuriController;
+use App\Http\Controllers\ValueController;
+use App\Http\Controllers\CreateValueController;
+use App\Http\Controllers\BeritaController;
+use App\Http\Controllers\OverviewController;
+use App\Http\Controllers\TimSuratController;
+use App\Http\Controllers\BobotController;
+use App\Http\Controllers\SertifikatLombaController;
+use App\Http\Controllers\RangkingController;
+use App\Http\Controllers\UserLombaStatusController;
 
 //default breeze
 Route::get('/', function () {
@@ -41,7 +59,31 @@ Route::get('/', function () {
                 'id' => $sponsor->id,
                 'name' => $sponsor->name,
                 'link_file' => $sponsor->link_file,
-                'logo' => asset('storage/' . $sponsor->logo)
+                'logo' => asset('storage/' . $sponsor->logo),
+            ];
+        }),
+        'settings' => Setting::all()->map(function ($setting) {
+            return [
+                'id' => $setting->id,
+                'name' => $setting->name,
+                'judul' => $setting->judul,
+                'sub_judul' => $setting->sub_judul,
+                'judul_des' => $setting->judul_des,
+                'deskripsi' => $setting->deskripsi,
+                'mulai' => $setting->mulai,
+                'berakhir' => $setting->berakhir,
+                'logo1' => asset('storage/' . $setting->logo1),
+                'logo2' => asset('storage/' . $setting->logo2),
+                'logo3' => asset('storage/' . $setting->logo3),
+            ];
+        }),
+        'beritas' => Berita::all()->map(function ($berita) {
+            return [
+                'id' => $berita->id,
+                'judul' => $berita->judul,
+                'deskripsi_awal' => $berita->deskripsi_awal,
+                'tanggal_upload' => Carbon::parse($berita->tanggal_upload)->translatedFormat('d F Y'),
+                'images' => $berita->images,
             ];
         }),
     ]);
@@ -59,58 +101,71 @@ Route::middleware('auth')->group(function () {
 //dont forget to add controller class or any other import needed
 
 // -> user atau peserta
+Route::post('/check-user-status', [UserController::class, 'checkStatus']);
+
 Route::middleware('auth', 'verified', 'user')->group(function () {
     Route::get('/dashboard', [UserController::class, 'index'])->name('dashboard');
+    Route::resource('overview', OverviewController::class)->only([
+        'store',
+    ]);
 
 
 
-    Route::get('/detailpeserta/{id}', [UserController::class, 'show']);
+    // Route::get('/api/user-lomba-status/{user}', [UserLombaStatusController::class, 'getStatus']);
+    // Route::post('/api/save-user-lomba-status/{user}', [UserLombaStatusController::class, 'saveStatus']);
+
+    Route::get('/download-certificate', [CertificateController::class, 'generateCertificates'])->name('download.certificate');
+
+    Route::get('/detailpeserta/{id}', [UserController::class, 'show'])->name('detailpeserta.show');
 
     Route::resource('profilpeserta', ProfilePesertaController::class)->only([
         'create',
         'store',
     ]);
     Route::resource('submission', SubmissionController::class)->only([
-        'create',
-        'store',
-    ]);
-    Route::resource('team-member', TeamMemberController::class)->only([
-        'store',
+        'show',
     ]);
 
-    Route::get('/notifikasipeserta', [UserController::class, 'notifikasipeserta']);
+    Route::post('/submissions/{id}', [SubmissionController::class, 'storeOrUpdate']);
+    Route::post('/submissions/{id}/update', [SubmissionController::class, 'storeOrUpdate']);
+
+
+
+    Route::post('/team-member/{id}', [TeamMemberController::class, 'store'])->name('team-member.store');
+
+    Route::get('/generate-certificates', [CertificateController::class, 'generateCertificates']);
+
+
+    Route::get('/notifikasipeserta', [NotifikasiController::class, 'notifikasipeserta']);
     Route::get('/reportpeserta', [UserController::class, 'reportpeserta']);
     Route::get('/detailtimreport', [UserController::class, 'detailtimreport']);
 
-    
+
     Route::resource('daftarlomba', RegLombaController::class)->only([
-        'index',
         'show',
         'store',
     ]);
-    
+
+    Route::get('/tambahanggota/{id}', [RegLombaController::class, 'tambahanggota'])->name('tambahanggota.update');
 
 
-
-
-
-    // Route::get('/search-users', [RegLombaController::class, 'search'])->name('search-users');
 
     Route::resource('datatim', TeamController::class)->only([
-        'create',
-        'store',
         'show',
     ]);
+
+    Route::post('/datatim/{id}', [TeamController::class, 'store'])->name('datatim.update');
 
     Route::get('/anggotatim', [UserController::class, 'anggotatim']);
     Route::get('/pengumpulankarya', [UserController::class, 'pengumpulankarya']);
+
+
 });
 
 // -> admin
 Route::middleware('auth', 'verified', 'admin')->group(function () {
     Route::get('/superadmin', [AdminController::class, 'index'])->name('admin');
     Route::get('/partisipan', [PartisipanController::class, 'index']);
-    Route::get('/export-partisipan', [ExcelController::class, 'export'])->name('export.partisipan');
     // Route::resource('superadmin/partisipan', [PartisipanController::class]);
     Route::get('/api/verified-participants-count', [DashboardController::class, 'getVerifiedParticipantsCount']);
     Route::resource('pesan', MessageController::class)->only([
@@ -127,18 +182,46 @@ Route::middleware('auth', 'verified', 'admin')->group(function () {
     // Route::get('/detaillomba', [AdminController::class, 'detaillomba']);
     Route::resource('lomba', LombaController::class);
 
+    Route::resource('sertikatlomba', SertifikatLombaController::class)->only([
+        'show',
+    ]);
+
+
     // Route::get('/kriteria', [AdminController::class, 'kriteria']);
     // Route::get('/tambahkriteria', [AdminController::class, 'tambahkriteria']);
-    // Route::get('/editkriteria', [AdminController::class, 'editkriteria']);
+    Route::get('/editkriteria', [AdminController::class, 'editkriteria']);
     // Route::get('/detailkriteria', [AdminController::class, 'detailkriteria']);
     Route::resource('kriteria', KriteriaController::class);
+    Route::resource('bobot', BobotController::class)->only([
+        'edit',
+        'update',
+        'destroy'
+    ]);
 
     // Route::get('/administrator', [AdminController::class, 'administrator'])->name('administrator');
     // Route::get('/tambahadministrator', [AdminController::class, 'tambahadministrator']);
     // Route::post('/tambahadministrator', [UserController::class, 'store'])->name('daftar.store');
     // Route::get('/editadministrator', [AdminController::class, 'editadministrator']);
     // Route::get('/detailadministrator', [AdminController::class, 'detailadministrator']);
-    Route::resource('administrator', AdministratorController::class);
+    Route::resource('administrator', AdministratorController::class)->only([
+        'index',
+        'create',
+        'store',
+        'show',
+
+    ]);
+
+    Route::put('/administrator/updateStatus/{id}', [AdministratorController::class, 'updateStatus'])->name('administrator.updateStatus');
+
+
+
+
+
+
+
+
+
+
 
     Route::get('/tim', [AdminController::class, 'tim']);
     Route::get('/tabeltim', [AdminController::class, 'tabeltim']);
@@ -148,22 +231,33 @@ Route::middleware('auth', 'verified', 'admin')->group(function () {
     // Route::resource('superadmin/sponsor', SponsorController::class);
     Route::resource('sponsor', SponsorController::class);
 
-    Route::get('/berita', [AdminController::class, 'berita']);
-    Route::get('/tambahberita', [AdminController::class, 'tambahberita']);
-    Route::get('/editberita', [AdminController::class, 'editberita']);
-    Route::get('/detailberita', [AdminController::class, 'detailberita']);
-    // Route::resource('superadmin/berita', [BeritaController::class]);
+
+    Route::get('/berita/tambah-berita', [BeritaController::class, 'tambahberita']);
+    Route::get('/berita', [BeritaController::class, 'berita'])->name('berita.index');
+    Route::post('/berita', [BeritaController::class, 'store']);
+    Route::delete('/berita/{berita}', [BeritaController::class, 'destroy']);
+    Route::get('/berita/{berita}/edit-berita', [BeritaController::class, 'editberita']);
+    Route::put('/berita/{berita}', [BeritaController::class, 'update']);
+    Route::get('/berita/{berita}/detail-berita', [BeritaController::class, 'detailberita']);
 
     // Route::get('/setting', [AdminController::class, 'setting']);
     // Route::get('/editsetting', [AdminController::class, 'editsetting']);
     // Route::get('/tambahsetting', [AdminController::class, 'tambahsetting']);
-    Route::resource('setting', SettingEventController::class)->only([
-        'index',
-        'create',
-        'store',
-        'edit',
-        'update',
-    ]);
+
+    Route::get('/setting', [AdminController::class, 'setting']);
+    Route::get('/editsetting', [AdminController::class, 'editsetting']);
+    Route::get('/tambahsetting', [AdminController::class, 'tambahsetting']);
+    // Route::resource('superadmin/settings', [SettingController::class]);
+    Route::resource('setting', SettingController::class);
+
+
+    // Route::resource('setting', SettingEventController::class)->only([
+    //     'index',
+    //     'create',
+    //     'store',
+    //     'edit',
+    //     'update',
+    // ]);
 
 
     Route::get('/rangking', [AdminController::class, 'rangking']);
@@ -175,19 +269,63 @@ Route::middleware('auth', 'verified', 'admin')->group(function () {
 Route::middleware('auth', 'verified', 'eventadmin')->group(function () {
     Route::get('/eventadmin', [EventAdminController::class, 'index'])->name('eventadmin');
     Route::get('/partisipanpetugas', [EventAdminController::class, 'partisipanpetugas']);
-    Route::get('/timpetugas', [EventAdminController::class, 'timpetugas']);
-    Route::get('/timdetail', [EventAdminController::class, 'timdetail']);
+    // Route::get('/timpetugas', [EventAdminController::class, 'timpetugas']);
+    // Route::get('/timdetail', [EventAdminController::class, 'timdetail']);
     Route::get('/pesanpetugas', [EventAdminController::class, 'pesanpetugas']);
     Route::get('/rangkingpetugas', [EventAdminController::class, 'rangkingpetugas']);
-    Route::get('/petugasrangking', [EventAdminController::class, 'petugasrangking']);
+    // Route::get('/petugasrangking', [EventAdminController::class, 'petugasrangking']);
+    Route::get('/detailtimpetugas', [EventAdminController::class, 'detailtimpetugas']);
+    Route::resource('timpetugas', TimPetugasController::class)->only([
+        'index',
+        'show',
+    ]);
+    Route::resource('petugasranking', RangkingController::class)->only([
+        'show',
+    ]);
+    Route::put('/teams/{id}/status', [TimPetugasController::class, 'updateStatus']);
 });
 
+Route::post('/api/update-status/kelulusan', [RegLombaController::class, 'updateStatus']);
+
+Route::post('/notifications', [NotifikasiController::class, 'store'])->name('notifications.store');
 // -> panelis atau juri
+
 Route::middleware('auth', 'verified', 'panelis')->group(function () {
-    Route::get('/panelis', [PanelisController::class, 'index'])->name('panelis');
-    Route::get('/lombajuri', [PanelisController::class, 'lombajuri']);
+    // Route::get('/panelis', [PanelisController::class, 'index'])->name('panelis');
+
+    Route::resource('lombajuri', LombaJuriController::class)->only([
+        'index',
+        'show',
+    ])->names([
+                'index' => 'panelis',
+            ]);
+
+
+    Route::post('/api/update-status/nilai', [RegLombaController::class, 'updateStatusnilai']);
+
+
+
+
+
+
+    Route::resource('value', ValueController::class)->only([
+        'index',
+        'show',
+        'edit',
+        'store',
+    ]);
+    Route::put('/update-value-count', [ValueController::class, 'updateValueCount']);
+
+
+
+
+    Route::get('/create-value/{lomba_id}', [CreateValueController::class, 'create'])->name('create.value');
+
+
+
     Route::get('/tabellomba', [PanelisController::class, 'tabellomba']);
-    Route::get('/rangkingjuri', [PanelisController::class, 'rangkingjuri']);
+    Route::get('/rangkingjuri/{id}', [App\Http\Controllers\PanelisController::class, 'rangkingjuri']);
+
     Route::get('/tabelrangkingjuri', [PanelisController::class, 'tabelrangkingjuri']);
     Route::get('/nilai', [PanelisController::class, 'nilai']);
     Route::get('/editnilai', [PanelisController::class, 'editnilai']);
@@ -211,17 +349,27 @@ Route::resource('pesan', MessageController::class)->only([
 ]);
 Route::patch('/messages/{message}/status', [MessageController::class, 'updateStatus'])->name('messages.updateStatus');
 
-Route::get('/informasiberita', function () {
-    return inertia::render('Utama/InformasiBerita');
-});
 
-Route::get('/api/unread-messages', [MessageController::class, 'getUnreadMessageCount']);
+Route::get('berita/{berita}/detail', [BeritaController::class, 'detail']);
 
-Route::get('/api/all-messages', [MessageController::class, 'getAllMessageCount']);
-
-Route::get('/api/all-participants', [MessageController::class, 'getAllparticipants']);
+Route::get('/api/unread-notifikasi', [NotifikasiController::class, 'notifikasiByTeamId']);
 
 
+Route::get('/export-partisipan', [ExcelController::class, 'exportPartisipan'])->name('export.partisipan');
+Route::get('/export-team', [ExcelController::class, 'exportTeam'])->name('export.team');
+Route::resource('submissionshow', TimSubmissionController::class)->only([
+    'show'
+]);
+Route::get('/submissionsurat/{id}', [TimSuratController::class, 'show'])->name('submissionsurat.show');
+
+Route::resource('datatimshow', TimPaymentController::class)->only([
+    'show',
+]);
+Route::resource('surat', TimSuratController::class)->only([
+    'show',
+]);
+
+Route::post('/api/notifikasi/{id}/mark-as-read', [NotifikasiController::class, 'markAsRead']);
 
 // -- backup --
 // Route::get('/api/logo', [LogoController::class, 'getLogo']);

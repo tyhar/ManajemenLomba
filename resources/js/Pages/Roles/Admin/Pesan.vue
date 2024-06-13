@@ -18,20 +18,24 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  settings: {
+    type: Object, // Menggunakan "type" untuk menentukan tipe data props
+    default: () => ({}), // Menggunakan "default" jika props tidak diberikan
+  },
+  logo1: {
+    type: String, // Menentukan tipe data logo sebagai String
+  },
+  unreadCount: {
+    type: Object,
+    required: true,
+  },
+
 });
 
 
 const selectedStatus = ref('Semua');
-const unreadCount = ref(0);
 
-onMounted(async () => {
-  try {
-    const response = await axios.get('/api/unread-messages');
-    unreadCount.value = response.data.unreadCount;
-  } catch (error) {
-    console.error(error);
-  }
-});
+
 
 const updateMessageStatus = async (id, currentStatus) => {
   try {
@@ -69,13 +73,14 @@ const filteredMessages = computed(() => {
   <div class="wrapper">
     <!--sidebar wrapper -->
     <div class="sidebar-wrapper" data-simplebar="true">
-      <div class="sidebar-header">
+      <div class="sidebar-header" v-for="setting in settings" :key="setting.id">
         <div>
           <a href="/">
-            <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon">
+            <img id="logo-img" :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
+              class="lg2">
           </a>
         </div>
-        <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
+        <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
       </div>
       <!--navigation-->
       <ul class="metismenu" id="menu">
@@ -93,11 +98,17 @@ const filteredMessages = computed(() => {
           <ul>
             <li class="jarak-dropdown"> <a href="/lomba">Lomba</a></li>
             <li class="jarak-dropdown"> <a href="/administrator">Administrator</a></li>
-            <li class="jarak-dropdown"> <a href="/tim">Tim</a></li>
             <li class="jarak-dropdown"> <a href="/sponsor">Sponsor</a></li>
             <li class="jarak-dropdown"> <a href="/berita">Berita</a></li>
             <li class="jarak-dropdown"> <a href="/setting">Setting</a></li>
           </ul>
+        </li>
+        <li>
+          <a href="/tim">
+            <div class="parent-icon"><i class="fadeIn animated lni lni-users"></i>
+            </div>
+            <div class="menu-title">Tim</div>
+          </a>
         </li>
         <li>
           <a href="/partisipan">
@@ -123,7 +134,7 @@ const filteredMessages = computed(() => {
             <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i></div>
             <div class="menu-title">
               <Link class="menu-title" :href="route('logout')" method="post" as="button">
-              Logout
+              Keluar
               </Link>
             </div>
           </a>
@@ -174,7 +185,7 @@ const filteredMessages = computed(() => {
 
         <div class="card">
           <div class="card-body">
-            <h4 class="mb-0 jarak-top-kurang5">Tabel Pesan</h4>
+            <h4 class="mb-0 jarak-top-kurang5">TABEL PESAN</h4>
             <hr class="c-mt10" />
             <label class="jarak-filterstatus">Filter by Status</label>
             <select class="form-select2" v-model="selectedStatus">

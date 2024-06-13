@@ -4,38 +4,54 @@ import { useForm } from "@inertiajs/vue3";
 import { Head } from "@inertiajs/vue3";
 import { onMounted, ref, computed } from 'vue';
 import { router } from "@inertiajs/vue3";
+import Swal from 'sweetalert2';
 // import { usePage } from "@inertiajs/vue3";
 
-const { name, username, sponsors } = defineProps(['name', 'username', 'sponsors']);
+const { name, username, sponsors, unreadCount, settings, logo1 } = defineProps(['name', 'username', 'sponsors', 'unreadCount', 'settings', 'logo1']);
 
-console.log(name); // Contoh penggunaan di dalam script setup
-console.log(username);
 
 // Definisikan properti yang diterima oleh komponen
 const props = {
     sponsors: {
         type: Array,
     },
+    settings: {
+        type: Object, // Menggunakan "type" untuk menentukan tipe data props
+        default: () => ({}), // Menggunakan "default" jika props tidak diberikan
+    },
+    logo1: {
+        type: String, // Menentukan tipe data logo sebagai String
+    },
 };
-const unreadCount = ref(0);
 
-onMounted(async () => {
-    try {
-        const response = await axios.get('/api/unread-messages');
-        unreadCount.value = response.data.unreadCount;
-    } catch (error) {
-        console.error(error);
-    }
-});
 const deleteForm = useForm({});
 
-const deleteSponsor = (id) => {
-    if (confirm("Are you sure you want to delete this sponsor?")) {
-        deleteForm.delete(route("sponsor.destroy", id), {
-            preserveScroll: true,
-        });
-    }
+const deleteSponsor = async (id) => {
+    // Menggunakan SweetAlert untuk konfirmasi penghapusan
+    Swal.fire({
+        icon: 'question',
+        title: 'Are you sure?',
+        text: 'Are you sure you want to delete this sponsor?',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it',
+        cancelButtonText: 'Cancel',
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+            try {
+                await deleteForm.delete(route("sponsor.destroy", id), { preserveScroll: true });
+                // Show success alert
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Sponsor berhasil dihapus!',
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    });
 };
+
 </script>
 
 <template>
@@ -43,14 +59,15 @@ const deleteSponsor = (id) => {
     <div class="wrapper">
         <!--sidebar wrapper -->
         <div class="sidebar-wrapper" data-simplebar="true">
-            <div class="sidebar-header">
+            <div class="sidebar-header" v-for="setting in settings" :key="setting.id">
                 <div>
                     <a href="/">
-                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon">
+                        <img id="logo-img"
+                            :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
+                            class="lg2">
                     </a>
                 </div>
-                <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
-                </div>
+                <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
             </div>
             <!--navigation-->
             <ul class="metismenu" id="menu">
@@ -72,8 +89,6 @@ const deleteSponsor = (id) => {
                         </li>
                         <li class="jarak-dropdown"> <a href="/administrator">Administrator</a>
                         </li>
-                        <li class="jarak-dropdown"> <a href="/tim">Tim</a>
-                        </li>
                         <li class="jarak-dropdown"> <a href="/sponsor">Sponsor</a>
                         </li>
                         <li class="jarak-dropdown"> <a href="/berita">Berita</a>
@@ -81,6 +96,13 @@ const deleteSponsor = (id) => {
                         <li class="jarak-dropdown"> <a href="/setting">Setting</a>
                         </li>
                     </ul>
+                </li>
+                <li>
+                    <a href="/tim">
+                        <div class="parent-icon"><i class="fadeIn animated lni lni-users"></i>
+                        </div>
+                        <div class="menu-title">Tim</div>
+                    </a>
                 </li>
                 <li>
                     <a href="/partisipan">
@@ -109,7 +131,7 @@ const deleteSponsor = (id) => {
                         </div>
                         <div class="menu-title">
                             <Link class="menu-title" :href="route('logout')" method="post" as="button">
-                            Logout
+                            Keluar
                             </Link>
                         </div>
                     </a>
@@ -158,7 +180,7 @@ const deleteSponsor = (id) => {
             <div class="page-content">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0 jarak-top-kurang5">Tabel Sponsor</h4>
+                        <h4 class="mb-0 jarak-top-kurang5">TABEL SPONSOR</h4>
                         <hr class="c-mt10" />
                         <!-- <button class="btn btn-success jarak-top-kurang7" onclick="window.location.href='sponsor/create'">Tambah Sponsor</button> -->
                         <a class="btn btn-success jarak-top-kurang7" :href="route('sponsor.create')">
@@ -170,10 +192,10 @@ const deleteSponsor = (id) => {
                                 <thead class="table-dark">
                                     <tr>
                                         <th class="width-id">ID</th>
-                                        <th>Nama Sponsor</th>
-                                        <th>Logo</th>
-                                        <th>Link</th>
-                                        <th class="crud-width-180">Aksi</th>
+                                        <th class="crud-width-290">Nama Sponsor</th>
+                                        <th class="crud-width-150">Logo</th>
+                                        <th class="crud-width-150">Link</th>
+                                        <th class="crud-width-510">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -189,9 +211,7 @@ const deleteSponsor = (id) => {
                                             {{ sponsor.name }}
                                         </td>
                                         <td>
-                                            <!-- {{ sponsor.logo }} -->
-                                            <img :src="sponsor.logo" class="w-8 h-8 rounded" style="width: 120px;"
-                                                alt="no image" />
+                                            {{ sponsor.logo }}
                                         </td>
                                         <td>
                                             {{ sponsor.link_file }}

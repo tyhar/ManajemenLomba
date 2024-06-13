@@ -22,10 +22,10 @@ return new class extends Migration
             $table->string('photo')->nullable();
             $table->tinyInteger('role')->default(3); // Users: 1-superadmin,2-event_admin,3-user,4-panelis. default means when the value are null or unassigned it automatically set to default value. so if you changed the default value you have to migrate 
             $table->string('password');
-            $table->string('nik');
+            $table->string('nik')->nullable();
             $table->enum('email_verification_status', ['unverified', 'verified'])->default('unverified');
             $table->rememberToken();
-            $table->date();
+            $table->timestamps();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

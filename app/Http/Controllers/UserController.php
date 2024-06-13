@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
@@ -7,28 +8,27 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Models\Lomba;
 use App\Models\User;
-// use Illuminate\Http\Request;
-// use App\Http\Requests\ProfileUpdateRequest;
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-// use Illuminate\Http\RedirectResponse;
-// use Illuminate\Support\Facades\Auth;
-// use Illuminate\Support\Facades\Redirect;
-// use Inertia\Response;
+use App\Http\Requests\ProfileUpdateRequest;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Http\RedirectResponse;
+
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Response;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
 
-       $lomba = Lomba::all();
-        $user = Auth::user();
-        Inertia::share('userData', [
-            'name' => $user->name,
-            'username' => $user->username,
-        ]);
+       
+        $user = $request->user();
+        $registeredLombas = $user->lomba()->pluck('lomba_id');
+        // Pass lomba status as props
         return Inertia::render('Roles/User/Dashboard', [
-            'UserData' => $user,
-            'lombas' => $lomba,
+            'user' => $user,
+            'lombas' => Lomba::all(),
+            'registeredLombas' => $registeredLombas,
+
         ]);
         
     }
@@ -39,7 +39,7 @@ class UserController extends Controller
     }
     public function show($id)
     {
-
+        $lombas = Lomba::all();
         $lomba = Lomba::findOrFail($id);
         $user = Auth::user();
         Inertia::share('userData', [
@@ -51,6 +51,7 @@ class UserController extends Controller
         return Inertia::render('Roles/User/Detailpeserta', [
             'DataUser' => $user,
             'lombax' => $lomba,
+            'lombas' => $lombas,
 
         ]);
     }
@@ -87,7 +88,16 @@ class UserController extends Controller
         return Inertia::render('Roles/User/Daftar/Pengumpulankarya');
     }
 
+    public function checkStatus(Request $request)
+    {
+        $user = User::where('email', $request->email)->first();
 
+        if ($user) {
+            return response()->json(['status' => $user->status]);
+        } else {
+            return response()->json(['status' => 'not_found'], 404);
+        }
+    }
 
 
     

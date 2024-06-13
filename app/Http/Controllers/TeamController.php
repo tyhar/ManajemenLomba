@@ -1,53 +1,84 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Lomba;
 use App\Models\Team;
-use App\Models\User;
-use App\Http\Requests\StoreTeam;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class TeamController extends Controller
 {
-    public function create()
-    {
-        $lombas = Lomba::all();
-        return Inertia::render('Roles/User/Daftar/Datatim', ['lombas' => $lombas]);
+    public function show($team_id)
+{
+    $user = Auth::user();
+    $teams = $user->team()->where('id', $team_id)->with(['lomba', 'user'])->first();
+    $team = Team::findOrFail($team_id);
+    return Inertia::render('Roles/User/Daftar/Datatim', [
+        'teams' => [
+            'data' => $team,
+        ],
+        'userData' => $user,
+        'teamz' => $teams,
+    ]);
+}
+
+public function store(Request $request, $id)
+{
+    // Validate the request data
+    $request->validate([
+        'name_team' => 'nullable|string|max:255',
+        'email' => 'required|string|email|max:255',
+        'phone' => 'required|string|max:15',
+        'instansi' => 'required|string|max:255',
+        'payment' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
+
+    // Retrieve the authenticated user
+    $user = Auth::user();
+
+    // Retrieve the team associated with the authenticated user
+    $team = $user->team()->where('id', $id)->first();
+
+    // Check if the team exists
+    if (!$team) {
+        return redirect()->route('dashboard')->with('error', 'Tim tidak ditemukan');
     }
 
-    public function store(StoreTeam $request)
-    {
-        $team = new Team();
+    // Check if there are changes in data
+    $isDataChanged = (
+        $team->name_team !== $request->input('name_team') ||
+        $team->email !== $request->input('email') ||
+        $team->phone !== $request->input('phone') ||
+        $team->instansi !== $request->input('instansi') ||
+        $request->hasFile('payment')
+    );
 
-        $team->name_team = $request->name_team;
-        $team->email = $request->email;
-        $team->phone = $request->phone;
-        $team->instansi = $request->instansi;
-        $team->user_id = auth()->user()->id; // Associate with the authenticated user
+    if ($isDataChanged) {
+        // Delete old payment file if exists
+        if ($team->payment && $request->hasFile('payment')) {
+            Storage::delete('public/' . $team->payment);
+        }
+
+        // Save new data
+        $team->name_team = $request->input('name_team');
+        $team->email = $request->input('email');
+        $team->phone = $request->input('phone');
+        $team->instansi = $request->input('instansi');
 
         if ($request->hasFile('payment')) {
-            $team->payment = $request->file('payment')->storePublicly('payments', 'public');
+            $path = $request->file('payment')->store('payments', 'public');
+            $team->payment = $path;
         }
 
         $team->save();
 
-        if ($request->has('SelectedLomba')) {
-            $team->lomba()->attach($request->input('SelectedLomba'));
-        }
-
-        return redirect()->route('daftarlomba.index');
+        return redirect()->route('dashboard')->with('success', 'Profil berhasil diperbarui');
     }
 
-    public function show($id)
-    {
-        $team = Team::findOrFail($id);
-        Inertia::share('userData', [
-            'payment' => $team->payment,
-        ]);
+    return redirect()->route('dashboard')->with('info', 'Tidak ada perubahan yang disimpan');
+}
 
-        return Inertia::render('Roles/User/Daftar/ImageFilePayment', [
-            'UserData' => $team,
-        ]);
-    }
 }

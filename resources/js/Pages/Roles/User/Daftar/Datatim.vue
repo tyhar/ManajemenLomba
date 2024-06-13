@@ -6,7 +6,7 @@
                     <div class="navbar-tambah">
                         <div class="navbar-left">
                             <a href="/">
-                                <img src='bootstrap/images/logo.png' alt="Logo">
+                                <img src="/bootstrap/images/lg.png" alt="Logo" style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>
@@ -14,8 +14,8 @@
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Lionel Andres</p>
-                                <p class="user-role">leon</p>
+                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                                <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i></div>
                         </ul>
@@ -25,29 +25,19 @@
         </header>
         <div class="page-wrapper-new">
             <div class="page-content">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="mb-0">INFO TIM LOMBA</h4>
+                <div class="card" >
+                    <div class="card-body "  v-if="teamz">
+                        <h4 class="mb-0">LOMBA {{ teamz?.lomba?.name_lomba }}</h4>
                         <hr />
                         <form @submit.prevent="submit">
                             <div class="row">
                                 <div class="col-md-6 c-mb10">
                                     <label class="jarak-input"><b>Nama Tim</b></label>
-                                    <input v-model="form.name_team" type="text" class="form-control" required>
+                                    <input v-model="form.name_team" type="text" class="form-control" placeholder="Masukan nama tim anda" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="jarak-input"><b>Instansi</b></label>
                                     <input v-model="form.instansi" type="text" class="form-control" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="c-mb5-black"><b>Nama Lomba</b></label>
-                                    <div class="col-12">
-                                        <select v-model="form.SelectedLomba" class="form-select" required>
-                                            <option v-for="lomba in lombas" :key="lomba.id" :value="lomba.id">
-                                                {{ lomba.name_lomba }}
-                                            </option>
-                                        </select>
-                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="jarak-input"><b>No WhatsApp</b></label>
@@ -55,83 +45,67 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class="jarak-input"><b>Email</b></label>
-                                    <input v-model="form.email" type="email" class="form-control" required>
+                                    <input v-model="form.email" type="email" class="form-control" required >
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="formFile" class="form-label jarak-teks12"><b>Bukti
-                                            Pembayaran</b></label>
-                                    <input class="form-control" type="file" name="payment"
-                                        v-on:change="handlePaymentUpload">
+                                    <label for="formFile" class="form-label jarak-teks12"><b>Bukti Pembayaran</b></label>
+                                    <input class="form-control" type="file" name="payment" @change="e => form.payment = e.target.files[0]">
                                 </div>
+                                <p class="keterangan-foto f-italic">Max file size: 2MB (500 x 500 px)</p>
+                                <p class="keterangan-foto f-italic">Format: .jpg, .png, .jpeg</p>
                             </div>
-                            <div style="display: flex;">
+                            <div class="btn-posisi">
                                 <button type="submit" class="btn btn-primary button-tabel-right">Simpan</button>
-                                <button class="btn btn-danger button-tabel-left" @click="goBack()">Batal</button>
+                                <button type="button" class="btn btn-danger button-tabel-left" @click="goBack()">Batal</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        <!--end page wrapper -->
     </div>
 </template>
 
-
 <script setup>
-import { defineProps } from "vue";
-import { reactive } from 'vue';
-import { router } from '@inertiajs/vue3';
+import { defineProps, reactive } from "vue";
+import { router, useForm, usePage } from "@inertiajs/vue3";
 import Swal from 'sweetalert2';
 
-const form = reactive({
-    name_team: '',
-    instansi: '',
-    SelectedLomba: [],
-    phone: '',
-    email: '',
-    payment: null,
-});
+const { userData, teamz} = defineProps(['userData', 'teamz' ]);
 
-const { name, username, lombas } = defineProps(['name', 'username', 'lombas']);
-
-// Definisikan properti yang diterima oleh komponen
 const props = {
-    lombas: {
-        type: Array,
-        default: () => [],
+    team: {
+        type: Object,
     },
 };
 
-const handlePaymentUpload = (event) => {
-    form.payment = event.target.files[0];
+const team = usePage().props.teams;
+
+const form = useForm({
+    name_team: team.data.name_team,
+    phone: team.data.phone,
+    email: team.data.email,
+    instansi: team.data.instansi,
+    payment: null,
+});
+// Method to handle form submission
+
+const submit = () => {
+    form.post(route('datatim.update', teamz.id), {
+        onSuccess: () => {
+            form.reset('payment');
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Data tim anda berhasil di perbaharui',
+                confirmButtonText: 'OK'
+            }).then(() => {
+            // Redirect to dashboard
+            window.location.href = `/daftarlomba/${teamz?.lomba?.id}`;
+          });
+        }
+    });
 };
-
-async function submit() {
-    // Menambahkan properti selectedCriteria ke dalam data yang disubmit
-    const formData = { ...form, SelectedLomba: form.SelectedLomba };
-
-    try {
-        await router.post('/datatim', formData);
-        // Tampilkan SweetAlert2 jika request berhasil
-        Swal.fire({
-            icon: 'success',
-            title: 'Success!',
-            text: 'Data tim berhasil ditambahkan.',
-            confirmButtonText: 'OK',
-        });
-    } catch (error) {
-        // Handle error
-        console.error('Error:', error);
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Terjadi kesalahan saat menambahkan data tim.',
-            confirmButtonText: 'OK',
-        });
-    }
-}
-
 
 const goBack = () => {
     window.history.back();

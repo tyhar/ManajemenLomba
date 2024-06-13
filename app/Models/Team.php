@@ -21,10 +21,10 @@ class Team extends Model
     ];
     public function lomba()
     {
-        return $this->belongsToMany(Lomba::class, 'team_lombas');
+        return $this->belongsTo(Lomba::class);
     }
 
-    public function users()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
@@ -35,6 +35,14 @@ class Team extends Model
     public function team_member()
     {
         return $this->hasMany(Team::class);
+    }
+    public function regLombas()
+    {
+        return $this->hasMany(Reg_Lomba::class);
+    }
+    public function notifikasi()
+    {
+        return $this->hasMany(Notifikasi::class);
     }
 
 }

@@ -6,10 +6,11 @@ DetailLOMBA
             <div class="c-topbar">
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
-                    <div class="navbar-tambah">
-                        <div class="navbar-left">
+                       <div class="navbar-tambah">
+                        <div class="navbar-left" v-for="setting in settings" :key="setting.id">
                             <a href="/">
-                                <img src="/bootstrap/images/logo.png" alt="Logo">
+                                <img :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"  alt="Logo"
+                                    style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>
@@ -37,53 +38,55 @@ DetailLOMBA
             <div class="page-content">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0">Detail Lomba</h4>
+                        <h4 class="mb-0">DETAIL LOMBA</h4>
                         <hr/>
                         <div class="row">
                             <div class="col-md-6 c-mb10">
-                                <label class="c-mb5-black"><b>Nama Lomba</b></label>
+                                <label class="c-mb5-black"><b>NAMA LOMBA</b></label>
                                 <div class="data-tim" id="name">{{ lomba && lomba.name_lomba ? lomba.name_lomba : 'Nama Lomba tidak tersedia' }}</div>
                             </div>
                             <div class="col-md-6">
-                                <label class="c-mb5-black"><b>Nama PJ</b></label>
+                                <label class="c-mb5-black"><b>NAMA PJ</b></label>
                                 <div class="data-tim" id="pj">{{ lomba && lomba.pj ? lomba.pj : 'Nama PJ tidak tersedia' }}</div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <label class="c-mb5-black"><b>Deskripsi</b></label>
+                                <label class="c-mb5-black"><b>DESKRIPSI</b></label>
                                 <div class="col-12">
                                     <div class="data-tim" id="description">{{ lomba && lomba.description ? lomba.description : 'Deskripsi tidak tersedia' }}</div>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="c-mb5-black"><b>Gambar</b></label>
+                                    <label class="c-mb5-black"><b>GAMBAR</b></label>
                                      <div class="col-12" id="picture">
                                         <img :src="pictureUrl" alt="Gambar" width="200" >		
                                     </div>
                                 </div>
                                 <div class="col-md-6 jarak-sertifikat">
-                                    <label class="c-mb5-black"><b>Sertifikat</b></label>
+                                    <label class="c-mb5-black"><b>SERTIFIKAT</b></label>
                               <div class="col-12" id="sertifikat">
-                                <img :src="sertifikatUrl" alt="Sertifikat" width="200" >	
+                                <a :href="`/sertikatlomba/${lomba.id}`">Lihat Sertifikat</a>
                                </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <label class="c-mb5-black"><b>Kontak PJ</b></label>
+                                <label class="c-mb5-black"><b>KONTAK PJ</b></label>
                                 <div class="data-tim" id="kontak">{{ lomba && lomba.kontak ? lomba.kontak : 'Kontak PJ tidak tersedia' }}</div>
      
-                                <label class="c-mb5-black"><b>Tempat</b></label>
+                                <label class="c-mb5-black"><b>TEMPAT</b></label>
                                 <div class="data-tim" id="tempat">{{ lomba && lomba.tempat ? lomba.tempat : 'Tempat tidak tersedia' }}</div>
 
                                 <div class="margin-top5-crud">
-                                    <label class="c-mb5-black"><b>Biaya Pendaftaran</b></label>
+                                    <label class="c-mb5-black"><b>BIAYA PENDAFTARAN</b></label>
                                     <div class="data-tim" id="biaya_pendaftaran">{{ lomba && lomba.biaya_pendaftaran ? lomba.biaya_pendaftaran : 'Biaya Pendaftaran tidak tersedia' }}</div>
                                </div>   
                                 <!-- Tambahkan bagian untuk menampilkan kriteria -->
-                                <label class="c-mb5-black"><b>Kriteria Dipilih</b></label>
+                                <label class="c-mb5-black"><b>KRITERIA PENILAIAN (100/100%)</b></label>
                                 <ul>
-                                    <li v-for="kriteria in lomba.kriteria" :key="kriteria.id">{{ kriteria.name_kriteria }}</li>
-                                </ul>
+                                <li v-for="kriterialombabobot in lomba.kriterialombabobot" :key="kriterialombabobot.id">
+                                    {{ kriterialombabobot.kriteria.name_kriteria }} {{ kriterialombabobot.bobot.nilai_bobot }}%
+                                </li>
+                            </ul>
                             </div>           
                         </div>
                         </div>
@@ -107,7 +110,9 @@ import { useForm, usePage } from '@inertiajs/vue3';
 const props = defineProps({
     name: String,
     username: String,
-    lomba: Object
+    lomba: Object,
+    settings: Object,
+    logo1: Object,
 });
 
 // Menampilkan properti name dan username yang diterima
@@ -116,11 +121,11 @@ console.log(props.username);
 
 // Mendeklarasikan variabel pictureUrl dan sertifikatUrl
 const pictureUrl = props.lomba && props.lomba.picture ? `/storage/${props.lomba.picture}` : null;
-const sertifikatUrl = props.lomba && props.lomba.sertifikat ? `/storage/${props.lomba.sertifikat}` : null;
+// const sertifikatUrl = props.lomba && props.lomba.sertifikat ? `/storage/${props.lomba.sertifikat}` : null;
 
 // Menampilkan URL gambar dan sertifikat jika tersedia
 console.log(pictureUrl);
-console.log(sertifikatUrl);
+// console.log(sertifikatUrl);
 
 
 const goBack = () => {

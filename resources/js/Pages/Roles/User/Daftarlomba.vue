@@ -6,11 +6,10 @@
             <div class="sidebar-header">
                 <div>
                     <a href="/">
-                        <img src="bootstrap/images/logocb.png" class="logo-icon" alt="logo icon">
+                        <img id="logo-img" src="/bootstrap/images/lg.png" class="lg2">
                     </a>
                 </div>
-                <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
-                </div>
+                <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
             </div>
             <!--navigation-->
             <ul class="metismenu" id="menu">
@@ -19,13 +18,6 @@
                         <div class="parent-icon"><i class='bx bx-category'></i>
                         </div>
                         <div class="menu-title">Overview</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="/daftarlomba">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-street-view"></i>
-                        </div>
-                        <div class="menu-title">Daftar Lomba</div>
                     </a>
                 </li>
                 <li>
@@ -39,7 +31,7 @@
                     <a href="/notifikasipeserta">
                         <div class="parent-icon"><i class="bx bx-user-circle"></i>
                         </div>
-                        <div class="menu-title">Notifikasi<span class="alert-count">1</span></div>
+                        <div class="menu-title">Notifikasi<span class="alert-count">{{ notifCount }}</span></div>
                     </a>
                 </li>
                 <li>
@@ -55,7 +47,7 @@
                     </div>
                     <div class="menu-title">
                         <Link class="menu-title" :href="route('logout')" method="post" as="button">
-                        Logout
+                        Keluar
                         </Link>
                     </div>
                 </a>
@@ -103,10 +95,10 @@
         <div class="page-wrapper">
             <div class="page-content">
                 <div class="card">
-                    <div class="card-body">
-                        <h4 class="mb-0 jarak-teks1">Daftar lomba</h4>
+                    <div class="card-body" v-if="team">
+                        <h4 class="mb-0 jarak-teks1">DAFTAR LOMBA </h4>
                         <div class="card">
-                            <h5 class="p-3">Info Tim Lomba</h5>
+                            <h5 class="p-3">TIM LOMBA {{ team?.lomba?.name_lomba }}</h5>
                             <hr class="garis">
                             <div class="row">
                                 <div class="col-md-2 jarak-daftar-lomba" v-if="team">
@@ -118,12 +110,6 @@
                                     <div class="data-tim">{{ team.instansi }}</div>
                                 </div>
                                 <div class="col-md-2 jarak-daftar-lomba" v-if="team">
-                                    <label class="c-mb5-black"><b>LOMBA</b></label>
-                                    <ul>
-                                        <li v-for="lomba in team.lomba" :key="lomba.id">{{ lomba.name_lomba }}</li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-2 jarak-daftar-lomba" v-if="team">
                                     <label class="c-mb5-black"><b>EMAIL</b></label>
                                     <div class="data-tim">{{ team.email }}</div>
                                 </div>
@@ -132,34 +118,28 @@
                                     <div class="data-tim">{{ team.phone }}</div>
                                 </div>
                                 <div class="col-md-2 jarak-daftar-lomba" v-if="team">
-                                    <label class="c-mb5-black"><b>STATUS</b></label>
-                                    <div class="data-tim">{{ team.status }}</div>
-                                </div>
-                                <div class="col-md-2 jarak-daftar-lomba" v-if="team">
                                     <label class="c-mb5-black"><b>PEMBAYARAN</b></label>
-                                    <div class="data-tim c-mb-70"><a :href="`/datatim/${team.id}`">Lihat Bukti</a></div>
-                                </div>
-                                <div>
-                                    <button onclick="window.location.href='/datatim/create'"
-                                        class="btn btn-primary radius-5 isi-data">Isi Data</button>
-                                </div>
+                                    <div class="data-tim c-mb-70"><a :href="`/datatimshow/${team.id}`">Lihat Bukti</a>
+                                    </div>
+                                </div v-if="team">
+                                <a :href="`/datatim/${team.id}`" class="btn btn-primary radius-5 isi-data">Isi Data</a>
                             </div>
                         </div>
+
                         <div class="card">
-                            <h5 class="p-3">Input Anggota Tim</h5>
-                            
+                            <h5 class="p-3">ANGGOTA TIM</h5>
                             <div class="row row-cards jarak-data-peserta">
-                                
-                                <div class="col-md-6 col-lg-3 crud-max-width260" v-for="member in teamMembers"
+                                <div class="col-md-6 col-lg-3 crud-max-width260" v-for="member in members"
                                     :key="member.id">
                                     <div class="card">
                                         <div class="card-header btn-crud ">
                                             <h6><b>{{ member.role }}</b></h6>
+
                                         </div>
                                         <div class="card-body p-4 text-center posisi-mb23">
-                                            <div class="btn-crud ">
+                                            <div class="btn-crud">
                                                 <img :src="member.photo ? `/storage/${member.photo}` : '/bootstrap/images/default2.png'"
-                                                    height="120" alt="..." class="img-fluid rounded">
+                                                    height="120" alt="..." class="img-fluidc rounded">
                                             </div>
                                             <br>
                                             <h6><b>{{ member.name }}</b></h6>
@@ -169,86 +149,50 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6 col-lg-3 crud-max-width260">
-                                    <div class="card">
-                                        <div class="card-header btn-crud">
-                                            <h6><b>anggota 1</b></h6>
-                                        </div>
-                                        <div class="card-body p-4 text-center posisi-mb23">
-                                            <div class="btn-crud ">
-                                                <button class="btn btn-white btn-putih" @click="showPopup"> + </button>
-                                            </div>
-                                            <br>
-                                        </div>
-                                    </div>
-                                    <div class="btn-dl">
-        <button @click="saveTeamMembers" class="btn btn-primary radius-5 lebar-btn">Save</button>
-    </div>
-                                </div>
-                                
-                            </div>
-                            
-                        </div>
-                        <div v-if="isPopupVisible" class="popup">
-                            <div class="popup-content">
-                                <span class="close" @click="hidePopup">&times;</span>
-                                <h5>Input Anggota Tim</h5>
-                                <hr />
-                                <div class="position-relative">
-                                    <input type="text" class="form-control ps-5" placeholder="Search by name"
-                                        v-model="searchQuery">
-                                    <span class="position-absolute top-50 product-show-edit translate-middle-y">
-                                        <i class="bx bx-search"></i>
-                                    </span>
-                                </div>
-                                <div class="overflow-auto">
-                                    <ul class="search-results">
-                                        <li v-for="user in filteredUsers" :key="user.id" @click="selectUser(user)"
-                                            :class="{ 'selected': user.selected }" class="user-item">
-                                            <div class="user-info csearch">
-                                                {{ user.name }} ({{ user.email }})
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="border-top btn-crud pt-3">
-                                    <button @click="addMember" class="btn-success btn btn-block">
-                                        Tambah anggota
-                                    </button>
-                                </div>
+                                <a class="btn btn-primary radius-5 isi-data2" :href="`/tambahanggota/${team.id}`">Isi
+                                    Anggota</a>
                             </div>
                         </div>
                         <div class="card">
                             <h5 class="p-3">PENGUMPULAN KARYA</h5>
                             <div class="card-body p-4 text-center">
                                 <div class="row">
-                                    <div class="col-md-3 text-left" v-if="submissions">
+                                    <div class="col-md-4 text-left" v-if="submissions">
                                         <label class="jarak-teks05"><b>JUDUL</b></label>
                                         <div class="data-tim">{{ submissions.title }}</div>
                                     </div>
                                     <div class="col-md-3 text-left" v-if="submissions">
-                                        <label class="jarak-teks05"><b>DESKRIPSI</b></label>
-                                        <div class="data-tim">{{ submissions.description }}</div>
+                                        <label class="jarak-teks05"><b>DOKUMEN</b></label>
+                                        <div class="data-tim"><a :href="`/submissionsurat/${submissions.id}`">Lihat
+                                                Dokumen</a></div>
                                     </div>
                                     <div class="col-md-3 text-left" v-if="submissions">
-                                        <label class="jarak-teks05"><b>File</b></label>
-                                        <div class="data-tim"><a :href="`/daftarlomba/${submissions.id}`">Lihat File</a>
+                                        <label class="jarak-teks05"><b>FILE</b></label>
+                                        <div class="data-tim"><a :href="`/submissionshow/${submissions.id}`">Lihat
+                                                File</a>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 text-left" v-if="submissions">
-                                        <label class="jarak-teks05"><b>LINK VIDEO</b></label>
-                                        <div class="data-tim c-mb-70"> <a :href="submissions.link" target="_blank">Link
-                                                Video</a></div>
+                                    <div class="col-md-2 text-left" v-if="submissions">
+                                        <label class="jarak-teks05"><b>LINK</b></label>
+                                        <div class="data-tim c-mb-70">
+                                            <a href="javascript:void(0)" @click="openLink(submissions.link)">Buka
+                                                Link</a>
+                                        </div>
                                     </div>
+
                                     <div>
-                                        <button onclick="window.location.href='/pengumpulankarya'"
-                                            class="btn btn-primary radius-5 isi-data jarak-isi-data">Isi Data</button>
+                                        <a :href="`/submission/${team.id}`"
+                                            class="btn btn-primary radius-5 isi-data jarak-isi-data">Isi Data</a>
+                                    </div>
+                                    <div class="text-left" v-if="submissions">
+                                        <label class="jarak-teks05"><b>DESKRIPSI</b></label>
+                                        <div class="c-mb20 rata-tengah">{{ submissions.description }}</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="btn-dl">
-                            <button href="#" class="btn btn-primary radius-5 lebar-btn">Submit</button>
+                            <button @click="submitForm" class="btn btn-primary radius-5 lebar-btn">Submit</button>
                         </div>
                     </div>
                 </div>
@@ -259,11 +203,30 @@
 </template>
 
 <script setup>
-import { defineProps, ref, computed, watch } from 'vue';
+import { defineProps, ref, onMounted, computed, watch } from 'vue';
 import { Link, useForm, router } from '@inertiajs/vue3';
 import Swal from 'sweetalert2';
+import axios from 'axios';
 
-const { userData, users, team, submissions } = defineProps(['userData', 'users', 'team', 'submissions']);
+const { userData, users, team, submissions, lombas, members } = defineProps(['userData', 'users', 'team', 'submissions', 'lombas', 'members']);
+
+
+
+
+const props = {
+    team: {
+        type: Object,
+    },
+    submissions: {
+        type: Object,
+    },
+    lombas: {
+        type: String,
+    },
+};
+
+
+const notifCount = ref(0);
 
 // Define form state using Inertia's useForm
 const form = useForm({
@@ -275,28 +238,38 @@ const form = useForm({
     photo: null
 });
 
-const props = {
-    team: {
-        type: Object,
-    },
-    submissions: {
-        type: Object,
-    },
-};
-
 const isPopupVisible = ref(false);
 const searchQuery = ref('');
 const searchResults = ref(users); // Use the users data passed from the controller
+const membersArray = Array.isArray(members) ? members : [];
+
 const teamMembers = ref([
     {
-        id: userData.id, // Ensure the `id` field is included
+        id: userData.id, // Pastikan field `id` termasuk
         role: 'ketua',
         name: userData.name,
         nik: userData.nik,
         instansi: userData.instansi,
         photo: userData.photo
-    }
+    },
+    ...membersArray.map(member => ({
+        id: member.id,
+        role: 'member',
+        name: member.name,
+        nik: member.nik,
+        instansi: member.instansi,
+        photo: member.photo
+    }))
 ]);
+
+onMounted(async () => {
+    try {
+        const response = await axios.get('/api/unread-notifikasi');
+        notifCount.value = response.data.notifCount;
+    } catch (error) {
+        console.error(error);
+    }
+});
 
 const filteredUsers = computed(() => {
     if (!searchQuery.value) {
@@ -330,49 +303,154 @@ function selectUser(user) {
     user.selected = true;
 }
 
-function addMember() {
-    const selectedUser = searchResults.value.find(user => user.selected);
-    if (selectedUser) {
-        teamMembers.value.push({
-            id: selectedUser.id,
-            role: `anggota ${teamMembers.value.length}`,
-            name: selectedUser.name,
-            nik: selectedUser.nik,
-            instansi: selectedUser.instansi,
-            photo: selectedUser.photo
-        });
-        hidePopup();
+function removeMember(index) {
+    if (teamMembers.value.length > 1) { // Pastikan setidaknya ada satu anggota tetap dalam tim
+        teamMembers.value.splice(index, 1);
         Swal.fire({
             title: 'Berhasil!',
-            text: 'Anggota berhasil ditambahkan.',
+            text: 'Anggota berhasil dihapus.',
             icon: 'success',
+            confirmButtonText: 'OK'
+        });
+    } else {
+        Swal.fire({
+            title: 'Peringatan!',
+            text: 'Tim harus memiliki setidaknya satu anggota.',
+            icon: 'warning',
             confirmButtonText: 'OK'
         });
     }
 }
 
+function addMember() {
+    if (teamMembers.value.length >= 5) {
+        Swal.fire({
+            title: 'Peringatan!',
+            text: 'Maksimal anggota tim adalah 5 peserta.',
+            icon: 'warning',
+            confirmButtonText: 'OK'
+        });
+    } else {
+        const selectedUser = searchResults.value.find(user => user.selected);
+        if (selectedUser) {
+            teamMembers.value.push({
+                id: selectedUser.id,
+                role: `anggota ${teamMembers.value.length}`,
+                name: selectedUser.name,
+                nik: selectedUser.nik,
+                instansi: selectedUser.instansi,
+                photo: selectedUser.photo
+            });
+            hidePopup();
+            Swal.fire({
+                title: 'Berhasil!',
+                text: 'Anggota berhasil ditambahkan.',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        }
+    }
+}
+
 async function saveTeamMembers() {
-    try {
-        await router.post('/team-member', {
-            members: teamMembers.value.map(member => ({
-                user_id: member.id, // Ensure the `user_id` field is included
-                role: member.role === 'ketua' ? 'ketua' : 'member'
-            }))
-        });
-        Swal.fire({
-            title: 'Berhasil!',
-            text: 'Anggota tim berhasil disimpan!',
-            icon: 'success',
-            confirmButtonText: 'OK'
-        });
-    } catch (error) {
-        console.error('Error saving team members:', error);
-        Swal.fire({
-            title: 'Gagal!',
-            text: 'Gagal menyimpan anggota tim.',
-            icon: 'error',
-            confirmButtonText: 'OK'
-        });
+    const result = await Swal.fire({
+        title: 'Apakah anda yakin?',
+        text: 'Data yang disimpan tidak dapat diubah. Apakah Anda ingin melanjutkan?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Simpan',
+        cancelButtonText: 'Batal'
+    });
+
+    if (result.isConfirmed) {
+        try {
+            const url = `/team-member/${team.id}`;
+
+            await axios.post(url, {
+                members: teamMembers.value.map(member => ({
+                    user_id: member.id,
+                    role: member.role === 'ketua' ? 'ketua' : 'member'
+                }))
+            });
+
+            Swal.fire({
+                title: 'Berhasil!',
+                text: 'Anggota tim berhasil disimpan!',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                window.location.href = `/daftarlomba/${team?.lomba?.id}`;
+            });
+        } catch (error) {
+            console.error('Error saving team members:', error);
+
+            let errorMessage = 'Gagal menyimpan anggota tim.';
+            if (error.response && error.response.data && error.response.data.message) {
+                errorMessage = error.response.data.message;
+            }
+
+            Swal.fire({
+                title: 'Gagal Menyimpan!',
+                text: 'Maaf, anda tidak dapat menambahkan peserta yang sudah ada sebelumnya!',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                window.location.href = `/daftarlomba/${team?.lomba?.id}`;
+            });
+        }
+    }
+}
+
+function showRole(memberId, role) {
+    const memberElement = document.getElementById(`member-${memberId}`);
+    if (memberElement && !memberElement.innerHTML.includes(role)) {
+        memberElement.innerHTML += ` (${role})`;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    teamMembers.value.forEach(member => {
+        const memberElement = document.getElementById(`member-${member.id}`);
+        if (memberElement) {
+            memberElement.addEventListener('click', () => showRole(member.id, member.role === 'ketua' ? 'Ketua' : 'Member'));
+        }
+    });
+});
+
+async function submitForm() {
+    const result = await Swal.fire({
+        title: 'Peringatan!',
+        text: 'Periksa Kelengkapan Data Anda!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, Submit',
+        cancelButtonText: 'Batal'
+    });
+
+    if (result.isConfirmed) {
+        try {
+            await router.post('/daftarlomba', {
+                user_id: userData.id,
+                team_id: team.id,
+                lomba_id: team?.lomba?.id,
+                team_member_id: teamMembers.value.map(member => member.id),
+                submission_id: submissions.id
+            });
+            Swal.fire({
+                title: 'Berhasil!',
+                text: 'Data berhasil disimpan.',
+                icon: 'success',
+                confirmButtonText: 'OK',
+            });
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            Swal.fire({
+                title: 'Gagal!',
+                text: 'Data yang anda isi belum lengkap silahkan periksa kembali!',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            });
+        }
     }
 }
 </script>

@@ -6,66 +6,142 @@ use App\Models\User;
 use App\Models\Team;
 use App\Models\TeamMember;
 use App\Models\Lomba;
+use App\Models\Reg_Lomba;
 use App\Models\Submission;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class RegLombaController extends Controller
 {
-    public function index()
+    public function show($lomba_id)
+{
+   
+    $user = Auth::user();
+    $users = User::where('role', 3)->get();
+    
+
+    $team = $user->team()->where('lomba_id', $lomba_id)->with(['lomba', 'user'])->first();
+
+    $submission = null;
+    if ($team) {
+        // Cari submission berdasarkan lomba_id dan team_id
+        $submission = Submission::where('lomba_id', $lomba_id)
+                                ->where('team_id', $team->id)
+                                ->first();
+    }
+
+
+    // Get team members if the user has a team
+    // $teamMembers = $team ? TeamMember::where('team_id', $team->id)->get() : [];
+
+    $members =  TeamMember::where('team_id', $team->id)
+    ->with(['user' => function($query) {
+        $query->select('id', 'name', 'nik', 'photo', 'instansi');
+    }])
+    ->get()
+    ->map(function($teamMember) {
+        return [
+            'name' => $teamMember->user->name,
+            'nik' => $teamMember->user->nik,
+            'photo' => $teamMember->user->photo,
+            'instansi' => $teamMember->user->instansi,
+        ];
+    });
+
+    return Inertia::render('Roles/User/Daftarlomba', [
+        'userData' => $user,
+        'users' => $users,
+        'team' => $team,
+        'submissions' => $submission,
+        'members' => $members,
+
+    ]);
+}
+
+public function store(Request $request)
+{
+    try {
+        // Find user
+        $user = User::find(Auth::id());
+
+        // Find team
+        $team = Team::findOrFail($request->team_id);
+
+        // Find submission
+        $submission = Submission::findOrFail($request->submission_id);
+
+        // Retrieve the first lomba associated with the team
+        $lomba = $team->lomba()->firstOrFail();
+
+        // Create a new Reg_Lomba instance
+        $regLomba = new Reg_Lomba();
+        $regLomba->user()->associate($user);
+        $regLomba->team()->associate($team);
+        $regLomba->submission()->associate($submission);
+        $regLomba->lomba()->associate($lomba);
+
+        // Save the reg_lomba instance
+        $regLomba->save();
+
+
+        return Redirect::route('dashboard')->with('success', 'Successfully registered for competition.');
+    } catch (\Exception $e) {
+        // Handle any errors that occur during save
+        return Redirect::route('dashboard')->with('success', 'Successfully registered for competition.');
+    }
+}
+
+    public function updateStatus(Request $request)
     {
+        // Validate the incoming request data
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:reg_lombas,id',
+            'status' => 'required|string|in:lolos,tidak_lolos,menunggu,terferifikasi',
+        ]);
+
+        // Update the status_kelulusan for the specified reg_lombas
+        Reg_Lomba::whereIn('id', $request->ids)->update(['status_kelulusan' => $request->status]);
+
+        return response()->json(['message' => 'Status updated successfully.'], 200);
+    }
+
+
+
+    public function tambahanggota($team_id)
+    {
+       
         $user = Auth::user();
-        
-        $users = User::all();
-        
-        // Mengambil tim yang terkait dengan user yang sedang diautentikasi
-        $team = $user->team()->with(['lomba', 'users'])->first();
-    
-        $submission = null;
-        if ($team) {
-            $submission = Submission::where('team_id', $team->id)->first();
-        }
-
-        $user = Auth::user();
-
-        // Ensure the user is associated with a team
-        if (!$user->team) {
-            return response()->json([
-                'success' => false,
-                'message' => 'User is not associated with any team'
-            ], 400);
-        }
-
-        $teamId = $user->team->id;
-
-        // Get team members
-        $teamMembers = TeamMember::all();
-    
-        return Inertia::render('Roles/User/Daftarlomba', [
+        $team = $user->team()->where('id', $team_id)->with(['lomba', 'user'])->first();
+        $users = User::where('role', 3)->get();
+  
+        // Get team members if the user has a team
+        $teamMembers = $team ? TeamMember::where('team_id', $team->id)->get() : [];
+        return Inertia::render('Roles/User/Daftar/Showmember', [
             'userData' => $user,
             'users' => $users,
             'team' => $team,
-            'submissions' => $submission,
-            'members' => $teamMembers,
-        ]);
-    }
+
     
-
-    public function show($id)
-    {
-        // Fetch the submission record from the database
-        $submission = Submission::findOrFail($id);
-        
-        // Return the Inertia view with the image URL
-        return Inertia::render('Roles/User/Daftar/ImageFileSubmission', [
-            'UserData' => [
-                'file' => $submission->file,
-            ],
         ]);
     }
 
-    public function store()
+
+    public function updateStatusnilai(Request $request)
     {
-        //
+        // Validate the incoming request data
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:reg_lombas,id',
+            'status' => 'required|string|in:dinilai,sudah_dinilai',
+        ]);
+
+        // Update the status_kelulusan for the specified reg_lombas
+        Reg_Lomba::whereIn('id', $request->ids)->update(['status' => $request->status]);
+
+        return response()->json(['message' => 'Status updated successfully.'], 200);
     }
+
+    
 }

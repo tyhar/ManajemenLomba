@@ -14,7 +14,10 @@ class Submission extends Model
         'description',
         'link',
         'file',
-        'team_id'
+        'surat',
+        'team_id',
+        'user_id',
+        'lomba_id',
 
     ];
 
@@ -22,5 +25,17 @@ class Submission extends Model
     {
         return $this->belongsTo(Team::class);
     }
+    public function regLombas()
+    {
+        return $this->hasMany(Reg_Lomba::class);
+    }
+    public function user()
+     {
+        return $this->belongsTo(User::class);
+     }
+     public function lomba()
+     {
+        return $this->belongsTo(Lomba::class);
+     }
 
 }

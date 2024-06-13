@@ -6,9 +6,10 @@
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
-                        <div class="navbar-left">
+                        <div class="navbar-left" v-for="setting in settingsz" :key="setting.id">
                             <a href="/">
-                                <img src="/bootstrap/images/logo.png" alt="Logo">
+                                <img :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'" alt="Logo"
+                                    style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>
@@ -20,8 +21,8 @@
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>
-                                <p class="user-role">habib</p>
+                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                                <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -36,35 +37,32 @@
             <div class="page-content">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0">Detail Berita</h4>
+                        <h4 class="mb-0">DETAIL BERITA</h4>
                         <hr />
                         <div>
                             <div class="col-md-6 c-mb10">
-                                <label class="c-mb5-black"><b>Judul</b></label>
-                                <div class="c-mb20">Profil Ketua Emailkomp Periode 2024</div>
+                                <label class="c-mb5-black"><b>JUDUL</b></label>
+                                <div class="c-mb20">{{ form.judul }}</div>
                             </div>
                             <div>
-                                <label class="c-mb5-black"><b>Deskripsi Awal</b></label>
-                                <div class="c-mb20">Emailkomp adalah sebuah organisasi dibawah pengawasan langsung oleh
-                                    Prodi Teknik Informatika</div>
+                                <label class="c-mb5-black"><b>DESKRIPSI AWAL</b></label>
+                                <div class="c-mb20">{{ form.deskripsi_awal }}</div>
                             </div>
                             <div>
-                                <label class="c-mb5-black"><b>Deskripsi</b></label>
-                                <div class="c-mb20">Emailkomp adalah sebuah organisasi dibawah pengawasan langsung oleh
-                                    Prodi Teknik Informatika</div>
+                                <label class="c-mb5-black"><b>DESKRIPSI</b></label>
+                                <div class="c-mb20">{{ form.deskripsi }}</div>
                             </div>
                             <div class="col-md-6 c-mb10">
-                                <label class="c-mb5-black"><b>Penerbit</b></label>
-                                <div class="c-mb20">Admin</div>
+                                <label class="c-mb5-black"><b>PENERBIT</b></label>
+                                <div class="c-mb20">{{ form.penerbit }}</div>
                             </div>
                             <div class="col-md-6 c-mb10">
-                                <label class="c-mb5-black"><b>Tanggal Upload</b></label>
-                                <div class="c-mb20">15 Maret 2024</div>
+                                <label class="c-mb5-black"><b>TANGGAL UPLOAD</b></label>
+                                <div class="c-mb20">{{ form.tanggal_upload }}</div>
                             </div>
                             <div class="c-mb10">
-                                <label class="c-mb5-black"><b>Gambar</b></label><br>
-                                <img src="/bootstrap/images/about_2_img_3.jpg" alt="Product Image"
-                                    class="form-control c-maxw400">
+                                <label class="c-mb5-black"><b>GAMBAR</b></label><br>
+                                <img :src="getBeritaImageUrl(form.images)" class="c-maxw400">
                             </div>
                         </div>
                         <div class="btn-posisi">
@@ -78,3 +76,37 @@
         <!--end page wrapper -->
     </div>
 </template>
+
+<script setup>
+import { useForm } from '@inertiajs/vue3';
+import { router } from '@inertiajs/vue3'
+
+const props = defineProps({
+    errors: Object,
+    berita: Object,
+    settings: Object,
+    settingsz: {
+        type: Object, // Menggunakan "type" untuk menentukan tipe data props
+        default: () => ({}), // Menggunakan "default" jika props tidak diberikan
+    },
+    logo1: {
+        type: String, // Menentukan tipe data logo sebagai String
+    },
+});
+
+const form = useForm({
+    judul: props.berita.judul,
+    deskripsi_awal: props.berita.deskripsi_awal,
+    deskripsi: props.berita.deskripsi,
+    penerbit: props.berita.penerbit,
+    tanggal_upload: props.berita.tanggal_upload,
+    images: props.berita.images,
+})
+
+const getBeritaImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/admin/berita/${imageName}` : '';
+};
+const getSettingImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/admin/setting/${imageName}` : '';
+};
+</script>

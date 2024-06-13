@@ -11,15 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('submissions', function (Blueprint $table) {
+        Schema::create('bobots', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('team_id')->constrained('team')->onDelete('cascade'); 
-            $table->string('title')->nullable();
-            $table->text('description')->nullable();
-            $table->string('link')->nullable();
-            $table->string('file')->nullable();
+            $table->integer('nilai_bobot')->nullable();
             $table->timestamps();
-           
         });
     }
 
@@ -28,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('submissions');
+        Schema::dropIfExists('bobots');
     }
 };

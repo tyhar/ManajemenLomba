@@ -6,9 +6,10 @@
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
-                        <div class="navbar-left">
+                        <div class="navbar-left" v-for="setting in settings" :key="setting.id">
                             <a href="/">
-                                <img src="/bootstrap/images/logo.png" alt="Logo">
+                                <img :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
+                                    style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>
@@ -20,8 +21,8 @@
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>
-                                <p class="user-role">habib</p>
+                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                                <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -35,27 +36,22 @@
         <div class="page-wrapper-new">
             <div class="page-content">
                 <div class="card">
-                    <form @submit.prevent="submit" enctype="multipart/form-data">
-                    <div class="card-body">
-                        <h4 class="mb-0">Edit Kriteria Lomba</h4>
-                        <hr />
-                        <div class="row">
-                            <div class=" c-mb10">
-                                <label class="c-mb5-black"><b>Nama Kriteria</b></label>
-                                <input type="text" id="name_kriteria" class="form-control" v-model="form.name_kriteria">
+                    <form @submit.prevent="submit">
+                        <div class="card-body">
+                            <h4 class="mb-0">EDIT KRITERIA PENILAIAN</h4>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-6 c-mb10">
+                                    <label class="c-mb5-black"><b>Kriteria Penilaian</b></label>
+                                    <input type="text" class="form-control" v-model="form.name_kriteria"
+                                        id="name_kriteria" required>
+                                </div>
+                            </div>
+                            <div class="btn-posisi">
+                                <button class="btn btn-danger button-left" @click="goBack()">Kembali</button>
+                                <button type="submit" class="btn btn-primary button-right">Simpan</button>
                             </div>
                         </div>
-                        <div class="btn-posisi">
-                            <button class="btn btn-primary button-tabel-right"
-                               type="submit">Simpan</button>
-                               <a 
-                                    class="btn btn-danger button-tabel-left"
-                                    :href="route('kriteria.index')"
-                                >
-                                    Batal
-                                </a>
-                        </div>
-                    </div>
                     </form>
                 </div>
             </div>
@@ -65,27 +61,51 @@
 </template>
 
 <script setup>
+import { router, useForm, usePage } from "@inertiajs/vue3";
+import Swal from 'sweetalert2'; // Import SweetAlert
 
-import { useForm } from "@inertiajs/vue3";
-import { usePage } from "@inertiajs/vue3";
-import { router } from "@inertiajs/vue3";
 
-// const props = defineProps({
-//     kriterias: Object,
-// });
+const { name, username, settings, logo1 } = defineProps(['name', 'username', 'settings', 'logo1']);
 
-//with resource
- const kriteria = usePage().props.kriterias; //props.sponsors "sponsors" are from controller
+const props = {
+    settings: {
+        type: Object, // Menggunakan "type" untuk menentukan tipe data props
+        default: () => ({}), // Menggunakan "default" jika props tidak diberikan
+    },
+    logo1: {
+        type: String, // Menentukan tipe data logo sebagai String
+    },
+};
+const kriteria = usePage().props.kriterias;
+
+
 
 const form = useForm({
     name_kriteria: kriteria.data.name_kriteria,
+
 });
 
-function submit() {
-    router.post(`/superadmin/kriteria/${kriteria.data.id }`, {
+async function submit() {
+    const formData = {
         _method: 'put',
         name_kriteria: form.name_kriteria,
+    };
 
-    })
- }
+    try {
+        await router.post(`/kriteria/${kriteria.data.id}`, formData);
+        // Display SweetAlert on success
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Kriteria berhasil diperbarui!',
+        });
+    } catch (error) {
+        console.error('Error:', error);
+        // Handle error if needed
+    }
+}
+const goBack = () => {
+    window.history.back();
+};
+
 </script>

@@ -8,7 +8,8 @@
                     <div class="navbar-tambah">
                         <div class="navbar-left">
                             <a href="/">
-                                <img src="/bootstrap/images/logo.png" alt="Logo">
+                                <img src="/bootstrap/images/lg.png" alt="Logo"
+                                    style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>
@@ -36,11 +37,11 @@
             <div class="page-content">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0">Detail Kriteria Lomba</h4>
+                        <h4 class="mb-0">DETAIL KRITERIA LOMBA</h4>
                         <hr />
                         <div class="row">
                             <div class="col-md-6 c-mb10">
-                                <label class="c-mb5-black"><b>Nama Kriteria</b></label>
+                                <label class="c-mb5-black"><b>NAMA KRITERIA</b></label>
                                 <div class="data-tim">{{ form.name_kriteria }}</div>
                             </div>
                         </div>

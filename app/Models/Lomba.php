@@ -22,9 +22,9 @@ class Lomba extends Model
         
     ];
 
-    public function kriteria()
+    public function kriterialombabobot()
 {
-    return $this->belongsToMany(Kriteria::class,'kriteria_lombas_');
+    return $this->belongsToMany(KriteriaBobot::class,'kriteria_lomba_bobots');
 }
     public function user()
 {
@@ -34,6 +34,15 @@ public function teams()
 {
     return $this->hasMany(Team::class);
 }
+public function submissions()
+{
+    return $this->hasMany(Submission::class);
+}
+public function regLombas()
+{
+    return $this->hasMany(Reg_Lomba::class);
+}
+
 
 
 }

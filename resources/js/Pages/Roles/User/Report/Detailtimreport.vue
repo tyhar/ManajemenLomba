@@ -11,7 +11,8 @@ import { Link } from '@inertiajs/vue3';
                     <div class="navbar-tambah">
                         <div class="navbar-left">
                             <a href="/">
-                                <img src="bootstrap/images/logo.png" alt="Logo" class="logo_icon">
+                                <img src="/bootstrap/images/lg.png" alt="Logo"
+                                    style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>
@@ -39,14 +40,10 @@ import { Link } from '@inertiajs/vue3';
             <div class="page-content">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0">Detail Tim Start Green</h4>
+                        <h4 class="mb-0">DETAIL TIM START GREEN</h4>
                         <hr />
                         <div class="row">
                             <div class="col-md-3 c-mb10">
-                                <label class="c-mb5-black"><b>NAMA TIM</b></label>
-                                <div class="c-mb20">Lomba Desain</div>
-                            </div>
-                            <div class="col-md-2">
                                 <label class="c-mb5-black"><b>INSTASNSI</b></label>
                                 <div class="c-mb20">Start Green</div>
                             </div>
@@ -54,23 +51,15 @@ import { Link } from '@inertiajs/vue3';
                                 <label class="c-mb5-black"><b>LOMBA</b></label>
                                 <div class="c-mb20">Lomba Desain</div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label class="c-mb5-black"><b>EMAIL</b></label>
                                 <div class="c-mb20">goat@gmail.com</div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <label class="c-mb5-black"><b>NO WHATSAPP</b></label>
                                 <div class="c-mb20">0850000000s</div>
                             </div>
-                            <div class="col-md-3">
-                                <label class="c-mb5-black"><b>SERTIFIKAT</b></label>
-                                <div class="c-mb20">Belum Ada</div>
-                            </div>
                             <div class="col-md-2">
-                                <label class="c-mb5-black"><b>STATUS</b></label>
-                                <div class="c-mb20">Verified</div>
-                            </div>
-                            <div class="col-md-3">
                                 <label class="c-mb5-black"><b>PEMBAYARAN</b></label>
                                 <div class="c-mb20"><a href="#">Lihat Bukti</a></div>
                             </div>
@@ -85,7 +74,7 @@ import { Link } from '@inertiajs/vue3';
                                     <div class="card-body p-4 text-center posisi-mb23">
                                         <div class="btn-crud">
                                             <img src="http://via.placeholder.com/120x120" height="120" alt="..."
-                                                class="img-fluid rounded">
+                                                class="img-fluidc rounded">
                                         </div>
                                         <br>
                                         <h6><b>Muhammaad Afkar Triwardana</b></h6>
@@ -103,7 +92,7 @@ import { Link } from '@inertiajs/vue3';
                                     <div class="card-body p-4 text-center posisi-mb23">
                                         <div class="btn-crud">
                                             <img src="http://via.placeholder.com/120x120" height="120" alt="..."
-                                                class="img-fluid rounded">
+                                                class="img-fluidc rounded">
                                         </div>
                                         <br>
                                         <h6><b>Muhammaad Haidar</b></h6>
@@ -121,7 +110,7 @@ import { Link } from '@inertiajs/vue3';
                                     <div class="card-body p-4 text-center posisi-mb23">
                                         <div class="btn-crud">
                                             <img src="http://via.placeholder.com/120x120" height="120" alt="..."
-                                                class="img-fluid rounded">
+                                                class="img-fluidc rounded">
                                         </div>
                                         <br>
                                         <h6><b>Iqbal Farhan Rasyid</b></h6>
@@ -139,7 +128,7 @@ import { Link } from '@inertiajs/vue3';
                                     <div class="card-body p-4 text-center posisi-mb23">
                                         <div class="btn-crud">
                                             <img src="http://via.placeholder.com/120x120" height="120" alt="..."
-                                                class="img-fluid rounded">
+                                                class="img-fluidc rounded">
                                         </div>
                                         <br>
                                         <h6><b>Lutfi Iffah Lathifah</b></h6>
@@ -152,23 +141,40 @@ import { Link } from '@inertiajs/vue3';
                         </div>
                         <div class="card card-height400">
                             <div class="card-body p-4 text-center">
-                                <h6 class="sub-judul-tim">PENGUMPULAN KARYA</h6>
+                                <h6 class="sub-judul-tim2"><b>KARYA TIM</b></h6>
+                                <hr />
                                 <div class="row">
-                                    <div class="col-md-3 label-left">
+                                    <div class="col-md-4 label-left">
                                         <label class="jarak-teks05"><b>JUDUL</b></label>
-                                        <div class="c-mb20">Platform Pendidikan Interaktif</div>
+                                        <div class="c-mb20">OLIVIA merupakan singkatan dari Olimpiade Vokasi Indonesia,
+                                            sebuah ajang kompetisi tingkat nasional.</div>
                                     </div>
                                     <div class="col-md-3 label-left">
-                                        <label class="jarak-teks05"><b>DESKRIPSI</b></label>
-                                        <div class="c-mb20">Platform Pendidikan Interaktif “LearnXperience”</div>
+                                        <label class="jarak-teks05"><b>DOKUMEN</b></label>
+                                        <div class="c-mb20"><a href="#">Lihat Dokumen</a></div>
                                     </div>
                                     <div class="col-md-3 label-left">
-                                        <label class="jarak-teks05"><b>File</b></label>
+                                        <label class="jarak-teks05"><b>FILE</b></label>
                                         <div class="c-mb20"><a href="#">Lihat File</a></div>
                                     </div>
-                                    <div class="col-md-3 label-left">
-                                        <label class="jarak-teks05"><b>LINK VIDEO</b></label>
-                                        <div class="data-tim"><a href="#">Link Video</a></div>
+                                    <div class="col-md-2 label-left">
+                                        <label class="jarak-teks05"><b>LINK</b></label>
+                                        <div class="data-tim"><a href="#">Buka Link</a></div>
+                                    </div>
+                                    <div class="label-left">
+                                        <label class="jarak-teks05"><b>DESKRIPSI</b></label>
+                                        <div class="c-mb20 rata-tengah">OLIVIA merupakan singkatan
+                                            dari Olimpiade Vokasi Indonesia,
+                                            sebuah ajang kompetisi tingkat nasional bagi mahasiswa vokasi dari perguruan
+                                            tinggi negeri maupun swasta di seluruh Indonesia. OLIVIA ini diselenggarakan
+                                            oleh Forum Pendidikan Tinggi Vokasi Indonesia (FPTVI) sebagai wadah forum
+                                            pendidikan tinggi khusus bidang ilmu terapan atau vokasi yang memiliki
+                                            agenda rutin tahunan berupa kompetisi ilmiah mahasiswa antar perguruan
+                                            tinggi vokasi se-Indonesia. Kegiatan ini memiliki tujuan untuk meningkatkan
+                                            daya saing insan vokasi, terutama mahasiswa. Dengan berlandaskan pada
+                                            prinsip-prinsip kompetisi, seperti sportivitas, profesionalitas, dan
+                                            transparansi. Melalui OLIVIA ini, mahasiswa vokasi dari seluruh Indonesia
+                                            menyajikan karya hasil kreativitas dan inovasi mereka.</div>
                                     </div>
                                 </div>
                             </div>
@@ -178,7 +184,8 @@ import { Link } from '@inertiajs/vue3';
             </div>
         </div>
         <!--end page wrapper -->
-        <h5 class="c-ml-160 jarak-top-kurang18 jarak-bottom-kurang13">Hasil Penilaian OLINAS</h5>
+
+        <h5 class="c-ml-160 jarak-top-kurang18 jarak-bottom-kurang13">HASIL PENILAIAN OLINAS</h5>
         <div class="page-wrapper-report">
             <div class="page-content">
                 <div class="card">
@@ -193,8 +200,8 @@ import { Link } from '@inertiajs/vue3';
                                         <thead class="table-dark">
                                             <tr>
                                                 <th class="width-id">NO.</th>
-                                                <th class="crud-width-400">KRITERIA</th>
-                                                <th class="crud-width-40">RATING</th>
+                                                <th class="crud-width-400 posisi-text">KRITERIA</th>
+                                                <th class="crud-width-40">BOBOT</th>
                                                 <th class="crud-width-40">NILAI</th>
                                             </tr>
                                         </thead>
@@ -203,19 +210,16 @@ import { Link } from '@inertiajs/vue3';
                                                 <th>1</th>
                                                 <td class="text-left">Kreativitas</td>
                                                 <td class="text-left"></td>
-                                                <td class="text-left"></td>
                                             </tr>
                                             <tr>
                                                 <th>2</th>
                                                 <td class="text-left">Estetika dan Komposisi</td>
                                                 <td class="text-left"></td>
-                                                <td class="text-left"></td>
                                             </tr>
                                             <tr>
-                                                <th colspan="3" class="text-left">Rata-rata</th>
+                                                <th colspan="3" class="text-left">Total</th>
                                                 <td class="crud-width-40">0</td>
                                             </tr>
-
                                         </tbody>
                                     </table>
                                 </div>
@@ -227,3 +231,18 @@ import { Link } from '@inertiajs/vue3';
         </div>
     </div>
 </template>
+
+<style scoped>
+/* DAFTAR LOMBA EDIT */
+.crud-max-width260 {
+    /* flex: 1 1 calc(25% - 1rem); */
+    display: flex;
+    flex-direction: column;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+</style>

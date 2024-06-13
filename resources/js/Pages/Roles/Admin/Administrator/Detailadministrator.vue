@@ -4,17 +4,28 @@ import { useForm } from "@inertiajs/vue3";
 import { Head } from "@inertiajs/vue3";
 import { router } from "@inertiajs/vue3";
 
-const { name, username, users } = defineProps(['name', 'username', 'users']);
+const { name, username, users ,settings, logo1} = defineProps(['name', 'username', 'users', 'settings', 'logo1']);
 
-console.log(name); // Contoh penggunaan di dalam script setup
-console.log(username);
+
 
 // Definisikan properti yang diterima oleh komponen
 const props = {
     users: {
         type: Array,
     },
+    settings: {
+        type: Object, // Menggunakan "type" untuk menentukan tipe data props
+        default: () => ({}), // Menggunakan "default" jika props tidak diberikan
+    },
+    logo1: {
+        type: String, // Menentukan tipe data logo sebagai String
+    },
 };
+
+
+
+
+
 
 // Define the role names mapping
 const roleNames = {
@@ -56,9 +67,10 @@ const formatDate = (dateString) => {
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
-                        <div class="navbar-left">
+                        <div class="navbar-left" v-for="setting in settings" :key="setting.id">
                             <a href="/">
-                                <img src="/bootstrap/images/logo.png" alt="Logo">
+                                <img :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"  alt="Logo"
+                                    style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>
@@ -90,31 +102,31 @@ const formatDate = (dateString) => {
                         <hr />
                         <div class="row">
                             <div class="col-md-6 c-mb10">
-                                <label class="c-mb5-black"><b>Nama Lengkap</b></label>
+                                <label class="c-mb5-black"><b>NAMA LENGKAP</b></label>
                                 <div class="data-tim">{{ users.name }}</div>
                             </div>
                             <div class="col-md-6">
-                                <label class="c-mb5-black"><b>Username</b></label>
+                                <label class="c-mb5-black"><b>USERNAME</b></label>
                                 <div class="data-tim">{{ users.username }}</div>
                             </div>
-                            <!-- <div class="col-md-6">
-                                <label class="c-mb5-black"><b>Password</b></label>
-                                <div class="data-tim">{{ users.password }}</div>
-                            </div> -->
                             <div class="col-md-6">
-                                <label class="c-mb5-black"><b>Email</b></label>
+                                <label class="c-mb5-black"><b>PASSWORD</b></label>
+                                <div class="data-tim">*********</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="c-mb5-black"><b>EMAIL</b></label>
                                 <div class="data-tim">{{ users.email }}</div>
                             </div>
                             <div class="col-md-6">
-                                <label class="c-mb5-black"><b>Role</b></label>
+                                <label class="c-mb5-black"><b>ROLE</b></label>
                                 <div class="data-tim">{{ getRoleName(users.role) }}</div>
                             </div>
                             <div class="col-md-6">
-                                <label class="c-mb5-black"><b>Tanggal Dibuat</b></label>
+                                <label class="c-mb5-black"><b>TANGGAL</b></label>
                                 <div class="data-tim">{{ formatDate(users.created_at) }}</div>
                             </div>
                         </div>
-                        <label class="c-mb5-black"><b>Lomba</b></label>
+                        <label class="c-mb5-black"><b>LOMBA</b></label>
                         <ul>
                             <li v-for="lomba in users.lomba" :key="lomba.id">{{ lomba.name_lomba }}</li>
                         </ul>

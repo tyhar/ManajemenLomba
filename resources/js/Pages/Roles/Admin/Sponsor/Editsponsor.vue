@@ -6,11 +6,9 @@ import { Head } from "@inertiajs/vue3";
 import { usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/vue3";
 // import { inertia } from "@inertiajs/inertia";
-const { name, username, sponsor, logo } = defineProps(['name', 'username', 'kriterias', 'logo']);
+const { name, username, logo, settings, logo1 } = defineProps(['name', 'username', 'logo', 'settings', 'logo1']);
 
 
-// console.log(name); // Contoh penggunaan di dalam script setup
-// console.log(username);
 
 const props = {
     sponsors: {
@@ -20,36 +18,47 @@ const props = {
     logo: {
         type: String, // Menentukan tipe data logo sebagai String
     },
+    settings: {
+        type: Object, // Menggunakan "type" untuk menentukan tipe data props
+        default: () => ({}), // Menggunakan "default" jika props tidak diberikan
+    },
+    logo1: {
+        type: String, // Menentukan tipe data logo sebagai String
+    },
 };
 
 
-//with resource
-// const sponsor = usePage().props.sponsors; //props.sponsors "sponsors" are from controller
+
+const sponsor = usePage().props.sponsors;
 
 const form = useForm({
-    // name: sponsor.data.name,
-    // logo: sponsor.data.logo,
-    // link_file: sponsor.data.link_file,
-    name: props.sponsors.name,
-    logo: null,
-    link_file: props.sponsors.link_file,
+    name: sponsor.data.name,
+    logo: sponsor.data.logo,
+    link_file: sponsor.data.link_file,
 });
-
-const submit = () => {
-    // form.put(route("sponsor.update", sponsor.data.id), {
-    //     preserveScroll: true,
-    // });
-    // form.put(route("sponsor.update", props.sponsors.id), {
-    //     preserveScroll: true,
-    // });
-    router.post(route("sponsor.update", props.sponsors.id), {
-        // preserveScroll: true,
-        _method: "put",
+async function submit() {
+    const formData = {
+        _method: 'put',
         name: form.name,
         logo: form.logo,
-        link_file: form.link_file
-    });
+        link_file: form.link_file,
+    };
 
+    try {
+        await router.post(`/sponsor/${sponsor.data.id}`, formData);
+        // Display SweetAlert on success
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Sponsor berhasil diperbarui!',
+        });
+    } catch (error) {
+        console.error('Error:', error);
+        // Handle error if needed
+    }
+}
+const goBack = () => {
+    window.history.back();
 };
 
 
@@ -61,9 +70,10 @@ const submit = () => {
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
-                        <div class="navbar-left">
+                        <div class="navbar-left" v-for="setting in settings" :key="setting.id">
                             <a href="/">
-                                <img src="/bootstrap/images/logo.png" alt="Logo">
+                                <img :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
+                                    alt="Logo" style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>
@@ -91,46 +101,37 @@ const submit = () => {
             <div class="page-content">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0">Tambah Sponsor</h4>
+                        <h4 class="mb-0">EDIT SPONSOR</h4>
                         <hr />
                         <form @submit.prevent="submit">
                             <div class="c-mb10">
-                                <label for="name" class="c-mb5-black">
-                                    <b>Nama Sponsor</b>
-                                </label>
-                                <input type="text" class="form-control" v-model="form.name" id="name">
+                                <label for="name" class="c-mb5-black"><b>Nama Sponsor</b></label>
+                                <input type="text" class="form-control" placeholder="Masukan nama sponsor"
+                                    v-model="form.name" id="name">
                             </div>
                             <div>
-                                <label for="link_file" class="c-mb5-black">
-                                    <b>Link</b>
-                                </label>
+                                <label for="link_file" class="c-mb5-black"><b>Link</b></label>
                                 <div class="col-12">
-                                    <textarea class="form-control c-mb10" rows="2" v-model="form.link_file"
-                                        id="link_file"></textarea>
+                                    <textarea class="c-mb10" rows="2" v-model="form.link_file" id="descriptionaddl"
+                                        placeholder="Masukan link sponsor"></textarea>
                                 </div>
                             </div>
                             <div>
-                                <label for="logo" class="form-label warna-hitam">
-                                    <b>Logo</b>
-                                </label>
+                                <label for="logo" class="form-label warna-hitam"> <b>Logo</b></label>
                                 <div class="m-2 p-2">
                                     <!-- <img :src="logo" class="w-32 h-32" style="width: 500px;" /> -->
-                                    <img :src="logo" alt="Product Image" class="img-fluid"
-                                        style="display:flex; margin: auto;" />
+                                    <img :src="logo" alt="Product Image" class="img-fluid c-maxw400" />
                                 </div>
                                 <input class="form-control" type="file" @input="form.logo = $event.target.files[0]"
                                     id="logo">
-                                <p class="keterangan-foto">Max 2 MB (500 x 500 px)</p>
+                                <p class="keterangan-foto f-italic">Max file size: 2MB (200 x 200 px)</p>
+                                <p class="keterangan-foto f-italic">Format: .jpg, .png, .jpeg</p>
                             </div>
                             <div class="btn-posisi">
                                 <!-- <button class="btn btn-primary button-tabel-right" onclick="window.location.href='/sponsor'">Tambah</button>
                                 <button class="btn btn-danger button-tabel-left" onclick="window.location.href='/sponsor'">Batal</button> -->
-                                <button type="submit" class="btn btn-primary button-tabel-right">
-                                    Update
-                                </button>
-                                <a class="btn btn-danger button-tabel-left" :href="route('sponsor.index')">
-                                    Batal
-                                </a>
+                                <a class="btn btn-danger button-left" :href="route('sponsor.index')">Batal</a>
+                                <button type="submit" class="btn btn-primary button-right">Update</button>
                             </div>
                         </form>
                     </div>

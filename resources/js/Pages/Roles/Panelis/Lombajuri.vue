@@ -1,5 +1,30 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
+import { defineProps, ref, onMounted, computed } from 'vue';
+
+const { name, username, lombas, picture, beluminilai, totalteam } = defineProps(['name', 'username', 'lombas', 'picture', 'beluminilai', 'totalteam']);
+
+
+const props = {
+    name: {
+        type: String,
+    },
+    username: {
+        type: String,
+    },
+    lombas: {
+        type: Array,
+    },
+    picture: {
+        type: Object,
+    },
+};
+
+
+
+
+
+
 </script>
 <template>
     <!--wrapper-->
@@ -9,21 +34,13 @@ import { Link } from '@inertiajs/vue3';
             <div class="sidebar-header">
                 <div>
                     <a href="/">
-                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon">
+                        <img id="logo-img" src="/bootstrap/images/lg.png" class="lg2">
                     </a>
                 </div>
-                <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
-                </div>
+                <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
             </div>
             <!--navigation-->
             <ul class="metismenu" id="menu">
-                <li>
-                    <a href="/panelis">
-                        <div class="parent-icon"><i class='bx bx-home-circle'></i>
-                        </div>
-                        <div class="menu-title">Dashboard</div>
-                    </a>
-                </li>
                 <li>
                     <a href="/lombajuri">
                         <div class="parent-icon"><i class="bx bx-award"></i>
@@ -31,8 +48,8 @@ import { Link } from '@inertiajs/vue3';
                         <div class="menu-title">Lomba</div>
                     </a>
                 </li>
-                <li>
-                    <a href="/rangkingjuri">
+                <li v-for="lomba in lombas" :key="lomba.id">
+                    <a :href="`/rangkingjuri/${lomba.id}`">
                         <div class="parent-icon"><i class="fadeIn animated bx bx-trophy"></i>
                         </div>
                         <div class="menu-title">Rangking</div>
@@ -44,7 +61,7 @@ import { Link } from '@inertiajs/vue3';
                         </div>
                         <div class="menu-title">
                             <Link class="menu-title" :href="route('logout')" method="post" as="button">
-                            Logout
+                            Keluar
                             </Link>
                         </div>
                     </a>
@@ -64,7 +81,8 @@ import { Link } from '@inertiajs/vue3';
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Juri</p>
+                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                                <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -95,49 +113,14 @@ import { Link } from '@inertiajs/vue3';
                     <div class="container">
                         <!--breadcrumb-->
                         <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
-                            <div class="col">
-                                <div class="card radius-15 card-overview">
-                                    <img src="/bootstrap/images/desain.jpg" alt="New Image" class="border-radius">
-                                    <label class="judul-overview">UI / UX</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/tabellomba">Lihat Peserta</a>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card radius-15 card-overview">
-                                    <img src="/bootstrap/images/ar-vr.jpg" alt="New Image" class="border-radius">
-                                    <label class="judul-overview">AR / VR</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/tabellomba">Lihat Peserta</a>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card radius-15 card-overview">
-                                    <img src="/bootstrap/images/aplikasi-mobile.jpg" alt="New Image"
+                            <div v-for="lomba in lombas" :key="lomba.id" class="col">
+                                <div class="card radius-15 card-overview"><span
+                                        class=" pcount">{{ beluminilai }}/{{ totalteam }}</span>
+                                    <img :src="lomba.picture ? `/storage/${lomba.picture}` : '/bootstrap/images/default.jpg'"
                                         class="border-radius">
-                                    <label class="judul-overview">APLIKASI MOBILE</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/tabellomba">Lihat Peserta</a>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card radius-15 card-overview">
-                                    <img src="/bootstrap/images/desain-website.jpg" alt="New Image"
-                                        class="border-radius">
-                                    <label class="judul-overview">DESAIN WEBSITE</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/tabellomba">Lihat Peserta</a>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card radius-15 card-overview">
-                                    <img src="/bootstrap/images/sistem-keamanan-data.jpg" alt="New Image"
-                                        class="border-radius">
-                                    <label class="judul-overview">SISTEM KEAMANAN DATA</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/tabellomba">Lihat Peserta</a>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card radius-15 card-overview">
-                                    <img src="/bootstrap/images/membuat-game.jpg" alt="New Image" class="border-radius">
-                                    <label class="judul-overview">UI / UX</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/tabellomba">Lihat Peserta</a>
+                                    <label class="judul-overview">{{ lomba.name_lomba }}</label>
+                                    <a class="btn btn-primary btn-landing-page2" :href="`/lombajuri/${lomba.id}`">Lihat
+                                        Karya</a>
                                 </div>
                             </div>
                         </div>
@@ -149,3 +132,19 @@ import { Link } from '@inertiajs/vue3';
         </div>
     </div>
 </template>
+
+<style scoped>
+.lomba-container {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    /* Adjust the gap as needed */
+    overflow-x: auto;
+    /* Enable horizontal scrolling if necessary */
+}
+
+.card-overview {
+    flex: 0 0 auto;
+    /* Prevent cards from shrinking */
+}
+</style>

@@ -4,16 +4,27 @@ import { reactive } from "vue";
 import Swal from 'sweetalert2';
 
 
-const { name, username, lombas } = defineProps(['name', 'username', 'lombas']);
+const { name, username, users, settings, logo1, lombas } = defineProps(['name', 'username', 'users', 'settings', 'logo1', 'lombas']);
 
-console.log(name); // Contoh penggunaan di dalam script setup
-console.log(username);
 
+
+// Definisikan properti yang diterima oleh komponen
 const props = {
+    users: {
+        type: Array,
+    },
+    settings: {
+        type: Object, // Menggunakan "type" untuk menentukan tipe data props
+        default: () => ({}), // Menggunakan "default" jika props tidak diberikan
+    },
+    logo1: {
+        type: String, // Menentukan tipe data logo sebagai String
+    },
     lombas: {
         type: Array,
     },
 };
+
 
 const form = useForm({
     name: null,
@@ -78,9 +89,10 @@ $(document).ready(function () {
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
-                        <div class="navbar-left">
+                        <div class="navbar-left" v-for="setting in settings" :key="setting.id">
                             <a href="/">
-                                <img src="/bootstrap/images/logo.png" alt="Logo">
+                                <img :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
+                                    alt="Logo" style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>
@@ -114,24 +126,28 @@ $(document).ready(function () {
                             <div class="row">
                                 <div class="col-md-6 margin-top10-crud">
                                     <label class="c-mb5-black"><b>Nama Lengkap</b></label>
-                                    <input id="name" type="name" class="form-control" v-model="form.name">
+                                    <input id="name" type="name" class="form-control" v-model="form.name"
+                                        placeholder="Masukan nama lengkap" required>
                                 </div>
 
                                 <div class="col-md-6 margin-top10-crud">
                                     <label class="c-mb5-black"><b>Username</b></label>
-                                    <input id="username" type="username" class="form-control" v-model="form.username">
+                                    <input id="username" type="username" class="form-control"
+                                        placeholder="Masukan username" v-model="form.username" required>
                                 </div>
                                 <div class="col-md-12 margin-top10-crud">
                                     <label class="c-mb5-black"><b>Email</b></label>
-                                    <input id="email" type="email" class="form-control" v-model="form.email">
+                                    <input id="email" type="email" class="form-control" v-model="form.email"
+                                        placeholder="Masukan email" required>
                                 </div>
                                 <div>
                                     <label for="inputChoosePassword"
                                         class="form-label warna-hitam"><b>Password</b></label>
                                     <div class="input-group" id="show_hide_password">
                                         <input type="password" v-model="form.password" class="form-control border-end-0"
-                                            id="inputChoosePassword"> <a href="javascript:;"
-                                            class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
+                                            id="inputChoosePassword" placeholder="Masukan password" required> <a
+                                            href="javascript:;" class="input-group-text bg-transparent"><i
+                                                class='bx bx-hide'></i></a>
                                     </div>
                                 </div>
                                 <div>
@@ -155,12 +171,8 @@ $(document).ready(function () {
                                     </div>
                                 </div>
                                 <div class="btn-posisi">
-                                    <button class="btn btn-primary button-tabel-right" type="submit">
-                                        Tambah
-                                    </button>
-                                    <a class="btn btn-danger button-tabel-left" :href="route('administrator.index')">
-                                        Batal
-                                    </a>
+                                    <a class="btn btn-danger button-left" :href="route('administrator.index')">Batal</a>
+                                    <button class="btn btn-primary button-right" type="submit">Tambah</button>
                                 </div>
                             </div>
                         </form>

@@ -14,9 +14,9 @@ class Kriteria extends Model
         'name_kriteria',
     ];
 
-    public function lombas()
+    public function bobot()
     {
-        return $this->belongsToMany(Lomba::class,'kriteria_lombas_');
+        return $this->belongsToMany(Bobot::class,'kriteria_bobots');
     }
-
+    
 }

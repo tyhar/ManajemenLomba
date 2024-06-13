@@ -60,7 +60,7 @@ class User extends Authenticatable implements MustVerifyEmail
     //relasi untuk role eventlomba, spesifik per lombanya
     public function lomba()
     {
-        return  $this->belongsToMany(Lomba::class,'user_lombas');
+        return  $this->belongsToMany(Lomba::class,'user_lombas', 'user_id', 'lomba_id');
     }
 
     public function hasVerifiedEmail()
@@ -78,7 +78,23 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     public function team()
     {
-        return $this->hasOne(Team::class);
+        return $this->hasMany(Team::class);
     }
+// In the User model
 
+public function regLomba()
+{
+    return $this->hasOne(Reg_Lomba::class, 'lomba_id', 'lomba_id');
+}
+
+    public function value()
+    {
+        return $this->hasMany(Value::class);
+    }
+    public function submissions()
+    {
+        return $this->hasMany(Submission::class);
+    }
+    
+    
 }

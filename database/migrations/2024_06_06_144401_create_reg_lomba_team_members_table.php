@@ -11,15 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('submissions', function (Blueprint $table) {
+        Schema::create('reg_lomba_team_members', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->nullable();
-            $table->text('description')->nullable();
-            $table->string('link')->nullable();
-            $table->string('file')->nullable();
-            $table->foreignId('team_id')->constrained('team')->onDelete('cascade'); 
+            $table->foreignId('reg_lomba_id')->constrained('reg_lombas')->onDelete('cascade');
+            $table->foreignId('team_member_id')->constrained('team_members')->onDelete('cascade');
             $table->timestamps();
-           
         });
     }
 
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('submissions');
+        Schema::dropIfExists('reg_lomba_team_members');
     }
 };

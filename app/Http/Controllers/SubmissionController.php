@@ -1,55 +1,81 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Submission;
+use App\Models\Lomba;
+use App\Models\Team;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class SubmissionController extends Controller
 {
-    public function create()
+    public function show($team_id)
     {
-        $submission = Submission::all();
-        return Inertia::render('Roles/User/Daftar/Pengumpulankarya', ['submissions' => $submission]);
+        $user = Auth::user();
+        $submissions = $user->team()->where('id', $team_id)->with(['lomba', 'user'])->first();
+        $submission = Submission::where('team_id', $team_id)->first();
+        return Inertia::render('Roles/User/Daftar/Pengumpulankarya', [
+            'tim' =>  $submissions,
+            'submissions' => $submission,
+            'userData' => $user,
+        ]);
     }
-    public function store(Request $request)
+
+    public function storeOrUpdate(Request $request, $id)
     {
         // Validasi data request yang masuk
         $request->validate([
-            'title' => 'required',
-            'description' => 'required|string|max:1000',
+            'title' => 'required|string|max:255',
+            'description' => 'required',
             'link' => 'required|string|max:255',
             'file' => 'nullable|file|mimes:jpeg,png,jpg,gif,zip,rar|max:512000',
+            'surat' => 'nullable|file|mimes:pdf|max:10240',
         ]);
-    
-        // Mengambil user yang sedang terautentikasi
+
         $user = Auth::user();
-    
-        // Asumsikan setiap pengguna hanya memiliki satu tim
-        // Jika tidak, Anda perlu menyesuaikan logika ini
-        $team = $user->team()->first(); // atau sesuai dengan relasi yang Anda miliki
-    
-        // Inisialisasi path file sebagai null jika tidak ada file yang diupload
+        // Retrieve the team associated with the authenticated user
+        $team = $user->team()->where('id', $id)->with('lomba')->first();
+
         $filePath = null;
-    
+        $suratPath = null;
         // Cek apakah ada file yang diupload dan simpan file tersebut
         if ($request->hasFile('file')) {
             $filePath = $request->file('file')->storePublicly('file_lomba', 'public');
         }
-    
-        // Buat submission baru dengan data yang diberikan
-        Submission::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'link' => $request->link,
-            'file' => $filePath,
-            'team_id' => $team->id, // Menyertakan team_id dalam data submission
-        ]);
-    
-        // Redirect ke halaman yang diinginkan setelah submission dibuat
-        return redirect()->route('daftarlomba.index');
+        if ($request->hasFile('surat')) {
+            $suratPath = $request->file('surat')->storePublicly('surat_lomba', 'public');
+        }
+
+        // Check if submission already exists
+        $submission = Submission::where('team_id', $id)->first();
+
+        if ($submission) {
+            // Update existing submission
+            $submission->update([
+                'title' => $request->title,
+                'description' => $request->description,
+                'link' => $request->link,
+                'file' => $filePath ?? $submission->file,
+                'surat' => $suratPath ?? $submission->surat,
+            ]);
+        } else {
+            // Create new submission
+            Submission::create([
+                'title' => $request->title,
+                'description' => $request->description,
+                'link' => $request->link,
+                'file' => $filePath,
+                'surat' => $suratPath,
+                'team_id' => $team->id,
+                'user_id' => $user->id,
+                'lomba_id' => $team->lomba->id, // Menggunakan lomba_id dari relasi team
+            ]);
+        }
+
+        // Redirect ke halaman yang diinginkan setelah submission dibuat atau diperbarui
+        return redirect()->route('dashboard');
     }
-    
 }

@@ -3,13 +3,24 @@ import { Link, useForm } from "@inertiajs/vue3";
 import { defineProps, ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 
-const unreadCount = ref(0);
 const filterStatus = ref('Semua');
 
 const props = defineProps({
   partisipans: {
-    type: Object, // Assuming partisipans is an object with a 'data' array
-  }
+    type: Object,
+  },
+  settings: {
+    type: Object, // Menggunakan "type" untuk menentukan tipe data props
+    default: () => ({}), // Menggunakan "default" jika props tidak diberikan
+  },
+  logo1: {
+    type: String, // Menentukan tipe data logo sebagai String
+  },
+  unreadCount: {
+    type: Object,
+    required: true,
+  },
+
 });
 
 
@@ -23,14 +34,6 @@ const filteredPartisipans = computed(() => {
   });
 });
 
-onMounted(async () => {
-  try {
-    const response = await axios.get('/api/unread-messages');
-    unreadCount.value = response.data.unreadCount;
-  } catch (error) {
-    console.error(error);
-  }
-});
 </script>
 
 <template>
@@ -38,13 +41,14 @@ onMounted(async () => {
   <div class="wrapper">
     <!--sidebar wrapper -->
     <div class="sidebar-wrapper" data-simplebar="true">
-      <div class="sidebar-header">
+      <div class="sidebar-header" v-for="setting in settings" :key="setting.id">
         <div>
           <a href="/">
-            <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon">
+            <img id="logo-img" :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
+              class="lg2">
           </a>
         </div>
-        <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
+        <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
       </div>
       <!--navigation-->
       <ul class="metismenu" id="menu">
@@ -97,7 +101,7 @@ onMounted(async () => {
             </div>
             <div class="menu-title">
               <Link class="menu-title" :href="route('logout')" method="post" as="button">
-              Logout
+              Keluar
               </Link>
             </div>
           </a>
@@ -147,7 +151,7 @@ onMounted(async () => {
         </div>
         <div class="card">
           <div class="card-body">
-            <h4 class="mb-0 jarak-top-kurang5">Tabel Partisipan</h4>
+            <h4 class="mb-0 jarak-top-kurang5">TABEL PARTISIPAN</h4>
             <hr class="c-mt10" />
             <a :href="route('export.partisipan')" class="btn btn-primary btn-float-right">Export Excel</a>
             <label class="jarak-filterstatus">Filter by Status</label>

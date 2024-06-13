@@ -15,12 +15,20 @@ class TeamMember extends Model
 
     ];
 
-    public function users()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
     public function team()
     {
         return $this->belongsTo(Team::class);
+    }
+    public function regLombas()
+    {
+        return $this->belongsTo(Reg_Lomba::class);
+    }
+    public function certificates()
+    {
+        return $this->hasMany(Certificate::class);
     }
 }

@@ -162,7 +162,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
-
+        
         
 
         /*
@@ -180,6 +180,10 @@ return [
         
         // Add Fortify Service Provider
         App\Providers\FortifyServiceProvider::class,
+
+        //Add ImageServiceProvider Service Provider
+        
+        
     ],
 
     /*

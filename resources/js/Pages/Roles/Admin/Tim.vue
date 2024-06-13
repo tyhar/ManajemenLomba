@@ -15,33 +15,45 @@ const props = defineProps({
         type: String,
         required: true,
     },
+    settings: {
+        type: Object, // Menggunakan "type" untuk menentukan tipe data props
+        default: () => ({}), // Menggunakan "default" jika props tidak diberikan
+    },
+    logo1: {
+        type: String, // Menentukan tipe data logo sebagai String
+    },
+    unreadCount: {
+        type: Object,
+        required: true,
+    },
+    lombas: {
+        type: Array,
+        required: true,
+    },
+    picture: {
+        type: Object,
+        required: true,
+    },
+
+
 });
 
 
-const unreadCount = ref(0);
-
-onMounted(async () => {
-    try {
-        const response = await axios.get('/api/unread-messages');
-        unreadCount.value = response.data.unreadCount;
-    } catch (error) {
-        console.error(error);
-    }
-});
 </script>
 <template>
     <!--wrapper-->
     <div class="wrapper">
         <!--sidebar wrapper -->
         <div class="sidebar-wrapper" data-simplebar="true">
-            <div class="sidebar-header">
+            <div class="sidebar-header" v-for="setting in settings" :key="setting.id">
                 <div>
                     <a href="/">
-                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon">
+                        <img id="logo-img"
+                            :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
+                            class="lg2">
                     </a>
                 </div>
-                <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
-                </div>
+                <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
             </div>
             <!--navigation-->
             <ul class="metismenu" id="menu">
@@ -63,8 +75,6 @@ onMounted(async () => {
                         </li>
                         <li class="jarak-dropdown"> <a href="/administrator">Administrator</a>
                         </li>
-                        <li class="jarak-dropdown"> <a href="/tim">Tim</a>
-                        </li>
                         <li class="jarak-dropdown"> <a href="/sponsor">Sponsor</a>
                         </li>
                         <li class="jarak-dropdown"> <a href="/berita">Berita</a>
@@ -72,6 +82,13 @@ onMounted(async () => {
                         <li class="jarak-dropdown"> <a href="/setting">Setting</a>
                         </li>
                     </ul>
+                </li>
+                <li>
+                    <a href="/tim">
+                        <div class="parent-icon"><i class="fadeIn animated lni lni-users"></i>
+                        </div>
+                        <div class="menu-title">Tim</div>
+                    </a>
                 </li>
                 <li>
                     <a href="/partisipan">
@@ -100,7 +117,7 @@ onMounted(async () => {
                         </div>
                         <div class="menu-title">
                             <Link class="menu-title" :href="route('logout')" method="post" as="button">
-                            Logout
+                            Keluar
                             </Link>
                         </div>
                     </a>
@@ -151,49 +168,14 @@ onMounted(async () => {
                     <div class="container">
                         <!--breadcrumb-->
                         <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
-                            <div class="col">
+                            <div class="col" v-for="lomba in lombas" :key="lomba.id">
                                 <div class="card radius-15 card-overview">
-                                    <img src="/bootstrap/images/desain.jpg" alt="New Image" class="border-radius">
-                                    <label class="judul-overview">UI / UX</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/tabeltim">Daftar Tim</a>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card radius-15 card-overview">
-                                    <img src="/bootstrap/images/ar-vr.jpg" alt="New Image" class="border-radius">
-                                    <label class="judul-overview">AR / VR</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/tabeltim">Daftar Tim</a>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card radius-15 card-overview">
-                                    <img src="/bootstrap/images/aplikasi-mobile.jpg" alt="New Image"
+                                    <img :src="lomba.picture ? `/storage/${lomba.picture}` : '/bootstrap/images/default.jpg'"
                                         class="border-radius">
-                                    <label class="judul-overview">APLIKASI MOBILE</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/tabeltim">Daftar Tim</a>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card radius-15 card-overview">
-                                    <img src="/bootstrap/images/desain-website.jpg" alt="New Image"
-                                        class="border-radius">
-                                    <label class="judul-overview">DESAIN WEBSITE</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/tabeltim">Daftar Tim</a>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card radius-15 card-overview">
-                                    <img src="/bootstrap/images/sistem-keamanan-data.jpg" alt="New Image"
-                                        class="border-radius">
-                                    <label class="judul-overview">SISTEM KEAMANAN DATA</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/tabeltim">Daftar Tim</a>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card radius-15 card-overview">
-                                    <img src="/bootstrap/images/membuat-game.jpg" alt="New Image" class="border-radius">
-                                    <label class="judul-overview">UI / UX</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/tabeltim">Daftar Tim</a>
+                                    <div class="judul-overview">{{ lomba.name_lomba }}</div>
+                                    <div class="btn-posisi">
+                                        <a class="btn btn-primary btn-landing-page2" href="/tabeltim">Lihat Tim</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

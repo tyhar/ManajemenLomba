@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use App\Models\Message;
-// use Illuminate\Support\Facades\Request;
+use App\Models\Setting;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,6 +17,8 @@ class MessageController extends Controller
      */
     public function index()
     {
+        $unreadCount = Message::where('status', 'belum_dibaca')->count();
+        $setting = Setting::all();
         $user = Auth::user();
         $messages = Message::all()->map(function($message) use ($user) {
             return [
@@ -35,6 +37,8 @@ class MessageController extends Controller
     
         return Inertia::render('Roles/Admin/Pesan', [
             'messages' => $messages,
+            'settings' =>  $setting,
+            'unreadCount' => $unreadCount
         ]);
     }
     
@@ -114,38 +118,6 @@ class MessageController extends Controller
         $message->delete();
         return redirect()->route('pesan.index');
     }
-    public function getUnreadMessageCount()
-{
-    $unreadCount = Message::where('status', 'belum_dibaca')->count();
-    
-    return response()->json(['unreadCount' => $unreadCount]);
-}
-
-
-
-
-
-
-public function getAllMessageCount(): JsonResponse
-{
-    try {
-        $allCount = Message::count();
-        return response()->json(['allCount' => $allCount], 200);
-    } catch (\Exception $e) {
-        return response()->json(['error' => 'Failed to retrieve message count', 'message' => $e->getMessage()], 500);
-    }
-}
-
-public function getAllParticipants(): JsonResponse
-{
-    try {
-        $allParticipants = User::count(); // Ganti 'User' dengan model yang sesuai jika berbeda
-        return response()->json(['allParticipants' => $allParticipants], 200);
-    } catch (\Exception $e) {
-        return response()->json(['error' => 'Failed to retrieve participants', 'message' => $e->getMessage()], 500);
-    }
-}
-
 
 
 public function updateStatus(Request $request, Message $message)

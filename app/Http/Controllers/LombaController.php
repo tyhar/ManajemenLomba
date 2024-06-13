@@ -4,15 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\LombaResource;
 use App\Models\Lomba;
+use App\Models\KriteriaBobot;
 use App\Models\User;
+use App\Models\Setting;
 use App\Models\Kriteria;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Message;
 use Illuminate\Validation\Rule;
 use App\Http\Requests\StoreLombaRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\KriteriaResource;
-
+use App\Http\Resources\KriteriaBobotResource;
 
 class LombaController extends Controller
 {
@@ -21,11 +24,14 @@ class LombaController extends Controller
      */
     public function index()
     {
-        
+        $unreadCount = Message::where('status', 'belum_dibaca')->count();
+        $setting = Setting::all();
         $lomba = LombaResource::collection(Lomba::all());
 
         return Inertia::render('Roles/Admin/Lomba', [
             'lombas' => $lomba,
+            'settings' =>$setting,
+            'unreadCount' => $unreadCount
         ]);
     }
 
@@ -35,11 +41,11 @@ class LombaController extends Controller
     public function create()
     {
 
-        $kriteria = KriteriaResource::collection(Kriteria::all());
-
-          
+        $kriteria = KriteriaBobotResource::collection(KriteriaBobot::all());
+        $setting = Setting::all(); 
         return Inertia::render('Roles/Admin/Lomba/Tambahlomba', [
             'kriteriaz' => $kriteria,
+            'settings' =>$setting,
         ]);
             
      
@@ -74,7 +80,7 @@ class LombaController extends Controller
          
          // Simpan kriteria yang dipilih
          if ($request->has('selectedCriteria')) {
-             $lomba->kriteria()->attach($request->input('selectedCriteria'));
+             $lomba->kriterialombabobot()->attach($request->input('selectedCriteria'));
          }
 
          // Redirect atau kembalikan response sesuai kebutuhan Anda
@@ -86,13 +92,13 @@ class LombaController extends Controller
     public function show(Lomba $lomba)
     {
 
-
+        $setting = Setting::all();
         // Ambil objek Lomba dari parameter metode
-        $lomba = Lomba::with('kriteria')->find($lomba->id);
+        $lomba = Lomba::with('kriterialombabobot.kriteria', 'kriterialombabobot.bobot')->find($lomba->id);
       
         // Buat variabel untuk menyimpan URL gambar dan sertifikat
         $pictureUrl = null;
-        $sertifikatUrl = null;
+       
     
         // Periksa apakah gambar tersedia
         if ($lomba->picture) {
@@ -109,27 +115,12 @@ class LombaController extends Controller
                 // echo "File gambar tidak ditemukan.";
             }
         }
-    
-        // Periksa apakah sertifikat tersedia
-        if ($lomba->sertifikat) {
-            // Buat path untuk sertifikat baru
-            $sertifikatPath = 'sertifikat_files/' . $lomba->sertifikat;
-            // Periksa apakah file sertifikat baru ada
-            if (Storage::exists($sertifikatPath)) {
-                // Generate URL untuk sertifikat baru
-                $sertifikatUrl = asset('storage/' . $sertifikatPath);
-            } else {
-                // Jika file sertifikat tidak ditemukan, berikan URL default atau pesan error
-                $sertifikatUrl =  asset('default_picture.jpg');// Jika sertifikat tidak ada, mungkin Anda tidak ingin menampilkan apa pun
-                // Atau berikan pesan error
-                // echo "File sertifikat tidak ditemukan.";
-            }
-        }
+
         // Kirim data lomba beserta URL gambar dan sertifikat ke tampilan
         return Inertia::render('Roles/Admin/Lomba/Detaillomba', [
             'lomba' => $lomba,
             'pictureUrl' => $pictureUrl,
-            'sertifikatUrl' => $sertifikatUrl,
+            'settings' =>$setting,
         ]);
     }
     
@@ -139,8 +130,8 @@ class LombaController extends Controller
      */
     public function edit(Lomba $lomba)
     {
-        // Mengambil semua kriteria yang tersedia
-        $kriteria = KriteriaResource::collection(Kriteria::all());
+        $setting = Setting::all();
+        $kriteria = KriteriaBobotResource::collection(KriteriaBobot::all());
         
         // // Mengambil ID kriteria yang telah dipilih sebelumnya untuk lomba ini
         // $selectedKriteriaIds = $lomba->kriteria()->pluck('id')->toArray();
@@ -149,7 +140,7 @@ class LombaController extends Controller
             'lombas' => LombaResource::make($lomba),    
             'lomba' => $lomba,
             'kriterias' => $kriteria,
-            // 'selectedKriteria' => $selectedKriteriaIds,
+            'settings' =>$setting,
         ]);
     }
     
@@ -183,10 +174,10 @@ class LombaController extends Controller
             'picture' => $picture,
             'sertifikat' => $sertifikat,
         ]);
-        $lomba->kriteria()->detach();
+        $lomba->kriterialombabobot()->detach();
         
         if ($request->has('selectedCriteria')) {
-            $lomba->kriteria()->attach($request->input('selectedCriteria'));
+            $lomba->kriterialombabobot()->attach($request->input('selectedCriteria'));
         }
     
         return redirect()->route('lomba.index')->with('success', 'Lomba berhasil diupdate');
@@ -202,7 +193,7 @@ class LombaController extends Controller
        Storage::delete('public/'. $lomba->picture);
        //hapus file sertfikat 
        Storage::delete('public/'. $lomba->sertifikat);
-        $lomba->kriteria()->detach();
+        $lomba->kriterialombabobot()->detach();
         $lomba->user()->detach();
         $lomba->delete();
     

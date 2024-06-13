@@ -1,11 +1,12 @@
 <script setup>
 import { Link, useForm } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { defineProps, ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
 // Define props
 const { userData } = defineProps(['userData']);
+const notifCount = ref(0);
 
 // Define form state using Inertia's useForm
 const form = useForm({
@@ -18,7 +19,15 @@ const form = useForm({
     photo: null
 });
 
+onMounted(async () => {
+    try {
+        const response = await axios.get('/api/unread-notifikasi');
+        notifCount.value = response.data.notifCount;
+    } catch (error) {
+        console.error(error);
+    }
 
+});
 
 // Method to handle form submission
 const submit = () => {
@@ -49,10 +58,10 @@ const submit = () => {
             <div class="sidebar-header">
                 <div>
                     <a href="/">
-                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon">
+                        <img id="logo-img" src="/bootstrap/images/lg.png" class="lg2">
                     </a>
                 </div>
-                <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
+                <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
             </div>
             <!--navigation-->
             <ul class="metismenu" id="menu">
@@ -60,12 +69,6 @@ const submit = () => {
                     <a href="/dashboard">
                         <div class="parent-icon"><i class='bx bx-category'></i></div>
                         <div class="menu-title">Overview</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="/daftarlomba">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-street-view"></i></div>
-                        <div class="menu-title">Daftar Lomba</div>
                     </a>
                 </li>
                 <li>
@@ -77,7 +80,7 @@ const submit = () => {
                 <li>
                     <a href="/notifikasipeserta">
                         <div class="parent-icon"><i class="bx bx-user-circle"></i></div>
-                        <div class="menu-title">Notifikasi<span class="alert-count">1</span></div>
+                        <div class="menu-title">Notifikasi<span class="alert-count">{{ notifCount }}</span></div>
                     </a>
                 </li>
                 <li>
@@ -91,7 +94,7 @@ const submit = () => {
                         <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i></div>
                         <div class="menu-title">
                             <Link class="menu-title" :href="route('logout')" method="post" as="button">
-                            Logout
+                            Keluar
                             </Link>
                         </div>
                     </a>
@@ -141,13 +144,19 @@ const submit = () => {
                                         <div class="card-body">
                                             <div class="d-flex flex-column align-items-center text-center">
                                                 <div class="ukuran-foto">
-                                                    <img :src="userData.photo ? `/storage/${userData.photo}` : '/bootstrap/images/default.jpg'"
+                                                    <img :src="userData.photo ? `/storage/${userData.photo}` : '/bootstrap/images/default1.jpg'"
                                                         alt="Profile" class="rounded-circle p-1 bg-primary" width="190"
                                                         height="150">
                                                 </div>
-                                                <input type="file" class="form-control form-control-sm btn-profil2"
+                                                <input type="file"
+                                                    class="form-control form-control-sm btn-profil2 img-profil"
                                                     @change="e => form.photo = e.target.files[0]">
                                             </div>
+                                            <div class="c-mtk">
+                                                <p class="keterangan-foto f-italic">Max file size: 2MB</p>
+                                                <p class="keterangan-foto f-italic">Format: .jpg, .png, .jpeg</p>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -175,7 +184,8 @@ const submit = () => {
                                                     <h6 class="mb-0">Email</h6>
                                                 </div>
                                                 <div class="col-sm-9 text-secondary">
-                                                    <input type="email" class="form-control" v-model="form.email">
+                                                    <input type="email" class="form-control" v-model="form.email"
+                                                        readonly>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">

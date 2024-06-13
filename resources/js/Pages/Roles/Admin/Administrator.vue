@@ -4,20 +4,24 @@ import { defineProps } from "vue";
 import { Head } from "@inertiajs/vue3";
 import { router } from "@inertiajs/vue3";
 import { onMounted, ref, computed } from 'vue';
+import Swal from 'sweetalert2'; // Impor SweetAlert 2
 
-
-const unreadCount = ref(0);
-
-onMounted(async () => {
-    try {
-        const response = await axios.get('/api/unread-messages');
-        unreadCount.value = response.data.unreadCount;
-    } catch (error) {
-        console.error(error);
-    }
-});
 // Mendefinisikan properti yang diterima oleh komponen
-const { name, username, users } = defineProps(['name', 'username', 'users']);
+const { name, username, users, settings, logo1, unreadCount } = defineProps(['name', 'username', 'users', 'settings', 'logo1', 'unreadCount']);
+
+const props = {
+    settings: {
+        type: Object, // Menggunakan "type" untuk menentukan tipe data props
+        default: () => ({}), // Menggunakan "default" jika props tidak diberikan
+    },
+    logo1: {
+        type: String, // Menentukan tipe data logo sebagai String
+    },
+    unreadCount: {
+        type: Object,
+        required: true,
+    },
+};
 
 // Menginisialisasi properti yang dibutuhkan untuk filter
 const selectedRole = ref('all');
@@ -37,14 +41,14 @@ const filterUsers = () => {
     // Di sini Anda dapat menambahkan logika untuk memperbarui daftar pengguna dari server, jika diperlukan
 };
 
-// Fungsi untuk menghapus administrator
-const deleteAdministrator = (id) => {
-    if (confirm("Are you sure you want to delete this user?")) {
-        deleteForm.delete(route("administrator.destroy", id), {
-            preserveScroll: true,
-        });
-    }
-};
+// // Fungsi untuk menghapus administrator
+// const deleteAdministrator = (id) => {
+//     if (confirm("Are you sure you want to delete this user?")) {
+//         deleteForm.delete(route("administrator.destroy", id), {
+//             preserveScroll: true,
+//         });
+//     }
+// };
 
 // Objek untuk memetakan nama peran berdasarkan nomor peran
 const roleNames = {
@@ -64,6 +68,75 @@ const viewDetails = (userId) => {
     // Logika untuk menavigasi ke halaman detail pengguna, jika diperlukan
 };
 
+// Menginisialisasi properti terkomputasi untuk checkbox
+const allChecked = computed(() => {
+    return filteredUsers.value.every(user => user.status === 'aktif');
+});
+const handleCheckboxChange = (user) => {
+    const currentStatus = user.status; // Simpan status saat ini
+
+    if (currentStatus === 'aktif') {
+        // Jika status saat ini adalah 'aktif', konfirmasi terlebih dahulu sebelum menonaktifkan
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: "Anda ingin menonaktifkan akun ini.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Simpan',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Jika pengguna mengkonfirmasi, lanjutkan perubahan status
+                updateStatus(user, 'nonaktif');
+            } else {
+                // Jika pengguna membatalkan, kembalikan status checkbox
+                document.getElementById(`checkbox-${user.id}`).checked = true;
+            }
+        });
+    } else if (currentStatus === 'nonaktif') {
+        // Jika status saat ini bukan 'aktif', konfirmasi terlebih dahulu sebelum mengaktifkan
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: "Anda ingin mengaktifkan akun ini.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Simpan',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Jika pengguna mengkonfirmasi, lanjutkan perubahan status
+                updateStatus(user, 'aktif');
+            } else {
+                // Jika pengguna membatalkan, kembalikan status checkbox
+                document.getElementById(`checkbox-${user.id}`).checked = false;
+            }
+        });
+    }
+};
+
+const updateStatus = (user, newStatus) => {
+    const previousStatus = user.status;
+    user.status = newStatus;
+
+    console.log('Mengirim permintaan ke server untuk memperbarui status pengguna');
+    router.put(route('administrator.updateStatus', user.id), { status: user.status })
+        .then(() => {
+            console.log('Permintaan berhasil');
+            if (newStatus === 'aktif') {
+                Swal.fire('Akun diaktifkan', 'Status akun telah diubah menjadi aktif.', 'success');
+            } else {
+                Swal.fire('Akun dinonaktifkan', 'Status akun telah diubah menjadi nonaktif.', 'success');
+            }
+        })
+        .catch(() => {
+            console.log('Permintaan gagal');
+            Swal.fire('Kesalahan', 'Terjadi kesalahan saat memperbarui status akun.', 'error');
+            // Jika permintaan gagal, kembalikan status ke sebelumnya
+            user.status = previousStatus;
+            document.getElementById(`checkbox-${user.id}`).checked = previousStatus === 'aktif';
+        });
+};
+
 </script>
 
 <template>
@@ -71,14 +144,15 @@ const viewDetails = (userId) => {
     <div class="wrapper">
         <!--sidebar wrapper -->
         <div class="sidebar-wrapper" data-simplebar="true">
-            <div class="sidebar-header">
+            <div class="sidebar-header" v-for="setting in settings" :key="setting.id">
                 <div>
                     <a href="/">
-                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon">
+                        <img id="logo-img"
+                            :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
+                            class="lg2">
                     </a>
                 </div>
-                <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
-                </div>
+                <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
             </div>
             <!--navigation-->
             <ul class="metismenu" id="menu">
@@ -100,8 +174,6 @@ const viewDetails = (userId) => {
                         </li>
                         <li class="jarak-dropdown"> <a href="/administrator">Administrator</a>
                         </li>
-                        <li class="jarak-dropdown"> <a href="/tim">Tim</a>
-                        </li>
                         <li class="jarak-dropdown"> <a href="/sponsor">Sponsor</a>
                         </li>
                         <li class="jarak-dropdown"> <a href="/berita">Berita</a>
@@ -109,6 +181,13 @@ const viewDetails = (userId) => {
                         <li class="jarak-dropdown"> <a href="/setting">Setting</a>
                         </li>
                     </ul>
+                </li>
+                <li>
+                    <a href="/tim">
+                        <div class="parent-icon"><i class="fadeIn animated lni lni-users"></i>
+                        </div>
+                        <div class="menu-title">Tim</div>
+                    </a>
                 </li>
                 <li>
                     <a href="/partisipan">
@@ -137,14 +216,13 @@ const viewDetails = (userId) => {
                         </div>
                         <div class="menu-title">
                             <Link class="menu-title" :href="route('logout')" method="post" as="button">
-                            Logout
+                            Keluar
                             </Link>
                         </div>
                     </a>
                 </li>
             </ul>
             <!--end navigation-->
-
         </div>
         <!--end sidebar wrapper -->
         <!--start header -->
@@ -194,7 +272,7 @@ const viewDetails = (userId) => {
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0 jarak-top-kurang5">Tabel Administrator</h4>
+                        <h4 class="mb-0 jarak-top-kurang5">TABEL ADMINISTRATOR</h4>
                         <hr class="c-mt10" />
                         <a class="btn btn-success jarak-top-kurang7" :href="route('administrator.create')">
                             Tambah Administrator
@@ -217,9 +295,8 @@ const viewDetails = (userId) => {
                                         <th class="crud-width-70">Username</th>
                                         <th class="crud-width-110">Email</th>
                                         <th class="crud-width-50">Role</th>
-                                        <!-- <th class="crud-width-90">Lomba</th>
-                                        <th class="crud-width-90">Tanggal</th> -->
                                         <th class="crud-width-50">Aksi</th>
+                                        <th class="crud-width-20">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -229,12 +306,14 @@ const viewDetails = (userId) => {
                                         <td>{{ user.username }}</td>
                                         <td>{{ user.email }}</td>
                                         <td>{{ getRoleName(user.role) }}</td>
-                                        <!-- <td>Lomba Desain</td>
-                                            <td>Maret 1, 2024</td> -->
                                         <td class="btn-crud">
                                             <a class="btn btn-secondary" :href="route('administrator.show', user.id)">
                                                 <i class="bi bi-eye"></i>
                                             </a>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" :checked="user.status === 'aktif'"
+                                                @change="handleCheckboxChange(user)">
                                         </td>
                                     </tr>
                                 </tbody>

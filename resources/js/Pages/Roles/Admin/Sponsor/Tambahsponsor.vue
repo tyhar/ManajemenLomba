@@ -38,11 +38,12 @@ const submit = () => {
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
-                        <a href="/">
-                            <div class="navbar-left">
-                                <img src="/bootstrap/images/logo.png" alt="Logo">
-                            </div>
-                        </a>
+                        <div class="navbar-left">
+                            <a href="/">
+                                <img src="/bootstrap/images/lg.png" alt="Logo"
+                                    style="width: 100px; margin-left: -15px;">
+                            </a>
+                        </div>
                     </div>
                     <!-- Mobile toggle menu -->
                     <!-- Search bar -->
@@ -68,22 +69,19 @@ const submit = () => {
             <div class="page-content">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0">Tambah Sponsor</h4>
+                        <h4 class="mb-0">TAMBAH SPONSOR</h4>
                         <hr />
                         <form @submit.prevent="submit">
                             <div class="c-mb10">
-                                <label for="name" class="c-mb5-black">
-                                    <b>Nama Sponsor</b>
-                                </label>
-                                <input type="text" class="form-control" v-model="form.name" id="name">
+                                <label for="name" class="c-mb5-black"><b>Nama Sponsor</b></label>
+                                <input type="text" class="form-control" placeholder="Masukan nama sponsor"
+                                    v-model="form.name" id="name" required>
                             </div>
                             <div>
-                                <label for="link_file" class="c-mb5-black"><b>Link</b>
-                                </label>
+                                <label for="link_file" class="c-mb5-black"><b>Link</b></label>
                                 <div class="col-12">
-                                    <textarea class="form-control c-mb10" rows="2" v-model="form.link_file"
-                                        id="link_file">
-                                        </textarea>
+                                    <textarea class="c-mb10" rows="2" placeholder="Masukan link sponsor"
+                                        v-model="form.link_file" id="descriptionaddl" required></textarea>
                                 </div>
                             </div>
                             <div>
@@ -91,15 +89,12 @@ const submit = () => {
                                 </label>
                                 <input class="form-control" type="file" @input="form.logo = $event.target.files[0]"
                                     id="logo">
-                                <p class="keterangan-foto">Max 2 MB (200 x 200 px)</p>
+                                <p class="keterangan-foto f-italic">Max file size: 2MB (200 x 200 px)</p>
+                                <p class="keterangan-foto f-italic">Format: .jpg, .png, .jpeg</p>
                             </div>
                             <div class="btn-posisi">
-                                <button type="submit" class="btn btn-primary button-tabel-right">
-                                    Tambah
-                                </button>
-                                <a class="btn btn-danger button-tabel-left" :href="route('sponsor.index')">
-                                    Batal
-                                </a>
+                                <a class="btn btn-danger button-left" :href="route('sponsor.index')">Batal</a>
+                                <button type="submit" class="btn btn-primary button-right">Tambah</button>
                             </div>
                         </form>
                     </div>

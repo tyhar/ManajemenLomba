@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\KriteriaResource;
+use App\Http\Resources\BobotResource;
 use App\Models\Kriteria;
+use App\Models\Bobot;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class KriteriaController extends Controller
 {
@@ -15,16 +19,21 @@ class KriteriaController extends Controller
      */
     public function index()
     {
+        $bobot = BobotResource::collection(Bobot::all());  
+        $setting = Setting::all();
         $user = Auth::user();
         Inertia::share('userData', [
             'name' => $user->name,
             'username' => $user->username,
+
         ]);
         $kriteria = KriteriaResource::collection(Kriteria::all());
 
         return Inertia::render('Roles/Admin/Kriteria', [
             'kriterias' => $kriteria,
             'UserData' => $user,
+            'settings' =>$setting,
+            'bobots' =>$bobot,
         ]);
     }
 
@@ -33,6 +42,7 @@ class KriteriaController extends Controller
      */
     public function create()
     {
+        $setting = Setting::all();
         $user = Auth::user();
         Inertia::share('userData', [
             'name' => $user->name,
@@ -41,6 +51,7 @@ class KriteriaController extends Controller
 
         return Inertia::render('Roles/Admin/Kriteria/Tambahkriteria',[
            'UserData' => $user,
+           'settings' =>$setting,
         ]);
     }
 
@@ -53,19 +64,31 @@ class KriteriaController extends Controller
         $validatedData = $request->validate([
             'kriteria' => 'required|array',
             'kriteria.*.name_kriteria' => 'required|string',
-     
+            'kriteria.*.nilai_bobot' => 'required|integer|in:10,20,30,40,50,60,70,80,100',
         ]);
-
-        // Simpan kriteria
-        foreach ($validatedData['kriteria'] as $kriteria) {
+    
+        // Simpan kriteria dan bobot
+        foreach ($validatedData['kriteria'] as $item) {
+            // Simpan kriteria
             $kriteriaModel = new Kriteria();
-            $kriteriaModel->name_kriteria = $kriteria['name_kriteria'];
+            $kriteriaModel->name_kriteria = $item['name_kriteria'];
             $kriteriaModel->save();
+    
+            // Simpan bobot
+            $bobotModel = new Bobot();
+            $bobotModel->nilai_bobot = $item['nilai_bobot'];
+            $bobotModel->save();
+    
+            // Simpan relasi kriteria dan bobot
+            DB::table('kriteria_bobots')->insert([
+                'kriteria_id' => $kriteriaModel->id,
+                'bobot_id' => $bobotModel->id,
+            ]);
         }
-
+    
         return redirect()->route('kriteria.index')->with('success', 'Kriteria berhasil ditambahkan');
     }
-
+    
 
 /**
  * Display the specified resource.
@@ -90,38 +113,35 @@ public function show($kriteria)
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Kriteria $kriteria)
+    public function edit($id)
     {
+        $setting = Setting::all();
+        $kriteria = Kriteria::findOrFail($id);
+
         return Inertia::render('Roles/Admin/Kriteria/Editkriteria', [
-            'kriterias' => KriteriaResource::make($kriteria),
-            'kriteria' => $kriteria,
-
-
+            'kriterias' => [
+                'data' => $kriteria,
+            ],
+            'userData' => auth()->user(),
+            'settings' =>$setting, // Assuming you pass user data to the page props
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
- public function update(Request $request, Kriteria $kriteria)
-{
-    // Validasi data yang diterima dari permintaan
-    $request->validate([
-        'name_kriteria' => 'required|string|max:255', // Sesuaikan dengan aturan validasi Anda
-        // Tambahkan validasi untuk atribut lain jika diperlukan
-    ]);
+    // Update the kriteria
+    public function update(Request $request, $id)
+    {
+        $kriteria = Kriteria::findOrFail($id);
 
-    // Perbarui kriteria yang sesuai dengan data yang diterima dari permintaan
-    $kriteria->update([
-        'name_kriteria' => $request->input('name_kriteria'),
-        // Tambahkan atribut lain yang ingin diperbarui
-    ]);
+        $request->validate([
+            'name_kriteria' => 'required|string|max:255',
+        ]);
 
-    // Redirect ke halaman indeks kriteria setelah pembaruan berhasil
-    return redirect()->route('kriteria.index')->with('success', 'Kriteria berhasil diperbarui');
-}
+        $kriteria->update([
+            'name_kriteria' => $request->name_kriteria,
+        ]);
 
-    
+        return redirect()->route('kriteria.index')->with('success', 'Kriteria berhasil diperbarui!');
+    }
     
 
     /**
@@ -131,6 +151,7 @@ public function show($kriteria)
     {
 
         $kriteria = Kriteria::findOrFail($kriteria);
+        $kriteria->bobot()->detach();
         $kriteria->delete(); 
         
         return redirect()->route('kriteria.index');

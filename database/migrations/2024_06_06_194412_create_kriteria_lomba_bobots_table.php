@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('certificate', function (Blueprint $table) {
+        Schema::create('kriteria_lomba_bobots', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('team_id')->constrained('team')->onDelete('cascade');
-            $table->string('team_sertifikat');
-            $table->date('date');
+            $table->foreignId('kriteria_bobot_id')->constrained('kriteria_bobots');
+            $table->foreignId('lomba_id')->constrained('lombas');
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('certificate');
+        Schema::dropIfExists('kriteria_lomba_bobots');
     }
 };

@@ -6,8 +6,11 @@
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
-                        <div class="navbar-left">
-                            <img src="/bootstrap/images/logo.png" alt="Logo">
+                        <div class="navbar-left" v-for="setting in settings" :key="setting.id">
+                            <a href="/">
+                                <img :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
+                                    alt="Logo" style="width: 100px; margin-left: -15px;">
+                            </a>
                         </div>
                     </div>
                     <!-- Mobile toggle menu -->
@@ -35,7 +38,7 @@
                 <div class="card">
                     <form @submit.prevent="submit" enctype="multipart/form-data">
                         <div class="card-body">
-                            <h4 class="mb-0">Edit Lomba</h4>
+                            <h4 class="mb-0">EDIT LOMBA</h4>
                             <hr />
                             <div class="row">
                                 <div class="col-md-6 c-mb10">
@@ -56,12 +59,16 @@
                                         <label for="picture" class="form-label judul-form"><b>Gambar</b></label>
                                         <input type="file" id="picture" accept="image/*" class="form-control"
                                             @input="form.picture = $event.target.files[0]">
-                                        <p class="keterangan-foto">Ukuran 500 x 500</p>
+                                        <p class="keterangan-foto f-italic">Max file size: 2MB (500 x 500 px)</p>
+                                        <p class="keterangan-foto f-italic">Format: .jpg, .png, .jpeg</p>
                                     </div>
+                                    <br>
                                     <div>
                                         <label for="sertifikat" class="form-label judul-form"><b>Sertifikat</b></label>
-                                        <input type="file" id="sertifikat" accept="image/*" class="form-control"
+                                        <input type="file" id="sertifikat" class="form-control"
                                             @input="form.sertifikat = $event.target.files[0]">
+                                        <p class="keterangan-foto f-italic">Max file size: 2MB (500 x 500 px)</p>
+                                        <p class="keterangan-foto f-italic">Format: .pdf</p>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -77,7 +84,8 @@
                                             id="biaya_pendaftaran">
                                     </div>
                                     <div>
-                                        <label class="role-add"><b class="warna-hitam">Kriteria Lomba</b></label>
+                                        <label class="role-add"><b class="warna-hitam">Kriteria Penilaian
+                                                (0%/100%)</b></label>
                                         <div>
                                             <div class="form-check" v-for="kriteria in kriterias.data"
                                                 :key="kriteria.id">
@@ -85,17 +93,15 @@
                                                     :id="'kriteria' + kriteria.id" v-model="form.selectedCriteria"
                                                     :value="kriteria.id">
                                                 <label class="form-check-label" :for="'kriteria' + kriteria.id">{{
-                                                    kriteria.name_kriteria }} </label>
+                                                    kriteria.name_kriteria }} {{ kriteria.nilai_bobot }} %</label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="btn-posisi">
-                                <button type="submit" class="btn btn-primary button-tabel-right">
-                                    Update
-                                </button>
-                                <button class="btn btn-danger btn-kembali" @click="goBack()">Kembali</button>
+                                <button class="btn btn-danger button-left" @click="goBack()">Kembali</button>
+                                <button type="submit" class="btn btn-primary button-right">Update</button>
                             </div>
                         </div>
                     </form>
@@ -105,23 +111,26 @@
         <!--end page wrapper -->
     </div>
 </template>
+
 <script setup>
 import { router, useForm, usePage } from "@inertiajs/vue3";
 import Swal from 'sweetalert2'; // Import SweetAlert
+import { reactive, computed } from 'vue'
 
-const { name, username, kriterias } = defineProps(['name', 'username', 'kriterias']);
+const { name, username, settings, logo1, kriterias } = defineProps(['name', 'username', 'kriterias', 'settings', 'logo1']);
 
 const props = {
-    sponsors: {
-        type: Object,
-        default: () => ({}),
+    settings: {
+        type: Object, // Menggunakan "type" untuk menentukan tipe data props
+        default: () => ({}), // Menggunakan "default" jika props tidak diberikan
     },
-    logo: {
-        type: String,
+    logo1: {
+        type: String, // Menentukan tipe data logo sebagai String
     },
 };
 
 const lomba = usePage().props.lombas;
+
 
 const form = useForm({
     name_lomba: lomba.data.name_lomba,
@@ -135,7 +144,24 @@ const form = useForm({
     selectedCriteria: [],
 });
 
+
+
 async function submit() {
+    // Validate total bobot
+    const totalBobot = form.selectedCriteria.reduce((acc, id) => {
+        const kriteria = kriterias.data.find(k => k.id === id);
+        return acc + parseInt(kriteria.nilai_bobot);
+    }, 0);
+
+    if (totalBobot !== 100) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal',
+            text: 'Total bobot kriteria harus 100%',
+        });
+        return; // Stop execution if total bobot is not 100%
+    }
+
     const formData = {
         _method: 'put',
         name_lomba: form.name_lomba,
@@ -162,4 +188,9 @@ async function submit() {
         // Handle error if needed
     }
 }
+
+const goBack = () => {
+    window.history.back();
+};
+
 </script>

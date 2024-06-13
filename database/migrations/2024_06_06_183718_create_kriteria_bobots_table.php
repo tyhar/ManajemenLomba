@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kriteria_lombas_', function (Blueprint $table) {
+        Schema::create('kriteria_bobots', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('lomba_id')->constrained('lombas'); // Menyesuaikan foreign key dengan tabel lombas
+            $table->foreignId('bobot_id')->constrained('bobots');
             $table->foreignId('kriteria_id')->constrained('kriterias');
             $table->timestamps();
         });
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kriteria_lombas_');
+        Schema::dropIfExists('kriteria_bobots');
     }
 };

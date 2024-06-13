@@ -23,9 +23,9 @@ class StoreLombaRequest extends FormRequest
     {
         return [
             'name_lomba' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string', 'max:1000'],
-            'picture' => ['required', 'image', 'max:4096'], // Memastikan hanya file gambar yang diizinkan
-            'sertifikat' => ['required', 'file', 'mimes:pdf,jpeg,png,jpg,', 'max:4096'], // Memastikan hanya file dengan ekstensi tertentu yang diizinkan
+            'description' => ['required'],
+            'picture' => ['required', 'image', 'max:2048'], // Memastikan hanya file gambar yang diizinkan
+            'sertifikat' => ['required', 'file', 'mimes:pdf', 'max:10240'],
             'pj' => ['required', 'string', 'max:255'],
             'kontak' => ['required', 'string', 'max:255'],
             'tempat' => ['required', 'string', 'max:255'],

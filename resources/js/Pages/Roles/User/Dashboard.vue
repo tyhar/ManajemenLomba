@@ -1,18 +1,3 @@
-<script setup>
-import { Link } from '@inertiajs/vue3';
-
-const props = defineProps({
-  lombas: {
-    type: Array,
-    required: true,
-  },
-  picture: {
-    type: Object,
-    required: true,
-  },
-});
-</script>
-
 <template>
   <!--wrapper-->
   <div class="wrapper">
@@ -21,10 +6,10 @@ const props = defineProps({
       <div class="sidebar-header">
         <div>
           <a href="/">
-            <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon">
+            <img id="logo-img" src="/bootstrap/images/lg.png" class="lg2">
           </a>
         </div>
-        <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
+        <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
       </div>
       <!--navigation-->
       <ul class="metismenu" id="menu">
@@ -32,12 +17,6 @@ const props = defineProps({
           <a href="/dashboard">
             <div class="parent-icon"><i class='bx bx-category'></i></div>
             <div class="menu-title">Overview</div>
-          </a>
-        </li>
-        <li >
-          <a :href="route('daftarlomba.index')">
-            <div class="parent-icon"><i class="fadeIn animated bx bx-street-view"></i></div>
-            <div class="menu-title">Daftar Lomba</div>
           </a>
         </li>
         <li>
@@ -49,7 +28,7 @@ const props = defineProps({
         <li>
           <a href="/notifikasipeserta">
             <div class="parent-icon"><i class="bx bx-user-circle"></i></div>
-            <div class="menu-title">Notifikasi<span class="alert-count">1</span></div>
+            <div class="menu-title">Notifikasi<span class="alert-count">{{ notifCount }}</span></div>
           </a>
         </li>
         <li>
@@ -63,7 +42,7 @@ const props = defineProps({
             <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i></div>
             <div class="menu-title">
               <Link class="menu-title" :href="route('logout')" method="post" as="button">
-              Logout
+              Keluar
               </Link>
             </div>
           </a>
@@ -114,7 +93,10 @@ const props = defineProps({
                   <img :src="lomba.picture ? `/storage/${lomba.picture}` : '/bootstrap/images/default.jpg'"
                     class="border-radius">
                   <div class="judul-overview">{{ lomba.name_lomba }}</div>
-                  <a class="btn btn-primary btn-landing-page2" :href="`/detailpeserta/${lomba.id}`">Detail</a>
+                  <div class="btn-posisi">
+                    <a class="btn btn-primary btn-lomba" :href="`/detailpeserta/${lomba.id}`">Detail</a>
+                    <a class="btn btn-success button-lomba" @click="submitForm(lomba.id)">Daftar</a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -127,3 +109,72 @@ const props = defineProps({
   </div>
   <!--end switcher-->
 </template>
+
+<script setup>
+import { Link, useForm, router } from '@inertiajs/vue3';
+import { defineProps, ref, onMounted, computed } from 'vue';
+import Swal from 'sweetalert2';
+import axios from 'axios';
+
+const notifCount = ref(0);
+
+const props = defineProps({
+  lombas: {
+    type: Array,
+    required: true,
+  },
+
+});
+
+
+onMounted(async () => {
+  try {
+    const response = await axios.get('/api/unread-notifikasi');
+    notifCount.value = response.data.notifCount;
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+async function submitForm(lombaId) {
+  const confirmation = await Swal.fire({
+    title: 'Apakah anda yakin akan mendaftar lomba?',
+    text: 'Klik "Daftar" untuk melanjutkan atau "Batal" untuk membatalkan.',
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Lanjutkan',
+    cancelButtonText: 'Batal'
+  });
+
+  if (confirmation.isConfirmed) {
+    try {
+      await router.post('/overview', {
+        lomba_id: lombaId
+      });
+      await Swal.fire({
+        title: 'Success!',
+        text: 'Silahkan lengkapi data tim anda!',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      });
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      if (error.response && error.response.data && error.response.data.errorInfo && error.response.data.errorInfo[1] === 1062) {
+        await Swal.fire({
+          title: 'Anda Telah Mendaftar!',
+          text: 'Anda telah mendaftar lomba ini sebelumnya!',
+          icon: 'warning',
+          confirmButtonText: 'OK'
+        });
+      } else {
+        await Swal.fire({
+          title: 'Gagal!',
+          text: 'Gagal menyimpan data.',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+      }
+    }
+  }
+}
+</script>

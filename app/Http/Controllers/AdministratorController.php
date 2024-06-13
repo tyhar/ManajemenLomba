@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Message;
 use App\Models\User;
 use App\Http\Resources\LombaResource;
 use App\Models\Lomba;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
-// use Illuminate\Support\Facades\Request;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\Registered;
@@ -24,22 +25,33 @@ class AdministratorController extends Controller
      */
     public function index()
     {
+        $newStatus = User::where('status', 'aktif')->get();
+        // $newStatus = User::where('status', 'nonaktif')->get();
+        $setting = Setting::all();
+        $unreadCount = Message::where('status', 'belum_dibaca')->count();
+       
         $user = Auth::user();
         Inertia::share('userData', [
             'name' => $user->name,
             'username' => $user->username,
+            'status' => $user->status
         ]);
+       
         return Inertia::render('Roles/Admin/Administrator', [
             'users' => User::all()->map(function($user) {
                 return [
                     'id' => $user->id,
                     'name' => $user->name,
                     'username' => $user->username,
+                    'status' => $user->status,
                     'email' => $user->email,
                     'role' => $user->role,
-                    'UserData'=>$user,
-                ];
-            })
+                    'UserData'=>$user,       
+                ]; }),
+                'settings' => $setting,
+                'unreadCount'=> $unreadCount,
+                'newStatus' => $newStatus,
+                   
         ]);
     }
 
@@ -48,7 +60,7 @@ class AdministratorController extends Controller
      */
     public function create()
     {
-
+        $setting = Setting::all();
         $user = Auth::user();
         Inertia::share('userData', [
             'name' => $user->name,
@@ -58,7 +70,8 @@ class AdministratorController extends Controller
         return Inertia::render('Roles/Admin/Administrator/Tambahadministrator',
         [
             'UserData' => $user,
-            'lombas' => $lomba
+            'lombas' => $lomba,
+            'settings' => $setting,
         ]);
     
     }
@@ -95,6 +108,7 @@ class AdministratorController extends Controller
      */
     public function show($id)
     {
+        $setting = Setting::all();
         $user = Auth::user();
         Inertia::share('userData', [
             'name' => $user->name,
@@ -104,7 +118,8 @@ class AdministratorController extends Controller
         $users = User::with('lomba')->find($id);
         return Inertia::render('Roles/Admin/Administrator/Detailadministrator', [
             'users' => $users,
-            'UserData' => $user
+            'UserData' => $user,
+            'settings' => $setting,
         ]);
     }
 
@@ -133,6 +148,23 @@ class AdministratorController extends Controller
         $user = User::find($id);
         $user->delete();
         // $user->delete();
+        return redirect()->route('administrator.index');
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        // Temukan pengguna berdasarkan ID
+        $user = User::findOrFail($id);
+        
+        // Validasi request
+        $request->validate([
+            'status' => 'required|in:aktif,nonaktif',
+        ]);
+        
+        // Perbarui status pengguna
+        $user->status = $request->status;
+        $user->save();
+
         return redirect()->route('administrator.index');
     }
 }
