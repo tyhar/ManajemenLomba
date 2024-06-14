@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Inertia\Controller;
 use setasign\Fpdi\Fpdi;
-use App\Http\Controllers\Auth;
 
 class FillPDFController extends Controller
 {
     public function process(Request $request)
     {
-        if (!auth()->check()) 
-        {
+        if (! auth()->check()) {
             return response()->json(['error' => 'User not authenticated'], 401);
         }
         $nama = auth()->user()->name;
@@ -23,7 +21,7 @@ class FillPDFController extends Controller
         return response()->file($outputfile);
     }
 
-    public function fillPDF($file,$outputfile,$nama)
+    public function fillPDF($file, $outputfile, $nama)
     {
         $fpdi = new FPDI;
         $fpdi->setSourceFile($file);

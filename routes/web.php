@@ -154,10 +154,7 @@ Route::controller(GoogleController::class)->group(function () {
 });
 
 //BUAT SERTIFIKAT PDF
-Route::get('/certificate',[FillPDFController::class,'process'])->name('certificate');
-Route::get('/pdf', function() {
-    return Inertia::render('Kontak');
-});
+Route::get('/certificate',[FillPDFController::class,'process']);
 
 // -- backup --
 // Route::get('/api/logo', [LogoController::class, 'getLogo']);
