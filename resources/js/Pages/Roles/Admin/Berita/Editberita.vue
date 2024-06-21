@@ -9,7 +9,7 @@
                         <div class="navbar-left" v-for="setting in settings" :key="setting.id">
                             <a href="/">
                                 <img :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
-                                    alt="Logo" style="width: 100px; margin-left: -15px;">
+                                    alt="Logo" style="width: 135px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>
@@ -21,8 +21,8 @@
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">Habib Shohiburrotib</p>
-                                <p class="user-role">habib</p>
+                                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                                <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -42,25 +42,28 @@
                         <form @submit.prevent="submit(berita.id)">
                             <div class="c-mb10">
                                 <label class="c-mb5-black"><b>Judul</b></label>
-                                <input type="text" class="form-control" v-model="form.judul">
+                                <input type="text" class="form-control" placeholder="Masukan judul berita"
+                                    v-model="form.judul">
                             </div>
                             <div>
                                 <label class="c-mb5-black"><b>Deskripsi Awal</b></label>
                                 <div class="col-12">
-                                    <textarea class="form-control c-mb10" id="inputProductDescription" rows="2"
-                                        v-model="form.deskripsi_awal"></textarea>
+                                    <textarea class="form-control c-mb10"
+                                        placeholder="Masukan deskripsi awal berita (max 20 kata)"
+                                        id="inputProductDescription" rows="2" v-model="form.deskripsi_awal"></textarea>
                                 </div>
                             </div>
                             <div>
                                 <label class="c-mb5-black"><b>Deskripsi</b></label>
                                 <div class="col-12">
-                                    <textarea class="form-control c-mb10" id="inputProductDescription" rows="7"
-                                        v-model="form.deskripsi"></textarea>
+                                    <textarea class="form-control c-mb10" placeholder="Masukan deskripsi berita"
+                                        id="inputProductDescription" rows="7" v-model="form.deskripsi"></textarea>
                                 </div>
                             </div>
                             <div class="c-mb10">
                                 <label class="c-mb5-black"><b>Penerbit</b></label>
-                                <input type="text" class="form-control" v-model="form.penerbit">
+                                <input type="text" class="form-control" placeholder="Masukan penerbit berita"
+                                    v-model="form.penerbit">
                             </div>
                             <div>
                                 <label class="form-label warna-hitam"><b>Tanggal Upload</b></label>

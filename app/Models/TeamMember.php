@@ -31,4 +31,8 @@ class TeamMember extends Model
     {
         return $this->hasMany(Certificate::class);
     }
+    public function notifikasi()
+{
+    return $this->hasMany(Notifikasi::class);
+}
 }

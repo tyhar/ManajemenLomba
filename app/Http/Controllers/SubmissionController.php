@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Submission;
+use App\Models\Setting;
 use App\Models\Lomba;
 use App\Models\Team;
 use App\Models\User;
@@ -14,6 +15,7 @@ class SubmissionController extends Controller
 {
     public function show($team_id)
     {
+        $settings = Setting::all();
         $user = Auth::user();
         $submissions = $user->team()->where('id', $team_id)->with(['lomba', 'user'])->first();
         $submission = Submission::where('team_id', $team_id)->first();
@@ -21,6 +23,7 @@ class SubmissionController extends Controller
             'tim' =>  $submissions,
             'submissions' => $submission,
             'userData' => $user,
+            'settings' => $settings,
         ]);
     }
 

@@ -9,7 +9,7 @@
                         <div class="navbar-left" v-for="setting in settings" :key="setting.id">
                             <a href="/">
                                 <img :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
-                                    style="width: 100px; margin-left: -15px;">
+                                    alt="Logo" style="width: 135px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>
@@ -70,15 +70,15 @@
                                     <div class="btn-crud">
                                         <button class="btn btn-white btn-putih" @click="showPopup"> + </button>
                                     </div>
-                                    <br>
-                                    <br>
+
                                 </div>
 
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <button @click="saveTeamMembers" class="btn btn-primary radius-5 isi-data2">Simpan</button>
+                    <div class="btn-posisi">
+                        <button class="btn btn-danger button-left margin-afkar" @click="goBack()">Batal</button>
+                        <button @click="saveTeamMembers" class="btn btn-primary button-right">Simpan</button>
                     </div>
                 </div>
                 <div v-if="isPopupVisible" class="popup">
@@ -113,8 +113,6 @@
                     </div>
                 </div>
             </div>
-            <button class="btn btn-danger" style="position: fixed; bottom: 20px; left: 20px;"
-                @click="goBack()">Batal</button>
         </div>
         <!--end page wrapper -->
     </div>
@@ -126,9 +124,19 @@ import { Link, useForm, router } from '@inertiajs/vue3';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 
-const { userData, users, team, settings } = defineProps(['userData', 'users', 'team', 'settings']);
+const { userData, users, team, settings, logo1 } = defineProps(['userData', 'users', 'team', 'settings', 'logo1']);
 
 
+const props = {
+    settings: {
+        type: Object, // Menggunakan "type" untuk menentukan tipe data props
+        default: () => ({}), // Menggunakan "default" jika props tidak diberikan
+    },
+    logo1: {
+        type: String, // Menentukan tipe data logo sebagai String
+    },
+
+};
 
 // Define form state using Inertia's useForm
 const form = useForm({
@@ -147,7 +155,7 @@ const searchResults = ref(users); // Use the users data passed from the controll
 const teamMembers = ref([
     {
         id: userData.id, // Pastikan field `id` termasuk
-        role: 'ketua',
+        role: 'Ketua',
         name: userData.name,
         nik: userData.nik,
         instansi: userData.instansi,
@@ -219,7 +227,7 @@ function addMember() {
         if (selectedUser) {
             teamMembers.value.push({
                 id: selectedUser.id,
-                role: `anggota ${teamMembers.value.length}`,
+                role: `Anggota ${teamMembers.value.length}`,
                 name: selectedUser.name,
                 nik: selectedUser.nik,
                 instansi: selectedUser.instansi,

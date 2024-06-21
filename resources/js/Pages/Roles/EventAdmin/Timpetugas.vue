@@ -3,13 +3,24 @@ import { Link } from '@inertiajs/vue3';
 import { defineProps, ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 
-const unreadCount = ref(0);
 
 const props = defineProps({
     teams: {
         type: Object,
         required: true
-    }
+    },
+    settings: {
+        type: Object, // Menggunakan "type" untuk menentukan tipe data props
+        default: () => ({}), // Menggunakan "default" jika props tidak diberikan
+    },
+    logo1: {
+        type: String, // Menentukan tipe data logo sebagai String
+    },
+    unreadCount: {
+        type: Object,
+        required: true,
+    },
+
 });
 
 const filterStatus = ref('Semua');
@@ -24,23 +35,18 @@ const filteredTeams = computed(() => {
     });
 });
 
-onMounted(async () => {
-    try {
-        const response = await axios.get('/api/unread-messages');
-        unreadCount.value = response.data.unreadCount;
-    } catch (error) {
-        console.error(error);
-    }
-});
+
 </script>
 
 <template>
     <div class="wrapper">
         <div class="sidebar-wrapper" data-simplebar="true">
             <div class="sidebar-header">
-                <div>
+                <div v-for="setting in settings" :key="setting.id">
                     <a href="/">
-                        <img id="logo-img" src="/bootstrap/images/lg.png" class="lg2">
+                        <img id="logo-img"
+                            :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
+                            class="lg2">
                     </a>
                 </div>
                 <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>

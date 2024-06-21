@@ -1,12 +1,9 @@
 <script setup>
 import { useForm, Link, router } from "@inertiajs/vue3";
-import { reactive } from "vue";
+import { reactive, watch } from "vue";
 import Swal from 'sweetalert2';
 
-
 const { name, username, users, settings, logo1, lombas } = defineProps(['name', 'username', 'users', 'settings', 'logo1', 'lombas']);
-
-
 
 // Definisikan properti yang diterima oleh komponen
 const props = {
@@ -24,7 +21,6 @@ const props = {
         type: Array,
     },
 };
-
 
 const form = useForm({
     name: null,
@@ -53,18 +49,12 @@ function submit() {
         });
 }
 
-
-// const form = reactive({
-//   name: null,
-//   email: null,
-//   password: null,
-//   role: null, // Tambahkan role di sini
-// })
-
-
-// function submit() {
-//     router.post(route("administrator.store"), form)
-// }
+// Watch for changes in the selected role to clear selectedLomba if role changes
+watch(() => form.role, (newRole) => {
+    if (newRole !== 4) {
+        form.selectedLomba = [];
+    }
+});
 
 $(document).ready(function () {
     $("#show_hide_password a").on('click', function (event) {
@@ -81,6 +71,7 @@ $(document).ready(function () {
     });
 });
 </script>
+
 <template>
     <div class="wrapper">
         <!--start header -->
@@ -92,7 +83,7 @@ $(document).ready(function () {
                         <div class="navbar-left" v-for="setting in settings" :key="setting.id">
                             <a href="/">
                                 <img :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
-                                    alt="Logo" style="width: 100px; margin-left: -15px;">
+                                    alt="Logo" style="width: 135px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>
@@ -159,7 +150,7 @@ $(document).ready(function () {
                                         <option :value="2">Petugas</option>
                                     </select>
                                 </div>
-                                <div>
+                                <div v-if="form.role == 4">
                                     <label class="role-add"><b class="warna-hitam">Lomba</b></label>
                                     <div>
                                         <div class="form-check" v-for="lomba in lombas.data" :key="lomba.id">

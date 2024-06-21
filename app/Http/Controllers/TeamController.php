@@ -6,6 +6,7 @@ use App\Models\Lomba;
 use App\Models\Team;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -13,6 +14,7 @@ class TeamController extends Controller
 {
     public function show($team_id)
 {
+    $settings = Setting::all();
     $user = Auth::user();
     $teams = $user->team()->where('id', $team_id)->with(['lomba', 'user'])->first();
     $team = Team::findOrFail($team_id);
@@ -22,6 +24,7 @@ class TeamController extends Controller
         ],
         'userData' => $user,
         'teamz' => $teams,
+        'settings' => $settings,
     ]);
 }
 

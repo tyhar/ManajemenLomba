@@ -24,6 +24,8 @@
         "datatables.net": "^2.0.8",
         "html2canvas": "^1.4.1",
         "jquery": "^3.7.1",
-        "sweetalert2": "^11.11.0"
+        "sweetalert2": "^11.11.0",
+        "vue-recaptcha-v3": "^2.0.1",
+        "vue3-recaptcha-v2": "^2.0.2"
     }
 }

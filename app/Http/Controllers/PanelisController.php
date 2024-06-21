@@ -10,6 +10,7 @@ use App\Models\Message;
 use App\Http\Resources\UserResource;
 use App\Models\Team;
 use App\Models\Visit;
+use App\Models\Setting;
 use App\Models\TeamMember;
 use App\Models\Lomba;
 use App\Models\Reg_Lomba;
@@ -61,17 +62,21 @@ class PanelisController extends Controller
     //RANKING
     public function rangkingjuri($lombaId)
     {
+        $user = auth()->user();
         $regLombas = Reg_Lomba::whereHas('team.lomba', function ($query) use ($lombaId) {
             $query->where('lomba_id', $lombaId);
         })->with(['team', 'submission', 'lomba'])->get();
 
+        $lomba =  $user ? $user->lomba : [];
 
-
+        $settings = Setting::all();
         return Inertia::render('Roles/Panelis/Rangkingjuri', [
 
             'name' => auth()->user()->name,
             'username' => auth()->user()->username,
             'reg_lombas' => $regLombas,
+            'lomba' => $lomba,
+            'settings' => $settings,
 
         ]);
 

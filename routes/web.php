@@ -2,6 +2,9 @@
 
 use Inertia\Inertia;
 use App\Models\Sponsor;
+use App\Models\Lomba;
+use App\Mail\ExampleMail;
+use Illuminate\Support\Facades\Mail;
 use App\Models\Setting;
 use App\Models\Berita;
 use App\Http\Controllers\LogoController;
@@ -12,6 +15,7 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\UserController;
 // use App\Http\Controllers\SettingEventController;
+use App\Http\Controllers\SettingProjectController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MessageController;
@@ -46,6 +50,7 @@ use App\Http\Controllers\BobotController;
 use App\Http\Controllers\SertifikatLombaController;
 use App\Http\Controllers\RangkingController;
 use App\Http\Controllers\UserLombaStatusController;
+use App\Http\Controllers\CaptchaController;
 
 //default breeze
 Route::get('/', function () {
@@ -70,14 +75,26 @@ Route::get('/', function () {
                 'sub_judul' => $setting->sub_judul,
                 'judul_des' => $setting->judul_des,
                 'deskripsi' => $setting->deskripsi,
-                'mulai' => $setting->mulai,
-                'berakhir' => $setting->berakhir,
+                'mulai' => Carbon::parse($setting->mulai)->translatedFormat('d F Y'),
+                'berakhir' => Carbon::parse($setting->berakhir)->translatedFormat('d F Y'),
+                'des_pendaftaran' => $setting->des_pendaftaran,
+                'pengumpulan' => Carbon::parse($setting->pengumpulan)->translatedFormat('d F Y'),
+                'des_pengumpulan' => $setting->des_pengumpulan,
+                'pengumuman' => Carbon::parse($setting->pengumuman)->translatedFormat('d F Y'),
+                'des_pengumuman' => $setting->des_pengumuman,
+                'presentasi' => Carbon::parse($setting->presentasi)->translatedFormat('d F Y'),
+                'des_presentasi' => $setting->des_presentasi,
+                'whatsApp' => $setting->whatsApp,
+                'instagram' => $setting->instagram,
+                'email' => $setting->email,
+                'youtube' => $setting->youtube,
                 'logo1' => asset('storage/' . $setting->logo1),
                 'logo2' => asset('storage/' . $setting->logo2),
                 'logo3' => asset('storage/' . $setting->logo3),
             ];
         }),
         'beritas' => Berita::all()->map(function ($berita) {
+            Carbon::setLocale('id');
             return [
                 'id' => $berita->id,
                 'judul' => $berita->judul,
@@ -86,8 +103,16 @@ Route::get('/', function () {
                 'images' => $berita->images,
             ];
         }),
+        'lombas' => Lomba::all()->map(function ($lomba) {
+            return [
+                'id' => $lomba->id,
+                'name_lomba' => $lomba->name_lomba,
+                'picture' => $lomba->picture,
+            ];
+        }),
     ]);
 })->name('welcome');
+
 
 require __DIR__ . '/auth.php';
 
@@ -103,20 +128,22 @@ Route::middleware('auth')->group(function () {
 // -> user atau peserta
 Route::post('/check-user-status', [UserController::class, 'checkStatus']);
 
-Route::middleware('auth', 'verified', 'user')->group(function () {
+Route::middleware('auth', 'verified', 'user', 'track.visits')->group(function () {
     Route::get('/dashboard', [UserController::class, 'index'])->name('dashboard');
     Route::resource('overview', OverviewController::class)->only([
         'store',
     ]);
 
-
+    
+    Route::patch('/api/update-status-ketua/{lombaId}', [UserController::class, 'updateStatusKetua'])
+    ->name('update-status-ketua');
 
     // Route::get('/api/user-lomba-status/{user}', [UserLombaStatusController::class, 'getStatus']);
     // Route::post('/api/save-user-lomba-status/{user}', [UserLombaStatusController::class, 'saveStatus']);
 
-    Route::get('/download-certificate', [CertificateController::class, 'generateCertificates'])->name('download.certificate');
+    Route::get('/download-certificate/{lomba_id}', [CertificateController::class, 'process'])->name('certificate.download');
 
-    Route::get('/detailpeserta/{id}', [UserController::class, 'show'])->name('detailpeserta.show');
+   
 
     Route::resource('profilpeserta', ProfilePesertaController::class)->only([
         'create',
@@ -129,7 +156,9 @@ Route::middleware('auth', 'verified', 'user')->group(function () {
     Route::post('/submissions/{id}', [SubmissionController::class, 'storeOrUpdate']);
     Route::post('/submissions/{id}/update', [SubmissionController::class, 'storeOrUpdate']);
 
+    // Route::post('/notifikasi/mark-as-read', [NotifikasiController::class, 'markAsRead']);
 
+    Route::post('/notifikasi/mark-all-as-read', [NotifikasiController::class, 'markAllAsRead']);
 
     Route::post('/team-member/{id}', [TeamMemberController::class, 'store'])->name('team-member.store');
 
@@ -138,7 +167,8 @@ Route::middleware('auth', 'verified', 'user')->group(function () {
 
     Route::get('/notifikasipeserta', [NotifikasiController::class, 'notifikasipeserta']);
     Route::get('/reportpeserta', [UserController::class, 'reportpeserta']);
-    Route::get('/detailtimreport', [UserController::class, 'detailtimreport']);
+
+    Route::get('/detailtimreport/{reg_lomba_id}/{team_id}/{lomba_id}', [UserController::class, 'detailtimreport'])->name('detail.riport');
 
 
     Route::resource('daftarlomba', RegLombaController::class)->only([
@@ -175,7 +205,9 @@ Route::middleware('auth', 'verified', 'admin')->group(function () {
     Route::resource('pesan', MessageController::class)->only([
         'index'
     ]);
-
+    Route::get('/project', [SettingProjectController::class, 'index']);
+    Route::get('/setting-project', [SettingProjectController::class, 'edit'])->name('settings.edit');
+    Route::post('/setting-project', [SettingProjectController::class, 'store'])->name('settings.store');
     // Route::get('/lomba', [AdminController::class, 'lomba']);
     // Route::get('tambahlomba', [AdminController::class, 'tambahlomba']);
     // Route::get('/editlomba', [AdminController::class, 'editlomba']);
@@ -215,7 +247,7 @@ Route::middleware('auth', 'verified', 'admin')->group(function () {
 
 
 
-
+    
 
 
 
@@ -224,8 +256,11 @@ Route::middleware('auth', 'verified', 'admin')->group(function () {
 
 
     Route::get('/tim', [AdminController::class, 'tim']);
-    Route::get('/tabeltim', [AdminController::class, 'tabeltim']);
-    Route::get('/detailtim', [AdminController::class, 'detailtim']);
+
+    Route::get('/tabeltim/{lomba_id}', [AdminController::class, 'tabeltim']);
+
+
+    Route::get('/detailtim/{team_id}', [AdminController::class, 'detailtim']);
     // Route::resource('superadmin/tim', [TimController::class]);
 
     // Route::resource('superadmin/sponsor', SponsorController::class);
@@ -261,7 +296,8 @@ Route::middleware('auth', 'verified', 'admin')->group(function () {
 
 
     Route::get('/rangking', [AdminController::class, 'rangking']);
-    Route::get('/tabelrangking', [AdminController::class, 'tabelrangking']);
+    
+    Route::get('/tabelrangking/{lomba_id}', [AdminController::class, 'tabelrangking']);
     // Route::resource('superadmin/ranking', [RankingController::class]);
 });
 
@@ -274,7 +310,7 @@ Route::middleware('auth', 'verified', 'eventadmin')->group(function () {
     Route::get('/pesanpetugas', [EventAdminController::class, 'pesanpetugas']);
     Route::get('/rangkingpetugas', [EventAdminController::class, 'rangkingpetugas']);
     // Route::get('/petugasrangking', [EventAdminController::class, 'petugasrangking']);
-    Route::get('/detailtimpetugas', [EventAdminController::class, 'detailtimpetugas']);
+    Route::get('/detailtimpetugas/{reg_lomba_id}', [EventAdminController::class, 'detailtimpetugas']);
     Route::resource('timpetugas', TimPetugasController::class)->only([
         'index',
         'show',
@@ -291,44 +327,42 @@ Route::post('/notifications', [NotifikasiController::class, 'store'])->name('not
 // -> panelis atau juri
 
 Route::middleware('auth', 'verified', 'panelis')->group(function () {
-    // Route::get('/panelis', [PanelisController::class, 'index'])->name('panelis');
+    Route::get('/lombajuri', [LombaJuriController::class, 'index'])->name('panelis');
+
+   
 
     Route::resource('lombajuri', LombaJuriController::class)->only([
-        'index',
         'show',
-    ])->names([
-                'index' => 'panelis',
-            ]);
+    ]);
 
 
     Route::post('/api/update-status/nilai', [RegLombaController::class, 'updateStatusnilai']);
 
-
-
-
-
-
     Route::resource('value', ValueController::class)->only([
         'index',
-        'show',
-        'edit',
         'store',
     ]);
-    Route::put('/update-value-count', [ValueController::class, 'updateValueCount']);
 
 
+    Route::get('/value/edit/{reg_lomba_id}/{lomba_id}', [ValueController::class, 'edit'])->name('value.edit');
+    Route::put('/value/{id}', [ValueController::class, 'update'])->name('value.update');
 
 
-    Route::get('/create-value/{lomba_id}', [CreateValueController::class, 'create'])->name('create.value');
+    Route::get('/value/show/{reg_lomba_id}/{team_id}', [ValueController::class, 'show'])->name('value.show');
+
+
+    Route::get('/value/create/{reg_lomba_id}/{team_id}/{lomba_id}', [CreateValueController::class, 'create'])->name('value.create');
+
+      
 
 
 
     Route::get('/tabellomba', [PanelisController::class, 'tabellomba']);
-    Route::get('/rangkingjuri/{id}', [App\Http\Controllers\PanelisController::class, 'rangkingjuri']);
+    Route::get('/rangkingjuri/{id}', [PanelisController::class, 'rangkingjuri']);
 
     Route::get('/tabelrangkingjuri', [PanelisController::class, 'tabelrangkingjuri']);
-    Route::get('/nilai', [PanelisController::class, 'nilai']);
-    Route::get('/editnilai', [PanelisController::class, 'editnilai']);
+    // Route::get('/nilai', [PanelisController::class, 'nilai']);
+    // Route::get('/editnilai', [PanelisController::class, 'editnilai']);
     Route::get('/timdetailjuri', [PanelisController::class, 'timdetailjuri']);
     // Route::get('/dashboardjuri', [PanelisController::class, 'dashboardjuri'])->name('dashboardjuri');
     // Route::get('/rangking', [PanelisControllerController::class, 'rangking']);
@@ -368,8 +402,16 @@ Route::resource('datatimshow', TimPaymentController::class)->only([
 Route::resource('surat', TimSuratController::class)->only([
     'show',
 ]);
+Route::get('/detailpeserta/{id}', [UserController::class, 'show'])->name('detailpeserta.show');
 
 Route::post('/api/notifikasi/{id}/mark-as-read', [NotifikasiController::class, 'markAsRead']);
+
+Route::get('/captcha-image', [CaptchaController::class, 'getCaptchaImage'])->name('captcha-image');
+
+Route::get('/send-test-email', function () {
+    Mail::to('recipient@example.com')->send(new ExampleMail());
+    return 'Email sent!';
+});
 
 // -- backup --
 // Route::get('/api/logo', [LogoController::class, 'getLogo']);

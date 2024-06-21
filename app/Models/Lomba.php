@@ -22,10 +22,12 @@ class Lomba extends Model
         
     ];
 
-    public function kriterialombabobot()
-{
-    return $this->belongsToMany(KriteriaBobot::class,'kriteria_lomba_bobots');
-}
+    public function kriteria()
+    {
+        return $this->belongsToMany(Kriteria::class, 'kriteria_lombas')
+                    ->withPivot('bobot')
+                    ->withTimestamps();
+    }
     public function user()
 {
     return $this->belongsToMany(User::class,'user_lombas');

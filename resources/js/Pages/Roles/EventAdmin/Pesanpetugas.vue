@@ -18,20 +18,21 @@ const props = defineProps({
         type: String,
         required: true,
     },
+    settings: {
+        type: Object, // Menggunakan "type" untuk menentukan tipe data props
+        default: () => ({}), // Menggunakan "default" jika props tidak diberikan
+    },
+    logo1: {
+        type: String, // Menentukan tipe data logo sebagai String
+    },
+    unreadCount: {
+        type: Object,
+        required: true,
+    },
 });
 
 
 const selectedStatus = ref('Semua');
-const unreadCount = ref(0);
-
-onMounted(async () => {
-    try {
-        const response = await axios.get('/api/unread-messages');
-        unreadCount.value = response.data.unreadCount;
-    } catch (error) {
-        console.error(error);
-    }
-});
 
 const updateMessageStatus = async (id, currentStatus) => {
     try {
@@ -62,6 +63,13 @@ const filteredMessages = computed(() => {
     }
     return props.messages.filter(message => message.status === selectedStatus.value.toLowerCase());
 });
+
+const formattedMessages = computed(() => {
+    return filteredMessages.value.map(message => ({
+        ...message,
+        status: message.status === 'belum_dibaca' ? 'Belum Dibaca' : 'Sudah Dibaca'
+    }));
+});
 </script>
 <template>
     <!--wrapper-->
@@ -69,9 +77,11 @@ const filteredMessages = computed(() => {
         <!--sidebar wrapper -->
         <div class="sidebar-wrapper" data-simplebar="true">
             <div class="sidebar-header">
-                <div>
+                <div v-for="setting in settings" :key="setting.id">
                     <a href="/">
-                        <img id="logo-img" src="/bootstrap/images/lg.png" class="lg2">
+                        <img id="logo-img"
+                            :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
+                            class="lg2">
                     </a>
                 </div>
                 <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
@@ -198,7 +208,7 @@ const filteredMessages = computed(() => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="message in filteredMessages" :key="message.id">
+                                    <tr v-for="message in formattedMessages" :key="message.id">
                                         <td>{{ message.id }}</td>
                                         <td>{{ message.name }}</td>
                                         <td>{{ message.email }}</td>

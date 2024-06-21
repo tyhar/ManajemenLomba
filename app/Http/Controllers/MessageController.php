@@ -33,6 +33,7 @@ class MessageController extends Controller
                     'username' => $user->username,
                 ],
             ];
+            
         });
     
         return Inertia::render('Roles/Admin/Pesan', [
@@ -47,9 +48,20 @@ class MessageController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Utama/Kontak');
+        return Inertia::render('Utama/Kontak', [
+            'settings' => Setting::all()->map(function ($setting) {
+                return [
+                    'whatsApp' => $setting->whatsApp,
+                    'instagram' => $setting->instagram,
+                    'email' => $setting->email,
+                    'youtube' => $setting->youtube,
+                    'logo1' =>$setting->logo1,
+                    'logo2' =>$setting->logo2,
+                ];
+            }),
+        ]);
     }
-
+    
     /**
      * Store a newly created resource in storage.
      */

@@ -4,9 +4,11 @@
         <!--sidebar wrapper -->
         <div class="sidebar-wrapper" data-simplebar="true">
             <div class="sidebar-header">
-                <div>
+                <div  v-for="setting in settings" :key="setting.id">
                     <a href="/">
-                        <img id="logo-img" src="/bootstrap/images/lg.png" class="lg2">
+                        <img id="logo-img"
+                            :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
+                            class="lg2">
                     </a>
                 </div>
                 <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
@@ -28,10 +30,9 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/notifikasipeserta">
-                        <div class="parent-icon"><i class="bx bx-user-circle"></i>
-                        </div>
-                        <div class="menu-title">Notifikasi<span class="alert-count">{{ notifCount }}</span></div>
+                    <a @click="clearNotifications" href="/notifikasipeserta">
+                        <div class="parent-icon"><i class="bx bx-user-circle"></i></div>
+                        <div class="menu-title">Notifikasi <span class="alert-count" v-if="notifCount">{{ notifCount }}</span></div>
                     </a>
                 </li>
                 <li>
@@ -39,7 +40,7 @@
                     <a href="/reportpeserta">
                         <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i>
                         </div>
-                        <div class="menu-title">Report <span class="alert-count">1</span></div>
+                        <div class="menu-title">Report <span></span></div>
                     </a>
                 </li>
                 <a href="/">
@@ -149,6 +150,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <br><br>
                                 <a class="btn btn-primary radius-5 isi-data2" :href="`/tambahanggota/${team.id}`">Isi
                                     Anggota</a>
                             </div>
@@ -175,8 +177,7 @@
                                     <div class="col-md-2 text-left" v-if="submissions">
                                         <label class="jarak-teks05"><b>LINK</b></label>
                                         <div class="data-tim c-mb-70">
-                                            <a href="javascript:void(0)" @click="openLink(submissions.link)">Buka
-                                                Link</a>
+                                            <a :href="submissions.link" target="_blank">Buka Link</a>
                                         </div>
                                     </div>
 
@@ -208,7 +209,7 @@ import { Link, useForm, router } from '@inertiajs/vue3';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 
-const { userData, users, team, submissions, lombas, members } = defineProps(['userData', 'users', 'team', 'submissions', 'lombas', 'members']);
+const { userData, users, team, submissions, lombas, members,settings,logo1,notifCount } = defineProps(['userData', 'users', 'team', 'submissions', 'lombas', 'members','settings','logo1','notifCount']);
 
 
 
@@ -223,10 +224,20 @@ const props = {
     lombas: {
         type: String,
     },
+    settings: {
+        type: Object, // Menggunakan "type" untuk menentukan tipe data props
+        default: () => ({}), // Menggunakan "default" jika props tidak diberikan
+    },
+    logo1: {
+        type: String, // Menentukan tipe data logo sebagai String
+    },
+    notifCount: {
+    type: [Number, null],
+    default: null,
+  },
 };
 
 
-const notifCount = ref(0);
 
 // Define form state using Inertia's useForm
 const form = useForm({
@@ -241,35 +252,7 @@ const form = useForm({
 const isPopupVisible = ref(false);
 const searchQuery = ref('');
 const searchResults = ref(users); // Use the users data passed from the controller
-const membersArray = Array.isArray(members) ? members : [];
 
-const teamMembers = ref([
-    {
-        id: userData.id, // Pastikan field `id` termasuk
-        role: 'ketua',
-        name: userData.name,
-        nik: userData.nik,
-        instansi: userData.instansi,
-        photo: userData.photo
-    },
-    ...membersArray.map(member => ({
-        id: member.id,
-        role: 'member',
-        name: member.name,
-        nik: member.nik,
-        instansi: member.instansi,
-        photo: member.photo
-    }))
-]);
-
-onMounted(async () => {
-    try {
-        const response = await axios.get('/api/unread-notifikasi');
-        notifCount.value = response.data.notifCount;
-    } catch (error) {
-        console.error(error);
-    }
-});
 
 const filteredUsers = computed(() => {
     if (!searchQuery.value) {
@@ -280,6 +263,8 @@ const filteredUsers = computed(() => {
         user.email.toLowerCase().includes(searchQuery.value.toLowerCase())
     );
 });
+
+
 
 watch(searchQuery, () => {
     searchUsers();
@@ -408,14 +393,16 @@ function showRole(memberId, role) {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    teamMembers.value.forEach(member => {
-        const memberElement = document.getElementById(`member-${member.id}`);
-        if (memberElement) {
-            memberElement.addEventListener('click', () => showRole(member.id, member.role === 'ketua' ? 'Ketua' : 'Member'));
+async function clearNotifications() {
+    try {
+        const response = await axios.post('/notifikasi/mark-all-as-read');
+        if (response.data.success) {
+            notifCount.value = 0;
         }
-    });
-});
+    } catch (error) {
+        console.error('Error marking notifications as read', error);
+    }
+}
 
 async function submitForm() {
     const result = await Swal.fire({
@@ -433,7 +420,6 @@ async function submitForm() {
                 user_id: userData.id,
                 team_id: team.id,
                 lomba_id: team?.lomba?.id,
-                team_member_id: teamMembers.value.map(member => member.id),
                 submission_id: submissions.id
             });
             Swal.fire({

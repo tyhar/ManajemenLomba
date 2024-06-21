@@ -9,19 +9,6 @@ defineProps({
     settings: {
         type: Array,
     },
-    name: {
-        type: String,
-    },
-    username: {
-        type: String,
-    },
-    logo1: {
-        type: String,
-    },
-    unreadCount: {
-        type: Object,
-        required: true,
-    },
 });
 </script>
 
@@ -83,7 +70,7 @@ defineProps({
                             <i class="fadeIn animated bx bx-comment-detail"></i>
                         </div>
                         <div class="menu-title">
-                            Pesan <span class="alert-count">{{ unreadCount }}</span>
+                            Pesan <span class="alert-count">1</span>
                         </div>
                     </a>
                 </li>
@@ -151,31 +138,56 @@ defineProps({
                     <div class="card-body">
                         <h4 class="mb-0 jarak-top-kurang5">TABEL SETTING</h4>
                         <hr class="c-mt10" />
-                        <a class="btn btn-success jarak-top-kurang7" :href="route('setting.create')">
-                            Tambah Event
-                        </a>
+                        <div class="d-flex align-items-center">
+                            <a class="btn btn-success jarak-top-kurang7 me-2" :href="route('setting.create')">
+                                Tambah Event
+                            </a>
+                            <a class="btn btn-primary jarak-top-kurang7" href="/setting-project">
+                                Setting Nama Email
+                            </a>
+                        </div>
                         <hr class="c-mt10" />
                         <div class="table-responsive">
                             <table id="example" class="table table-bordered">
                                 <thead class="table-dark">
                                     <tr>
                                         <th class="width-id">ID</th>
-                                        <th class="crud-width-180">Nama Event</th>
+                                        <th class="crud-width-180">
+                                            Nama Event
+                                        </th>
                                         <th class="crud-width-180">Judul</th>
-                                        <th class="crud-width-180">Sub Judul</th>
-                                        <th class="crud-width-180">Tanggal Mulai</th>
-                                        <th class="crud-width-180">Tanggal Berakhir</th>
+                                        <th class="crud-width-180">
+                                            Sub Judul
+                                        </th>
+                                        <th class="crud-width-180">
+                                            Tanggal Mulai
+                                        </th>
+                                        <th class="crud-width-180">
+                                            Tanggal Berakhir
+                                        </th>
                                         <th class="crud-width-50">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-for="setting in settings" :key="setting.id">
-                                        <td>{{ setting.id }}</td>
-                                        <td>{{ setting.name }}</td>
-                                        <td>{{ setting.judul }}</td>
-                                        <td>{{ setting.sub_judul }}</td>
-                                        <td>{{ setting.mulai }}</td>
-                                        <td>{{ setting.berakhir }}</td>
+                                        <td>
+                                            {{ setting.id }}
+                                        </td>
+                                        <td>
+                                            {{ setting.name }}
+                                        </td>
+                                        <td>
+                                            {{ setting.judul }}
+                                        </td>
+                                        <td>
+                                            {{ setting.sub_judul }}
+                                        </td>
+                                        <td>
+                                            {{ setting.mulai }}
+                                        </td>
+                                        <td>
+                                            {{ setting.berakhir }}
+                                        </td>
                                         <td class="btn-crud">
                                             <a class="btn btn-primary" :href="route('setting.edit', setting.id)">
                                                 <i class="bi bi-pencil-square"></i>

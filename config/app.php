@@ -13,8 +13,9 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'YourAppName'),
 
+    'logo_path' => env('APP_LOGO_PATH', 'logos/default.png'),
     /*
     |--------------------------------------------------------------------------
     | Application Environment

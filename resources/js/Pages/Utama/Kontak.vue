@@ -1,7 +1,7 @@
 <script setup>
-import { reactive } from 'vue'
-import { Head, Link, useForm, router } from '@inertiajs/vue3'
-import Swal from 'sweetalert2'
+import { reactive } from "vue";
+import { Head, Link, useForm, router } from "@inertiajs/vue3";
+import Swal from "sweetalert2";
 
 // Backend navbar
 defineProps({
@@ -19,6 +19,10 @@ defineProps({
         type: String,
         required: true,
     },
+    settings: {
+        type: Object,
+        required: true,
+    },
 });
 
 // Form data
@@ -34,12 +38,12 @@ const submit = () => {
         preserveScroll: true,
         onSuccess: () => {
             Swal.fire({
-                title: 'Success!',
-                text: 'Pesan anda telah berhasil dikirim',
-                icon: 'success',
-                confirmButtonText: 'OK'
+                title: "Success!",
+                text: "Pesan anda telah berhasil dikirim",
+                icon: "success",
+                confirmButtonText: "OK",
             });
-        }
+        },
     });
 };
 </script>
@@ -47,9 +51,10 @@ const submit = () => {
 <template>
     <div class="bg-index">
         <nav class="navbar navbar-expand-lg main_menu">
-            <div class="container">
+            <div class="container" v-for="setting in settings" :key="setting.id">
                 <a class="navbar-brand" href="/">
-                    <img src="/bootstrap/images/lg.png" alt="Logo" class="lg-index">
+                    <img :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
+                        class="lg-index" />
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -99,34 +104,38 @@ const submit = () => {
                 </div>
             </div>
         </nav>
-        <section class="tf__breadcrumb" style="background: url(/bootstrap/images/home.jpg);">
-        </section>
+        <div v-for="setting in settings" :key="setting.id">
+            <section class="tf__breadcrumb"
+                :style="{ backgroundImage: `url(${setting.logo2 ? `/storage/${setting.logo2}` : '/bootstrap/images/logo1default.jpg'})` }">
+            </section>
+        </div>
+
         <section class="tf__contact_page mt_190">
-            <div class="container">
+            <div class="container" v-for="setting in settings" :key="setting.id">
                 <div class="row">
                     <div class="tf__heading_area tf__heading_area_left mb_25">
-                        <h5 class="c-mb-13 text30">INFORMASI KONTAK</h5>
+                        <h5 class="c-mb-8 text25">INFORMASI KONTAK</h5>
                     </div>
                     <div class="row">
                         <div class="col-md-c3">
                             <h6 class="c-mb-13"><b>WhatsApp</b></h6>
-                            <h6 class="c-mb20">089521915485</h6>
+                            <h6 class="c-mb20">{{ setting.whatsApp }}</h6>
                         </div>
                         <div class="col-md-3">
                             <h6 class="c-mb-13"><b>Instagram</b></h6>
-                            <h6 class="c-mb20">@OLINAS_2024</h6>
+                            <h6 class="c-mb20">{{ setting.instagram }}</h6>
                         </div>
                         <div class="col-md-3">
                             <h6 class="c-mb-13"><b>Email</b></h6>
-                            <h6 class="c-mb20">olinas2024.gmail.com</h6>
+                            <h6 class="c-mb20">{{ setting.email }}</h6>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-2 cml30">
                             <h6 class="c-mb-13"><b>Youtube</b></h6>
-                            <h6 class="c-mb20">@OLINAS_2024</h6>
+                            <h6 class="c-mb20">{{ setting.youtube }}</h6>
                         </div>
                     </div>
-                    <br><br><br><br><br>
-                    <div class="col-xxl-8 col-xl-7  wow fadeInLeft">
+                    <br /><br /><br /><br /><br />
+                    <div class="col-xxl-8 col-xl-7 wow fadeInLeft">
                         <div class="tf__contact_form">
                             <form @submit.prevent="submit">
                                 <input class="form-control ckontak" id="nama" type="text" v-model="form.name"
@@ -137,7 +146,9 @@ const submit = () => {
                                     placeholder="No. WhatsApp (cont. 085xxxxxxx)" />
                                 <textarea class="c-mtkc" rows="4" type="textarea" v-model="form.value"
                                     placeholder="Pesan" />
-                                <button type="submit" class="common_btn_2">Kirim</button>
+                                <button type="submit" class="common_btn_2">
+                                    Kirim
+                                </button>
                             </form>
                         </div>
                     </div>
@@ -146,7 +157,7 @@ const submit = () => {
                             <div class="tf__contact_map cmt_30">
                                 <iframe
                                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3012.4794374146772!2d110.98160354801688!3d-7.591865364294748!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a19d07a714fd3%3A0xaea18d5d16dea09d!2sWaduk%20Delingan!5e1!3m2!1sen!2sid!4v1711694566155!5m2!1sen!2sid"
-                                    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                                    width="600" height="450" style="border: 0" allowfullscreen="" loading="lazy"
                                     referrerpolicy="no-referrer-when-downgrade"></iframe>
                             </div>
                         </div>

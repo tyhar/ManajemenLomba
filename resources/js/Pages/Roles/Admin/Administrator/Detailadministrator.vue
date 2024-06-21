@@ -4,7 +4,7 @@ import { useForm } from "@inertiajs/vue3";
 import { Head } from "@inertiajs/vue3";
 import { router } from "@inertiajs/vue3";
 
-const { name, username, users ,settings, logo1} = defineProps(['name', 'username', 'users', 'settings', 'logo1']);
+const { name, username, users, settings, logo1 } = defineProps(['name', 'username', 'users', 'settings', 'logo1']);
 
 
 
@@ -69,8 +69,8 @@ const formatDate = (dateString) => {
                     <div class="navbar-tambah">
                         <div class="navbar-left" v-for="setting in settings" :key="setting.id">
                             <a href="/">
-                                <img :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"  alt="Logo"
-                                    style="width: 100px; margin-left: -15px;">
+                                <img :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
+                                    alt="Logo" style="width: 135px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>

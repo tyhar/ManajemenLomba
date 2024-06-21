@@ -73,7 +73,7 @@ const goBack = () => {
                         <div class="navbar-left" v-for="setting in settings" :key="setting.id">
                             <a href="/">
                                 <img :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
-                                    alt="Logo" style="width: 100px; margin-left: -15px;">
+                                    alt="Logo" style="width: 135px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>

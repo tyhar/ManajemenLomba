@@ -42,21 +42,18 @@ class Reg_Lomba extends Model
     {
         return $this->belongsTo(Lomba::class);
     }
-    public function kriteriaLombaBobots()
+ 
+    public function kriterialomba()
     {
-        return $this->hasMany(KriteriaLombaBobot::class, 'reg_lomba_id');
+        return $this->hasMany(KriteriaLomba::class);
     }
-
-    public function values()
+    public function user_lombas()
     {
-        return $this->hasMany(Value::class);
+        return $this->belongsTo(JuriLomba::class,'lomba_id');
     }
-
-    public function valuesteam()
+    public function juri_lomba()
     {
-        return $this->belongsTo(ValueTeam::class);
+        return $this->belongsTo(JuriLomba::class, 'lomba_id', 'lomba_id');
     }
-
-
 
 }

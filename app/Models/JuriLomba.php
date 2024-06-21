@@ -23,8 +23,9 @@ class JuriLomba extends Model
     }
 
     // Relasi ke model RegLomba jika ada
-    public function regLomba()
+    public function reg_lombas()
     {
-        return $this->hasOneThrough(Reg_Lomba::class, Lomba::class, 'id', 'lomba_id', 'lomba_id', 'id');
+        return $this->hasMany(Reg_Lomba::class, 'lomba_id', 'lomba_id');
     }
+    
 }

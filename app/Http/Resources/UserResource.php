@@ -15,6 +15,11 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        // Check if the role is 3
+        if ($this->role !== 3) {
+            return [];
+        }
+        Carbon::setLocale('id');
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -27,7 +32,7 @@ class UserResource extends JsonResource
             'password' => $this->password,
             'role' => $this->role,
             'photo' => $this->photo,
-            'created_at' => Carbon::parse($this->created_at)->format('Y-m-d'),
+            'created_at' => Carbon::parse($this->created_at)->translatedformat('d F Y'),
         ];
     }
 }

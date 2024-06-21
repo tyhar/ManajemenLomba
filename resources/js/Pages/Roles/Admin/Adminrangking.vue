@@ -5,15 +5,32 @@ import { router } from "@inertiajs/vue3";
 import { defineProps } from "vue";
 
 
-const unreadCount = ref(0);
-onMounted(async () => {
-    try {
-        const response = await axios.get('/api/unread-messages');
-        unreadCount.value = response.data.unreadCount;
-    } catch (error) {
-        console.error(error);
-    }
+
+const props = defineProps({
+    lombas: {
+        type: Array,
+        required: true,
+    },
+    picture: {
+        type: Object,
+        required: true,
+    },
+    settings: {
+        type: Object, // Menggunakan "type" untuk menentukan tipe data props
+        default: () => ({}), // Menggunakan "default" jika props tidak diberikan
+    },
+    logo1: {
+        type: String, // Menentukan tipe data logo sebagai String
+    },
+    unreadCount: {
+        type: Object,
+        required: true,
+    },
+
+
 });
+
+
 
 
 </script>
@@ -23,9 +40,11 @@ onMounted(async () => {
         <!--sidebar wrapper -->
         <div class="sidebar-wrapper" data-simplebar="true">
             <div class="sidebar-header">
-                <div>
+                <div v-for="setting in settings" :key="setting.id">
                     <a href="/">
-                        <img id="logo-img" src="/bootstrap/images/lg.png" class="lg2">
+                        <img id="logo-img"
+                            :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
+                            class="lg2">
                     </a>
                 </div>
                 <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
@@ -87,10 +106,14 @@ onMounted(async () => {
                     </a>
                 </li>
                 <li>
-                    <a href="/">
+                    <a>
                         <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
                         </div>
-                        <div class="menu-title">Keluar</div>
+                        <div class="menu-title">
+                            <Link class="menu-title" :href="route('logout')" method="post" as="button">
+                            Keluar
+                            </Link>
+                        </div>
                     </a>
                 </li>
             </ul>
@@ -139,55 +162,13 @@ onMounted(async () => {
                     <div class="container">
                         <!--breadcrumb-->
                         <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
-                            <div class="col">
+                            <div class="col" v-for="lomba in lombas" :key="lomba.id">
                                 <div class="card radius-15 card-overview">
-                                    <img src="/bootstrap/images/desain.jpg" alt="New Image" class="border-radius">
-                                    <label class="judul-overview">UI / UX</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Lihat
-                                        Rangking</a>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card radius-15 card-overview">
-                                    <img src="/bootstrap/images/ar-vr.jpg" alt="New Image" class="border-radius">
-                                    <label class="judul-overview">AR / VR</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Lihat
-                                        Rangking</a>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card radius-15 card-overview">
-                                    <img src="/bootstrap/images/aplikasi-mobile.jpg" alt="New Image"
+                                    <img :src="lomba.picture ? `/storage/${lomba.picture}` : '/bootstrap/images/default.jpg'"
                                         class="border-radius">
-                                    <label class="judul-overview">APLIKASI MOBILE</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Lihat
-                                        Rangking</a>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card radius-15 card-overview">
-                                    <img src="/bootstrap/images/desain-website.jpg" alt="New Image"
-                                        class="border-radius">
-                                    <label class="judul-overview">DESAIN WEBSITE</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Lihat
-                                        Rangking</a>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card radius-15 card-overview">
-                                    <img src="/bootstrap/images/sistem-keamanan-data.jpg" alt="New Image"
-                                        class="border-radius">
-                                    <label class="judul-overview">SISTEM KEAMANAN DATA</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Lihat
-                                        Rangking</a>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card radius-15 card-overview">
-                                    <img src="/bootstrap/images/membuat-game.jpg" alt="New Image" class="border-radius">
-                                    <label class="judul-overview">UI / UX</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/tabelrangking">Lihat
-                                        Rangking</a>
+                                    <div class="judul-overview">{{ lomba.name_lomba }}</div>
+                                    <a class="btn btn-primary btn-landing-page2"
+                                    :href="`/tabelrangking/${lomba.id}`">Lihat Rangking</a>
                                 </div>
                             </div>
                         </div>

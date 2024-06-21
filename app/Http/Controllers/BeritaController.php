@@ -18,7 +18,10 @@ class BeritaController extends Controller
     //BERITA
     public function tambahberita()
     {
-        return Inertia::render('Roles/Admin/Berita/Tambahberita');
+        $setting = Setting::all();
+        return Inertia::render('Roles/Admin/Berita/Tambahberita',[
+            'settings' =>  $setting,
+        ]);
     }
 
     public function store(Request $request)
@@ -143,6 +146,7 @@ class BeritaController extends Controller
     }
     public function detail(Request $request, Berita $berita)
     {
+        Carbon::setLocale('id');
         return Inertia::render('Utama/Detail', [
             // 'berita' => $berita
             'berita' => [
@@ -153,6 +157,11 @@ class BeritaController extends Controller
                 'tanggal_upload' => Carbon::parse($berita->tanggal_upload)->translatedFormat('d F Y'),
                 'images' => $berita->images,
             ],
+            'settings' => Setting::all()->map(function ($setting) {
+                return [
+                    'logo1' => asset('storage/' . $setting->logo1),
+                ];
+            }),
         ]);
     }
 }

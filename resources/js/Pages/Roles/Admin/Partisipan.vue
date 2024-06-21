@@ -182,6 +182,7 @@ const filteredPartisipans = computed(() => {
                     <td>{{ partisipan.instansi }}</td>
                     <td>{{ partisipan.email }}</td>
                     <td>{{ partisipan.email_verification_status }}</td>
+                    <!-- <td>12 Juni 2024 => static</td> -->
                     <td>{{ partisipan.created_at }}</td>
                   </tr>
                 </tbody>

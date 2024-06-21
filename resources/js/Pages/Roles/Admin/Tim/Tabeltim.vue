@@ -4,9 +4,11 @@
         <!--sidebar wrapper -->
         <div class="sidebar-wrapper" data-simplebar="true">
             <div class="sidebar-header">
-                <div>
+                <div v-for="setting in settings" :key="setting.id">
                     <a href="/">
-                        <img id="logo-img" src="/bootstrap/images/lg.png" class="lg2">
+                        <img id="logo-img"
+                            :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
+                            class="lg2">
                     </a>
                 </div>
                 <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
@@ -14,7 +16,7 @@
             <!--navigation-->
             <ul class="metismenu" id="menu">
                 <li>
-                    <a href="/index2">
+                    <a :href="route('admin')">
                         <div class="parent-icon"><i class='bx bx-home-circle'></i>
                         </div>
                         <div class="menu-title">Dashboard</div>
@@ -68,10 +70,14 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/">
+                    <a>
                         <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
                         </div>
-                        <div class="menu-title">Keluar</div>
+                        <div class="menu-title">
+                            <Link class="menu-title" :href="route('logout')" method="post" as="button">
+                            Keluar
+                            </Link>
+                        </div>
                     </a>
                 </li>
             </ul>
@@ -116,15 +122,15 @@
         <div class="page-wrapper">
             <div class="page-content">
                 <div class="card">
-                    <div class="card-body">
-                        <h4 class="mb-0 jarak-top-kurang5">TABEL TIM UI / UX</h4>
+                    <div class="card-body" v-if="lomba">
+                        <h4 class="mb-0 jarak-top-kurang5">TABEL LOMBA {{ lomba.name_lomba }}</h4>
                         <hr class="c-mt10" />
                         <button class="btn btn-primary btn-export">Export Excel</button>
                         <label class="dropdown-crud">Filter by Status</label>
-                        <select class="form-select2">
-                            <option selected>Semua</option>
-                            <option>Verified</option>
-                            <option>Unverified</option>
+                        <select class="form-select2" v-model="filterStatus">
+                            <option value="Semua">Semua</option>
+                            <option value="Verified">Verified</option>
+                            <option value="Unverified">Unverified</option>
                         </select>
                         <br><br>
                         <div class="table-responsive">
@@ -133,7 +139,6 @@
                                     <tr>
                                         <th class="width-id">ID</th>
                                         <th class="crud-width-90">Nama Tim</th>
-                                        <th class="crud-width-90">Lomba</th>
                                         <th class="crud-width-100">No WhatsApp</th>
                                         <th class="crud-width-120">Email</th>
                                         <th class="crud-width-90">Instansi</th>
@@ -142,18 +147,17 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Start Green</td>
-                                        <td>Lomba Desain</td>
-                                        <td>0850000000</td>
-                                        <td>goat@gmail.com</td>
-                                        <td>Universitas</td>
-                                        <td>Verified</td>
+                                    <tr v-for="(team, index) in filteredTeams" :key="team.id">
+                                        <td>{{ index + 1 }}</td>
+                                        <td>{{ team.name_team }}</td>
+                                        <td>{{ team.phone }}</td>
+                                        <td>{{ team.email }}</td>
+                                        <td>{{ team.instansi }}</td>
+                                        <td>{{ team.status }}</td>
                                         <td class="btn-crud">
-                                            <button class="btn btn-secondary"
-                                                onclick="window.location.href='/detailtim'"><i
-                                                    class="bi bi-eye"></i></button>
+                                            <a class="btn btn-secondary" :href="`/detailtim/${team.id}`">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -166,14 +170,13 @@
         <!--end page wrapper -->
     </div>
 </template>
-<script setup>
-import { onMounted, ref, computed } from 'vue';
-import { router } from "@inertiajs/vue3";
-import { defineProps } from "vue";
 
+<script setup>
+import { ref, computed } from 'vue';
+import { defineProps } from 'vue';
+import { Link } from '@inertiajs/vue3';
 
 const props = defineProps({
-
     name: {
         type: String,
         required: true,
@@ -182,15 +185,36 @@ const props = defineProps({
         type: String,
         required: true,
     },
+    unreadCount: {
+        type: Object,
+        required: true,
+    },
+    settings: {
+        type: Object,
+        default: () => ({}),
+    },
+    logo1: {
+        type: String,
+    },
+    teams: {
+        type: Array,
+        required: true,
+    },
+    lomba: {
+        type: Object,
+        required: true,
+    },
 });
-const unreadCount = ref(0);
 
-onMounted(async () => {
-    try {
-        const response = await axios.get('/api/unread-messages');
-        unreadCount.value = response.data.unreadCount;
-    } catch (error) {
-        console.error(error);
-    }
+const filterStatus = ref('Semua');
+
+const filteredTeams = computed(() => {
+    return props.teams.filter(team => {
+        if (filterStatus.value === 'Semua') {
+            return true;
+        }
+        const isVerified = team.status.toLowerCase() === 'verified';
+        return filterStatus.value === 'Verified' ? isVerified : !isVerified;
+    });
 });
 </script>

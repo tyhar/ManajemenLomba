@@ -9,7 +9,7 @@
             <div class="navbar-left" v-for="setting in settings" :key="setting.id">
               <a href="/">
                 <img :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
-                  alt="Logo" style="width: 100px; margin-left: -15px;">
+                  alt="Logo" style="width: 135px; margin-left: -15px;">
               </a>
             </div>
           </div>
@@ -58,16 +58,16 @@
                   </div>
                   <div>
                     <label for="picture" class="form-label judul-form"><b>Gambar</b></label>
-                    <input class="form-control" type="file" name="picture" v-on:change="handlePictureUpload">
+                    <input class="form-control" type="file" name="picture" @change="handlePictureUpload">
                     <p class="keterangan-foto f-italic">Max file size: 2MB (500 x 500 px)</p>
                     <p class="keterangan-foto f-italic">Format: .jpg, .png, .jpeg</p>
                   </div>
                   <br>
                   <div>
                     <label for="sertifikat" class="form-label judul-form"><b>Sertifikat</b></label>
-                    <input class="form-control" type="file" name="sertifikat" v-on:change="handleSertifikatUpload">
-                    <p class="keterangan-foto f-italic">Max file size: 2MB (500 x 500 px)</p>
-                    <p class="keterangan-foto f-italic">Format: .jpg, .png, .jpeg</p>
+                    <input class="form-control" type="file" name="sertifikat" @change="handleSertifikatUpload">
+                    <p class="keterangan-foto f-italic">Max file size: 2MB</p>
+                    <p class="keterangan-foto f-italic">Format: .pdf</p>
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -76,7 +76,7 @@
                     v-model="form.kontak" required>
                   <div>
                     <label class="c-mb5-black" for="tempat"><b>Tempat</b></label>
-                    <input type="text" class="form-control" id="tempat" placeholder="Masukan tempat"
+                    <input type="text" class="form-control" id="tempat" placeholder="Masukan nama tempat"
                       v-model="form.tempat" required>
                   </div>
                   <div class="c-mt10">
@@ -85,14 +85,16 @@
                       id="biaya_pendaftaran" v-model="form.biaya_pendaftaran" required>
                   </div>
                   <div>
-                    <label class="role-add"><b class="warna-hitam">Kriteria Penilaian (0%/100%)</b></label>
+                    <label class="role-add"><b class="warna-hitam">Kriteria Penilaian</b></label>
                     <div>
                       <div class="form-check" v-for="kriteria in kriteriaz.data" :key="kriteria.id">
                         <input class="form-check-input" type="checkbox" :id="'kriteria' + kriteria.id"
                           v-model="form.selectedCriteria" :value="kriteria.id">
-                        <label class="form-check-label" :for="'kriteria' + kriteria.id">{{ kriteria.name_kriteria
-                          }} {{ kriteria.nilai_bobot }} % </label>
-                        <!-- Kasih Persen -->
+                        <label class="form-check-label" :for="'kriteria' + kriteria.id">{{ kriteria.name_kriteria }}
+                        </label>
+                        <!-- Input for bobot value for each kriteria -->
+                        <input type="number" class="form-control" placeholder="Masukan bobot nilai"
+                          :readonly="!isKriteriaSelected(kriteria.id)" v-model="form.bobot[kriteria.id]">
                       </div>
                     </div>
                   </div>
@@ -113,8 +115,8 @@
 
 <script setup>
 import { defineProps } from "vue";
-import { reactive, computed } from 'vue'
-import { router } from '@inertiajs/vue3'
+import { reactive } from 'vue';
+import { router } from '@inertiajs/vue3';
 import Swal from 'sweetalert2'; // Import SweetAlert
 
 const form = reactive({
@@ -127,13 +129,11 @@ const form = reactive({
   tempat: '',
   biaya_pendaftaran: '',
   selectedCriteria: [],
+  bobot: {} // Object to store bobot values for each kriteria
 });
 
 const { name, username, kriteriaz, settings, logo1 } = defineProps(['name', 'username', 'kriteriaz', 'settings', 'logo1']);
 
-
-
-// Definisikan properti yang diterima oleh komponen
 const props = {
   kriteriaz: {
     type: Array,
@@ -147,10 +147,6 @@ const props = {
     type: String, // Menentukan tipe data logo sebagai String
   },
 };
-// const form = useForm({
-//     kriteria: [{ name_kriteria: '' }],
-// });
-
 
 const handleSertifikatUpload = (event) => {
   form.sertifikat = event.target.files[0];
@@ -160,31 +156,46 @@ const handlePictureUpload = (event) => {
   form.picture = event.target.files[0];
 };
 
-
-
+// Computed property to check if a kriteria is selected
+const isKriteriaSelected = (kriteriaId) => {
+  return form.selectedCriteria.includes(kriteriaId);
+};
 
 function submit() {
-  // Menghitung total bobot yang dipilih
+  // Calculate the total bobot
   const totalBobot = form.selectedCriteria.reduce((acc, id) => {
-    const kriteria = kriteriaz.data.find(k => k.id === id);
-    return acc + parseInt(kriteria.nilai_bobot);
+    return acc + (parseInt(form.bobot[id]) || 0);
   }, 0);
 
-  // Validasi jika total bobot tidak 100
+  // Check if the total bobot is 100
   if (totalBobot !== 100) {
     Swal.fire({
       icon: 'error',
       title: 'Oops...',
-      text: 'Total bobot kriteria harus 100%!',
+      text: 'Maaf, bobot yang Anda inputkan belum 100%',
     });
     return;
   }
 
-  // Jika total bobot sudah 100, lakukan submit
-  const formData = { ...form, selectedCriteria: form.selectedCriteria };
-  router.post('/lomba', formData);
+  const formData = new FormData();
+  formData.append('name_lomba', form.name_lomba);
+  formData.append('description', form.description);
+  formData.append('pj', form.pj);
+  formData.append('kontak', form.kontak);
+  formData.append('tempat', form.tempat);
+  formData.append('biaya_pendaftaran', form.biaya_pendaftaran);
+  formData.append('sertifikat', form.sertifikat);
+  formData.append('picture', form.picture);
+
+  form.selectedCriteria.forEach(id => {
+    formData.append('selectedCriteria[]', id);
+    formData.append(`bobot[${id}]`, form.bobot[id]);
+  });
+
+  router.post('/lomba', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  });
 }
-
-
-
 </script>

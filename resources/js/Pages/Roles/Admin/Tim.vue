@@ -174,7 +174,7 @@ const props = defineProps({
                                         class="border-radius">
                                     <div class="judul-overview">{{ lomba.name_lomba }}</div>
                                     <div class="btn-posisi">
-                                        <a class="btn btn-primary btn-landing-page2" href="/tabeltim">Lihat Tim</a>
+                                        <a class="btn btn-primary btn-landing-page2" :href="`/tabeltim/${lomba.id}`">Lihat Tim</a>
                                     </div>
                                 </div>
                             </div>

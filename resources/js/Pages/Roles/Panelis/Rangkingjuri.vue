@@ -4,9 +4,9 @@
         <!--sidebar wrapper -->
         <div class="sidebar-wrapper" data-simplebar="true">
             <div class="sidebar-header">
-                <div>
+                <div  v-for="setting in settings" :key="setting.id">
                     <a href="/">
-                        <img id="logo-img" src="/bootstrap/images/lg.png" class="lg2">
+                        <img id="logo-img" :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'" class="lg2">
                     </a>
                 </div>
                 <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
@@ -19,8 +19,8 @@
                         <div class="menu-title">Lomba</div>
                     </a>
                 </li>
-                <li>
-                    <a href="/rangkingjuri">
+                <li v-for="lombas in lomba" :key="lombas.id">
+                     <a :href="`/rangkingjuri/${lombas.id}`">
                         <div class="parent-icon"><i class="fadeIn animated bx bx-trophy"></i></div>
                         <div class="menu-title">Rangking</div>
                     </a>
@@ -79,9 +79,9 @@
                         </ol>
                     </nav>
                 </div>
-                <div class="card" v-for="reg_lomba in reg_lombas" :key="reg_lomba.id">
+                <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0 jarak-top-kurang5">TABEL RANGKING LOMBA {{ reg_lomba.lomba.name_lomba }}</h4>
+                        <h4 class="mb-0 jarak-top-kurang5">TABEL RANGKING LOMBA {{ reg_lombas.length > 0 ? reg_lombas[0].lomba.name_lomba : '' }}</h4>
                         <hr class="c-mt10" />
                         <div class="table-responsive">
                             <table class="table table-bordered">
@@ -96,8 +96,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>{{ reg_lomba.id }}</td>
+                                    <tr v-for="(reg_lomba, index) in reg_lombas" :key="reg_lomba.id">
+                                        <td>{{ index + 1  }}</td>
                                         <td>{{ reg_lomba.team.name_team }}</td>
                                         <td>{{ reg_lomba.submission.title }}</td>
                                         <td>{{ reg_lomba.team.instansi }}</td>
@@ -121,6 +121,14 @@ import { defineProps } from 'vue';
 
 const props = defineProps({
     userData: Object,
-    reg_lombas: Array
+    reg_lombas: Array,
+    lomba: Object,
+    settings: {
+        type: Object, 
+        default: () => ({}), 
+    },
+    logo1: {
+        type: String,
+    },
 });
 </script>

@@ -192,10 +192,10 @@ const deleteSponsor = async (id) => {
                                 <thead class="table-dark">
                                     <tr>
                                         <th class="width-id">ID</th>
-                                        <th class="crud-width-290">Nama Sponsor</th>
-                                        <th class="crud-width-150">Logo</th>
+                                        <th class="crud-width-220">Nama Sponsor</th>
+                                        <!-- <th class="crud-width-150">Logo</th> -->
                                         <th class="crud-width-150">Link</th>
-                                        <th class="crud-width-510">Aksi</th>
+                                        <th class="crud-width-150">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -210,9 +210,9 @@ const deleteSponsor = async (id) => {
                                         <td>
                                             {{ sponsor.name }}
                                         </td>
-                                        <td>
+                                        <!-- <td>
                                             {{ sponsor.logo }}
-                                        </td>
+                                        </td> -->
                                         <td>
                                             {{ sponsor.link_file }}
                                         </td>

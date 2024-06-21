@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 use App\Models\Team;
 use App\Models\Lomba;
+use App\Models\UserStatus;
 
 class OverviewController extends Controller
 {
@@ -41,12 +42,22 @@ class OverviewController extends Controller
             // Simpan tim
             $team->save();
 
+            // Buat UserStatus baru untuk ketua tim dan set 'status_ketua_team' menjadi 'terdaftar'
+            $userStatus = new UserStatus([
+                'user_id' => $user->id,
+                'status_ketua_team' => 'terdaftar',
+                'lomba_id' => $lomba->id,
+            ]);
+
+            // Simpan UserStatus
+            $userStatus->save();
+
             // Redirect ke rute 'daftarlomba.show' dengan lomba_id
-            return redirect()->route('detailpeserta.show', $request->lomba_id );
+            return redirect()->route('detailpeserta.show', $request->lomba_id);
         } catch (QueryException $e) {
             if ($e->errorInfo[1] == 1062) {
                 // Redirect ke rute 'daftarlomba.show' jika terjadi duplikasi
-                return redirect()->route('dashboard' );
+                return redirect()->route('dashboard');
             }
             // Tangani exception lainnya
             return back()->withErrors(['msg' => 'Gagal menyimpan data.']);

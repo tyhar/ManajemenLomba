@@ -34,13 +34,13 @@ class AdminController extends Controller
 
         $userstatus = User::where('email_verification_status', 'verified')->count();
         $user = Auth::user();
-        
+
         Inertia::share('userData', [
             'name' => $user->name,
             'username' => $user->username,
         ]);
-        
-        return Inertia::render('Roles/Admin/Admin',[
+
+        return Inertia::render('Roles/Admin/Admin', [
             'UserData' => $user,
             'userstatus' => $userstatus,
             'teamcount' => $teamcount,
@@ -123,21 +123,78 @@ class AdminController extends Controller
         return Inertia::render('Roles/Admin/Tim', [
             'lombas' => $lomba,
             'settings' => $setting,
-            'unreadCount'=> $unreadCount,
+            'unreadCount' => $unreadCount,
         ]);
-
-
-
-
     }
-    public function tabeltim()
+
+    public function tabeltim($lomba_id)
     {
-        return Inertia::render('Roles/Admin/Tim/Tabeltim');
+        // Query to get all teams with related lomba and user based on the lomba_id
+        $teams = Team::with(['lomba', 'user'])->where('lomba_id', $lomba_id)->get();
+
+        // Get all settings
+        $setting = Setting::all();
+
+        // Count unread messages
+        $unreadCount = Message::where('status', 'belum_dibaca')->count();
+
+        $lomba = Lomba::findOrFail($lomba_id);
+        // Render the Inertia page with the necessary data
+        return Inertia::render('Roles/Admin/Tim/Tabeltim', [
+            'settings' => $setting,
+            'unreadCount' => $unreadCount,
+            'teams' => $teams,
+            'lomba' => $lomba,
+        ]);
     }
-    public function detailtim()
+
+
+    public function detailtim($team_id)
     {
-        return Inertia::render('Roles/Admin/Tim/Detailtim');
+        $setting = Setting::all();
+        // Get the authenticated user
+        $user = Auth::user();
+
+        // Fetch the team using the provided ID
+        $team = Team::with(['lomba', 'user'])->findOrFail($team_id);
+
+        // Fetch the reg_lomba related to the team
+        // Assuming there is a relation 'reg_lomba' in the Team model
+        $regLomba = $team->regLombas()->with('lomba', 'submission')->first();
+
+        // Fetch the submission related to the team
+        $submission = Submission::where('team_id', $team->id)->first();
+
+        // Fetch the team members related to the team
+        $teamMembers = TeamMember::where('team_id', $team->id)
+            ->with(['user:id,name,nik,photo,instansi'])
+            ->get()
+            ->map(function ($teamMember) {
+                return [
+                    'name' => $teamMember->user->name,
+                    'nik' => $teamMember->user->nik,
+                    'photo' => $teamMember->user->photo,
+                    'instansi' => $teamMember->user->instansi,
+                    'role' => $teamMember->role,
+                ];
+            });
+
+        return Inertia::render('Roles/Admin/Tim/Detailtim', [
+            'userData' => $user,
+            'reg_lombas' => $regLomba,
+            'team' => $team,
+            'submissions' => $submission,
+            'members' => $teamMembers,
+            'settings' => $setting,
+        ]);
     }
+
+
+
+
+
+
+
 
     //SPONSOR
     public function sponsor()
@@ -192,10 +249,36 @@ class AdminController extends Controller
     //RANKING
     public function rangking()
     {
-        return Inertia::render('Roles/Admin/Adminrangking');
+        $settings = Setting::all();
+        $unreadCount = Message::where('status', 'belum_dibaca')->count();
+        $lomba = Lomba::all();
+        $user = Auth::user();
+        Inertia::share('userData', [
+            'name' => $user->name,
+            'username' => $user->username,
+        ]);
+        return Inertia::render('Roles/Admin/Adminrangking', [
+            'UserData' => $user,
+            'lombas' => $lomba,
+            'settings' => $settings,
+            'unreadCount' => $unreadCount,
+        ]);
     }
-    public function tabelrangking()
+    public function tabelrangking($lomba_id)
     {
-        return Inertia::render('Roles/Admin/Rangking/Tabelrangking');
+        $user = Auth::user();
+        $settings = Setting::all();
+        $unreadCount = Message::where('status', 'belum_dibaca')->count();
+
+        // Mengambil semua entri Reg_Lomba dengan lomba_id yang sesuai
+        $regLombas = Reg_Lomba::where('lomba_id', $lomba_id)->with('lomba', 'team', 'submission')->get();
+
+        return Inertia::render('Roles/Admin/Rangking/Tabelrangking', [
+            'UserData' => $user,
+            'reg_lombas' => $regLombas,
+            'settings' => $settings,
+            'unreadCount' => $unreadCount,
+        ]);
     }
+
 }

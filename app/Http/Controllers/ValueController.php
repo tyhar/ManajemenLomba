@@ -9,13 +9,15 @@ use App\Models\Reg_Lomba;
 use App\Models\Team;
 use App\Models\TeamMember;
 use App\Models\Submission;
-use App\Models\KriteriaLombaBobot;
+use App\Models\KriteriaLomba;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\ValueResource;
 use App\Http\Resources\KriteriaResource;
 use App\Models\JuriLomba;
+use Illuminate\Support\Facades\Validator;
 
 class ValueController extends Controller
 {
@@ -26,157 +28,154 @@ class ValueController extends Controller
     {
         //
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    // public function create()
-    // {   
-    //     $kriterias = KriteriaLombaBobot::with('kriteria_bobot')->find();
-
-    //     return Inertia::render('Roles/Panelis/Lomba/Nilai', [
-    //         'kriterias' => $kriterias
-    //     ]);
-    // }
-
-
-
-    /**
-     * Store a newly created resource in storage.
-     */
+   
     public function store(Request $request)
     {
-        $user = Auth::user();
-    
-        // Validate the incoming request
-        $validatedData = $request->validate([
+        $validator = Validator::make($request->all(), [
             'data' => 'required|array',
-            'data.*.kriteria_lomba_bobot_id' => 'required|exists:kriteria_lomba_bobots,id',
+            'data.*.kriteria_lomba_id' => 'required|exists:kriteria_lombas,id',
+            'data.*.reg_lomba_id' => 'required|exists:reg_lombas,id',
             'data.*.value_count' => 'required|numeric',
         ]);
     
-        // Retrieve the data from the validated request
-        $data = $validatedData['data']; // Array of data containing kriteria_lomba_bobot_id and value_count
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
     
-        try {
-            foreach ($data as $item) {
-                $kriteriaLombaBobot = KriteriaLombaBobot::find($item['kriteria_lomba_bobot_id']);
-                if (!$kriteriaLombaBobot) {
-                    continue; // Skip if kriteriaLombaBobot is not found
-                }
+        $user = Auth::user();
+        $regLombaValues = [];
     
-                $lombaId = $kriteriaLombaBobot->lomba_id;
-
-                Value::create([
-                    'user_id' => $user->id,
-                    'kriteria_lomba_bobot_id' => $item['kriteria_lomba_bobot_id'],
-                    'value_count' => $item['value_count'],
-                ]);
-            }
-
-            DB::table('reg_lombas')->insert([
-                'value_total' => $reaquest->id,
+        foreach ($request->data as $item) {
+            Value::create([
+                'reg_lomba_id' => $item['reg_lomba_id'],
+                'kriteria_lomba_id' => $item['kriteria_lomba_id'],
+                'value_count' => $item['value_count'],
+                'user_id' => $user->id,
             ]);
     
-            // Return a success response
-            return redirect()->route('lombajuri.index');
-        } catch (\Exception $e) {
-            // Return an error response if something goes wrong
-            return response()->json([
-                'message' => 'An error occurred while saving values.',
-                'error' => $e->getMessage()
-            ], 500);
+            // Sum the value_count for each reg_lomba_id
+            if (!isset($regLombaValues[$item['reg_lomba_id']])) {
+                $regLombaValues[$item['reg_lomba_id']] = 0;
+            }
+            $regLombaValues[$item['reg_lomba_id']] += $item['value_count'];
         }
+    
+        foreach ($regLombaValues as $regLombaId => $valueTotal) {
+            // Update the status and value_total in Reg_Lomba table
+            Reg_Lomba::where('id', $regLombaId)->update([
+                'status' => 'sudah_dinilai',
+                'value_total' => $valueTotal,
+            ]);
+        }
+    
+        return redirect()->route('lombajuri.index')->with('success', 'Data successfully saved');
     }
     
-    /**
-     * Display the specified resource.
-     */
+    
 
-    public function show($lomba_id)
+    public function show($reg_lomba_id, $team_id)
     {
+        $settings = Setting::all();
+
         $user = Auth::user();
-
+    
+        // Fetch the reg_lomba using the provided ID
+        $regLomba = Reg_Lomba::with('team', 'lomba', 'submission')->findOrFail($reg_lomba_id);
+    
         // Fetch the team using the provided ID
-        $team = Team::with(['lomba', 'user'])->findOrFail($lomba_id);
-
+        $team = Team::with(['lomba', 'user'])->findOrFail($team_id);
+    
         // Fetch the submission related to the team
         $submission = Submission::where('team_id', $team->id)->first();
-
+    
         // Fetch the team members related to the team
         $teamMembers = TeamMember::where('team_id', $team->id)->with('user')->get();
 
+        
+    
         return Inertia::render('Roles/Panelis/Lomba/Timdetailjuri', [
             'userData' => $user,
+            'reg_lombas' => $regLomba,
             'team' => $team,
             'submissions' => $submission,
             'members' => $teamMembers,
+            'settings' => $settings,
         ]);
     }
+    
 
 
-
-
-
-
-
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($lomba_id)
+    public function edit(int $reg_lomba_id, int $lomba_id)
     {
+        $settings = Setting::all();
         $user = Auth::user();
-
-        // Fetch the Lomba instance
-        $lomba = Lomba::findOrFail($lomba_id);
-
-        // Fetch all kriterias related to the lomba and user
-        $kriterias = KriteriaLombaBobot::whereHas('kriterialombabobot', function ($query) use ($user, $lomba) {
-            $query->where('lomba_id', $lomba->id);
-
-        })->get();
-
-        $values = Value::where('user_id', $lomba_id)->get()->pluck('value_count', 'kriteria_id');
-
-
-        // Fetch authenticated user data
-        $userData = $user;
-
-        return inertia('Roles/Panelis/Lomba/Editnilai', [
+        
+        $value = Value::with(['reg_lomba', 'kriteria_lomba'])
+            ->where('reg_lomba_id', $reg_lomba_id)
+            ->firstOrFail();
+            
+        $regLomba = Reg_Lomba::with(['team', 'lomba', 'submission'])->findOrFail($reg_lomba_id);
+        
+        $kriterias = KriteriaLomba::with('kriteria')
+            ->whereHas('kriteria', function($query) use ($value) {
+                $query->where('lomba_id', $value->reg_lomba->lomba_id);
+            })->get();
+            
+        return Inertia::render('Roles/Panelis/Lomba/Editnilai', [
+            'value' => $value,
             'kriterias' => $kriterias,
-            'userData' => $userData,
-            'userValues' => $values
+            'userData' => $user,
+            'reg_lombas' => $regLomba,
+            'settings' => $settings,
         ]);
     }
-
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function updateValueCount(Request $request)
+    
+    public function update(Request $request, $id)
     {
-        // Validate the request data
-        $request->validate([
-            'value_count' => 'required|array',
-            'value_count.*' => 'integer',
+        $validator = Validator::make($request->all(), [
+            'data.*.value_count' => 'required|numeric',
+            'data.*.kriteria_lomba_id' => 'required|exists:kriteria_lombas,id',
         ]);
-
-        // Define the specific user_id
-        $userId = 14; // Replace with the specific user_id you want to update
-
-        // Update the value_count for the specific user_id
-        foreach ($request->input('value_count') as $kriteriaId => $valueCount) {
-            Value::updateOrCreate(
-                ['user_id' => $userId, 'kriteria_id' => $kriteriaId],
-                ['value_count' => $valueCount]
-            );
+    
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
         }
-
-        return redirect()->route('lombajuri.index')->with('success', 'Nilai berhasil disimpan');
+    
+        try {
+            // Array to keep track of reg_lomba_ids for which values are updated
+            $updatedRegLombaIds = [];
+    
+            foreach ($request->input('data') as $item) {
+                $value = Value::where('kriteria_lomba_id', $item['kriteria_lomba_id'])
+                              ->where('reg_lomba_id', $item['reg_lomba_id'])
+                              ->firstOrFail();
+    
+                $value->update([
+                    'value_count' => $item['value_count'],
+                ]);
+    
+                // Add reg_lomba_id to the array
+                $updatedRegLombaIds[] = $item['reg_lomba_id'];
+            }
+    
+            // Recalculate and update value_total for each updated reg_lomba_id
+            $updatedRegLombaIds = array_unique($updatedRegLombaIds);
+    
+            foreach ($updatedRegLombaIds as $regLombaId) {
+                $totalValue = Value::where('reg_lomba_id', $regLombaId)->sum('value_count');
+    
+                Reg_Lomba::where('id', $regLombaId)->update([
+                    'value_total' => $totalValue,
+                    'status' => 'sudah_dinilai', // Optionally update status
+                ]);
+            }
+    
+            return redirect()->route('lombajuri.index')->with('success', 'Nilai updated successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'An error occurred while updating the values');
+        }
     }
-
-
+    
     /**
      * Remove the specified resource from storage.
      */

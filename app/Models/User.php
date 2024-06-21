@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\UserStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+
 use Symfony\Component\CssSelector\Node\FunctionNode;
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -32,6 +34,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'photo',
         'email_verification_status',
         'created_at',
+        
     ];
 
     /**
@@ -84,17 +87,35 @@ class User extends Authenticatable implements MustVerifyEmail
 
 public function regLomba()
 {
-    return $this->hasOne(Reg_Lomba::class, 'lomba_id', 'lomba_id');
+    return $this->hasMany(Reg_Lomba::class);
 }
 
-    public function value()
-    {
-        return $this->hasMany(Value::class);
-    }
+public function notifications()
+{
+    return $this->hasMany(Notifikasi::class);
+}
+
+public function statusketua()
+{
+    return $this->hasOne(UserStatus::class);
+}
     public function submissions()
     {
         return $this->hasMany(Submission::class);
     }
-    
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($user) {
+            if ($user->role == 3) {
+                UserStatus::create([
+                    'user_id' => $user->id,
+                    'status_ketua_team' => 'belum_terdaftar',
+                ]);
+            }
+        });
+    }  
     
 }

@@ -1,6 +1,7 @@
 <script setup>
 import { Head, Link } from "@inertiajs/vue3";
-import { router } from '@inertiajs/vue3'
+import { defineProps, ref } from 'vue';
+import { router } from "@inertiajs/vue3";
 
 defineProps({
     canLogin: {
@@ -29,14 +30,18 @@ defineProps({
         type: Array,
         required: true,
     },
+    lombas: {
+        type: Array,
+        required: true,
+    },
 });
 
 function detail(id) {
-    router.get('/berita/' + id + '/detail')
+    router.get("/berita/" + id + "/detail");
 }
 
 const getBeritaImageUrl = (imageName) => {
-    return imageName ? `/storage/uploads/admin/berita/${imageName}` : '';
+    return imageName ? `/storage/uploads/admin/berita/${imageName}` : "";
 };
 // console.log('Sponsors:', sponsors);
 
@@ -54,7 +59,7 @@ function handleImageError() {
         <nav class="navbar navbar-expand-lg main_menu">
             <div class="container">
                 <a class="navbar-brand" href="#" v-for="setting in settings" :key="setting.id">
-                    <img :src="setting.logo1" :alt="setting.name" class="lg-index">
+                    <img :src="setting.logo1" :alt="setting.name" class="lg-index" />
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -112,8 +117,12 @@ function handleImageError() {
                 <div class="row">
                     <div class="col-xl-7 col-lg-8">
                         <div class="tf__banner_text wow fadeInUp" v-for="setting in settings" :key="setting.id">
-                            <h1 class="teks-judul"><b>{{ setting.judul }}</b></h1>
-                            <h1 class="teks-judul2"><b>{{ setting.sub_judul }}</b></h1>
+                            <h1 class="teks-judul">
+                                <b>{{ setting.judul }}</b>
+                            </h1>
+                            <h1 class="teks-judul2">
+                                <b>{{ setting.sub_judul }}</b>
+                            </h1>
                         </div>
                     </div>
                 </div>
@@ -157,46 +166,12 @@ function handleImageError() {
                     </div>
                     <!--breadcrumb-->
                     <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
-                        <div class="col">
+                        <div class="col" v-for="lomba in lombas" :key="lomba.id">
                             <div class="card radius-15 card-overview">
-                                <img src="bootstrap/images/desain.jpg" alt="New Image" class="border-radius" />
-                                <button class="btn btn-danger btn-landing-page" href="#">
-                                    UI / UX
-                                </button>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card radius-15 card-overview">
-                                <img src="bootstrap/images/ar-vr.jpg" alt="New Image" class="border-radius" />
-                                <a class="btn btn-danger btn-landing-page" href="#">AR / VR
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card radius-15 card-overview">
-                                <img src="bootstrap/images/aplikasi-mobile.jpg" alt="New Image" class="border-radius" />
-                                <a class="btn btn-danger btn-landing-page" href="#">Aplikasi Mobile</a>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card radius-15 card-overview">
-                                <img src="bootstrap/images/desain-website.jpg" alt="New Image" class="border-radius" />
-                                <a class="btn btn-danger btn-landing-page" href="#">Desain Website
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card radius-15 card-overview">
-                                <img src="bootstrap/images/sistem-keamanan-data.jpg" alt="New Image"
+                                <img :src="lomba.picture ? `/storage/${lomba.picture}` : '/bootstrap/images/default.jpg'"
                                     class="border-radius" />
-                                <a class="btn btn-danger btn-landing-page" href="#">Sistem Keamanan Data
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card radius-15 card-overview">
-                                <img src="bootstrap/images/membuat-game.jpg" alt="New Image" class="border-radius" />
-                                <a class="btn btn-danger btn-landing-page" href="#">Membuat Game
+                                <a class="btn btn-danger btn-landing-page" :href="`/detailpeserta/${lomba.id}`">
+                                    {{ lomba.name_lomba }}
                                 </a>
                             </div>
                         </div>
@@ -205,7 +180,7 @@ function handleImageError() {
                 </div>
             </div>
         </section>
-        <br>
+        <br />
         <!-- Timeline 4 - Bootstrap Brain Component -->
         <section id="timeline-section" class="bsb-timeline-4">
             <div class="container">
@@ -221,17 +196,18 @@ function handleImageError() {
                                             <div class="timeline-meta">
                                                 <div
                                                     class="d-inline-flex flex-column px-2 py-1 text-success-emphasis bg-success-subtle border border-success-subtle rounded-2 text-md-end">
-                                                    <span>27 Mei - 10 Juni 2024</span>
+                                                    <span>{{ setting.mulai }}</span>
                                                 </div>
                                             </div>
                                             <div class="timeline-content timeline-indicator">
                                                 <div class="card border-0 shadow">
                                                     <div class="card-body p-xl-4">
-                                                        <h3 class="cuyy">PENDAFTARAN</h3>
-                                                        <p class="card-text m-0 cuyyy">Peserta mendaftar secara online
-                                                            dengan
-                                                            mengisi formulir dan memenuhi persyaratan sebelum batas
-                                                            waktu.</p>
+                                                        <h3 class="cuyy">
+                                                            PENDAFTARAN
+                                                        </h3>
+                                                        <p class="card-text m-0 cuyyy">
+                                                            {{ setting.des_pendaftaran }}
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -242,18 +218,18 @@ function handleImageError() {
                                             <div class="timeline-meta">
                                                 <div
                                                     class="d-inline-flex flex-column px-2 py-1 text-success-emphasis bg-success-subtle border border-success-subtle rounded-2 text-md-end">
-                                                    <span>15 Juni 2024</span>
+                                                    <span>{{ setting.pengumpulan }}</span>
                                                 </div>
                                             </div>
                                             <div class="timeline-content timeline-indicator">
                                                 <div class="card border-0 shadow">
                                                     <div class="card-body p-xl-4">
-                                                        <h3 class="cuyy">PENGUMPULAN KARYA</h3>
-                                                        <p class="card-text m-0 cuyyy">Peserta mengirimkan karya sesuai
-                                                            pedoman
-                                                            dan format yang ditentukan melalui platform yang ditunjuk
-                                                            sebelum
-                                                            batas waktu.</p>
+                                                        <h3 class="cuyy">
+                                                            PENGUMPULAN KARYA
+                                                        </h3>
+                                                        <p class="card-text m-0 cuyyy">
+                                                            {{ setting.des_pengumpulan }}
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -264,17 +240,18 @@ function handleImageError() {
                                             <div class="timeline-meta">
                                                 <div
                                                     class="d-inline-flex flex-column px-2 py-1 text-success-emphasis bg-success-subtle border border-success-subtle rounded-2 text-md-end">
-                                                    <span>15 Juni 2024</span>
+                                                    <span>{{ setting.pengumuman }}</span>
                                                 </div>
                                             </div>
                                             <div class="timeline-content timeline-indicator">
                                                 <div class="card border-0 shadow">
                                                     <div class="card-body p-xl-4">
-                                                        <h3 class="cuyy">PENGUMUMAN FINALIS</h3>
-                                                        <p class="card-text m-0 cuyyy">Daftar finalis diumumkan di situs
-                                                            web
-                                                            resmi dan media sosial penyelenggara setelah penilaian
-                                                            karya.</p>
+                                                        <h3 class="cuyy">
+                                                            PENGUMUMAN FINALIS
+                                                        </h3>
+                                                        <p class="card-text m-0 cuyyy">
+                                                            {{ setting.des_pengumuman }}
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -285,16 +262,17 @@ function handleImageError() {
                                             <div class="timeline-meta">
                                                 <div
                                                     class="d-inline-flex flex-column px-2 py-1 text-success-emphasis bg-success-subtle border border-success-subtle rounded-2 text-md-end">
-                                                    <span>27 Juni 2024</span>
+                                                    <span>{{ setting.presentasi }}</span>
                                                 </div>
                                             </div>
                                             <div class="timeline-content timeline-indicator">
                                                 <div class="card border-0 shadow">
                                                     <div class="card-body p-xl-4">
-                                                        <h3 class="cuyy">PRESENTAS FINAL</h3>
-                                                        <p class="card-text m-0 cuyyy">Finalis mempresentasikan karya
-                                                            mereka di
-                                                            hadapan dewan juri, menjelaskan ide dan menjawab pertanyaan.
+                                                        <h3 class="cuyy">
+                                                            PRESENTASI FINAL
+                                                        </h3>
+                                                        <p class="card-text m-0 cuyyy">
+                                                            {{ setting.des_presentasi }}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -323,7 +301,7 @@ function handleImageError() {
                         <div class="tf__single_event">
                             <button @click.prevent="detail(berita.id)">
                                 <div class="tf__single_courses_img">
-                                    <img :src="getBeritaImageUrl(berita.images)" alt="event" class="img-fluid w-100">
+                                    <img :src="getBeritaImageUrl(berita.images)" alt="event" class="img-fluid w-100" />
                                 </div>
                                 <div class="tf__single_event_text">
                                     <a class="title">{{ berita.judul }}</a>
@@ -343,7 +321,7 @@ function handleImageError() {
             <div class="container">
                 <div class="row">
                     <div class="tf__heading_area mb_15">
-                        <h5> Sponsor</h5>
+                        <h5>Sponsor</h5>
                         <div class="sponsor-grid">
                             <div v-for="sponsor in sponsors" :key="sponsor.id">
                                 <a :href="sponsor.link_file">

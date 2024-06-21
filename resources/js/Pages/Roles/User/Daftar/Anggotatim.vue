@@ -83,7 +83,7 @@ import { Link } from '@inertiajs/vue3';
                                 <input class="form-control" type="file" id="formFile">
                             </div>
                         </div>
-                        <div style="display: flex;">
+                        <div class="btn-posisi">
                             <button class="btn btn-primary button-tabel-right"
                                 onclick="window.location.href='/daftarlomba'">Tambah</button>
                             <button class="btn btn-danger button-tabel-left"

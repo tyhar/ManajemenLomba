@@ -9,7 +9,7 @@
                         <div class="navbar-left" v-for="setting in settings" :key="setting.id">
                             <a href="/">
                                 <img :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
-                                    alt="Logo" style="width: 100px; margin-left: -15px;">
+                                    alt="Logo" style="width: 135px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>
@@ -43,22 +43,24 @@
                             <div class="row">
                                 <div class="col-md-6 c-mb10">
                                     <label class="c-mb5-black"><b>Nama Lomba</b></label>
-                                    <input type="text" class="form-control" v-model="form.name_lomba" id="name">
+                                    <input type="text" class="form-control" v-model="form.name_lomba" id="name"
+                                        placeholder="Masukan nama lomba">
                                 </div>
                                 <div class="col-md-6 c-mb10">
                                     <label class="c-mb5-black"><b>Nama PJ</b></label>
-                                    <input type="text" class="form-control" v-model="form.pj" id="pj">
+                                    <input type="text" class="form-control" v-model="form.pj" id="pj"
+                                        placeholder="Masukan nama PJ">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="c-mb5-black"><b>Deskripsi</b></label>
                                     <div class="col-12">
-                                        <textarea class="form-control c-mb10" id="deskripsi" rows="4"
-                                            v-model="form.description"></textarea>
+                                        <textarea class="form-control c-mb10" placeholder="Masukan deskripsi lomba"
+                                            id="deskripsi" rows="4" v-model="form.description"></textarea>
                                     </div>
                                     <div>
                                         <label for="picture" class="form-label judul-form"><b>Gambar</b></label>
                                         <input type="file" id="picture" accept="image/*" class="form-control"
-                                            @input="form.picture = $event.target.files[0]">
+                                            @change="handlePictureUpload">
                                         <p class="keterangan-foto f-italic">Max file size: 2MB (500 x 500 px)</p>
                                         <p class="keterangan-foto f-italic">Format: .jpg, .png, .jpeg</p>
                                     </div>
@@ -66,35 +68,37 @@
                                     <div>
                                         <label for="sertifikat" class="form-label judul-form"><b>Sertifikat</b></label>
                                         <input type="file" id="sertifikat" class="form-control"
-                                            @input="form.sertifikat = $event.target.files[0]">
-                                        <p class="keterangan-foto f-italic">Max file size: 2MB (500 x 500 px)</p>
+                                            @change="handleSertifikatUpload">
+                                        <p class="keterangan-foto f-italic">Max file size: 2MB</p>
                                         <p class="keterangan-foto f-italic">Format: .pdf</p>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="c-mb5-black"><b>Kontak PJ</b></label>
-                                    <input type="number" class="form-control" v-model="form.kontak" id="kontak">
+                                    <label class="c-mb5-black"><b>Kontak PJ (+62)</b></label>
+                                    <input type="number" class="form-control" v-model="form.kontak" id="kontak"
+                                        placeholder="Masukan kontak PJ">
                                     <div>
                                         <label class="c-mb5-black"><b>Tempat</b></label>
-                                        <input type="text" class="form-control" v-model="form.tempat" id="tempat">
+                                        <input type="text" class="form-control" v-model="form.tempat" id="tempat"
+                                            placeholder="Masukan nama tempat">
                                     </div>
                                     <div class="c-mt10">
                                         <label class="c-mb5-black"><b>Biaya Pendaftaran</b></label>
                                         <input type="text" class="form-control" v-model="form.biaya_pendaftaran"
-                                            id="biaya_pendaftaran">
+                                            placeholder="Masukan biaya pendaftaran" id="biaya_pendaftaran">
                                     </div>
                                     <div>
                                         <label class="role-add"><b class="warna-hitam">Kriteria Penilaian
                                                 (0%/100%)</b></label>
-                                        <div>
-                                            <div class="form-check" v-for="kriteria in kriterias.data"
-                                                :key="kriteria.id">
-                                                <input class="form-check-input" type="checkbox"
-                                                    :id="'kriteria' + kriteria.id" v-model="form.selectedCriteria"
-                                                    :value="kriteria.id">
-                                                <label class="form-check-label" :for="'kriteria' + kriteria.id">{{
-                                                    kriteria.name_kriteria }} {{ kriteria.nilai_bobot }} %</label>
-                                            </div>
+                                        <div v-for="kriteria in kriterias.data" :key="kriteria.id" class="form-check">
+                                            <input class="form-check-input" type="checkbox"
+                                                :id="'kriteria' + kriteria.id" v-model="form.selectedCriteria"
+                                                :value="kriteria.id">
+                                            <label class="form-check-label" :for="'kriteria' + kriteria.id">{{
+                                                kriteria.name_kriteria }} </label>
+                                            <input type="number" class="form-control" placeholder="Masukan bobot nilai"
+                                                :readonly="!isKriteriaSelected(kriteria.id)"
+                                                v-model="form.bobot[kriteria.id]">
                                         </div>
                                     </div>
                                 </div>
@@ -115,42 +119,40 @@
 <script setup>
 import { router, useForm, usePage } from "@inertiajs/vue3";
 import Swal from 'sweetalert2'; // Import SweetAlert
-import { reactive, computed } from 'vue'
+import { reactive, toRefs } from 'vue';
 
 const { name, username, settings, logo1, kriterias } = defineProps(['name', 'username', 'kriterias', 'settings', 'logo1']);
 
-const props = {
-    settings: {
-        type: Object, // Menggunakan "type" untuk menentukan tipe data props
-        default: () => ({}), // Menggunakan "default" jika props tidak diberikan
-    },
-    logo1: {
-        type: String, // Menentukan tipe data logo sebagai String
-    },
-};
-
 const lomba = usePage().props.lombas;
 
-
-const form = useForm({
-    name_lomba: lomba.data.name_lomba,
-    pj: lomba.data.pj,
-    description: lomba.data.description,
-    kontak: lomba.data.kontak,
-    tempat: lomba.data.tempat,
-    biaya_pendaftaran: lomba.data.biaya_pendaftaran,
-    picture: lomba.data.picture ? `/storage/${lomba.data.picture}` : null,
-    sertifikat: lomba.data.sertifikat ? `/storage/${lomba.data.sertifikat}` : null,
+const form = reactive({
+    name_lomba: lomba.data.name_lomba || '',
+    pj: lomba.data.pj || '',
+    description: lomba.data.description || '',
+    kontak: lomba.data.kontak || '',
+    tempat: lomba.data.tempat || '',
+    biaya_pendaftaran: lomba.data.biaya_pendaftaran || '',
+    picture: null,
+    sertifikat: null,
     selectedCriteria: [],
+    bobot: {},
 });
 
+const isKriteriaSelected = (kriteriaId) => {
+    return form.selectedCriteria.includes(kriteriaId);
+};
 
+const handlePictureUpload = (event) => {
+    form.picture = event.target.files[0];
+};
 
-async function submit() {
-    // Validate total bobot
+const handleSertifikatUpload = (event) => {
+    form.sertifikat = event.target.files[0];
+};
+
+const submit = async () => {
     const totalBobot = form.selectedCriteria.reduce((acc, id) => {
-        const kriteria = kriterias.data.find(k => k.id === id);
-        return acc + parseInt(kriteria.nilai_bobot);
+        return acc + (parseInt(form.bobot[id]) || 0);
     }, 0);
 
     if (totalBobot !== 100) {
@@ -159,25 +161,31 @@ async function submit() {
             title: 'Gagal',
             text: 'Total bobot kriteria harus 100%',
         });
-        return; // Stop execution if total bobot is not 100%
+        return;
     }
 
-    const formData = {
-        _method: 'put',
-        name_lomba: form.name_lomba,
-        pj: form.pj,
-        description: form.description,
-        tempat: form.tempat,
-        kontak: form.kontak,
-        picture: form.picture,
-        sertifikat: form.sertifikat,
-        biaya_pendaftaran: form.biaya_pendaftaran,
-        selectedCriteria: form.selectedCriteria,
-    };
+    const formData = new FormData();
+    formData.append('_method', 'put');
+    formData.append('name_lomba', form.name_lomba);
+    formData.append('pj', form.pj);
+    formData.append('description', form.description);
+    formData.append('tempat', form.tempat);
+    formData.append('kontak', form.kontak);
+    formData.append('biaya_pendaftaran', form.biaya_pendaftaran);
+
+    form.selectedCriteria.forEach(id => {
+        formData.append('selectedCriteria[]', id);
+        formData.append(`bobot[${id}]`, form.bobot[id]);
+    });
+    if (form.picture) {
+        formData.append('picture', form.picture);
+    }
+    if (form.sertifikat) {
+        formData.append('sertifikat', form.sertifikat);
+    }
 
     try {
         await router.post(`/lomba/${lomba.data.id}`, formData);
-        // Display SweetAlert on success
         Swal.fire({
             icon: 'success',
             title: 'Success',
@@ -185,12 +193,15 @@ async function submit() {
         });
     } catch (error) {
         console.error('Error:', error);
-        // Handle error if needed
     }
-}
+};
 
 const goBack = () => {
     window.history.back();
 };
 
 </script>
+
+<style scoped>
+/* Tambahkan gaya CSS jika diperlukan */
+</style>

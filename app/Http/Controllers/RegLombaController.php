@@ -5,6 +5,8 @@ use Inertia\Inertia;
 use App\Models\User;
 use App\Models\Team;
 use App\Models\TeamMember;
+use App\Models\Setting;
+use App\Models\Notifikasi;
 use App\Models\Lomba;
 use App\Models\Reg_Lomba;
 use App\Models\Submission;
@@ -16,7 +18,8 @@ class RegLombaController extends Controller
 {
     public function show($lomba_id)
 {
-   
+    $notifCount = Notifikasi::where('status', 'belum_dibaca')->count();
+    $settings = Setting::all();
     $user = Auth::user();
     $users = User::where('role', 3)->get();
     
@@ -46,8 +49,10 @@ class RegLombaController extends Controller
             'nik' => $teamMember->user->nik,
             'photo' => $teamMember->user->photo,
             'instansi' => $teamMember->user->instansi,
+            'role' => $teamMember->role,
         ];
     });
+
 
     return Inertia::render('Roles/User/Daftarlomba', [
         'userData' => $user,
@@ -55,6 +60,8 @@ class RegLombaController extends Controller
         'team' => $team,
         'submissions' => $submission,
         'members' => $members,
+        'settings' => $settings,
+        'notifCount' => $notifCount,
 
     ]);
 }
@@ -111,7 +118,7 @@ public function store(Request $request)
 
     public function tambahanggota($team_id)
     {
-       
+        $settings = Setting::all();
         $user = Auth::user();
         $team = $user->team()->where('id', $team_id)->with(['lomba', 'user'])->first();
         $users = User::where('role', 3)->get();
@@ -122,6 +129,7 @@ public function store(Request $request)
             'userData' => $user,
             'users' => $users,
             'team' => $team,
+            'settings' => $settings,
 
     
         ]);

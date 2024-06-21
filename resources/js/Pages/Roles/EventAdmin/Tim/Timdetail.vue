@@ -4,10 +4,10 @@
             <div class="c-topbar">
                 <nav class="navbar navbar-expand">
                     <div class="navbar-tambah">
-                        <div class="navbar-left">
+                        <div class="navbar-left" v-for="setting in settings" :key="setting.id">
                             <a href="/">
-                                <img src="/bootstrap/images/lg.png" alt="Logo"
-                                    style="width: 100px; margin-left: -15px;">
+                                <img :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
+                                    alt="Logo" style="width: 135px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>
@@ -68,11 +68,11 @@
                                     <li>{{ team?.lomba?.name_lomba }}</li>
                                 </ul>
                             </div>
-                            <div class="col-md-2" v-if="team">
+                            <div class="col-md-3" v-if="team">
                                 <label class="c-mb5-black"><b>EMAIL</b></label>
                                 <div class="c-mb20">{{ team.email }}</div>
                             </div>
-                            <div class="col-md-3" v-if="team">
+                            <div class="col-md-2" v-if="team">
                                 <label class="c-mb5-black"><b>NO WHATSAPP</b></label>
                                 <div class="c-mb20">{{ team.phone }}</div>
                             </div>
@@ -109,15 +109,16 @@
                         <div class="card card-height400">
                             <div class="card-body p-4 text-center">
                                 <h6 class="sub-judul-tim"><b>KARYA TIM</b></h6>
+                                <hr />
                                 <div class="row">
                                     <div class="col-md-4 label-left" v-if="submissions">
                                         <label class="jarak-teks05"><b>JUDUL</b></label>
                                         <div class="c-mb20">{{ submissions.title }}</div>
                                     </div>
                                     <div class="col-md-3 label-left">
-                                        <label class="jarak-teks05"><b>DOKUMEN</b></label>
-                                        <div class="data-tim"><a :href="`/submissionsurat/${submissions.id}`">Lihat
-                                                Dokumen</a></div>
+                                        <label class="jarak-teks05"><b>SURAT</b></label>
+                                        <div class="data-tim"><a
+                                                :href="`/submissionsurat/${submissions.id}`">Dokumen.pdf</a></div>
                                     </div>
                                     <div class="col-md-3 label-left" v-if="submissions">
                                         <label class="jarak-teks05"><b>FILE</b></label>
@@ -125,7 +126,7 @@
                                                 File</a></div>
                                     </div>
                                     <div class="col-md-2 label-left" v-if="submissions">
-                                        <label class="jarak-teks05"><b>LINK</b></label>
+                                        <label class="jarak-teks05"><b>LINK KARYA</b></label>
                                         <div class="data-tim c-mb-70"><a :href="submissions.link" target="_blank">Buka
                                                 Link</a></div>
                                     </div>
@@ -148,7 +149,25 @@ import { defineProps, ref, reactive } from 'vue';
 import Swal from 'sweetalert2';
 import { router } from '@inertiajs/vue3';
 
-const { userData, members, team, submissions } = defineProps(['userData', 'members', 'team', 'submissions']);
+const { userData, members, team, submissions, settings, logo1 } = defineProps(['userData', 'members', 'team', 'submissions', 'settings', 'logo1']);
+
+const props = {
+    settings: {
+        type: Object, // Menggunakan "type" untuk menentukan tipe data props
+        default: () => ({}), // Menggunakan "default" jika props tidak diberikan
+    },
+    logo1: {
+        type: String, // Menentukan tipe data logo sebagai String
+    },
+};
+
+
+
+
+
+
+
+
 
 const form = reactive({
     description: ''

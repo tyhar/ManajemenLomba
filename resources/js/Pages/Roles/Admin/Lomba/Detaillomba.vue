@@ -10,7 +10,7 @@ DetailLOMBA
                         <div class="navbar-left" v-for="setting in settings" :key="setting.id">
                             <a href="/">
                                 <img :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"  alt="Logo"
-                                    style="width: 100px; margin-left: -15px;">
+                                    style="width: 135px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>
@@ -54,7 +54,8 @@ DetailLOMBA
                             <div class="col-md-6">
                                 <label class="c-mb5-black"><b>DESKRIPSI</b></label>
                                 <div class="col-12">
-                                    <div class="data-tim" id="description">{{ lomba && lomba.description ? lomba.description : 'Deskripsi tidak tersedia' }}</div>
+                                    <div class="data-tim" id="description">{{ lomba && lomba.description ? lomba.description : 'Deskripsi tidak tersedia' }}
+				</div>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="c-mb5-black"><b>GAMBAR</b></label>
@@ -83,8 +84,8 @@ DetailLOMBA
                                 <!-- Tambahkan bagian untuk menampilkan kriteria -->
                                 <label class="c-mb5-black"><b>KRITERIA PENILAIAN (100/100%)</b></label>
                                 <ul>
-                                <li v-for="kriterialombabobot in lomba.kriterialombabobot" :key="kriterialombabobot.id">
-                                    {{ kriterialombabobot.kriteria.name_kriteria }} {{ kriterialombabobot.bobot.nilai_bobot }}%
+                                <li v-for="kriteria in lomba.kriteria" :key="kriteria.id">
+                                    {{ kriteria.name_kriteria }} {{kriteria.pivot.bobot}}%
                                 </li>
                             </ul>
                             </div>           

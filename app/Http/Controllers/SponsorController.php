@@ -21,7 +21,7 @@ class SponsorController extends Controller
         $setting = Setting::all();
         $unreadCount = Message::where('status', 'belum_dibaca')->count();
         $user = Auth::user();
-        $sponsors = Sponsor::all()->map(function($sponsor) use ($user) {
+        $sponsors = Sponsor::all()->map(function ($sponsor) use ($user) {
             return [
                 'UserData' => $user,
                 'id' => $sponsor->id,
@@ -46,6 +46,7 @@ class SponsorController extends Controller
      */
     public function create()
     {
+        $setting = Setting::all();
         $user = Auth::user();
         Inertia::share('userData', [
             'name' => $user->name,
@@ -54,6 +55,7 @@ class SponsorController extends Controller
 
         return Inertia::render('Roles/Admin/Sponsor/Tambahsponsor', [
             'UserData' => $user,
+            'settings' => $setting,
         ]);
     }
 
@@ -71,8 +73,8 @@ class SponsorController extends Controller
 
         // dd($request);
         // store logo into sponsors folder inside public folder
-        $logo = Request::file('logo')->store('sponsors','public');
-    
+        $logo = Request::file('logo')->store('sponsors', 'public');
+
         $sponsor = Sponsor::create([
             'name' => Request::input('name'),
             'logo' => $logo,
@@ -97,7 +99,7 @@ class SponsorController extends Controller
         $baseUrl = config('app.url');
         return Inertia::render('Roles/Admin/Sponsor/Detailsponsor', [
             'sponsors' => $sponsor,
-            'logo' => asset('storage/'.$sponsor->logo),
+            'logo' => asset('storage/' . $sponsor->logo),
             'baseUrl' => $baseUrl,
             'UserData' => $user,
             'settings' => $setting,
@@ -114,9 +116,9 @@ class SponsorController extends Controller
 
         return Inertia::render('Roles/Admin/Sponsor/Editsponsor', [
             'sponsors' => $sponsor,
-            'logo' => asset('storage/'.$sponsor->logo),
-             'userData' => auth()->user(),
-             'sponsors' => [
+            'logo' => asset('storage/' . $sponsor->logo),
+            'userData' => auth()->user(),
+            'sponsors' => [
                 'data' => $sponsor,
             ],
             'settings' => $setting,
@@ -130,9 +132,9 @@ class SponsorController extends Controller
     public function update(Request $request, Sponsor $sponsor)
     {
         $logo = $sponsor->logo;
-        if(Request::file('logo')){
-            Storage::delete('public/'.$sponsor->logo);
-            $logo = Request::file('logo')->store('sponsors','public');
+        if (Request::file('logo')) {
+            Storage::delete('public/' . $sponsor->logo);
+            $logo = Request::file('logo')->store('sponsors', 'public');
         }
 
         $sponsor->update([
@@ -154,9 +156,9 @@ class SponsorController extends Controller
         //     'link_file' => 'required|string|max:255'
         // ]);
         // Sponsor::create([
-            // 'name' => Request::input('name'),
-            // 'logo' => $logo,
-            // 'link_file' => Request::input('link_file')
+        // 'name' => Request::input('name'),
+        // 'logo' => $logo,
+        // 'link_file' => Request::input('link_file')
         // ]);
         // $sponsor->update($validatedData);
         // $sponsor->update($request->validated());
@@ -168,7 +170,7 @@ class SponsorController extends Controller
     public function destroy(Sponsor $sponsor)
     {
         // dd($sponsor);
-        Storage::delete('public/'.$sponsor->logo);
+        Storage::delete('public/' . $sponsor->logo);
         $sponsor->delete();
         return redirect()->route('sponsor.index');
     }

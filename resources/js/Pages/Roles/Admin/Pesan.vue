@@ -29,13 +29,9 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-
 });
 
-
 const selectedStatus = ref('Semua');
-
-
 
 const updateMessageStatus = async (id, currentStatus) => {
   try {
@@ -65,6 +61,13 @@ const filteredMessages = computed(() => {
     return props.messages;
   }
   return props.messages.filter(message => message.status === selectedStatus.value.toLowerCase());
+});
+
+const formattedMessages = computed(() => {
+  return filteredMessages.value.map(message => ({
+    ...message,
+    status: message.status === 'belum_dibaca' ? 'Belum Dibaca' : 'Sudah Dibaca'
+  }));
 });
 </script>
 
@@ -208,16 +211,17 @@ const filteredMessages = computed(() => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="message in filteredMessages" :key="message.id">
+                  <tr v-for="message in formattedMessages" :key="message.id">
                     <td>{{ message.id }}</td>
                     <td>{{ message.name }}</td>
                     <td>{{ message.email }}</td>
                     <td>{{ message.phone }}</td>
                     <td>{{ message.value }}</td>
                     <td>{{ message.status }}</td>
+                    <!-- <td>{{ message.status }}</td> -->
                     <td>
-                      <input type="checkbox" :checked="message.status === 'sudah_dibaca'"
-                        @change="() => updateMessageStatus(message.id, message.status)" />
+                      <input type="checkbox" :checked="message.status === 'Sudah Dibaca'"
+                        @change="() => updateMessageStatus(message.id, message.status === 'Sudah Dibaca' ? 'sudah_dibaca' : 'belum_dibaca')" />
                     </td>
                   </tr>
                 </tbody>

@@ -94,6 +94,9 @@
     <script src="/assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js"></script>
     <script src="/assets/plugins/chartjs/js/Chart.min.js"></script>
     <script src="/assets/plugins/chartjs/js/Chart.extension.js"></script>
+    <!-- <Capctcha></script> -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
     <!-- <script src="/assets/js/index.js"></script> -->
     <script src="/assets/plugins/sparkline-charts/jquery.sparkline.min.js"></script>
     <!--Morris JavaScript -->

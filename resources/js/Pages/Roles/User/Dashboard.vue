@@ -4,9 +4,10 @@
     <!--sidebar wrapper-->
     <div class="sidebar-wrapper" data-simplebar="true">
       <div class="sidebar-header">
-        <div>
+        <div v-for="setting in settings" :key="setting.id">
           <a href="/">
-            <img id="logo-img" src="/bootstrap/images/lg.png" class="lg2">
+            <img id="logo-img" :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
+              class="lg2">
           </a>
         </div>
         <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
@@ -26,15 +27,15 @@
           </a>
         </li>
         <li>
-          <a href="/notifikasipeserta">
+          <a @click="clearNotifications" href="/notifikasipeserta">
             <div class="parent-icon"><i class="bx bx-user-circle"></i></div>
-            <div class="menu-title">Notifikasi<span class="alert-count">{{ notifCount }}</span></div>
+            <div class="menu-title">Notifikasi <span class="alert-count" v-if="notifCount">{{ notifCount }}</span></div>
           </a>
         </li>
         <li>
           <a href="/reportpeserta">
             <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i></div>
-            <div class="menu-title">Report <span class="alert-count">1</span></div>
+            <div class="menu-title">Report <span></span></div>
           </a>
         </li>
         <li>
@@ -95,7 +96,10 @@
                   <div class="judul-overview">{{ lomba.name_lomba }}</div>
                   <div class="btn-posisi">
                     <a class="btn btn-primary btn-lomba" :href="`/detailpeserta/${lomba.id}`">Detail</a>
-                    <a class="btn btn-success button-lomba" @click="submitForm(lomba.id)">Daftar</a>
+                    <a v-if="!lomba.is_registered" class="btn btn-success button-lomba"
+                      @click="submitForm(lomba.id)">Daftar</a>
+                    <a v-if="lomba.is_registered" class="btn btn-primary button-lomba"
+                      @click="handleLombaSaya(lomba.id)">Lanjutkan</a>
                   </div>
                 </div>
               </div>
@@ -112,29 +116,62 @@
 
 <script setup>
 import { Link, useForm, router } from '@inertiajs/vue3';
-import { defineProps, ref, onMounted, computed } from 'vue';
+import { defineProps, ref } from 'vue';
 import Swal from 'sweetalert2';
 import axios from 'axios';
-
-const notifCount = ref(0);
 
 const props = defineProps({
   lombas: {
     type: Array,
     required: true,
   },
-
+  initialUserStatus: {
+    type: String,
+    required: true,
+  },
+  notifCount: {
+    type: [Number, null],
+    default: null,
+  },
+  settings: {
+    type: Object, // Menggunakan "type" untuk menentukan tipe data props
+    default: () => ({}), // Menggunakan "default" jika props tidak diberikan
+  },
+  logo1: {
+    type: String, // Menentukan tipe data logo sebagai String
+  },
 });
 
+const userStatus = ref(props.initialUserStatus);
 
-onMounted(async () => {
+const notifCount = ref(props.notifCount);
+
+async function clearNotifications() {
   try {
-    const response = await axios.get('/api/unread-notifikasi');
-    notifCount.value = response.data.notifCount;
+    const response = await axios.post('/notifikasi/mark-all-as-read');
+    if (response.data.success) {
+      notifCount.value = 0;
+    }
   } catch (error) {
-    console.error(error);
+    console.error('Error marking notifications as read', error);
   }
-});
+}
+function handleLombaSaya(lombaId) {
+  axios.get(route('daftarlomba.show', lombaId))
+    .then(response => {
+      router.get(route('daftarlomba.show', lombaId));
+    })
+    .catch(error => {
+      Swal.fire({
+        title: 'Lomba Kosong!',
+        text: 'Silahkan mendaftar lomba terlebih dahulu.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      }).then(() => {
+        router.get('/dashboard');
+      });
+    });
+}
 
 async function submitForm(lombaId) {
   const confirmation = await Swal.fire({
@@ -151,12 +188,17 @@ async function submitForm(lombaId) {
       await router.post('/overview', {
         lomba_id: lombaId
       });
+
+      await axios.patch(`/api/update-status-ketua/${lombaId}`, { status: 'terdaftar' });
+
       await Swal.fire({
         title: 'Success!',
         text: 'Silahkan lengkapi data tim anda!',
         icon: 'success',
         confirmButtonText: 'OK'
       });
+
+      userStatus.value = 'terdaftar';
     } catch (error) {
       console.error('Error submitting form:', error);
       if (error.response && error.response.data && error.response.data.errorInfo && error.response.data.errorInfo[1] === 1062) {

@@ -26,19 +26,18 @@ class AdministratorController extends Controller
     public function index()
     {
         $newStatus = User::where('status', 'aktif')->get();
-        // $newStatus = User::where('status', 'nonaktif')->get();
         $setting = Setting::all();
         $unreadCount = Message::where('status', 'belum_dibaca')->count();
-       
         $user = Auth::user();
+    
         Inertia::share('userData', [
             'name' => $user->name,
             'username' => $user->username,
             'status' => $user->status
         ]);
-       
+    
         return Inertia::render('Roles/Admin/Administrator', [
-            'users' => User::all()->map(function($user) {
+            'users' => User::whereIn('role', [1, 2, 4])->get()->map(function($user) {
                 return [
                     'id' => $user->id,
                     'name' => $user->name,
@@ -46,15 +45,15 @@ class AdministratorController extends Controller
                     'status' => $user->status,
                     'email' => $user->email,
                     'role' => $user->role,
-                    'UserData'=>$user,       
-                ]; }),
-                'settings' => $setting,
-                'unreadCount'=> $unreadCount,
-                'newStatus' => $newStatus,
-                   
+                    'UserData' => $user,
+                ];
+            }),
+            'settings' => $setting,
+            'unreadCount' => $unreadCount,
+            'newStatus' => $newStatus,
         ]);
     }
-
+    
     /**
      * Show the form for creating a new resource.
      */

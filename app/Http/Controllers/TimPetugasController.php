@@ -4,8 +4,10 @@
 namespace App\Http\Controllers;
 
 use Inertia\Inertia;
+use App\Models\Message;
 use App\Models\User;
 use App\Models\Team;
+use App\Models\Setting;
 use App\Models\TeamMember;
 use App\Models\Lomba;
 use App\Models\Reg_Lomba;
@@ -19,10 +21,14 @@ class TimPetugasController extends Controller
 {
     public function index()
     {
+        $settings = Setting::all();
+        $unreadCount = Message::where('status', 'belum_dibaca')->count();
         $teams = Team::with('lomba')->get();
 
         return Inertia::render('Roles/EventAdmin/Timpetugas', [
-            'teams' => TeamResource::collection($teams)
+            'teams' => TeamResource::collection($teams),
+            'settings' => $settings,
+            'unreadCount' => $unreadCount,
         ]);
     }
  public function show($id)
@@ -37,12 +43,18 @@ class TimPetugasController extends Controller
 
         // Fetch the team members related to the team
         $teamMembers = TeamMember::where('team_id', $team->id)->with('user')->get();
-
+        
+        $settings = Setting::all();
+        $unreadCount = Message::where('status', 'belum_dibaca')->count();
+        
         return Inertia::render('Roles/EventAdmin/Tim/Timdetail', [
             'userData' => $user,
             'team' => $team,
             'submissions' => $submission,
             'members' => $teamMembers,
+            'settings' => $settings,
+            'unreadCount' => $unreadCount,
+
         ]);
     }
     public function updateStatus(Request $request, $id)

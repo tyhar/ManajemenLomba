@@ -42,11 +42,11 @@ const props = defineProps({
     required: true,
   },
   settings: {
-    type: Object, // Menggunakan "type" untuk menentukan tipe data props
-    default: () => ({}), // Menggunakan "default" jika props tidak diberikan
+    type: Object,
+    default: () => ({}),
   },
   logo1: {
-    type: String, // Menentukan tipe data logo sebagai String
+    type: String,
   },
 });
 
@@ -80,7 +80,7 @@ const renderChart = () => {
     series: [
       {
         name: 'Jumlah Kunjungan',
-        data: props.visitData,
+        data: props.visitData.map(v => v.visit_count),
       },
     ],
     tooltip: {
@@ -105,10 +105,7 @@ const renderChart = () => {
       axisBorder: {
         show: false,
       },
-      categories: [
-        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-      ],
+      categories: props.visitData.map(v => v.visit_month),
     },
     yaxis: {
       labels: {
@@ -117,7 +114,6 @@ const renderChart = () => {
     },
   }).render();
 };
-
 
 // Call the renderChart function when the component is mounted
 onMounted(() => {
@@ -135,8 +131,6 @@ if (!localStorage.getItem('reloaded')) {
   // Jika sudah, hapus flag agar reload hanya terjadi sekali
   localStorage.removeItem('reloaded');
 }
-
-
 </script>
 
 <template>
@@ -144,8 +138,8 @@ if (!localStorage.getItem('reloaded')) {
   <div class="wrapper">
     <!--sidebar wrapper -->
     <div class="sidebar-wrapper" data-simplebar="true">
-      <div class="sidebar-header" v-for="setting in settings" :key="setting.id">
-        <div>
+      <div class="sidebar-header">
+        <div v-for="setting in settings" :key="setting.id">
           <a href="/">
             <img id="logo-img" :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
               class="lg2">
@@ -208,7 +202,6 @@ if (!localStorage.getItem('reloaded')) {
         </li>
       </ul>
       <!--end navigation-->
-
     </div>
     <!--end sidebar wrapper -->
 
@@ -241,11 +234,12 @@ if (!localStorage.getItem('reloaded')) {
       </div>
     </header>
     <!--end header -->
+
     <!--start page wrapper -->
     <div class="page-wrapper">
       <div class="page-content">
         <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
-          <div class="col mr-k10">
+          <div class="col">
             <div class="card radius-10 border-start border-0 border-3 border-info">
               <div class="card-body">
                 <div class="d-flex align-items-center">
@@ -258,7 +252,7 @@ if (!localStorage.getItem('reloaded')) {
               </div>
             </div>
           </div>
-          <div class="col mr-k10">
+          <div class="col">
             <div class="card radius-10 border-start border-0 border-3 border-success">
               <div class="card-body">
                 <div class="d-flex align-items-center">
@@ -271,7 +265,7 @@ if (!localStorage.getItem('reloaded')) {
               </div>
             </div>
           </div>
-          <div class="col mr-k10">
+          <div class="col">
             <div class="card radius-10 border-start border-0 border-3 border-danger">
               <div class="card-body">
                 <div class="d-flex align-items-center">
@@ -284,12 +278,12 @@ if (!localStorage.getItem('reloaded')) {
               </div>
             </div>
           </div>
-          <div class="col csize">
+          <div class="col">
             <div class="card radius-10 border-start border-0 border-3 border-warning">
               <div class="card-body">
                 <div class="d-flex align-items-center">
                   <div>
-                    <h6 class="mb-0"><b>{{ useradminis }} Akun Administrator</b></h6>
+                    <h6 class="mb-0 cfs-15"><b>{{ useradminis }} Akun Administrator</b></h6>
                     <br>
                     <p class="mb-0 font-13">{{ useradmin }} Akun Admin</p>
                   </div>

@@ -9,7 +9,7 @@
                         <div class="navbar-left" v-for="setting in settings" :key="setting.id">
                             <a href="/">
                                 <img :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
-                                    style="width: 100px; margin-left: -15px;">
+                                    alt="Logo" style="width: 135px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>
@@ -35,7 +35,7 @@
             <div class="page-content">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0">TAMBAH KRITERIA DAN BOBOT PENILAIAN</h4>
+                        <h4 class="mb-0">TAMBAH KRITERIA PENILAIAN</h4>
                         <hr />
                         <form @submit.prevent="submit" enctype="multipart/form-data">
                             <div class="row" v-for="(criteria, index) in form.kriteria" :key="index">
@@ -45,11 +45,7 @@
                                         placeholder="Masukan kriteria penilaian" v-model="criteria.name_kriteria"
                                         required>
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="c-mb5-black c-mt10"><b>Bobot (%)</b></label>
-                                    <input type="number" class="form-control label-8"
-                                        placeholder="Masukan bobot kriteria" v-model="criteria.nilai_bobot">
-                                </div>
+
                                 <div class="col-md-2 c-mt10 d-flex align-items-end">
                                     <button class="btn btn-secondary" @click="removeKriteria(index)"
                                         v-if="form.kriteria.length > 1"><i class="fas fa-minus"></i></button>
@@ -92,11 +88,11 @@ const props = {
 
 
 const form = useForm({
-    kriteria: [{ name_kriteria: '', nilai_bobot: '' }],
+    kriteria: [{ name_kriteria: '' }],
 });
 
 const addKriteria = () => {
-    form.kriteria.push({ name_kriteria: '', nilai_bobot: '' });
+    form.kriteria.push({ name_kriteria: '' });
 };
 
 const removeKriteria = (index) => {

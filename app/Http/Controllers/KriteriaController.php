@@ -19,7 +19,6 @@ class KriteriaController extends Controller
      */
     public function index()
     {
-        $bobot = BobotResource::collection(Bobot::all());  
         $setting = Setting::all();
         $user = Auth::user();
         Inertia::share('userData', [
@@ -33,7 +32,6 @@ class KriteriaController extends Controller
             'kriterias' => $kriteria,
             'UserData' => $user,
             'settings' =>$setting,
-            'bobots' =>$bobot,
         ]);
     }
 
@@ -64,7 +62,6 @@ class KriteriaController extends Controller
         $validatedData = $request->validate([
             'kriteria' => 'required|array',
             'kriteria.*.name_kriteria' => 'required|string',
-            'kriteria.*.nilai_bobot' => 'required|integer|in:10,20,30,40,50,60,70,80,100',
         ]);
     
         // Simpan kriteria dan bobot
@@ -73,17 +70,6 @@ class KriteriaController extends Controller
             $kriteriaModel = new Kriteria();
             $kriteriaModel->name_kriteria = $item['name_kriteria'];
             $kriteriaModel->save();
-    
-            // Simpan bobot
-            $bobotModel = new Bobot();
-            $bobotModel->nilai_bobot = $item['nilai_bobot'];
-            $bobotModel->save();
-    
-            // Simpan relasi kriteria dan bobot
-            DB::table('kriteria_bobots')->insert([
-                'kriteria_id' => $kriteriaModel->id,
-                'bobot_id' => $bobotModel->id,
-            ]);
         }
     
         return redirect()->route('kriteria.index')->with('success', 'Kriteria berhasil ditambahkan');

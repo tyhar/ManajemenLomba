@@ -6,9 +6,10 @@
         <nav class="navbar navbar-expand">
           <!-- Navbar tambah untuk logo di kiri -->
           <div class="navbar-tambah">
-            <div class="navbar-left">
+            <div class="navbar-left" v-for="setting in settings" :key="setting.id">
               <a href="/">
-                <img src="/bootstrap/images/lg.png" alt="Logo" style="width: 100px; margin-left: -15px;">
+                <img :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
+                  alt="Logo" style="width: 135px; margin-left: -15px;">
               </a>
             </div>
           </div>
@@ -70,8 +71,8 @@
                 <p class="keterangan-foto f-italic">Format: .pdf</p>
               </div>
               <div class="btn-posisi">
-                <button type="submit" class="btn btn-primary button-tabel-right">Simpan</button>
-                <button class="btn btn-danger button-tabel-left" @click="goBack()">Batal</button>
+                <button class="btn btn-danger button-left" @click="goBack()">Batal</button>
+                <button type="submit" class="btn btn-primary button-right">Simpan</button>
               </div>
             </form>
           </div>
@@ -98,7 +99,22 @@ const form = reactive({
 });
 
 // Destructure props
-const { name, username, tim, submissions } = defineProps(['name', 'username', 'tim', 'submissions']);
+const { name, username, tim, submissions, settings, logo1 } = defineProps(['name', 'username', 'tim', 'submissions', 'settings', 'logo1']);
+
+
+
+const props = {
+  settings: {
+    type: Object, // Menggunakan "type" untuk menentukan tipe data props
+    default: () => ({}), // Menggunakan "default" jika props tidak diberikan
+  },
+  logo1: {
+    type: String, // Menentukan tipe data logo sebagai String
+  },
+
+};
+
+
 
 // Populate form with existing submission data if available
 onMounted(() => {
@@ -124,7 +140,7 @@ function submit() {
   // Menampilkan konfirmasi sebelum menyimpan data
   Swal.fire({
     title: 'Apakah Anda yakin?',
-    text: 'Apakah Anda yakin akan mengumpulkan hasil karya lomba? Silakan cek terlebih dahulu! Data yang disimpan tidak dapat diubah!',
+    text: 'Silakan cek terlebih dahulu!',
     icon: 'warning',
     showCancelButton: true,
     confirmButtonText: 'Ya, Simpan!',

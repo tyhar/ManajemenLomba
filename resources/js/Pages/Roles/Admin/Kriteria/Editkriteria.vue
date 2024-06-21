@@ -9,7 +9,7 @@
                         <div class="navbar-left" v-for="setting in settings" :key="setting.id">
                             <a href="/">
                                 <img :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
-                                    style="width: 100px; margin-left: -15px;">
+                                    alt="Logo" style="width: 135px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>
@@ -43,8 +43,8 @@
                             <div class="row">
                                 <div class="col-md-6 c-mb10">
                                     <label class="c-mb5-black"><b>Kriteria Penilaian</b></label>
-                                    <input type="text" class="form-control" v-model="form.name_kriteria"
-                                        id="name_kriteria" required>
+                                    <input type="text" class="form-control" placeholder="Masukan kriteria penilaian"
+                                        v-model="form.name_kriteria" id="name_kriteria" required>
                                 </div>
                             </div>
                             <div class="btn-posisi">

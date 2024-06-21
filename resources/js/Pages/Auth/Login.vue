@@ -1,84 +1,3 @@
-<script setup>
-import { computed, defineProps, ref, reactive } from 'vue';
-import Checkbox from '@/Components/Checkbox.vue';
-import InputError from '@/Components/InputError.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
-import Swal from 'sweetalert2';
-
-// Define props
-const props = defineProps({
-    canResetPassword: {
-        type: Boolean,
-    },
-    status: {
-        type: String,
-    },
-    errors: Object,
-});
-
-// Reactive state for CAPTCHA
-const captcha = reactive({
-    question: '',
-    answer: 0
-});
-let captchaInput = '';
-
-// Generate CAPTCHA
-function generateCaptcha() {
-    const num1 = Math.floor(Math.random() * 10) + 1;
-    const num2 = Math.floor(Math.random() * 10) + 1;
-    captcha.question = `${num1} x ${num2}?`;
-    captcha.answer = num1 * num2;
-}
-
-// Form state
-const form = useForm({
-    email: '',
-    password: '',
-    remember: false,
-});
-
-// Form submit handler with CAPTCHA and SweetAlert
-function submit() {
-    if (parseInt(captchaInput) === captcha.answer) {
-        form.post(route('login'), {
-            onFinish: () => {
-                form.reset('password');
-                if (!form.hasErrors()) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Login Successful',
-                        text: 'You have successfully logged in!',
-                    });
-                }
-            },
-        });
-    } else {
-        Swal.fire({
-            icon: 'error',
-            title: 'Captcha Incorrect',
-            text: 'Try Again!',
-        });
-        generateCaptcha();
-    }
-}
-
-// Login with Google
-function loginWithGoogle() {
-    window.location.href = "/authorized/google";
-}
-
-// Initial CAPTCHA generation
-generateCaptcha();
-
-// Password visibility toggle
-const showPassword = ref(false);
-function togglePasswordVisibility() {
-    showPassword.value = !showPassword.value;
-}
-</script>
-
 <template>
 
     <body class="body-login">
@@ -91,19 +10,14 @@ function togglePasswordVisibility() {
                             <br><br>
                         </div>
                         <form class="row g-3" @submit.prevent="submit">
-                            <!-- <div v-if="errors.username" class="text-danger">{{ errors.username }}
-								</div> -->
-                            <!-- <div v-if="$page.props.flash.message" class="alert alert-success">
-									{{ $page.props.flash.message }}
-								</div> -->
                             <div class="col-12">
-                                <label for="inputEmailAddress" class="form-label warna-hitam">Email</label>
-                                <input class="form-control" id="email" type="email" v-model="form.email" required
+                                <label for="login" class="form-label warna-hitam">Email</label>
+                                <input class="form-control" id="login" type="text" v-model="form.login" required
                                     placeholder="Email atau Username" />
-                                <InputError class="mt-2" :message="errors.email" />
+                                <InputError class="mt-2" :message="errors.login" />
                             </div>
                             <div class="col-12 c-mlk10">
-                                <label for="inputEmailAddress" class="form-label warna-hitam">Password</label>
+                                <label for="password" class="form-label warna-hitam">Password</label>
                                 <div class="input-group" id="show_hide_password">
                                     <input class="form-control border-end-0" id="password"
                                         :type="showPassword ? 'text' : 'password'" v-model="form.password" required
@@ -113,21 +27,18 @@ function togglePasswordVisibility() {
                                         @click="togglePasswordVisibility">
                                         <i :class="showPassword ? 'bx bx-show' : 'bx bx-hide'"></i>
                                     </a>
-
                                 </div>
-                            </div>
-                            <div class="col-md-6 jarak-top-lebih4">
                             </div>
                             <div class="d-grid jarak-top-lebih10">
-                                <label class="c-mr-5">Hasil Dari</label>
-                                <label for="captcha" class="form-label">{{ captcha.question }}</label>
-                                <div class="input-group">
-                                    <input v-model="captchaInput" type="text" class="form-control" id="captcha"
-                                        placeholder="Enter Captcha">
+                                <label class="c-mr-5">CAPTCHA</label>
+                                <div>
+                                    <img :src="captcha.image" alt="CAPTCHA">
+                                    <button type="button" @click="generateCaptcha">Refresh</button>
                                 </div>
+                                <input v-model="captchaInput" type="text" class="form-control" id="captcha" required
+                                    placeholder="Enter CAPTCHA">
                             </div>
-                            <Link v-if="canResetPassword" :href="route('password.request')" class="ml240">
-                            Lupa Password?
+                            <Link v-if="canResetPassword" :href="route('password.request')" class="ml240">Lupa Password?
                             </Link>
                             <div class="col-12">
                                 <div class="d-grid jarak-top-kurang5">
@@ -157,9 +68,88 @@ function togglePasswordVisibility() {
                             </div>
                         </form>
                     </div>
-                    <!--end row-->
                 </div>
             </div>
         </div>
     </body>
 </template>
+
+<script setup>
+import { ref, reactive } from 'vue';
+import { Head, Link, useForm } from '@inertiajs/vue3';
+import Swal from 'sweetalert2';
+import axios from 'axios';
+
+const props = defineProps({
+    canResetPassword: {
+        type: Boolean,
+    },
+    status: {
+        type: String,
+    },
+    errors: Object,
+});
+
+const captcha = reactive({
+    image: '',
+    key: '',
+});
+const captchaInput = ref('');
+
+async function generateCaptcha() {
+    try {
+        const response = await axios.get('/captcha-image');
+        captcha.image = response.data.captcha + '&' + Date.now(); // Avoid caching
+    } catch (error) {
+        console.error('Error fetching CAPTCHA:', error);
+    }
+}
+
+const form = useForm({
+    login: '',
+    password: '',
+    remember: false,
+    captcha: ''
+});
+
+function submit() {
+    form.captcha = captchaInput.value;
+    form.post(route('login'), {
+        onFinish: () => {
+            form.reset('password');
+            if (form.errors.captcha) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Captcha Salah',
+                    text: 'Silahkan Coba Lagi!',
+                });
+                generateCaptcha();
+            } else if (!form.hasErrors()) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Login Successful',
+                    text: 'You have successfully logged in!',
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Login Failed',
+                    text: 'Please check your input and try again.',
+                });
+                generateCaptcha();
+            }
+        },
+    });
+}
+
+function loginWithGoogle() {
+    window.location.href = "/authorized/google";
+}
+
+const showPassword = ref(false);
+function togglePasswordVisibility() {
+    showPassword.value = !showPassword.value;
+}
+
+generateCaptcha();
+</script>

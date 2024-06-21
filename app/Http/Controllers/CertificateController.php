@@ -1,73 +1,128 @@
 <?php
-
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image;
-use App\Models\Certificate;
+use setasign\Fpdi\Fpdi;
+use Illuminate\Support\Facades\Auth;
 use App\Models\TeamMember;
 use App\Models\Lomba;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Setting;
 
 class CertificateController extends Controller
 {
-    public function generateCertificates(Lomba $lomba)
+    public function process($lomba_id)
     {
+        if (!auth()->check()) 
+        {
+            return response()->json(['error' => 'User not authenticated'], 401);
+        }
+        
         $user = Auth::user();
-
-        // Fetch team members with the authenticated user and their roles
-        $members = TeamMember::with(['team.lomba', 'user'])
-            ->where('user_id', $user->id)
+        
+        // Fetch the team and ensure it exists
+        $team = $user->team()->where('lomba_id', $lomba_id)->with(['lomba', 'user'])->first();
+        if (!$team) {
+            return response()->json(['error' => 'Team not found'], 404);
+        }
+        
+        // Fetch members of the team along with their roles
+        $members = TeamMember::where('team_id', $team->id)
+            ->with(['user' => function($query) {
+                $query->select('id', 'name');
+            }])
             ->get();
-
-        $outputDir = storage_path('app/public/certificates');
-
-        if (!file_exists($outputDir)) {
-            mkdir($outputDir, 0777, true);
+        
+        // Fetch the lomba to get the certificate template
+        $lomba = Lomba::find($lomba_id);
+        if (!$lomba || !$lomba->sertifikat) {
+            return response()->json(['error' => 'Certificate template not found'], 404);
         }
+        
+        // Fetch the setting to get the title
+        $setting = Setting::first(); // Adjust this if there are specific settings related to the lomba or other criteria
+        if (!$setting || !$setting->judul) {
+            return response()->json(['error' => 'Setting or title not found'], 404);
+        }
+        
+        $certificateTemplatePath = public_path('storage/' . $lomba->sertifikat);
 
-        foreach ($members as $member) {
-            if ($member->role == 'ketua' || $member->role == 'member') {
-                $filePath = $this->generateCertificate($member, $outputDir);
-                Certificate::create([
-                    'team_member_id' => $member->id,
-                    'file_path' => $filePath,
-                ]);
+        // Path to save the merged PDF temporarily
+        $tempOutputFile = public_path('temp_certificate.pdf');
+
+        // Create an FPDI instance
+        $fpdi = new FPDI;
+
+        // Loop through each role and generate certificates
+        $roles = ['Ketua', 'Anggota']; // Define roles if fixed, otherwise fetch dynamically
+        foreach ($roles as $role) {
+            foreach ($members as $member) {
+                if ($member->role == $role) {
+                    $nama = $member->user->name;
+                    $this->fillPDF($fpdi, $certificateTemplatePath, $nama, $role, $lomba->name_lomba);
+                }
             }
         }
 
-        return response()->json(['message' => 'Certificates generated successfully!']);
+        // Output the final merged PDF temporarily
+        $fpdi->Output($tempOutputFile, 'F');
+
+        // Construct the filename using name_lomba and judul
+        $outputFilename = 'sertifikat_' . $lomba->name_lomba . '_' . $setting->name . '.pdf';
+
+        // Return the file as a response with the dynamic filename
+        return response()->download($tempOutputFile, $outputFilename)->deleteFileAfterSend(true);
     }
 
-    private function generateCertificate($member, $outputDir)
+    public function fillPDF($fpdi, $file, $nama, $role, $nameLomba)
     {
-        // Assuming you want to use the first related lomba's sertifikat for the certificate
-        $lomba = $member->team->lomba->first();
-        $templatePath = $this->getTemplatePath($lomba->sertifikat);
-        $template = Image::make($templatePath);
-
-        $template->text($member->user->name, 150, 200, function ($font) {
-            $font->file(public_path('fonts/YourFont.ttf'));
-            $font->size(24);
-            $font->color('#000000');
-        });
-
-        $outputPath = $outputDir . '/' . $member->user->name . '_certificate.png';
-        $template->save($outputPath);
-
-        return 'certificates/' . $member->user->name . '_certificate.png'; // Relative path for storage
-    }
-
-    private function getTemplatePath($template)
-    {
-        $defaultTemplatePath = public_path('images/default_template.png');
-        if ($template) {
-            $templatePath = storage_path('app/public/sertifikat_files/' . $template);
-            if (file_exists($templatePath)) {
-                return $templatePath;
-            }
-        }
-        return $defaultTemplatePath;
+        $fpdi->setSourceFile($file);
+        $template = $fpdi->importPage(1);
+        $size = $fpdi->getTemplateSize($template);
+        $fpdi->AddPage($size['orientation'], [$size['width'], $size['height']]);
+        $fpdi->useTemplate($template);
+    
+        // Generate random 4 digit certificate number
+        $certNumber = rand(1000, 9999);
+    
+        // Define positions for certificate number
+        $certNumberLeft = 10;
+        $certNumberTop = 10;
+    
+        // Add certificate number text
+        $fpdi->SetFont('helvetica', '', 10);
+        $fpdi->SetTextColor(25, 26, 25);
+        $fpdi->Text($certNumberLeft, $certNumberTop, str_pad($certNumber, 4, '0', STR_PAD_LEFT));
+    
+        // Calculate center positions for name and role
+        $fpdi->SetFont('helvetica', '', 20);
+        $nameWidth = $fpdi->GetStringWidth($nama);
+        $nameX = ($size['width'] - $nameWidth) / 2;
+        $nameY = 105; // Adjust as needed for vertical position
+    
+        $fpdi->SetFont('helvetica', '', 15);
+        $roleText = 'Sebagai ' . $role;
+        $roleWidth = $fpdi->GetStringWidth($roleText);
+        $roleX = ($size['width'] - $roleWidth) / 2;
+        $roleY = $nameY + 10; // Adjust as needed for vertical position
+    
+        $fpdi->SetFont('helvetica', '', 15);
+        $lombaText = 'Lomba ' . $nameLomba;
+        $lombaWidth = $fpdi->GetStringWidth($lombaText);
+        $lombaX = ($size['width'] - $lombaWidth) / 2;
+        $lombaY = $roleY + 10; // Adjust as needed for vertical position
+    
+        // Add name text
+        $fpdi->SetFont('helvetica', '', 20);
+        $fpdi->SetTextColor(25, 26, 25);
+        $fpdi->Text($nameX, $nameY, $nama);
+    
+        // Add role text
+        $fpdi->SetFont('helvetica', '', 15);
+        $fpdi->Text($roleX, $roleY, $roleText);
+    
+        // Add lomba text
+        $fpdi->SetFont('helvetica', '', 15);
+        $fpdi->Text($lombaX, $lombaY, $lombaText);
     }
 }

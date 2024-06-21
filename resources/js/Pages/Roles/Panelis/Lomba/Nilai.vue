@@ -1,68 +1,71 @@
 <template>
   <div class="wrapper">
-    <!--start header -->
+    <!-- Start header -->
     <header>
       <div class="c-topbar">
         <nav class="navbar navbar-expand">
-          <!-- Navbar tambah untuk logo di kiri -->
+          <!-- Navbar logo on the left -->
           <div class="navbar-tambah">
-            <div class="navbar-left">
+            <div class="navbar-left" v-for="setting in settings" :key="setting.id">
               <a href="/">
-                <img src="bootstrap/images/logo.png" alt="Logo">
+                <img :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
+                  alt="Logo" style="width: 135px; margin-left: -15px;">
               </a>
             </div>
           </div>
           <!-- Mobile toggle menu -->
           <!-- Search bar -->
-          <div class="search-bar flex-grow-1">
-          </div>
+          <div class="search-bar flex-grow-1"></div>
           <!-- Top menu -->
           <div class="top-menu ms-auto">
             <ul class="navbar-nav align-items-center">
-              <div class="user-info ps-3">
-                <p class="user-name mb-0">Habib Shohiburrotib</p>
-                <p class="user-role">habib</p>
-              </div>
-              <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
+              <div class="parent-icon posisi-icon">
+                <i class="bx bx-user-circle c-font48"></i>
               </div>
             </ul>
           </div>
         </nav>
       </div>
     </header>
-    <!--end header -->
-    <!--start page wrapper -->
+    <!-- End header -->
+
+    <!-- Start page wrapper -->
     <div class="page-wrapper-new">
       <div class="page-content">
         <div class="card">
-          <div class="card-body">
-            <h4 class="mb-0">BERI NILAI </h4>
+          <div class="card-body" v-if="teams">
+            <h4 class="mb-0">BERI NILAI TIM {{ teams.name_team }}</h4>
             <hr />
             <form @submit.prevent="confirmSubmit">
               <div class="row" v-for="(kriteria, index) in kriterias" :key="kriteria.id">
                 <div class="col-md-6 c-mb10">
                   <label class="c-mb5-black">
-                    <b>{{ index + 1 }}. {{ kriteria?.kriteria_bobot?.kriteria?.name_kriteria }}</b>
+                    <b>{{ index + 1 }}. {{ kriteria?.kriteria?.name_kriteria }} </b>
                   </label>
                 </div>
                 <div class="col-md-6">
-                  <label class="c-mb5-black">Nilai {{ kriteria?.kriteria_bobot?.bobot?.nilai_bobot }}%</label>
+                  <label class="c-mb5-black">Nilai {{ kriteria.bobot }} %</label>
                   <input type="number" class="form-control c-mb20" :id="'value_count_' + kriteria.id"
                     v-model="form.value_count[kriteria.id]" />
                   <!-- Add hidden input to store kriteria_id -->
-                  <input type="hidden" :name="'kriteria_lomba_bobot_id' + kriteria.id" :value="kriteria.id" />
+                  <input type="hidden" :name="'kriteria_lomba_id' + kriteria.id" :value="kriteria.id" />
                 </div>
               </div>
+              <div v-if="errors.length" class="alert alert-danger">
+                <ul>
+                  <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
+                </ul>
+              </div>
               <div class="btn-posisi">
-                <button type="submit" class="btn btn-primary button-tabel-right">Simpan</button>
-                <button class="btn btn-danger button-tabel-left" @click="goBack">Batal</button>
+                <button type="button" class="btn btn-danger button-left" @click="goBack">Batal</button>
+                <button type="submit" class="btn btn-primary button-right">Simpan</button>
               </div>
             </form>
           </div>
         </div>
       </div>
     </div>
-    <!--end page wrapper -->
+    <!-- End page wrapper -->
   </div>
 </template>
 
@@ -81,12 +84,33 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+  lombas: {
+    type: Object,
+    required: true,
+  },
+  teams: {
+    type: Object,
+    required: true,
+  },
+  reg_lombas: {
+    type: Object,
+    required: true,
+  },
+  settings: {
+    type: Object,
+    default: () => ({}),
+  },
+  logo1: {
+    type: String,
+  },
 });
 
 const form = useForm({
   value_count: {},
-  user_id: props.userData.id
+  user_id: props.userData.id,
 });
+
+const errors = ref([]);
 
 onMounted(() => {
   props.kriterias.forEach(kriteria => {
@@ -110,9 +134,9 @@ const confirmSubmit = async () => {
 const submit = async () => {
   try {
     const formData = props.kriterias.map(kriteria => ({
-      kriteria_lomba_bobot_id: kriteria.id,
-      value_count: (form.value_count[kriteria.id] * kriteria.kriteria_bobot.bobot.nilai_bobot) / 100,
-      reg_lomba_id: kriteria.kriteria_bobot.reg_lomba_id // Assuming 'reg_lomba_id' is available in 'kriteria_bobot'
+      kriteria_lomba_id: kriteria.id,
+      value_count: (form.value_count[kriteria.id] * kriteria.bobot) / 100,
+      reg_lomba_id: props.reg_lombas.id,
     }));
 
     await router.post('/value', {
@@ -128,12 +152,16 @@ const submit = async () => {
       router.get('/lombajuri');
     });
   } catch (error) {
-    Swal.fire({
-      icon: 'error',
-      title: 'Oops...',
-      text: 'Terjadi kesalahan. Silakan coba lagi!',
-    });
-    console.error('An error occurred:', error);
+    if (error.response && error.response.data.errors) {
+      errors.value = Object.values(error.response.data.errors).flat();
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Terjadi kesalahan. Silakan coba lagi!',
+      });
+      console.error('An error occurred:', error);
+    }
   }
 };
 

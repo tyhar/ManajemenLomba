@@ -4,9 +4,11 @@
         <!--sidebar wrapper -->
         <div class="sidebar-wrapper" data-simplebar="true">
             <div class="sidebar-header">
-                <div>
+                <div v-for="setting in settings" :key="setting.id">
                     <a href="/">
-                        <img id="logo-img" src="/bootstrap/images/lg.png" class="lg2">
+                        <img id="logo-img"
+                            :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
+                            class="lg2">
                     </a>
                 </div>
                 <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
@@ -14,7 +16,7 @@
             <!--navigation-->
             <ul class="metismenu" id="menu">
                 <li>
-                    <a href="/index2">
+                    <a :href="route('admin')">
                         <div class="parent-icon"><i class='bx bx-home-circle'></i>
                         </div>
                         <div class="menu-title">Dashboard</div>
@@ -68,10 +70,14 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/">
+                    <a>
                         <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i>
                         </div>
-                        <div class="menu-title">Keluar</div>
+                        <div class="menu-title">
+                            <Link class="menu-title" :href="route('logout')" method="post" as="button">
+                            Keluar
+                            </Link>
+                        </div>
                     </a>
                 </li>
             </ul>
@@ -124,13 +130,14 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0 jarak-top-kurang5">TABEL RANGKING UI / UX</h4>
+                        <h4 class="mb-0 jarak-top-kurang5">TABEL RANGKING {{ reg_lombas.length > 0 ?
+                            reg_lombas[0].lomba.name_lomba : '' }}</h4>
                         <hr class="c-mt10" />
                         <label class="jarak-filterstatus">Filter by Status</label>
-                        <select class="form-select2">
-                            <option selected>Semua</option>
-                            <option>Tidak Lolos</option>
-                            <option>Lolos</option>
+                        <select v-model="filterStatus" class="form-select2">
+                            <option value="Semua">Semua</option>
+                            <option value="Tidak Lolos">Tidak Lolos</option>
+                            <option value="Lolos">Lolos</option>
                         </select>
                         <br><br>
                         <div class="table-responsive">
@@ -143,20 +150,21 @@
                                         <th class="crud-width100">File</th>
                                         <th class="crud-width100">Link</th>
                                         <th class="crud-width-150">Instansi</th>
-                                        <th class="crud-width100">Rata-rata</th>
+                                        <th class="crud-width100">Total</th>
                                         <th class="crud-width100">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Tim Design</td>
-                                        <td>Platform Pendidikan Interaktif</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Universitas</td>
-                                        <td></td>
-                                        <td>Tidak Lolos</td>
+                                    <tr v-for="(reg_lomba, index) in filteredRegLombas" :key="reg_lomba.id">
+                                        <td>{{ index + 1 }}</td>
+                                        <td>{{ reg_lomba?.team?.name_team }}</td>
+                                        <td>{{ reg_lomba?.submission?.title }}</td>
+                                        <td><a :href="`/submissionshow/${reg_lomba?.submission?.id}`">Lihat File</a>
+                                        </td>
+                                        <td> <a :href="reg_lomba?.submission?.link" target="_blank">Buka Link</a></td>
+                                        <td>{{ reg_lomba?.team?.instansi }}</td>
+                                        <td>{{ reg_lomba.value_total }}</td>
+                                        <td>{{ reg_lomba.status_kelulusan }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -168,21 +176,50 @@
         </div>
     </div>
 </template>
+
 <script setup>
-import { onMounted, ref, computed } from 'vue';
-import { router } from "@inertiajs/vue3";
+import { ref, computed } from 'vue';
+import { Link } from '@inertiajs/vue3';
 import { defineProps } from "vue";
 
-
-const unreadCount = ref(0);
-onMounted(async () => {
-    try {
-        const response = await axios.get('/api/unread-messages');
-        unreadCount.value = response.data.unreadCount;
-    } catch (error) {
-        console.error(error);
-    }
+const props = defineProps({
+    reg_lombas: {
+        type: Array,
+        required: true,
+    },
+    settings: {
+        type: Object,
+        default: () => ({}),
+    },
+    logo1: {
+        type: String,
+    },
+    unreadCount: {
+        type: Object,
+        required: true,
+    },
 });
 
+const filterStatus = ref('Semua');
 
+const filteredRegLombas = computed(() => {
+    return props.reg_lombas.filter(reg_lomba => {
+        if (filterStatus.value === 'Semua') {
+            return true;
+        }
+        const statusLower = reg_lomba.status_kelulusan.toLowerCase();
+        if (filterStatus.value === 'Lolos') {
+            return statusLower === 'lolos';
+        } else if (filterStatus.value === 'Tidak Lolos') {
+            return statusLower === 'tidak lolos';
+        }
+        return false;
+    });
+});
+
+function openLink(url) {
+    if (url) {
+        window.open(url, '_blank');
+    }
+}
 </script>

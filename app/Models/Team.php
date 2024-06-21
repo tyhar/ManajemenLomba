@@ -44,5 +44,9 @@ class Team extends Model
     {
         return $this->hasMany(Notifikasi::class);
     }
+    public function userStatus()
+    {
+        return $this->hasOne(UserStatus::class, 'user_id', 'user_id');
+    }
 
 }

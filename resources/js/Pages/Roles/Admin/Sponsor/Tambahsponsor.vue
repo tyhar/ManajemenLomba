@@ -1,9 +1,10 @@
 <script setup>
+import { defineProps, ref, reactive } from 'vue';
 import { Link } from '@inertiajs/vue3';
 import { useForm } from "@inertiajs/vue3";
 import { Head } from "@inertiajs/vue3";
 
-const { name, username } = defineProps(['name', 'username']);
+const { name, username, settings } = defineProps(['name', 'username', 'settings']);
 
 console.log(name); // Contoh penggunaan di dalam script setup
 console.log(username);
@@ -15,6 +16,14 @@ const form = useForm({
     logo: null,
     link_file: "",
 });
+
+const props = {
+    settings: {
+        type: Object, // Menggunakan "type" untuk menentukan tipe data props
+        default: () => ({}), // Menggunakan "default" jika props tidak diberikan
+    },
+};
+
 
 const submit = () => {
     form.post(route("sponsor.store"), {
@@ -38,10 +47,10 @@ const submit = () => {
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
-                        <div class="navbar-left">
+                        <div class="navbar-left" v-for="setting in settings" :key="setting.id">
                             <a href="/">
-                                <img src="/bootstrap/images/lg.png" alt="Logo"
-                                    style="width: 100px; margin-left: -15px;">
+                                <img :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
+                                    alt="Logo" style="width: 135px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>

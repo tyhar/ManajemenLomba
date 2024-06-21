@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Message;
 use App\Http\Resources\SettingResource;
 use App\Models\Setting;
-use Illuminate\Support\Facades\Auth;
+// use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -18,10 +17,9 @@ class SettingController extends Controller
     public function index()
     {
 
-        $unreadCount = Message::where('status', 'belum_dibaca')->count();
 
         return Inertia::render('Roles/Admin/Setting', [
-            'settings' => Setting::all()->map(function($setting) {
+            'settings' => Setting::all()->map(function ($setting) {
                 return [
                     'id' => $setting->id,
                     'name' => $setting->name,
@@ -31,16 +29,22 @@ class SettingController extends Controller
                     'deskripsi' => $setting->deskripsi,
                     'mulai' => $setting->mulai,
                     'berakhir' => $setting->berakhir,
-                    'logo1' => asset('storage/'.$setting->logo1),
-                    'logo2' => asset('storage/'.$setting->logo2),
-                    'logo3' => asset('storage/'.$setting->logo3)
+                    'des_pendaftaran' => $setting->des_pendaftaran,
+                    'pengumpulan' => $setting->pengumpulan,
+                    'des_pengumpulan' => $setting->des_pengumpulan,
+                    'pengumuman' => $setting->pengumuman,
+                    'des_pengumuman' => $setting->des_pengumuman,
+                    'presentasi' => $setting->presentasi,
+                    'des_presentasi' => $setting->des_presentasi,
+                    'whatsApp' => $setting->whatsApp,
+                    'instagram' => $setting->instagram,
+                    'email' => $setting->email,
+                    'youtube' => $setting->youtube,
+                    'logo1' => asset('storage/' . $setting->logo1),
+                    'logo2' => asset('storage/' . $setting->logo2),
+                    'logo3' => asset('storage/' . $setting->logo3)
                 ];
-                
-
-            }),
-            'unreadCount' => $unreadCount,
-
-
+            })
         ]);
     }
 
@@ -49,10 +53,15 @@ class SettingController extends Controller
      */
     public function create()
     {
-
-
-        return Inertia::render('Roles/Admin/Setting/Tambahsetting');
-
+        $settings = Setting::all()->map(function ($setting) {
+            return [
+                'id' => $setting->id,
+                'logo1' => $setting->logo1,
+            ];
+        });
+        return Inertia::render('Roles/Admin/Setting/Tambahsetting', [
+            'settings' => $settings,
+        ]);
     }
 
     /**
@@ -61,10 +70,10 @@ class SettingController extends Controller
     public function store(Request $request)
     {
 
-        $logo1 = Request::file('logo1')->store('settings','public');
-        $logo2 = Request::file('logo2')->store('settings','public');
-        $logo3 = Request::file('logo3')->store('settings','public');
-    
+        $logo1 = Request::file('logo1')->store('settings', 'public');
+        $logo2 = Request::file('logo2')->store('settings', 'public');
+        $logo3 = Request::file('logo3')->store('settings', 'public');
+
         Setting::create([
             'name' => Request::input('name'),
             'judul' => Request::input('judul'),
@@ -73,6 +82,17 @@ class SettingController extends Controller
             'deskripsi' => Request::input('deskripsi'),
             'mulai' => Request::input('mulai'),
             'berakhir' => Request::input('berakhir'),
+            'des_pendaftaran' => Request::input('des_pendaftaran'),
+            'pengumpulan' => Request::input('pengumpulan'),
+            'des_pengumpulan' => Request::input('des_pengumpulan'),
+            'pengumuman' => Request::input('pengumuman'),
+            'des_pengumuman' => Request::input('des_pengumuman'),
+            'presentasi' => Request::input('presentasi'),
+            'des_presentasi' => Request::input('des_presentasi'),
+            'whatsApp' => Request::input('whatsApp'),
+            'instagram' => Request::input('instagram'),
+            'email' => Request::input('email'),
+            'youtube' => Request::input('youtube'),
             'logo1' => $logo1,
             'logo2' => $logo2,
             'logo3' => $logo3
@@ -84,14 +104,12 @@ class SettingController extends Controller
 
     public function edit(Setting $setting)
     {
-
-        $settingz = Setting::all();
+        
         return Inertia::render('Roles/Admin/Setting/Editsetting', [
-            'settingsz' => $settingz,
             'settings' => $setting,
-            'logo1' => asset('storage/'.$setting->logo1),
-            'logo2' => asset('storage/'.$setting->logo2),
-            'logo3' => asset('storage/'.$setting->logo3)
+            'logo1' => asset('storage/' . $setting->logo1),
+            'logo2' => asset('storage/' . $setting->logo2),
+            'logo3' => asset('storage/' . $setting->logo3)
         ]);
 
     }
@@ -102,19 +120,19 @@ class SettingController extends Controller
     public function update(Request $request, Setting $setting)
     {
         $logo1 = $setting->logo1;
-        if(Request::file('logo1')){
-            Storage::delete('public/'.$setting->logo1);
-            $logo1 = Request::file('logo1')->store('settings','public');
+        if (Request::file('logo1')) {
+            Storage::delete('public/' . $setting->logo1);
+            $logo1 = Request::file('logo1')->store('settings', 'public');
         }
         $logo2 = $setting->logo2;
-        if(Request::file('logo2')){
-            Storage::delete('public/'.$setting->logo2);
-            $logo2 = Request::file('logo2')->store('settings','public');
+        if (Request::file('logo2')) {
+            Storage::delete('public/' . $setting->logo2);
+            $logo2 = Request::file('logo2')->store('settings', 'public');
         }
         $logo3 = $setting->logo3;
-        if(Request::file('logo3')){
-            Storage::delete('public/'.$setting->logo3);
-            $logo3 = Request::file('logo3')->store('settings','public');
+        if (Request::file('logo3')) {
+            Storage::delete('public/' . $setting->logo3);
+            $logo3 = Request::file('logo3')->store('settings', 'public');
         }
 
         $setting->update([
@@ -125,6 +143,17 @@ class SettingController extends Controller
             'deskripsi' => Request::input('deskripsi'),
             'mulai' => Request::input('mulai'),
             'berakhir' => Request::input('berakhir'),
+            'des_pendaftaran' => Request::input('des_pendaftaran'),
+            'pengumpulan' => Request::input('pengumpulan'),
+            'des_pengumpulan' => Request::input('des_pengumpulan'),
+            'pengumuman' => Request::input('pengumuman'),
+            'des_pengumuman' => Request::input('des_pengumuman'),
+            'presentasi' => Request::input('presentasi'),
+            'des_presentasi' => Request::input('des_presentasi'),
+            'whatsApp' => Request::input('whatsApp'),
+            'instagram' => Request::input('instagram'),
+            'email' => Request::input('email'),
+            'youtube' => Request::input('youtube'),
             'logo1' => $logo1,
             'logo2' => $logo2,
             'logo3' => $logo3
@@ -140,15 +169,15 @@ class SettingController extends Controller
      */
     public function destroy(Setting $setting)
     {
-        Storage::delete('public/'.$setting->logo1);
+        Storage::delete('public/' . $setting->logo1);
         $setting->delete();
         return redirect()->route('setting.index');
 
-        Storage::delete('public/'.$setting->logo2);
+        Storage::delete('public/' . $setting->logo2);
         $setting->delete();
         return redirect()->route('setting.index');
 
-        Storage::delete('public/'.$setting->logo3);
+        Storage::delete('public/' . $setting->logo3);
         $setting->delete();
         return redirect()->route('setting.index');
     }

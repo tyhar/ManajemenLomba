@@ -137,28 +137,7 @@
                                 </tbody>
                             </table>
                             <br>
-                            <table id="bobotTable" class="table mt-3 table-bordered">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <th class="width-id2">No</th>
-                                        <th class="crud-width-290">Bobot</th>
-                                        <th class="crud-width60">Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="(bobot, index) in bobots.data" :key="bobot.id">
-                                        <td>{{ index + 1 }}</td> <!-- Use index + 1 for sequential numbering -->
-                                        <td>{{ bobot.nilai_bobot }}</td>
-                                        <td class="btn-crud">
-                                            <a class="btn btn-primary" :href="route('bobot.edit', bobot.id)"><i
-                                                    class="bi bi-pencil-square"></i></a>
-                                            <button class="btn btn-danger" @click="deleteBobot(bobot.id)"><i
-                                                    class="bi bi-trash"></i></button>
-                                        </td>
-                                    </tr>
-                                </tbody>
 
-                            </table>
                         </div>
                     </div>
                 </div>
@@ -186,10 +165,7 @@ const props = {
     logo1: {
         type: String, // Menentukan tipe data logo sebagai String
     },
-    bobots: {
-        type: Object,
-        required: true
-    }
+
 };
 
 const deleteForm = useForm({});
@@ -244,7 +220,3 @@ $(document).ready(function () {
     $('#bobotTable').DataTable();
 });
 </script>
-
-<style>
-/* Add any necessary styles */
-</style>

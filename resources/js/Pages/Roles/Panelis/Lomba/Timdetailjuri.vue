@@ -6,9 +6,10 @@
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
-                        <div class="navbar-left">
+                        <div class="navbar-left" v-for="setting in settings" :key="setting.id">
                             <a href="/">
-                                <img src="/bootstrap/images/lg.png" alt="Logo" class="lg3">
+                                <img :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
+                                    alt="Logo" style="width: 135px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>
@@ -37,7 +38,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="mb-0">DETAIL TIM {{ team.name_team }}</h4>
-                        <a class="btn btn-primary crud-width-150 btn-petugas btn-verifikasi posisi-ver"  :href="route('create.value', team?.lomba?.id)">Beri
+                        <a class="btn btn-primary crud-width-150 btn-petugas btn-verifikasi posisi-ver"
+                            :href="getRegLombaTeamUrl(reg_lombas.id, reg_lombas.team.id, reg_lombas.lomba.id)">Beri
                             Nilai</a>
                         <hr />
                         <div class="row">
@@ -71,7 +73,8 @@
                                     </div>
                                     <div class="col-md-3 label-left" v-if="submissions">
                                         <label class="jarak-teks05"><b>DOKUMEN</b></label>
-                                        <div class="data-tim"><a :href="`/submissionsurat/${submissions.id}`">Lihat Dokumen</a></div>
+                                        <div class="data-tim"><a :href="`/submissionsurat/${submissions.id}`">Lihat
+                                                Dokumen</a></div>
                                     </div>
                                     <div class="col-md-3 label-left" v-if="submissions">
                                         <label class="jarak-teks05"><b>FILE</b></label>
@@ -81,7 +84,8 @@
                                     </div>
                                     <div class="col-md-2 label-left" v-if="submissions">
                                         <label class="jarak-teks05"><b>LINK</b></label>
-                                        <div class="data-tim c-mb-70"><a :href="submissions.link" target="_blank">Buka Link</a></div>
+                                        <div class="data-tim c-mb-70"><a :href="submissions.link" target="_blank">Buka
+                                                Link</a></div>
                                     </div>
                                     <div class="label-left">
                                         <label class="jarak-teks05"><b>DESKRIPSI</b></label>
@@ -102,7 +106,18 @@ import { defineProps, ref, reactive } from 'vue';
 import Swal from 'sweetalert2';
 import { router } from '@inertiajs/vue3';
 
-const { userData, members, team, submissions } = defineProps(['userData', 'members', 'team', 'submissions']);
+const { userData, members, team, submissions, reg_lombas, lomba, settings, logo1 } = defineProps(['userData', 'members', 'team', 'submissions', 'reg_lombas', 'lomba', 'settings', 'logo1']);
+
+
+const props = {
+    settings: {
+        type: Object,
+        default: () => ({}),
+    },
+    logo1: {
+        type: String,
+    },
+};
 
 const form = reactive({
     description: ''
@@ -116,6 +131,9 @@ const showPopup = () => {
 
 const hidePopup = () => {
     isPopupVisible.value = false;
+};
+const getRegLombaTeamUrl = (regLombaId, teamId, lombaId) => {
+    return route('value.create', { reg_lomba_id: regLombaId, team_id: teamId, lomba_id: lombaId });
 };
 
 </script>

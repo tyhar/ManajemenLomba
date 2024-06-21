@@ -8,6 +8,9 @@ use App\Http\Middleware\Admin;
 use App\Http\Middleware\EventAdmin;
 use App\Http\Middleware\Panelis;
 use App\Http\Middleware\User;
+use App\Http\Middleware\TrackVisits;
+use Mews\Captcha\Facades\Captcha;
+
 // Importing the email verification middleware
 use App\Http\Middleware\EnsureEmailIsVerified;
 use App\Http\Middleware\RedirectIfAuthenticated;
@@ -33,6 +36,8 @@ return Application::configure(basePath: dirname(__DIR__))
             // Adding the verified middleware
             'verified' => EnsureEmailIsVerified::class,
             'google' => RedirectIfAuthenticated::class,
+            'track.visits' => TrackVisits::class,
+            'captcha' => \Mews\Captcha\Middleware\Captcha::class,
         ]);
 
         //

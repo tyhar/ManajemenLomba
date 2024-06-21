@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class KriteriaBobotResource extends JsonResource
+class KriteriaLombaResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,10 +16,10 @@ class KriteriaBobotResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'bobot_id' => $this->bobot_id,
+            'lomba_id' => $this->lomba_id,
             'kriteria_id' => $this->kriteria_id,
-            'name_kriteria' => $this->kriteria->name_kriteria,  // Ambil nama kriteria dari relasi
-            'nilai_bobot' => $this->bobot->nilai_bobot,  
+            'bobot' => $this->bobot,  
+            'name_kriteria' => $this->kriteria ? $this->kriteria->name_kriteria : null, 
         ];
     }
 }

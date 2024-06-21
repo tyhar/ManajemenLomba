@@ -4,9 +4,11 @@
         <!--sidebar wrapper -->
         <div class="sidebar-wrapper" data-simplebar="true">
             <div class="sidebar-header">
-                <div>
+                <div v-for="setting in settings" :key="setting.id">
                     <a href="/">
-                        <img src="/bootstrap/images/logocb.png" class="logo-icon" alt="logo icon">
+                        <img id="logo-img"
+                            :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
+                            class="lg2">
                     </a>
                 </div>
                 <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
@@ -95,12 +97,12 @@
                         </ol>
                     </nav>
                 </div>
-                <div class="card">
+                <div class="card" >
                     <div class="card-body">
-                        <h4 class="mb-0 jarak-top-kurang5">TABEL RANKING LOMBA UI /UX</h4>
+                        <h4 class="mb-0 jarak-top-kurang5">TABEL RANKING LOMBA {{ reg_lombas.length > 0 ? reg_lombas[0].lomba.name_lomba : '' }}</h4>
                         <hr class="c-mt10" />
-                        <a class="btn btn-danger" @click="updateStatus('tidak_lolos')">Tidak lolos</a>
-                        <a class="btn btn-primary crud-width120" @click="updateStatus('lolos')">Lolos</a>
+                        <a class="btn btn-danger" @click="checkVerification('tidak_lolos')">Tidak lolos</a>
+                        <a class="btn btn-primary crud-width120" @click="checkVerification('lolos')">Lolos</a>
                         <br><br>
                         <div class="table-responsive">
                             <table class="table table-bordered">
@@ -119,8 +121,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="reg_lomba in reg_lombas" :key="reg_lomba?.id">
-                                        <td>{{ reg_lomba.id }}</td>
+                                    <tr v-for="(reg_lomba, index) in reg_lombas" :key="reg_lomba.id">
+                                        <td>{{ index + 1  }}</td>
                                         <td>{{ reg_lomba?.team?.name_team }}</td>
                                         <td>{{ reg_lomba?.submission?.title }}</td>
                                         <td>{{ reg_lomba?.team?.instansi }}</td>
@@ -128,7 +130,7 @@
                                         <td>{{ reg_lomba.status_kelulusan }}</td>
                                         <td class="btn-crud">
                                             <a class="btn btn-secondary"
-                                                :href="`/detailtimpetugas/${reg_lomba?.team?.id}`"><i
+                                                :href="`/detailtimpetugas/${reg_lomba.id}`"><i
                                                     class="bi bi-eye"></i></a>
                                         </td>
                                         <td>
@@ -153,9 +155,8 @@ import { defineProps, ref, onMounted } from 'vue';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
-const { name, username, reg_lombas } = defineProps(['name', 'username', 'reg_lombas']);
+const { name, username, reg_lombas, settings, logo1, unreadCount } = defineProps(['name', 'username', 'reg_lombas','unreadCount', 'settings', 'logo1']);
 
-const unreadCount = ref(0);
 const selectedLombas = ref([]);
 const selectAll = ref(false);
 
@@ -169,16 +170,18 @@ const props = {
     reg_lombas: {
         type: Array,
     },
+    settings: {
+        type: Object,
+        default: () => ({}),
+    },
+    logo1: {
+        type: String,
+    },
+    unreadCount: {
+        type: Object,
+        required: true,
+    },
 };
-
-onMounted(async () => {
-    try {
-        const response = await axios.get('/api/unread-messages');
-        unreadCount.value = response.data.unreadCount;
-    } catch (error) {
-        console.error(error);
-    }
-});
 
 const updateStatus = async (status) => {
     try {
@@ -203,6 +206,24 @@ const updateStatus = async (status) => {
     } catch (error) {
         console.error(error);
     }
+};
+
+const checkVerification = async (status) => {
+    const unverifiedTeams = selectedLombas.value.some(id => {
+        const regLomba = reg_lombas.find(lomba => lomba.id === id);
+        return regLomba.status_kelulusan === 'menunggu';
+    });
+
+    if (unverifiedTeams) {
+        await Swal.fire({
+            title: 'Peringatan!',
+            text: 'Anda tidak dapat meloloskan team yang belum terverifikasi!',
+            icon: 'warning',
+            confirmButtonText: 'OK'
+        });
+        return;
+    }
+    updateStatus(status);
 };
 
 const toggleSelectAll = () => {

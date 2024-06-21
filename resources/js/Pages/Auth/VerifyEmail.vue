@@ -1,6 +1,5 @@
 <script setup>
 import { computed } from 'vue';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 
@@ -20,39 +19,52 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
 </script>
 
 <template>
-    <GuestLayout>
+    <div class="container mt-5">
+
         <Head title="Email Verification" />
 
-        <div class="mb-4 text-sm text-gray-600">
-            Thanks for signing up! Before getting started, could you verify your email address by clicking on the link
-            we just emailed to you? If you didn't receive the email, we will gladly send you another.
-        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="mb-4 card-title">Email Verification</h2>
 
-        <div class="mb-4 font-medium text-sm text-green-600" v-if="verificationLinkSent">
-            A new verification link has been sent to the email address you provided during registration.
-        </div>
+                        <div class="alert alert-info">
+                            Thanks for signing up! Before getting started, could you verify your email address by
+                            clicking on the link
+                            we just emailed to you? If you didn't receive the email, we will gladly send you another.
+                        </div>
 
-        <form @submit.prevent="submit">
-            <div class="mt-4 flex items-center justify-between">
-                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing" class="text-dark-blue">
-                    Resend Verification Email
-                </PrimaryButton>
+                        <div class="alert alert-success" v-if="verificationLinkSent">
+                            A new verification link has been sent to the email address you provided during registration.
+                        </div>
 
-                <Link
-                    :href="route('logout')"
-                    method="post"
-                    as="button"
-                    class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >Log Out</Link
-                >
+                        <form @submit.prevent="submit">
+                            <div class="mt-4 d-flex justify-content-between align-items-center">
+                                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing"
+                                    class="btn btn-primary">
+                                    Resend Verification Email
+                                </PrimaryButton>
+
+                                <Link :href="route('logout')" method="post" as="button"
+                                    class="btn btn-link text-decoration-none text-secondary">Log Out</Link>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-        </form>
-    </GuestLayout>
+        </div>
+    </div>
 </template>
 
-<style>
+<style scoped>
+.btn-primary {
+    background-color: #00008b;
+    /* Dark blue */
+    border-color: #00008b;
+}
 
-.text-dark-blue {
-    color: #00008b !important; /* dark blue */
+.btn-primary:disabled {
+    opacity: 0.6;
 }
 </style>

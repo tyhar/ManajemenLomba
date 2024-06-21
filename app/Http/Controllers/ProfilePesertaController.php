@@ -7,12 +7,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use Inertia\Inertia;
+use App\Models\Setting;
+use App\Models\Notifikasi;
 
 class ProfilePesertaController extends Controller
 {
     public function create()
     {
-
+        $settings = Setting::all();
         $user = Auth::user();
         Inertia::share('userData', [
             'name' => $user->name,
@@ -24,8 +26,22 @@ class ProfilePesertaController extends Controller
             'photo' => $user->photo,
         ]);
         
+        $team = $user->team()->with('user')->first();
+
+        // If the team exists, count the unread notifications for that team
+        $notifCount = null;
+
+        // If the team exists, count the unread notifications for that team
+        if ($team) {
+            $notifCount = Notifikasi::where('status', 'belum_dibaca')
+                                    ->where('team_id', $team->id)
+                                    ->count();
+        }
+
         return Inertia::render('Roles/User/Profilpeserta', [
             'UserData' => $user,
+            'notifCount' => $notifCount,
+            'settings' => $settings,
             
         ]);
         

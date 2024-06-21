@@ -30,8 +30,8 @@ function handleImageError() {
     <div class="bg-index">
         <nav class="navbar navbar-expand-lg main_menu">
             <div class="container">
-                <a class="navbar-brand" href="/">
-                    <img src="/bootstrap/images/lg.png" alt="Logo" class="lg-index">
+                <a class="navbar-brand" href="/" v-for="setting in settings" :key="setting.id">
+                    <img :src="setting.logo1" :alt="setting.name" class="lg-index" />
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,7 +95,7 @@ function handleImageError() {
                         <h2 class="c-mb50 btn-crud c-mt50"><b>{{ form.judul }}</b></h2>
                         <div class="paragraf-container">
                             <p class="warna-p">Oleh : {{ form.penerbit }}</p>
-                            <p class="warna-p p-right c-mb50">Tanggal :{{ form.tanggal_upload }}</p>
+                            <p class="warna-p p-right c-mb50">Tanggal : {{ form.tanggal_upload }}</p>
                         </div>
                         <div class="tf__event_details_img ">
                             <img :src="getBeritaImageUrl(berita.images)" alt="event details" class="w-100">
@@ -125,6 +125,13 @@ import { useForm } from '@inertiajs/vue3';
 
 const props = defineProps({
     berita: Object,
+    settings: {
+        type: Object, // Menggunakan "type" untuk menentukan tipe data props
+        default: () => ({}), // Menggunakan "default" jika props tidak diberikan
+    },
+    logo1: {
+        type: String, // Menentukan tipe data logo sebagai String
+    },
 });
 
 const form = useForm({
