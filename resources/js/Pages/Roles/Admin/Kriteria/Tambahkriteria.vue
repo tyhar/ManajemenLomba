@@ -39,20 +39,20 @@
                         <hr />
                         <form @submit.prevent="submit" enctype="multipart/form-data">
                             <div class="row" v-for="(criteria, index) in form.kriteria" :key="index">
-                                <div class="col-md-6">
+                                <div class="col-mb10">
                                     <label class="c-mb5-black c-mt10"><b>Kriteria Penilaian</b></label>
                                     <input type="text" class="form-control label-8"
                                         placeholder="Masukan kriteria penilaian" v-model="criteria.name_kriteria"
                                         required>
                                 </div>
-
-                                <div class="col-md-2 c-mt10 d-flex align-items-end">
+                                <div class="">
+                                    <button class="btn btn-secondary" @click="addKriteria"><i class="fas fa-plus"></i>
+                                        Tambah
+                                        Kriteria</button>
                                     <button class="btn btn-secondary" @click="removeKriteria(index)"
                                         v-if="form.kriteria.length > 1"><i class="fas fa-minus"></i></button>
                                 </div>
                             </div>
-                            <button class="btn btn-secondary" @click="addKriteria"><i class="fas fa-plus"></i> Tambah
-                                Kriteria</button>
                             <div class="btn-posisi">
                                 <button class="btn btn-danger button-left" @click="goBack()">Batal</button>
                                 <button type="submit" class="btn btn-primary button-right">Tambah</button>

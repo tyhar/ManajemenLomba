@@ -7,6 +7,7 @@ import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { reactive, ref, onMounted } from 'vue';
 import Swal from 'sweetalert2';
+import axios from 'axios';
 import { router } from '@inertiajs/vue3';
 
 const form = useForm({
@@ -15,7 +16,7 @@ const form = useForm({
     email: '',
     password: '',
     password_confirmation: '',
-    'g-recaptcha-response': '', // Add this
+    captcha: ''
 });
 
 const showPassword = ref(false);
@@ -29,47 +30,67 @@ const togglePasswordConfirmationVisibility = () => {
     showPasswordConfirmation.value = !showPasswordConfirmation.value;
 };
 
-const submit = () => {
-    // Ensure reCAPTCHA response is set before submitting
-    if (form['g-recaptcha-response'] === '') {
-        Swal.fire({
-            icon: 'error',
-            title: 'Captcha Verification Failed',
-            text: 'Please complete the reCAPTCHA verification.',
-            confirmButtonText: 'OK'
-        });
-        return;
-    }
+const usernameError = ref('');
+const emailError = ref('');
 
+const submit = () => {
+    form.captcha = captchaInput.value;
     form.post(route('register'), {
         onFinish: () => {
             form.reset('password', 'password_confirmation');
+            if (!form.hasErrors()) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Registration Successful!',
+                    text: 'Your account has been successfully registered.',
+                    confirmButtonText: 'OK'
+                });
+            } else {
+                generateCaptcha();
+            }
+        },
+        onError: (errors) => {
+            if (errors.email) {
+                emailError.value = 'Email Sudah Terdaftar';
+            } else {
+                emailError.value = '';
+            }
+            if (errors.username) {
+                usernameError.value = 'Username Sudah Ada';
+            } else {
+                usernameError.value = '';
+            }
             Swal.fire({
-                icon: 'success',
-                title: 'Registration Successful!',
-                text: 'Your account has been successfully registered.',
-                confirmButtonText: 'OK'
+                icon: 'error',
+                title: 'Registrasi gagal',
+                text: 'Silahkan Periksa Kembali',
             });
         },
     });
 };
 
-// Handle callback from reCAPTCHA
-const onRecaptchaSuccess = (response) => {
-    form['g-recaptcha-response'] = response;
-};
-
-// Initialize reCAPTCHA and bind callback
-onMounted(() => {
-    window.onRecaptchaSuccess = onRecaptchaSuccess;
+const captcha = reactive({
+    image: '',
+    key: '',
 });
+const captchaInput = ref('');
+
+async function generateCaptcha() {
+    try {
+        const response = await axios.get('/captcha-image');
+        captcha.image = response.data.captcha + '&' + Date.now(); // Avoid caching
+    } catch (error) {
+        console.error('Error fetching CAPTCHA:', error);
+    }
+}
 
 function loginWithGoogle() {
     window.location.href = "/authorized/google";
 }
 
-// Export site key for use in the template
-const yourSiteKey = '6LdT7_0pAAAAAKThZpv3zh14SNXQt2cpCzTSD2Eb';
+onMounted(() => {
+    generateCaptcha();
+});
 </script>
 
 <template>
@@ -92,10 +113,12 @@ const yourSiteKey = '6LdT7_0pAAAAAKThZpv3zh14SNXQt2cpCzTSD2Eb';
                                 <label for="inputUsername" class="form-label warna-hitam jb-k5">Username</label>
                                 <input v-model="form.username" type="text" class="form-control jb-k5" id="inputUsername"
                                     placeholder="Enter Username">
+                                <div class="mt-2 text-danger">{{ usernameError }}</div>
                             </div>
                             <div class="col-12">
                                 <label for="inputEmailAddress" class="form-label warna-hitam jb-k5">Email</label>
                                 <input v-model="form.email" type="email" class="form-control" placeholder="Enter Email">
+                                <div class="mt-2 text-danger">{{ emailError }}</div>
                                 <InputError class="mt-2" :message="form.errors.email" />
                             </div>
                             <div class="col-12 jarak-top-lebih10">
@@ -117,9 +140,13 @@ const yourSiteKey = '6LdT7_0pAAAAAKThZpv3zh14SNXQt2cpCzTSD2Eb';
                                 </div>
                             </div>
                             <div class="col-12 jarak-top-lebih10">
-                                <!-- Add reCAPTCHA element here -->
-                                <div class="g-recaptcha" :data-sitekey="yourSiteKey" data-callback="onRecaptchaSuccess"></div>
-                                <InputError class="mt-2" :message="form.errors['g-recaptcha-response']" />
+                                <label class="c-mr-5">CAPTCHA</label>
+                                <div>
+                                    <img :src="captcha.image" alt="CAPTCHA">
+                                    <button type="button" @click="generateCaptcha">Refresh</button>
+                                </div>
+                                <input v-model="captchaInput" type="text" class="form-control" id="captcha" required placeholder="Enter CAPTCHA">
+                                <InputError class="mt-2" :message="form.errors.captcha" />
                             </div>
                             <div class="col-12 jarak-top-lebih12">
                                 <div class="d-grid">

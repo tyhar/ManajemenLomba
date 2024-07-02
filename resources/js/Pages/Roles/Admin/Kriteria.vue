@@ -172,19 +172,19 @@ const deleteForm = useForm({});
 
 const deleteKriteria = (id) => {
     Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
+        title: 'Apakah anda yakin?',
+        text: "Apakah anda ingin menghapus kriteria !",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonText: 'Ya, hapus!'
     }).then((result) => {
         if (result.isConfirmed) {
             deleteForm.delete(route("kriteria.destroy", id), {
                 preserveScroll: true,
                 onSuccess: () => {
-                    Swal.fire('Deleted!', 'The criterion has been deleted.', 'success');
+                    Swal.fire('Terhapus!', 'Kriteria berhasil dihapus.', 'Berhasil');
                 }
             });
         }
@@ -193,19 +193,19 @@ const deleteKriteria = (id) => {
 
 const deleteBobot = (id) => {
     Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
+        title: 'Apakah anda yakin?',
+        text: "Apakah anda ingin menghapus kriteria !",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonText: 'Ya, hapus!'
     }).then((result) => {
         if (result.isConfirmed) {
             deleteForm.delete(route("bobot.destroy", id), {
                 preserveScroll: true,
                 onSuccess: () => {
-                    Swal.fire('Deleted!', 'The criterion has been deleted.', 'success');
+                    Swal.fire('Berhasil!', 'Kriteria berhasil dihapus.', 'success');
                 }
             });
         }

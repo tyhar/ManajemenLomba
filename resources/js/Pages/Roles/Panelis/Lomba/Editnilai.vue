@@ -7,7 +7,7 @@
             <div class="navbar-left" v-for="setting in settings" :key="setting.id">
               <a href="/">
                 <img :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
-                  alt="Logo" style="width: 135px; margin-left: -15px;">
+                  alt="Logo" style="width: 100px; margin-left: -15px;">
               </a>
             </div>
           </div>
@@ -45,6 +45,8 @@
                   <input type="number" class="form-control c-mb20" :id="'value_count_' + kriteria.id"
                     v-model="form.value_count[kriteria.id]" />
                   <input type="hidden" :name="'kriteria_lomba_id_' + kriteria.id" :value="kriteria.id" />
+                  <!-- Error message for bobot -->
+                  <div v-if="bobotErrors[kriteria.id]" class="text-danger">{{ bobotErrors[kriteria.id] }}</div>
                 </div>
               </div>
               <div v-if="errors.length" class="alert alert-danger">
@@ -101,14 +103,33 @@ const form = useForm({
 });
 
 const errors = ref([]);
+const bobotErrors = ref({});
 
 onMounted(() => {
   props.kriterias.forEach(kriteria => {
-    form.value_count[kriteria.id] = props.value.find(v => v.kriteria_lomba_id === kriteria.id)?.value_count || '';
+    const initialValue = props.value.find(v => v.kriteria_lomba_id === kriteria.id)?.value_count;
+    if (initialValue !== undefined) {
+      form.value_count[kriteria.id] = (initialValue * 100) / kriteria.bobot;
+    }
   });
 });
 
 const confirmSubmit = async () => {
+  let valid = true;
+  bobotErrors.value = {};
+
+  // Validate bobot values
+  props.kriterias.forEach(kriteria => {
+    if (form.value_count[kriteria.id] > 100) {
+      bobotErrors.value[kriteria.id] = 'Maksimal 100!';
+      valid = false;
+    }
+  });
+
+  if (!valid) {
+    return;
+  }
+
   const result = await Swal.fire({
     title: 'Apakah anda akan menyimpan perubahan?',
     showCancelButton: true,

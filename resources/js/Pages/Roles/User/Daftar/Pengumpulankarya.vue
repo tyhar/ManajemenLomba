@@ -9,7 +9,7 @@
             <div class="navbar-left" v-for="setting in settings" :key="setting.id">
               <a href="/">
                 <img :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
-                  alt="Logo" style="width: 135px; margin-left: -15px;">
+                  alt="Logo" style="width: 100px; margin-left: -15px;">
               </a>
             </div>
           </div>
@@ -56,16 +56,19 @@
                 <div>
                   <label class="jarak-input"><b>Link</b></label>
                   <input v-model="form.link" type="text" class="form-control" placeholder="Masukan link karya" required>
+                  <p v-if="linkError" class="text-danger">Link Invalid!</p>
                 </div>
                 <div>
                   <label for="formFile" class="form-label jarak-teks12"><b>File</b></label>
-                  <input class="form-control" type="file" name="file" @change="e => form.file = e.target.files[0]">
+                  <input class="form-control" type="file" name="file" @change="handleFileChange">
+                  <p v-if="fileError" class="text-danger">File melebihi batas max!</p>
                 </div>
                 <p class="keterangan-foto f-italic">Max file size: 20MB</p>
-                <p class="keterangan-foto f-italic">Format: .pdf</p>
+                <p class="keterangan-foto f-italic">Format: zip</p>
                 <div>
                   <label for="formFile" class="form-label jarak-teks12"><b>Surat</b></label>
-                  <input class="form-control" type="file" name="file" @change="e => form.surat = e.target.files[0]">
+                  <input class="form-control" type="file" name="file" @change="handleSuratChange">
+                  <p v-if="suratError" class="text-danger">Surat melebihi batas max!</p>
                 </div>
                 <p class="keterangan-foto f-italic">Max file size: 10MB</p>
                 <p class="keterangan-foto f-italic">Format: .pdf</p>
@@ -82,10 +85,9 @@
     <!--end page wrapper -->
   </div>
 </template>
-
 <script setup>
 import { defineProps } from "vue";
-import { reactive, onMounted } from 'vue';
+import { reactive, onMounted, ref } from 'vue';
 import { router } from '@inertiajs/vue3';
 import Swal from 'sweetalert2';
 
@@ -98,10 +100,12 @@ const form = reactive({
   surat: null,
 });
 
+const linkError = ref(false);
+const fileError = ref(false);
+const suratError = ref(false);
+
 // Destructure props
 const { name, username, tim, submissions, settings, logo1 } = defineProps(['name', 'username', 'tim', 'submissions', 'settings', 'logo1']);
-
-
 
 const props = {
   settings: {
@@ -111,10 +115,7 @@ const props = {
   logo1: {
     type: String, // Menentukan tipe data logo sebagai String
   },
-
 };
-
-
 
 // Populate form with existing submission data if available
 onMounted(() => {
@@ -124,6 +125,39 @@ onMounted(() => {
     form.link = submissions.link;
   }
 });
+
+function isValidLink(link) {
+  // Basic regex for URL validation
+  const pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+ // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+  return !!pattern.test(link);
+}
+
+function handleFileChange(e) {
+  const file = e.target.files[0];
+  if (file && file.size > 20 * 1024 * 1024) {
+    fileError.value = true;
+    form.file = null;
+  } else {
+    fileError.value = false;
+    form.file = file;
+  }
+}
+
+function handleSuratChange(e) {
+  const file = e.target.files[0];
+  if (file && file.size > 10 * 1024 * 1024) {
+    suratError.value = true;
+    form.surat = null;
+  } else {
+    suratError.value = false;
+    form.surat = file;
+  }
+}
 
 function submit() {
   // Periksa apakah `form` dan `tim` tidak null/undefined
@@ -135,6 +169,29 @@ function submit() {
       text: 'Form atau tim tidak tersedia. Silakan coba lagi!',
     });
     return;
+  }
+
+  // Validate the link
+  if (!isValidLink(form.link)) {
+    linkError.value = true;
+    return;
+  } else {
+    linkError.value = false;
+  }
+
+  // Validate file sizes
+  if (form.file && form.file.size > 20 * 1024 * 1024) {
+    fileError.value = true;
+    return;
+  } else {
+    fileError.value = false;
+  }
+
+  if (form.surat && form.surat.size > 10 * 1024 * 1024) {
+    suratError.value = true;
+    return;
+  } else {
+    suratError.value = false;
   }
 
   // Menampilkan konfirmasi sebelum menyimpan data

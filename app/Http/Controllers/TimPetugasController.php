@@ -31,12 +31,14 @@ class TimPetugasController extends Controller
             'unreadCount' => $unreadCount,
         ]);
     }
+
+
  public function show($id)
     {
         $user = Auth::user();
 
         // Fetch the team using the provided ID
-        $team = Team::with(['lomba', 'user'])->findOrFail($id);
+        $team = Team::with(['lomba', 'user','regLombas'])->findOrFail($id);
 
         // Fetch the submission related to the team
         $submission = Submission::where('team_id', $team->id)->first();
@@ -46,7 +48,8 @@ class TimPetugasController extends Controller
         
         $settings = Setting::all();
         $unreadCount = Message::where('status', 'belum_dibaca')->count();
-        
+        $userStatus = Reg_Lomba::where('team_id', $team->id)->first();
+
         return Inertia::render('Roles/EventAdmin/Tim/Timdetail', [
             'userData' => $user,
             'team' => $team,
@@ -54,6 +57,7 @@ class TimPetugasController extends Controller
             'members' => $teamMembers,
             'settings' => $settings,
             'unreadCount' => $unreadCount,
+            'userStatus' => $userStatus,
 
         ]);
     }

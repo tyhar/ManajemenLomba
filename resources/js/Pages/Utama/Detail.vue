@@ -146,3 +146,8 @@ const getBeritaImageUrl = (imageName) => {
     return imageName ? `/storage/uploads/admin/berita/${imageName}` : '';
 };
 </script>
+<style scoped>
+.lg-index {
+    width: 150px;
+}
+</style>

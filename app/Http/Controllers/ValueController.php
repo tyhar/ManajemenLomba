@@ -68,7 +68,7 @@ class ValueController extends Controller
             ]);
         }
     
-        return redirect()->route('lombajuri.index')->with('success', 'Data successfully saved');
+        return redirect()->route('panelis')->with('success', 'Data successfully saved');
     }
     
     
@@ -103,26 +103,36 @@ class ValueController extends Controller
         ]);
     }
     
-
-
     public function edit(int $reg_lomba_id, int $lomba_id)
     {
         $settings = Setting::all();
         $user = Auth::user();
         
-        $value = Value::with(['reg_lomba', 'kriteria_lomba'])
+        // Fetch the value for the specified reg_lomba_id
+        $values = Value::with(['reg_lomba', 'kriteria_lomba'])
             ->where('reg_lomba_id', $reg_lomba_id)
-            ->firstOrFail();
+            ->get();
             
+        // Fetch the reg_lomba details
         $regLomba = Reg_Lomba::with(['team', 'lomba', 'submission'])->findOrFail($reg_lomba_id);
         
+        // Fetch the kriterias associated with the specified lomba_id
         $kriterias = KriteriaLomba::with('kriteria')
-            ->whereHas('kriteria', function($query) use ($value) {
-                $query->where('lomba_id', $value->reg_lomba->lomba_id);
+            ->whereHas('kriteria', function($query) use ($lomba_id) {
+                $query->where('lomba_id', $lomba_id);
             })->get();
-            
+    
+        // Prepare value data to include `value_count` calculated as needed
+        $valueData = $values->map(function($value) {
+            return [
+                'id' => $value->id,
+                'kriteria_lomba_id' => $value->kriteria_lomba_id,
+                'value_count' => ($value->value_count) 
+            ];
+        });
+    
         return Inertia::render('Roles/Panelis/Lomba/Editnilai', [
-            'value' => $value,
+            'value' => $valueData,
             'kriterias' => $kriterias,
             'userData' => $user,
             'reg_lombas' => $regLomba,
@@ -170,7 +180,7 @@ class ValueController extends Controller
                 ]);
             }
     
-            return redirect()->route('lombajuri.index')->with('success', 'Nilai updated successfully');
+            return redirect()->route('panelis')->with('success', 'Nilai updated successfully');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'An error occurred while updating the values');
         }

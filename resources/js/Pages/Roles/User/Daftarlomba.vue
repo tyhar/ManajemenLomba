@@ -154,6 +154,7 @@
                                 <a class="btn btn-primary radius-5 isi-data2" :href="`/tambahanggota/${team.id}`">Isi
                                     Anggota</a>
                             </div>
+                            <br><br> <br><br> 
                         </div>
                         <div class="card">
                             <h5 class="p-3">PENGUMPULAN KARYA</h5>
@@ -403,7 +404,6 @@ async function clearNotifications() {
         console.error('Error marking notifications as read', error);
     }
 }
-
 async function submitForm() {
     const result = await Swal.fire({
         title: 'Peringatan!',
@@ -422,6 +422,9 @@ async function submitForm() {
                 lomba_id: team?.lomba?.id,
                 submission_id: submissions.id
             });
+
+            await axios.patch(`/api/update-status-ketua/${team?.lomba?.id}`, { status: 'sudah_submit' });
+
             Swal.fire({
                 title: 'Berhasil!',
                 text: 'Data berhasil disimpan.',
@@ -439,4 +442,5 @@ async function submitForm() {
         }
     }
 }
+
 </script>

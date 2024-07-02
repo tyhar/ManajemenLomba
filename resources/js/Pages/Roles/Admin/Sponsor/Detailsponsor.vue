@@ -88,7 +88,7 @@ const goBack = () => {
                             </div>
                             <div>
                                 <label class="col-md-6 c-mb10 warna-hitam"><b>LINK</b></label>
-                                <div class="c-mb20"><a href="#">{{ sponsors.link_file }}</a></div>
+                                <div class="c-mb20" :href="sponsors.link_file" target="_blank"><a >{{ sponsors.link_file  }}</a></div>
                             </div>
                             <div class="c-mb10">
                                 <label class="c-mb5-black"><b>LOGO</b></label><br>

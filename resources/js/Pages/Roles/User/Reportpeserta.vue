@@ -44,7 +44,7 @@
                         <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i></div>
                         <div class="menu-title">
                             <Link class="menu-title" :href="route('logout')" method="post" as="button">
-                                Keluar
+                            Keluar
                             </Link>
                         </div>
                     </a>
@@ -96,10 +96,13 @@
                             <div class="label-left">
                                 <h5 class="judul-report"><b>{{ reg_lomba?.submission?.title }}</b></h5>
                                 <div v-for="setting in settings" :key="setting.id">
-                                    <div class="judul-lomba-index">{{ setting.name }}</div>
+                                    <div class="judul-lomba-index"> Lomba {{ reg_lomba?.lomba?.name_lomba}} <br> {{ setting.name }}</div>
                                 </div>
                                 <div class="d-flex justify-content-end posisi-mb7 cnew">
-                                    <a class="btn btn-success crud-width150" @click="checkAndDownloadCertificate(reg_lomba)">
+                                    <button v-if="reg_lomba.status_kelulusan === 'menunggu' && reg_lomba.team.status === 'verified'" class="btn-silver crud-width150">
+                                        <i class="bi bi-download icon-dow"></i>Download
+                                    </button>
+                                    <a v-else-if="reg_lomba.status_kelulusan !== 'menunggu' && reg_lomba.team.status === 'verified'" class="btn btn-success crud-width150" @click="checkAndDownloadCertificate(reg_lomba)">
                                         <i class="bi bi-download icon-dow"></i>Download
                                     </a>
                                 </div>

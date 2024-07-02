@@ -41,7 +41,7 @@
                         <hr />
                         <div class="row">
                             <div class="col-md-3 c-mb10">
-                                <label class="c-mb5-black"><b>INSTASNSI</b></label>
+                                <label class="c-mb5-black"><b>INSTANSI</b></label>
                                 <div class="c-mb20">{{ team.instansi }}</div>
                             </div>
                             <div class="col-md-2">
@@ -99,7 +99,7 @@
                                     </div>
                                     <div class="col-md-3 label-left" v-if="submissions">
                                         <label class="jarak-teks05"><b>FILE</b></label>
-                                        <div class="data-tim"><a :href="`/submissionshow/${submissions.id}`">Lihat
+                                        <div class="data-tim"><a :href="getDownloadLink()" download>Lihat
                                                 File</a>
                                         </div>
                                     </div>
@@ -149,15 +149,23 @@ const showPopup = () => {
 const hidePopup = () => {
     isPopupVisible.value = false;
 };
+
 const getRegLombaTeamUrl = (regLombaId, teamId, lombaId) => {
     return route('value.create', { reg_lomba_id: regLombaId, team_id: teamId, lomba_id: lombaId });
 };
 
+const getDownloadLink = () => {
+    if (submissions && submissions.file) {
+        return `/storage/${submissions.file}`;
+    } else {
+        return '#'; // or an appropriate default value
+    }
+};
 </script>
+
 <style scoped>
 /* DAFTAR LOMBA EDIT */
 .crud-max-width260 {
-    /* flex: 1 1 calc(25% - 1rem); */
     display: flex;
     flex-direction: column;
 }

@@ -9,7 +9,7 @@
                         <div class="navbar-left" v-for="setting in settings" :key="setting.id">
                             <a href="/">
                                 <img :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
-                                    alt="Logo" style="width: 135px; margin-left: -15px;">
+                                    style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>
@@ -247,7 +247,7 @@ function addMember() {
 async function saveTeamMembers() {
     const result = await Swal.fire({
         title: 'Apakah anda yakin?',
-        text: 'Data yang disimpan tidak dapat diubah. Apakah Anda ingin melanjutkan?',
+        text: ' ',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Simpan',
@@ -261,7 +261,7 @@ async function saveTeamMembers() {
             await axios.post(url, {
                 members: teamMembers.value.map(member => ({
                     user_id: member.id,
-                    role: member.role === 'ketua' ? 'ketua' : 'member'
+                    role: member.role === 'Ketua' ? 'Ketua' : 'Anggota'
                 }))
             });
 

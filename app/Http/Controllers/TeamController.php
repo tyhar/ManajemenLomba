@@ -78,7 +78,7 @@ public function store(Request $request, $id)
 
         $team->save();
 
-        return redirect()->route('dashboard')->with('success', 'Profil berhasil diperbarui');
+        return redirect()->route('datatim.show', $team->id);
     }
 
     return redirect()->route('dashboard')->with('info', 'Tidak ada perubahan yang disimpan');

@@ -1,26 +1,9 @@
 <script setup>
-import { useForm, Link, router } from "@inertiajs/vue3";
-import { reactive, watch } from "vue";
+import { useForm, router } from "@inertiajs/vue3";
+import { ref, watch } from "vue";
 import Swal from 'sweetalert2';
 
 const { name, username, users, settings, logo1, lombas } = defineProps(['name', 'username', 'users', 'settings', 'logo1', 'lombas']);
-
-// Definisikan properti yang diterima oleh komponen
-const props = {
-    users: {
-        type: Array,
-    },
-    settings: {
-        type: Object, // Menggunakan "type" untuk menentukan tipe data props
-        default: () => ({}), // Menggunakan "default" jika props tidak diberikan
-    },
-    logo1: {
-        type: String, // Menentukan tipe data logo sebagai String
-    },
-    lombas: {
-        type: Array,
-    },
-};
 
 const form = useForm({
     name: null,
@@ -31,25 +14,36 @@ const form = useForm({
     selectedLomba: [],
 });
 
+const emailError = ref('');
+const usernameError = ref('');
+
 function submit() {
-    // Menambahkan properti selectedCriteria ke dalam data yang disubmit
-    const formData = { ...form, selectedLomba: form.selectedLomba };
-    router.post('/administrator', formData)
-        .then(() => {
+    form.post('/administrator', {
+        onError: (errors) => {
+            if (errors.email) {
+                emailError.value = 'Email sudah terdaftar';
+            } else {
+                emailError.value = '';
+            }
+            if (errors.username) {
+                usernameError.value = 'Username sudah ada';
+            } else {
+                usernameError.value = '';
+            }
+        },
+        onSuccess: () => {
             Swal.fire({
                 icon: 'success',
                 title: 'Sukses!',
                 text: 'Akun administrator berhasil ditambahkan.',
                 confirmButtonText: 'Ok'
             });
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            // Handle error here
-        });
+            emailError.value = ''; // Reset the email error
+            usernameError.value = ''; // Reset the username error
+        },
+    });
 }
 
-// Watch for changes in the selected role to clear selectedLomba if role changes
 watch(() => form.role, (newRole) => {
     if (newRole !== 4) {
         form.selectedLomba = [];
@@ -74,11 +68,9 @@ $(document).ready(function () {
 
 <template>
     <div class="wrapper">
-        <!--start header -->
         <header>
             <div class="c-topbar">
                 <nav class="navbar navbar-expand">
-                    <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
                         <div class="navbar-left" v-for="setting in settings" :key="setting.id">
                             <a href="/">
@@ -87,26 +79,20 @@ $(document).ready(function () {
                             </a>
                         </div>
                     </div>
-                    <!-- Mobile toggle menu -->
-                    <!-- Search bar -->
-                    <div class="search-bar flex-grow-1">
-                    </div>
-                    <!-- Top menu -->
+                    <div class="search-bar flex-grow-1"></div>
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
                                 <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
                                 <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
-                            <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
-                            </div>
+                            <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i></div>
                         </ul>
                     </div>
                 </nav>
             </div>
         </header>
-        <!--end header -->
-        <!--start page wrapper -->
+
         <div class="page-wrapper-new">
             <div class="page-content">
                 <div class="card">
@@ -125,11 +111,13 @@ $(document).ready(function () {
                                     <label class="c-mb5-black"><b>Username</b></label>
                                     <input id="username" type="username" class="form-control"
                                         placeholder="Masukan username" v-model="form.username" required>
+                                    <div v-if="usernameError" class="text-danger">{{ usernameError }}</div>
                                 </div>
                                 <div class="col-md-12 margin-top10-crud">
                                     <label class="c-mb5-black"><b>Email</b></label>
                                     <input id="email" type="email" class="form-control" v-model="form.email"
                                         placeholder="Masukan email" required>
+                                    <div v-if="emailError" class="text-danger">{{ emailError }}</div>
                                 </div>
                                 <div>
                                     <label for="inputChoosePassword"
@@ -156,8 +144,7 @@ $(document).ready(function () {
                                         <div class="form-check" v-for="lomba in lombas.data" :key="lomba.id">
                                             <input class="form-check-input" type="checkbox" :id="'lomba' + lomba.id"
                                                 v-model="form.selectedLomba" :value="lomba.id">
-                                            <label class="form-check-label" :for="'lomba' + lomba.id">{{
-                                                lomba.name_lomba }}</label>
+                                            <label class="form-check-label" :for="'lomba' + lomba.id">{{ lomba.name_lomba }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -171,7 +158,5 @@ $(document).ready(function () {
                 </div>
             </div>
         </div>
-
-        <!--end page wrapper -->
     </div>
 </template>

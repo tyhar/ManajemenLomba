@@ -50,7 +50,13 @@
                             </div>
                             <div>
                                 <label class="c-mb5-black"><b>DESKRIPSI</b></label>
-                                <div class="c-mb20">{{ form.deskripsi }}</div>
+                                <div class="c-mb20">
+                                    <span v-if="!showFullDescription">{{ truncatedDescription }}...</span>
+                                    <span v-if="showFullDescription">{{ form.deskripsi }}</span>
+                                    <a @click="toggleDescription" class="btn-link">
+                                        {{ showFullDescription ? 'Sembunyikan' : 'Lihat semuanya' }}
+                                    </a>
+                                </div>
                             </div>
                             <div class="col-md-6 c-mb10">
                                 <label class="c-mb5-black"><b>PENERBIT</b></label>
@@ -79,7 +85,7 @@
 
 <script setup>
 import { useForm } from '@inertiajs/vue3';
-import { router } from '@inertiajs/vue3'
+import { ref, computed } from 'vue';
 
 const props = defineProps({
     errors: Object,
@@ -102,6 +108,16 @@ const form = useForm({
     tanggal_upload: props.berita.tanggal_upload,
     images: props.berita.images,
 })
+const showFullDescription = ref(false);
+
+const toggleDescription = () => {
+    showFullDescription.value = !showFullDescription.value;
+};
+
+const truncatedDescription = computed(() => {
+    const words = form.deskripsi.split(' ');
+    return words.slice(0, 30).join(' ');
+});
 
 const getBeritaImageUrl = (imageName) => {
     return imageName ? `/storage/uploads/admin/berita/${imageName}` : '';

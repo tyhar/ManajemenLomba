@@ -4077,7 +4077,7 @@ input.search-control-2::placeholder {
 /* Aturan CSS untuk tampilan desktop */
 @media (min-width: 768px) {
 	.card-height200 {
-		height: 190px;
+		height: 210px;
 	}
 
 	.cnew {
@@ -4093,7 +4093,7 @@ input.search-control-2::placeholder {
 /* Aturan CSS untuk tampilan mobile */
 @media (max-width: 767px) {
 	.card-height200 {
-		height: 280px;
+		height: 330px;
 		/* height: 310px; */
 	}
 
@@ -4120,7 +4120,7 @@ input.search-control-2::placeholder {
 }
 
 .keterangan1 {
-	background-color: #B8B8B8;
+	background-color: #b8b8b8;
 	width: 300px;
 	text-align: center;
 	height: 40px;
@@ -4129,6 +4129,33 @@ input.search-control-2::placeholder {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+
+.btn-silver {
+	background-color: #B8B8B8;
+	width: 150px;
+	text-align: center;
+	height: 40px;
+	color: white;
+	border-radius: 5px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-right: 12px;
+}
+
+.btn-ungu {
+	background-color: #83A2FF;
+	width: 150px;
+	text-align: center;
+	height: 40px;
+	color: rgb(246, 246, 246);
+	border-radius: 5px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-right: 12px;
+	cursor: pointer;
 }
 
 .keterangan2 {
@@ -4553,9 +4580,6 @@ body {
 	margin-left: -10px !important;
 }
 
-.lg-index {
-	width: 10px;
-}
 
 .lg2 {
 	width: 80px;

@@ -82,17 +82,18 @@ class CertificateController extends Controller
         $fpdi->AddPage($size['orientation'], [$size['width'], $size['height']]);
         $fpdi->useTemplate($template);
     
-        // Generate random 4 digit certificate number
-        $certNumber = rand(1000, 9999);
+        // Generate certificate number in the format YYYY-MM-DD-XX
+        $date = date('Y-m-d');
+        $certNumber = $date . '-' . str_pad(rand(1, 99), 2, '0', STR_PAD_LEFT);
     
         // Define positions for certificate number
         $certNumberLeft = 10;
         $certNumberTop = 10;
     
         // Add certificate number text
-        $fpdi->SetFont('helvetica', '', 10);
+        $fpdi->SetFont('helvetica', '', 12); // Increased font size
         $fpdi->SetTextColor(25, 26, 25);
-        $fpdi->Text($certNumberLeft, $certNumberTop, str_pad($certNumber, 4, '0', STR_PAD_LEFT));
+        $fpdi->Text($certNumberLeft, $certNumberTop, $certNumber);
     
         // Calculate center positions for name and role
         $fpdi->SetFont('helvetica', '', 20);

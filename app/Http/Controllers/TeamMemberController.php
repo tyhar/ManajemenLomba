@@ -29,7 +29,7 @@ class TeamMemberController extends Controller
         $validator = Validator::make($request->all(), [
             'members' => 'required|array',
             'members.*.user_id' => 'required|exists:users,id',
-            'members.*.role' => 'required|in:ketua,member'
+            'members.*.role' => 'required|in:Ketua,Anggota'
         ]);
 
         if ($validator->fails()) {

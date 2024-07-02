@@ -2,7 +2,7 @@
 import { Link } from '@inertiajs/vue3';
 import { defineProps, ref, onMounted, computed } from 'vue';
 
-const { name, username, lombas, picture, beluminilai, totalteam ,settings, logo1} = defineProps(['name', 'username', 'lombas', 'picture', 'beluminilai', 'totalteam', 'settings', 'logo1']);
+const { name, username, lombas, picture, sudah_dinilai, totalteam ,settings, logo1} = defineProps(['name', 'username', 'lombas', 'picture', 'sudah_dinilai', 'totalteam', 'settings', 'logo1']);
 
 
 const props = {
@@ -27,7 +27,16 @@ const props = {
     },
 };
 
-
+if (!localStorage.getItem('reloaded')) {
+  // Jika belum, set flag dan reload halaman setelah 1 detik
+  setTimeout(() => {
+    localStorage.setItem('reloaded', 'true');
+    location.reload();
+  }, 1000);
+} else {
+  // Jika sudah, hapus flag agar reload hanya terjadi sekali
+  localStorage.removeItem('reloaded');
+}
 
 
 
@@ -55,8 +64,8 @@ const props = {
                         <div class="menu-title">Lomba</div>
                     </a>
                 </li>
-                <li v-for="lomba in lombas" :key="lomba.id">
-                    <a :href="`/rangkingjuri/${lomba.id}`">
+                <li >
+                    <a  href="/rangkingjuri">
                         <div class="parent-icon"><i class="fadeIn animated bx bx-trophy"></i>
                         </div>
                         <div class="menu-title">Rangking</div>
@@ -120,17 +129,15 @@ const props = {
                     <div class="container">
                         <!--breadcrumb-->
                         <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
-                            <div v-for="lomba in lombas" :key="lomba.id" class="col">
-                                <div class="card radius-15 card-overview"><span
-                                        class=" pcount">{{ beluminilai }}/{{ totalteam }}</span>
-                                    <img :src="lomba.picture ? `/storage/${lomba.picture}` : '/bootstrap/images/default.jpg'"
-                                        class="border-radius">
-                                    <label class="judul-overview">{{ lomba.name_lomba }}</label>
-                                    <a class="btn btn-primary btn-landing-page2" :href="`/lombajuri/${lomba.id}`">Lihat
-                                        Karya</a>
-                                </div>
+                        <div v-for="lomba in lombas" :key="lomba.id" class="col">
+                            <div class="card radius-15 card-overview">
+                                <span class="pcount">{{ lomba.sudah_dinilai }}/{{ lomba.totalteam }}</span>
+                                <img :src="lomba.picture ? `/storage/${lomba.picture}` : '/bootstrap/images/default.jpg'" class="border-radius">
+                                <label class="judul-overview">{{ lomba.name_lomba }}</label>
+                                <a class="btn btn-primary btn-landing-page2" :href="`/lombajuri/${lomba.id}`">Lihat Karya</a>
                             </div>
                         </div>
+                    </div>
                         <!--end row-->
                     </div>
                 </div>

@@ -10,6 +10,7 @@ class Notifikasi extends Model
     use HasFactory;
     protected $fillable = [
         'description',
+        'user_id',
         'team_id',
         'status',
         

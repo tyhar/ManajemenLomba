@@ -19,36 +19,40 @@ class NotifikasiController extends Controller
         // Ambil tim yang dimiliki oleh pengguna
         $team = Team::where('user_id', $user->id)->first();
         
-        // Ambil semua notifikasi yang belum dibaca terkait dengan pengguna
-        $notifikasis = Notifikasi::where('team_id', $team->id)->get();
+        if (!$team) {
+            // Jika tim tidak ada, return halaman kosong
+            return Inertia::render('Roles/User/Notifikasipeserta', [
+                'notifikasis' => [],
+                'notifCount' => 0,
+                'settings' => $settings,
+                'isVerified' => false,
+            ]);
+        }
+    
+        // Ambil semua notifikasi terkait dengan pengguna berdasarkan user_id dan team_id
+        $notifikasis = Notifikasi::where('user_id', $user->id)->get();
         
-        $team = $user->team()->with('user')->first();
-
-        // If the team exists, count the unread notifications for that team
+        // Count all notifications for that team and user
         $notifCount = null;
-
-        // If the team exists, count the unread notifications for that team
-        if ($team) {
+        if ($user) {
             $notifCount = Notifikasi::where('status', 'belum_dibaca')
-                                    ->where('team_id', $team->id)
-                                    ->count();
+                ->where('user_id', $user->id)
+                ->count();
         }
         
         return Inertia::render('Roles/User/Notifikasipeserta', [
             'notifikasis' => $notifikasis,
             'notifCount' => $notifCount,
             'settings' => $settings,
-            'isVerified' => $team && $team->status === 'verified', // Properti isVerified berdasarkan status tim
+            'isVerified' => $team->status === 'verified', // Properti isVerified berdasarkan status tim
         ]);
     }
     
-    
-    
-
     public function store(Request $request)
     {
         // Validate the incoming request
         $request->validate([
+            'user_id'=> 'required|exists:users,id',
             'team_id' => 'required|exists:team,id',
             'description' => 'required|string|max:255'
         ]);
@@ -58,6 +62,7 @@ class NotifikasiController extends Controller
     
         // Create the notification
         Notifikasi::create([
+            'user_id' => $request->user_id,
             'team_id' => $request->team_id,
             'description' => $request->description,
         ]);
@@ -111,7 +116,7 @@ class NotifikasiController extends Controller
 
         if ($team) {
             Notifikasi::where('status', 'belum_dibaca')
-                      ->where('team_id', $team->id)
+                      ->where('user_id', $user->id)
                       ->update(['status' => 'sudah_dibaca']);
 
             return response()->json(['success' => true]);

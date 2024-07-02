@@ -138,7 +138,7 @@
                                             <button class="btn btn-primary" @click.prevent="editberita(berita.id)">
                                                 <i class="bi bi-pencil-square"></i>
                                             </button>
-                                            <button class="btn btn-danger" @click.prevent="destroy(berita.id)">
+                                            <button class="btn btn-danger" @click.prevent="confirmDelete(berita.id)">
                                                 <i class="bi bi-trash"></i>
                                             </button>
                                         </td>
@@ -156,7 +156,8 @@
 
 <script>
 import { Link, router } from '@inertiajs/vue3';
-import { onMounted, ref } from 'vue';
+import { onMounted } from 'vue';
+import Swal from 'sweetalert2';
 
 export default {
     components: {
@@ -183,6 +184,19 @@ export default {
         },
         detailberita(id) {
             router.get('/berita/' + id + '/detail-berita');
+        },
+        confirmDelete(id) {
+            Swal.fire({
+                title: 'Apakah anda yakin ingin menghapus?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.destroy(id);
+                }
+            });
         },
         destroy(id) {
             router.delete('/berita/' + id);

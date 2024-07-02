@@ -60,14 +60,12 @@ class PanelisController extends Controller
 
 
     //RANKING
-    public function rangkingjuri($lombaId)
+    public function rangkingjuri()
     {
         $user = auth()->user();
-        $regLombas = Reg_Lomba::whereHas('team.lomba', function ($query) use ($lombaId) {
-            $query->where('lomba_id', $lombaId);
-        })->with(['team', 'submission', 'lomba'])->get();
+        $regLombas = Reg_Lomba::with('lomba','submission','team')->get();
 
-        $lomba =  $user ? $user->lomba : [];
+       
 
         $settings = Setting::all();
         return Inertia::render('Roles/Panelis/Rangkingjuri', [
@@ -75,11 +73,10 @@ class PanelisController extends Controller
             'name' => auth()->user()->name,
             'username' => auth()->user()->username,
             'reg_lombas' => $regLombas,
-            'lomba' => $lomba,
+            
             'settings' => $settings,
 
         ]);
-
 
     }
     public function tabelrangkingjuri()

@@ -131,12 +131,18 @@ class LombaController extends Controller
     {
         $setting = Setting::all();
         $kriteria = KriteriaResource::collection(Kriteria::all());
-        
+        $lombaCriteria = $lomba->kriteria()->get()->map(function ($criteria) {
+            return [
+                'id' => $criteria->id,
+                'weight' => $criteria->pivot->bobot, // Assuming 'weight' is stored in pivot table
+            ];
+        });
         return Inertia::render('Roles/Admin/Lomba/Editlomba', [
             'lombas' => LombaResource::make($lomba),    
             'lomba' => $lomba,
             'kriterias' => $kriteria,
             'settings' =>$setting,
+            'lombaCriteria' => $lombaCriteria,
         ]);
     }
 
@@ -145,18 +151,37 @@ class LombaController extends Controller
      */
     public function update(Request $request, Lomba $lomba)
     {
+        // Validate request data
+        $request->validate([
+            'name_lomba' => 'required|string|max:255',
+            'pj' => 'required|string|max:255',
+            'kontak' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'tempat' => 'required|string|max:255',
+            'biaya_pendaftaran' => 'required|numeric',
+            'picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'sertifikat' => 'nullable|mimes:pdf|max:2048',
+            'selectedCriteria' => 'nullable|array',
+            'selectedCriteria.*' => 'exists:kriterias,id',
+            'bobot' => 'nullable|array',
+            'bobot.*' => 'integer|min:0|max:100',
+        ]);
+    
+        // Handle picture upload
         $picture = $lomba->picture;
         if ($request->file('picture')) {
-            Storage::delete('public/'. $lomba->picture);
-            $picture = $request->file('picture')->storePublicly('picture_files', 'public');
+            Storage::delete('public/' . $lomba->picture);
+            $picture = $request->file('picture')->store('picture_files', 'public');
         }
-
+    
+        // Handle sertifikat upload
         $sertifikat = $lomba->sertifikat;
         if ($request->file('sertifikat')) {
-            Storage::delete('public/'. $lomba->sertifikat);
-            $sertifikat = $request->file('sertifikat')->storePublicly('sertifikat_files', 'public');
+            Storage::delete('public/' . $lomba->sertifikat);
+            $sertifikat = $request->file('sertifikat')->store('sertifikat_files', 'public');
         }
-        
+    
+        // Update lomba data
         $lomba->update([
             'name_lomba' => $request->input('name_lomba'),
             'pj' => $request->input('pj'),
@@ -167,23 +192,24 @@ class LombaController extends Controller
             'picture' => $picture,
             'sertifikat' => $sertifikat,
         ]);
-
+    
         // Update kriteria and their respective bobot
         $lomba->kriteria()->detach();
-        
+    
         if ($request->has('selectedCriteria')) {
             $selectedCriteria = $request->input('selectedCriteria');
             $bobotValues = $request->input('bobot');
-
+    
             foreach ($selectedCriteria as $kriteriaId) {
                 $lomba->kriteria()->attach($kriteriaId, [
                     'bobot' => $bobotValues[$kriteriaId] ?? 0,
                 ]);
             }
         }
-
+    
         return redirect()->route('lomba.index')->with('success', 'Lomba berhasil diupdate');
     }
+    
 
     /**
      * Remove the specified resource from storage.

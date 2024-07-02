@@ -34,7 +34,7 @@ class SubmissionController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required',
             'link' => 'required|string|max:255',
-            'file' => 'nullable|file|mimes:jpeg,png,jpg,gif,zip,rar|max:512000',
+            'file' => 'nullable|file|mimes:zip|max:20480',
             'surat' => 'nullable|file|mimes:pdf|max:10240',
         ]);
 

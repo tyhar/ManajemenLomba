@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -11,8 +10,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
+use Illuminate\Validation\Rule;
 use Inertia\Response;
-use App\Rules\CaptchaRule;
+use Mews\Captcha\Facades\Captcha;
 
 class RegisteredUserController extends Controller
 {
@@ -21,9 +21,7 @@ class RegisteredUserController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Auth/Register', [
-            'recaptcha_site_key' => env('NOCAPTCHA_SITEKEY'),
-        ]);
+        return Inertia::render('Auth/Register');
     }
 
     /**
@@ -31,21 +29,25 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'username' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:users',
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'g-recaptcha-response' => ['required', new CaptchaRule()],
-        ]);
 
+
+public function store(Request $request): RedirectResponse
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'username' => 'required|string|max:255|unique:' . User::class,
+        'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
+        'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        'captcha' => 'required|captcha'
+    ]);
+
+    try {
         $user = User::create([
             'name' => $request->name,
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'google_id' => '',
         ]);
 
         event(new Registered($user));
@@ -53,5 +55,17 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         return redirect()->route('verification.notice');
+    } catch (\Exception $e) {
+        if ($e->getCode() === '23000') { // Integrity constraint violation
+            if (str_contains($e->getMessage(), 'users_username_unique')) {
+                return back()->withErrors(['username' => 'Username sudah ada! Silahkan coba username lain.'])->withInput();
+            } elseif (str_contains($e->getMessage(), 'users_email_unique')) {
+                return back()->withErrors(['email' => 'Email Anda telah terdaftar.'])->withInput();
+            }
+        }
+
+        return back()->withErrors(['general' => 'Terjadi kesalahan. Silakan coba lagi.'])->withInput();
     }
+}
+
 }

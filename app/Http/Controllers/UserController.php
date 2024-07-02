@@ -29,56 +29,54 @@ class UserController extends Controller
 {
 
     public function index(Request $request)
-    {
-        $settings = Setting::all();
-        $user = Auth::user();
+{
+    $settings = Setting::all();
+    $user = Auth::user();
 
-        // Fetch UserStatus entries based on user_id and filter the status_ketua_team
-        $userStatuses = UserStatus::where('user_id', $user->id)
-            ->whereIn('status_ketua_team', ['terdaftar', 'belum_terdaftar'])
-            ->get();
+    // Fetch UserStatus entries based on user_id and filter the status_ketua_team
+    $userStatuses = UserStatus::where('user_id', $user->id)
+        ->whereIn('status_ketua_team', ['terdaftar', 'belum_terdaftar', 'sudah_submit'])
+        ->get();
 
-        // Collect the relevant Lomba IDs from the userStatuses
-        $lombaIds = $userStatuses->pluck('lomba_id')->unique();
+    // Collect the relevant Lomba IDs from the userStatuses
+    $lombaIds = $userStatuses->pluck('lomba_id')->unique();
 
-        // Fetch all Lomba entries
-        $lombas = Lomba::all();
+    // Fetch all Lomba entries
+    $lombas = Lomba::all();
 
-        // Add user status information to each Lomba entry
-        $lombas = $lombas->map(function($lomba) use ($lombaIds) {
-            $lomba->is_registered = $lombaIds->contains($lomba->id);
-            return $lomba;
-        });
+    // Add user status information to each Lomba entry
+    $lombas = $lombas->map(function ($lomba) use ($userStatuses) {
+        $userStatus = $userStatuses->firstWhere('lomba_id', $lomba->id);
+        $lomba->is_registered = !is_null($userStatus);
+        $lomba->status_ketua_team = $userStatus ? $userStatus->status_ketua_team : null;
+        return $lomba;
+    });
 
-        // Collect the status_ketua_team from the userStatuses
-        $usersWithStatus = $userStatuses->pluck('status_ketua_team')->first();
+    // Fetch team and notifications
+    // $team = $user->team()->with('user')->first();
 
-        // Fetch team and notifications
-        $team = $user->team()->with('user')->first();
-
-        // If the team exists, count the unread notifications for that team
-        $notifCount = null;
-        if ($team) {
-            $notifCount = Notifikasi::where('status', 'belum_dibaca')
-                                    ->where('team_id', $team->id)
-                                    ->count();
-        }
-
-        // Fetch visit data for the chart
-        $visitData = Visit::select('visit_month', 'visit_count')->get();
-
-        return Inertia::render('Roles/User/Dashboard', [
-            'initialUserStatus' => $usersWithStatus,
-            'lombas' => $lombas,
-            'userData' => $user,
-            'notifCount' => $notifCount,
-            'settings' => $settings,
-            'visitData' => $visitData,
-        ]);
+    // If the team exists, count the unread notifications for that team
+    $notifCount = null;
+    if ($user) {
+        $notifCount = Notifikasi::where('status', 'belum_dibaca')
+            ->where('user_id', $user->id)
+            ->count();
     }
 
-    
-    
+    // Fetch visit data for the chart
+    $visitData = Visit::select('visit_month', 'visit_count')->get();
+
+    return Inertia::render('Roles/User/Dashboard', [
+        'initialUserStatus' => $userStatuses->pluck('status_ketua_team')->first(), // Keeping this for initial status if needed
+        'lombas' => $lombas,
+        'userData' => $user,
+        'notifCount' => $notifCount,
+        'settings' => $settings,
+        'visitData' => $visitData,
+        'userStatuses' => $userStatuses, // Pass userStatuses to the view
+    ]);
+}
+
 
     public function overviewpeserta()
     {
@@ -133,16 +131,11 @@ class UserController extends Controller
         ->where('user_id', $user->id)
         ->get();
 
-        $team = $user->team()->with('user')->first();
-
-        // If the team exists, count the unread notifications for that team
         $notifCount = null;
-
-        // If the team exists, count the unread notifications for that team
-        if ($team) {
+        if ($user) {
             $notifCount = Notifikasi::where('status', 'belum_dibaca')
-                                    ->where('team_id', $team->id)
-                                    ->count();
+                ->where('user_id', $user->id)
+                ->count();
         }
      
     return Inertia::render('Roles/User/Reportpeserta', [
@@ -154,13 +147,12 @@ class UserController extends Controller
     ]);
 }
 
-
 public function detailtimreport($reg_lomba_id, $team_id, $lomba_id)
 {
     $settings = Setting::all();
     // Ambil pengguna yang sedang login
     $user = Auth::user();
-    
+
     // Ambil reg_lomba menggunakan ID yang diberikan dan pastikan lomba_id cocok
     $regLomba = Reg_Lomba::with(['team', 'lomba', 'submission'])->findOrFail($reg_lomba_id);
 
@@ -175,33 +167,34 @@ public function detailtimreport($reg_lomba_id, $team_id, $lomba_id)
         ->where('lomba_id', $lomba_id)
         ->first();
 
-    
-        $value = Value::with(['reg_lomba', 'kriteria_lomba'])
+    // Ambil Value atau null jika tidak ditemukan
+    $value = Value::with(['reg_lomba', 'kriteria_lomba'])
         ->where('reg_lomba_id', $reg_lomba_id)
-        ->firstOrFail();
-    
-    // Ambil kriterias terkait dengan lomba_id dan tambahkan value_count
-    $kriterias = KriteriaLomba::with(['kriteria'])
-        ->whereHas('kriteria', function($query) use ($value) {
+        ->first();
+
+    // Ambil kriterias terkait dengan lomba_id jika value ditemukan, jika tidak, kosongkan
+    $kriterias = $value ? KriteriaLomba::with(['kriteria'])
+        ->whereHas('kriteria', function ($query) use ($value) {
             $query->where('lomba_id', $value->reg_lomba->lomba_id);
-        })->get();
-    
-    // Ambil value_count untuk setiap kriteria
-    foreach ($kriterias as $kriteria) {
-        // Mengambil value_count berdasarkan reg_lomba_id dan kriteria_lomba_id di tabel values
-        $valueEntry = Value::where('reg_lomba_id', $value->reg_lomba_id)
-                           ->where('kriteria_lomba_id', $kriteria->id)
-                           ->first();
-    
-        // Jika entri ditemukan, set value_count, jika tidak, set ke null atau nilai default
-        $kriteria->value_count = $valueEntry ? $valueEntry->value_count : null;
+        })->get() : collect();
+
+    // Ambil value_count untuk setiap kriteria jika kriterias tidak kosong
+    if ($kriterias->isNotEmpty()) {
+        foreach ($kriterias as $kriteria) {
+            // Mengambil value_count berdasarkan reg_lomba_id dan kriteria_lomba_id di tabel values
+            $valueEntry = Value::where('reg_lomba_id', $reg_lomba_id)
+                ->where('kriteria_lomba_id', $kriteria->id)
+                ->first();
+
+            // Jika entri ditemukan, set value_count, jika tidak, set ke null atau nilai default
+            $kriteria->value_count = $valueEntry ? $valueEntry->value_count : null;
+        }
     }
-    
 
     $teamMembers = TeamMember::where('team_id', $team->id)
         ->with(['user:id,name,nik,photo,instansi'])
         ->get()
-        ->map(function($teamMember) {
+        ->map(function ($teamMember) {
             return [
                 'name' => $teamMember->user->name,
                 'nik' => $teamMember->user->nik,
@@ -225,7 +218,6 @@ public function detailtimreport($reg_lomba_id, $team_id, $lomba_id)
 }
 
 
-
     public function daftarlomba()
     {
         return Inertia::render('Roles/User/Daftarlomba');
@@ -243,16 +235,20 @@ public function detailtimreport($reg_lomba_id, $team_id, $lomba_id)
         return Inertia::render('Roles/User/Daftar/Pengumpulankarya');
     }
 
+
+
+    
     public function checkStatus(Request $request)
     {
-        $user = User::where('email', $request->email)->first();
-
+        $user = User::where('email', $request->login)->orWhere('username', $request->login)->first();
+    
         if ($user) {
             return response()->json(['status' => $user->status]);
         } else {
             return response()->json(['status' => 'not_found'], 404);
         }
     }
+    
 
     public function updateStatusKetua(Request $request, $lombaId)
     {
@@ -262,12 +258,18 @@ public function detailtimreport($reg_lomba_id, $team_id, $lomba_id)
     
         $user = Auth::user();
         
-        // Find or create a new UserStatus entry for the user and lomba
+        // Validasi status yang diterima dalam request
+        $validated = $request->validate([
+            'status' => 'required|in:terdaftar,sudah_submit',
+        ]);
+        
+        // Cari atau buat entri UserStatus untuk user dan lomba
         $userStatus = UserStatus::firstOrNew(['user_id' => $user->id, 'lomba_id' => $lombaId]);
-        $userStatus->status_ketua_team = 'terdaftar';
+        $userStatus->status_ketua_team = $validated['status'];
         $userStatus->save();
     
         return response()->json(['message' => 'Status updated successfully']);
     }
+    
     
 }

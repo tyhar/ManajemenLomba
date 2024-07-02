@@ -1,3 +1,105 @@
+<script setup>
+import { router, useForm, usePage } from "@inertiajs/vue3";
+import Swal from 'sweetalert2'; // Import SweetAlert
+import { reactive, onMounted, ref } from 'vue';
+
+const { name, username, settings, logo1, kriterias, lombaCriteria } = defineProps(['name', 'username', 'kriterias', 'settings', 'logo1', 'lombaCriteria']);
+
+const lomba = usePage().props.lombas;
+
+const form = reactive({
+    name_lomba: lomba.data.name_lomba || '',
+    pj: lomba.data.pj || '',
+    description: lomba.data.description || '',
+    kontak: lomba.data.kontak || '',
+    tempat: lomba.data.tempat || '',
+    biaya_pendaftaran: lomba.data.biaya_pendaftaran || '',
+    picture: null,
+    sertifikat: null,
+    selectedCriteria: [],
+    bobot: {},
+});
+
+const sertifikatError = ref('');
+
+// Initialize selectedCriteria and bobot with existing data
+onMounted(() => {
+    lombaCriteria.forEach(criteria => {
+        form.selectedCriteria.push(criteria.id);
+        form.bobot[criteria.id] = criteria.weight;
+    });
+});
+
+const isKriteriaSelected = (kriteriaId) => {
+    return form.selectedCriteria.includes(kriteriaId);
+};
+
+const handlePictureUpload = (event) => {
+    form.picture = event.target.files[0];
+};
+
+const handleSertifikatUpload = (event) => {
+    const file = event.target.files[0];
+    if (file && file.type !== 'application/pdf') {
+        sertifikatError.value = 'Format file harus .pdf';
+        form.sertifikat = null;
+    } else {
+        sertifikatError.value = '';
+        form.sertifikat = file;
+    }
+};
+
+const submit = async () => {
+    const totalBobot = form.selectedCriteria.reduce((acc, id) => {
+        return acc + (parseInt(form.bobot[id]) || 0);
+    }, 0);
+
+    if (totalBobot !== 100) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal',
+            text: 'Total bobot kriteria harus 100%',
+        });
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('_method', 'put');
+    formData.append('name_lomba', form.name_lomba);
+    formData.append('pj', form.pj);
+    formData.append('description', form.description);
+    formData.append('tempat', form.tempat);
+    formData.append('kontak', form.kontak);
+    formData.append('biaya_pendaftaran', form.biaya_pendaftaran);
+
+    form.selectedCriteria.forEach(id => {
+        formData.append('selectedCriteria[]', id);
+        formData.append(`bobot[${id}]`, form.bobot[id]);
+    });
+    if (form.picture) {
+        formData.append('picture', form.picture);
+    }
+    if (form.sertifikat) {
+        formData.append('sertifikat', form.sertifikat);
+    }
+
+    try {
+        await router.post(`/lomba/${lomba.data.id}`, formData);
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Lomba berhasil diperbarui!',
+        });
+    } catch (error) {
+        console.error('Error:', error);
+    }
+};
+
+const goBack = () => {
+    window.history.back();
+};
+</script>
+
 <template>
     <div class="wrapper">
         <!--start header -->
@@ -9,7 +111,7 @@
                         <div class="navbar-left" v-for="setting in settings" :key="setting.id">
                             <a href="/">
                                 <img :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
-                                    alt="Logo" style="width: 135px; margin-left: -15px;">
+                                    alt="Logo" style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>
@@ -71,6 +173,7 @@
                                             @change="handleSertifikatUpload">
                                         <p class="keterangan-foto f-italic">Max file size: 2MB</p>
                                         <p class="keterangan-foto f-italic">Format: .pdf</p>
+                                        <span v-if="sertifikatError" class="text-danger">{{ sertifikatError }}</span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -88,14 +191,12 @@
                                             placeholder="Masukan biaya pendaftaran" id="biaya_pendaftaran">
                                     </div>
                                     <div>
-                                        <label class="role-add"><b class="warna-hitam">Kriteria Penilaian
-                                                (0%/100%)</b></label>
+                                        <label class="role-add"><b class="warna-hitam">Kriteria Penilaian</b></label>
                                         <div v-for="kriteria in kriterias.data" :key="kriteria.id" class="form-check">
                                             <input class="form-check-input" type="checkbox"
                                                 :id="'kriteria' + kriteria.id" v-model="form.selectedCriteria"
                                                 :value="kriteria.id">
-                                            <label class="form-check-label" :for="'kriteria' + kriteria.id">{{
-                                                kriteria.name_kriteria }} </label>
+                                            <label class="form-check-label" :for="'kriteria' + kriteria.id">{{ kriteria.name_kriteria }} </label>
                                             <input type="number" class="form-control" placeholder="Masukan bobot nilai"
                                                 :readonly="!isKriteriaSelected(kriteria.id)"
                                                 v-model="form.bobot[kriteria.id]">
@@ -104,7 +205,7 @@
                                 </div>
                             </div>
                             <div class="btn-posisi">
-                                <button class="btn btn-danger button-left" @click="goBack()">Kembali</button>
+                                <button class="btn btn-danger button-left" @click="goBack">Kembali</button>
                                 <button type="submit" class="btn btn-primary button-right">Update</button>
                             </div>
                         </div>
@@ -115,93 +216,3 @@
         <!--end page wrapper -->
     </div>
 </template>
-
-<script setup>
-import { router, useForm, usePage } from "@inertiajs/vue3";
-import Swal from 'sweetalert2'; // Import SweetAlert
-import { reactive, toRefs } from 'vue';
-
-const { name, username, settings, logo1, kriterias } = defineProps(['name', 'username', 'kriterias', 'settings', 'logo1']);
-
-const lomba = usePage().props.lombas;
-
-const form = reactive({
-    name_lomba: lomba.data.name_lomba || '',
-    pj: lomba.data.pj || '',
-    description: lomba.data.description || '',
-    kontak: lomba.data.kontak || '',
-    tempat: lomba.data.tempat || '',
-    biaya_pendaftaran: lomba.data.biaya_pendaftaran || '',
-    picture: null,
-    sertifikat: null,
-    selectedCriteria: [],
-    bobot: {},
-});
-
-const isKriteriaSelected = (kriteriaId) => {
-    return form.selectedCriteria.includes(kriteriaId);
-};
-
-const handlePictureUpload = (event) => {
-    form.picture = event.target.files[0];
-};
-
-const handleSertifikatUpload = (event) => {
-    form.sertifikat = event.target.files[0];
-};
-
-const submit = async () => {
-    const totalBobot = form.selectedCriteria.reduce((acc, id) => {
-        return acc + (parseInt(form.bobot[id]) || 0);
-    }, 0);
-
-    if (totalBobot !== 100) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Gagal',
-            text: 'Total bobot kriteria harus 100%',
-        });
-        return;
-    }
-
-    const formData = new FormData();
-    formData.append('_method', 'put');
-    formData.append('name_lomba', form.name_lomba);
-    formData.append('pj', form.pj);
-    formData.append('description', form.description);
-    formData.append('tempat', form.tempat);
-    formData.append('kontak', form.kontak);
-    formData.append('biaya_pendaftaran', form.biaya_pendaftaran);
-
-    form.selectedCriteria.forEach(id => {
-        formData.append('selectedCriteria[]', id);
-        formData.append(`bobot[${id}]`, form.bobot[id]);
-    });
-    if (form.picture) {
-        formData.append('picture', form.picture);
-    }
-    if (form.sertifikat) {
-        formData.append('sertifikat', form.sertifikat);
-    }
-
-    try {
-        await router.post(`/lomba/${lomba.data.id}`, formData);
-        Swal.fire({
-            icon: 'success',
-            title: 'Success',
-            text: 'Lomba berhasil diperbarui!',
-        });
-    } catch (error) {
-        console.error('Error:', error);
-    }
-};
-
-const goBack = () => {
-    window.history.back();
-};
-
-</script>
-
-<style scoped>
-/* Tambahkan gaya CSS jika diperlukan */
-</style>

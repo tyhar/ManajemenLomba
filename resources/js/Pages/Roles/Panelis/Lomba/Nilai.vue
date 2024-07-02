@@ -9,16 +9,19 @@
             <div class="navbar-left" v-for="setting in settings" :key="setting.id">
               <a href="/">
                 <img :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
-                  alt="Logo" style="width: 135px; margin-left: -15px;">
+                  alt="Logo" style="width: 100px; margin-left: -15px;">
               </a>
             </div>
           </div>
           <!-- Mobile toggle menu -->
           <!-- Search bar -->
           <div class="search-bar flex-grow-1"></div>
-          <!-- Top menu -->
           <div class="top-menu ms-auto">
             <ul class="navbar-nav align-items-center">
+              <div class="user-info ps-3">
+                <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
+                <p class="user-role">{{ $page.props.userData.username }}</p>
+              </div>
               <div class="parent-icon posisi-icon">
                 <i class="bx bx-user-circle c-font48"></i>
               </div>
@@ -49,6 +52,8 @@
                     v-model="form.value_count[kriteria.id]" />
                   <!-- Add hidden input to store kriteria_id -->
                   <input type="hidden" :name="'kriteria_lomba_id' + kriteria.id" :value="kriteria.id" />
+                  <!-- Error message for bobot -->
+                  <div v-if="bobotErrors[kriteria.id]" class="text-danger">{{ bobotErrors[kriteria.id] }}</div>
                 </div>
               </div>
               <div v-if="errors.length" class="alert alert-danger">
@@ -58,7 +63,8 @@
               </div>
               <div class="btn-posisi">
                 <button type="button" class="btn btn-danger button-left" @click="goBack">Batal</button>
-                <button type="submit" class="btn btn-primary button-right">Simpan</button>
+                <button type="submit" class="btn btn-primary button-right"
+                  :disabled="reg_lombas.status === 'sudah_dinilai'">Simpan</button>
               </div>
             </form>
           </div>
@@ -111,6 +117,7 @@ const form = useForm({
 });
 
 const errors = ref([]);
+const bobotErrors = ref({});
 
 onMounted(() => {
   props.kriterias.forEach(kriteria => {
@@ -119,6 +126,21 @@ onMounted(() => {
 });
 
 const confirmSubmit = async () => {
+  let valid = true;
+  bobotErrors.value = {};
+
+  // Validate bobot values
+  props.kriterias.forEach(kriteria => {
+    if (form.value_count[kriteria.id] > 100) {
+      bobotErrors.value[kriteria.id] = 'Maksimal 100!';
+      valid = false;
+    }
+  });
+
+  if (!valid) {
+    return;
+  }
+
   const result = await Swal.fire({
     title: 'Apakah anda akan menyimpan nilai?',
     showCancelButton: true,

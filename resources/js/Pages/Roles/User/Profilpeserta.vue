@@ -15,23 +15,23 @@ const props = defineProps({
     default: null
   },
   settings: {
-        type: Object, // Menggunakan "type" untuk menentukan tipe data props
-        default: () => ({}), // Menggunakan "default" jika props tidak diberikan
-    },
-    logo1: {
-        type: String, // Menentukan tipe data logo sebagai String
-    },
+    type: Object, // Menggunakan "type" untuk menentukan tipe data props
+    default: () => ({}), // Menggunakan "default" jika props tidak diberikan
+  },
+  logo1: {
+    type: String, // Menentukan tipe data logo sebagai String
+  },
 });
 
 async function clearNotifications() {
-    try {
-        const response = await axios.post('/notifikasi/mark-all-as-read');
-        if (response.data.success) {
-            notifCount.value = 0;
-        }
-    } catch (error) {
-        console.error('Error marking notifications as read', error);
+  try {
+    const response = await axios.post('/notifikasi/mark-all-as-read');
+    if (response.data.success) {
+      notifCount.value = 0;
     }
+  } catch (error) {
+    console.error('Error marking notifications as read', error);
+  }
 }
 // Create a reactive reference for form data
 const form = useForm({
@@ -81,10 +81,9 @@ const submit = () => {
       <div class="sidebar-header">
         <div v-for="setting in settings" :key="setting.id">
           <a href="/">
-                        <img id="logo-img"
-                            :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
-                            class="lg2">
-                    </a>
+            <img id="logo-img" :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
+              class="lg2">
+          </a>
         </div>
         <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
       </div>
@@ -104,9 +103,9 @@ const submit = () => {
         </li>
         <li>
           <a @click="clearNotifications" href="/notifikasipeserta">
-                        <div class="parent-icon"><i class="bx bx-user-circle"></i></div>
-                        <div class="menu-title">Notifikasi <span class="alert-count" v-if="notifCount">{{ notifCount }}</span></div>
-                    </a>
+            <div class="parent-icon"><i class="bx bx-user-circle"></i></div>
+            <div class="menu-title">Notifikasi <span class="alert-count" v-if="notifCount">{{ notifCount }}</span></div>
+          </a>
         </li>
         <li>
           <a href="/reportpeserta">
@@ -169,10 +168,12 @@ const submit = () => {
                     <div class="card-body">
                       <div class="d-flex flex-column align-items-center text-center">
                         <div class="ukuran-foto">
-                          <img :src="props.userData.photo ? `/storage/${props.userData.photo}` : '/bootstrap/images/default.jpg'"
+                          <img
+                            :src="props.userData.photo ? `/storage/${props.userData.photo}` : '/bootstrap/images/default.jpg'"
                             alt="Profile" class="rounded-circle p-1 bg-primary" width="190" height="150">
                         </div>
-                        <input type="file" class="form-control form-control-sm btn-profil2 img-profil" @change="e => form.photo = e.target.files[0]">
+                        <input type="file" class="form-control form-control-sm btn-profil2 img-profil"
+                          @change="e => form.photo = e.target.files[0]">
                       </div>
                       <div class="c-mtk">
                         <p class="keterangan-foto f-italic">Max file size: 2MB</p>
@@ -197,7 +198,7 @@ const submit = () => {
                           <h6 class="mb-0">Username</h6>
                         </div>
                         <div class="col-sm-9 text-secondary">
-                          <input type="text" class="form-control" v-model="form.username">
+                          <input type="text" class="form-control" v-model="form.username" readonly>
                         </div>
                       </div>
                       <div class="row mb-3">
@@ -232,8 +233,12 @@ const submit = () => {
                           <input type="text" class="form-control" v-model="form.phone">
                         </div>
                       </div>
-                      <div class="pperbarui">
-                        <button type="submit" class="btn btn-primary crud-width-435">Perbarui</button>
+                      <div class="row mb-3">
+                        <div class="col-sm-3">
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                          <button type="submit" class="btn btn-primary w-100">Perbarui</button>
+                        </div>
                       </div>
                     </div>
                   </div>

@@ -323,6 +323,9 @@ Route::middleware('auth', 'verified', 'eventadmin')->group(function () {
 
 Route::post('/api/update-status/kelulusan', [RegLombaController::class, 'updateStatus']);
 
+Route::patch('/api/update-status/kelulusan2', [RegLombaController::class, 'updateStatuskelulusan']);
+
+
 Route::post('/notifications', [NotifikasiController::class, 'store'])->name('notifications.store');
 // -> panelis atau juri
 
@@ -358,7 +361,7 @@ Route::middleware('auth', 'verified', 'panelis')->group(function () {
 
 
     Route::get('/tabellomba', [PanelisController::class, 'tabellomba']);
-    Route::get('/rangkingjuri/{id}', [PanelisController::class, 'rangkingjuri']);
+    Route::get('/rangkingjuri', [PanelisController::class, 'rangkingjuri']);
 
     Route::get('/tabelrangkingjuri', [PanelisController::class, 'tabelrangkingjuri']);
     // Route::get('/nilai', [PanelisController::class, 'nilai']);
@@ -413,6 +416,19 @@ Route::get('/send-test-email', function () {
     return 'Email sent!';
 });
 
+Route::get('/storage-link', function () {
+    // Define the target folder, which is the storage path for public files
+    $targetFolder = storage_path('app/public');
+    
+    // Define the link folder, which is the document root path plus '/storage'
+    $linkFolder = $_SERVER['DOCUMENT_ROOT'] . '/storage';
+    
+    // Create the symbolic link
+    symlink($targetFolder, $linkFolder);
+    
+    // Optional: return a response to confirm the link was created
+    return 'Storage link created successfully!';
+});
 // -- backup --
 // Route::get('/api/logo', [LogoController::class, 'getLogo']);
 // Route::get('/superadmin', function () {

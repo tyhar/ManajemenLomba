@@ -90,6 +90,16 @@ const renderChart = () => {
 onMounted(() => {
   renderChart();
 });
+if (!localStorage.getItem('reloaded')) {
+  // Jika belum, set flag dan reload halaman setelah 1 detik
+  setTimeout(() => {
+    localStorage.setItem('reloaded', 'true');
+    location.reload();
+  }, 1000);
+} else {
+  // Jika sudah, hapus flag agar reload hanya terjadi sekali
+  localStorage.removeItem('reloaded');
+}
 </script>
 
 <template>

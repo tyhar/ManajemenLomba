@@ -34,6 +34,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'photo',
         'email_verification_status',
         'created_at',
+        'google_id'
         
     ];
 

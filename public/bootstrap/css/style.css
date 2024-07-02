@@ -1324,8 +1324,8 @@ button {
 
 /*----- EVENT START-----*/
 .tf__single_event {
-    background: var(--colorWhite);
-    border: 1px solid #ddd;
+    /* background: var(--colorWhite);
+    border: 1px solid #ddd; */
     overflow: hidden;
     border-radius: 5px;
     margin-top: 25px;

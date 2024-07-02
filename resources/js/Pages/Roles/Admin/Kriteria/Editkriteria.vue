@@ -41,7 +41,7 @@
                             <h4 class="mb-0">EDIT KRITERIA PENILAIAN</h4>
                             <hr />
                             <div class="row">
-                                <div class="col-md-6 c-mb10">
+                                <div class=" c-mb10">
                                     <label class="c-mb5-black"><b>Kriteria Penilaian</b></label>
                                     <input type="text" class="form-control" placeholder="Masukan kriteria penilaian"
                                         v-model="form.name_kriteria" id="name_kriteria" required>

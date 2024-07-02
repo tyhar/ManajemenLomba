@@ -6,8 +6,7 @@
       <div class="sidebar-header">
         <div v-for="setting in settings" :key="setting.id">
           <a href="/">
-            <img id="logo-img" :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
-              class="lg2">
+            <img id="logo-img" :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'" class="lg2">
           </a>
         </div>
         <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
@@ -43,7 +42,7 @@
             <div class="parent-icon"><i class="fadeIn animated bx bx-log-out"></i></div>
             <div class="menu-title">
               <Link class="menu-title" :href="route('logout')" method="post" as="button">
-              Keluar
+                Keluar
               </Link>
             </div>
           </a>
@@ -91,15 +90,13 @@
             <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
               <div class="col" v-for="lomba in lombas" :key="lomba.id">
                 <div class="card radius-15 card-overview">
-                  <img :src="lomba.picture ? `/storage/${lomba.picture}` : '/bootstrap/images/default.jpg'"
-                    class="border-radius">
+                  <img :src="lomba.picture ? `/storage/${lomba.picture}` : '/bootstrap/images/default.jpg'" class="border-radius">
                   <div class="judul-overview">{{ lomba.name_lomba }}</div>
                   <div class="btn-posisi">
                     <a class="btn btn-primary btn-lomba" :href="`/detailpeserta/${lomba.id}`">Detail</a>
-                    <a v-if="!lomba.is_registered" class="btn btn-success button-lomba"
-                      @click="submitForm(lomba.id)">Daftar</a>
-                    <a v-if="lomba.is_registered" class="btn btn-primary button-lomba"
-                      @click="handleLombaSaya(lomba.id)">Lanjutkan</a>
+                    <a v-if="!lomba.is_registered" class="btn btn-success button-lomba" @click="submitForm(lomba.id)">Daftar</a>
+                    <button v-if="lomba.is_registered && lomba.status_ketua_team === 'sudah_submit'" class="btn btn-secondary button-lomba">Terdaftar</button>
+                    <a v-if="lomba.is_registered && lomba.status_ketua_team === 'terdaftar'" class="btn-ungu button-lomba" @click="handleLombaSaya(lomba.id)">Lanjutkan</a>
                   </div>
                 </div>
               </div>
@@ -134,16 +131,15 @@ const props = defineProps({
     default: null,
   },
   settings: {
-    type: Object, // Menggunakan "type" untuk menentukan tipe data props
-    default: () => ({}), // Menggunakan "default" jika props tidak diberikan
+    type: Object,
+    default: () => ({}),
   },
   logo1: {
-    type: String, // Menentukan tipe data logo sebagai String
+    type: String,
   },
 });
 
 const userStatus = ref(props.initialUserStatus);
-
 const notifCount = ref(props.notifCount);
 
 async function clearNotifications() {
@@ -156,6 +152,7 @@ async function clearNotifications() {
     console.error('Error marking notifications as read', error);
   }
 }
+
 function handleLombaSaya(lombaId) {
   axios.get(route('daftarlomba.show', lombaId))
     .then(response => {
@@ -174,49 +171,30 @@ function handleLombaSaya(lombaId) {
 }
 
 async function submitForm(lombaId) {
-  const confirmation = await Swal.fire({
-    title: 'Apakah anda yakin akan mendaftar lomba?',
-    text: 'Klik "Daftar" untuk melanjutkan atau "Batal" untuk membatalkan.',
-    icon: 'question',
-    showCancelButton: true,
-    confirmButtonText: 'Lanjutkan',
-    cancelButtonText: 'Batal'
-  });
+  try {
+    await router.post('/overview', {
+      lomba_id: lombaId
+    });
 
-  if (confirmation.isConfirmed) {
-    try {
-      await router.post('/overview', {
-        lomba_id: lombaId
-      });
+    await axios.patch(`/api/update-status-ketua/${lombaId}`, { status: 'terdaftar' });
 
-      await axios.patch(`/api/update-status-ketua/${lombaId}`, { status: 'terdaftar' });
-
-      await Swal.fire({
-        title: 'Success!',
-        text: 'Silahkan lengkapi data tim anda!',
-        icon: 'success',
-        confirmButtonText: 'OK'
-      });
-
-      userStatus.value = 'terdaftar';
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      if (error.response && error.response.data && error.response.data.errorInfo && error.response.data.errorInfo[1] === 1062) {
-        await Swal.fire({
-          title: 'Anda Telah Mendaftar!',
-          text: 'Anda telah mendaftar lomba ini sebelumnya!',
-          icon: 'warning',
-          confirmButtonText: 'OK'
-        });
-      } else {
-        await Swal.fire({
-          title: 'Gagal!',
-          text: 'Gagal menyimpan data.',
-          icon: 'error',
-          confirmButtonText: 'OK'
-        });
-      }
+    userStatus.value = 'terdaftar';
+  } catch (error) {
+    console.error('Error submitting form:', error);
+    if (error.response && error.response.data && error.response.data.errorInfo && error.response.data.errorInfo[1] === 1062) {
+      // Handle duplicate entry error (Anda telah mendaftar lomba ini sebelumnya)
+    } else {
+      // Handle other errors (Gagal menyimpan data)
     }
   }
+}
+
+if (!localStorage.getItem('reloaded')) {
+  setTimeout(() => {
+    localStorage.setItem('reloaded', 'true');
+    location.reload();
+  }, 1000);
+} else {
+  localStorage.removeItem('reloaded');
 }
 </script>

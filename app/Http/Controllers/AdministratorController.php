@@ -78,30 +78,48 @@ class AdministratorController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
+   public function store(Request $request)
+{
+    // Validate the incoming request
+    $validatedData = $request->validate([
+        'name' => ['required', 'max:50'],
+        'username' => ['required', 'max:50', 'unique:users,username'],
+        'email' => ['required', 'max:50', 'email', 'unique:users,email'],
+        'password' => ['required'],
+        'role' => ['required', 'integer'],
+        'google_id' => ['nullable', 'string', 'max:255'],
+    ]);
+    
 
-        // dd($request);
-        $validatedData = $request->validate([
-            'name' => ['required', 'max:50'],
-            'username' => ['required', 'max:50'],
-            'email' => ['required', 'max:50', 'email'],
-            'password' => ['required'],
-            'role' => ['required', 'integer'],
-        ]);
+    // Encrypt the password
+    $validatedData['password'] = bcrypt($validatedData['password']);
 
-        $validatedData['password'] = bcrypt($validatedData['password']);
-        // $validatedData['role'] = $request->input('role', 'peserta');
-        $validatedData['role'] = $request->input('role');
+    // Ensure the role is set from the input
+    $validatedData['role'] = $request->input('role');
 
+    // Provide a default value for google_id if not set
+    if (!isset($validatedData['google_id'])) {
+        $validatedData['google_id'] = '';
+    }
+
+    try {
+        // Create the user
         $user = User::create($validatedData);
 
+        // Attach the user to the selected Lomba if any
         if ($request->has('selectedLomba')) {
             $user->lomba()->attach($request->input('selectedLomba'));
         }
-        return redirect()->route('administrator.index');
-    }
 
+        return redirect()->route('administrator.index');
+    } catch (\Exception $e) {
+        if ($e->getCode() === '23000') { // Integrity constraint violation
+            return back()->withErrors(['email' => 'Email Anda telah terdaftar.'])->withInput();
+        }
+
+        return back()->withErrors(['general' => 'Terjadi kesalahan. Silakan coba lagi.'])->withInput();
+    }
+}
     /**
      * Display the specified resource.
      */

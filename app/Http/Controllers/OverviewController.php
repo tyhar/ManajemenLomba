@@ -53,7 +53,7 @@ class OverviewController extends Controller
             $userStatus->save();
 
             // Redirect ke rute 'daftarlomba.show' dengan lomba_id
-            return redirect()->route('detailpeserta.show', $request->lomba_id);
+            return redirect()->route('daftarlomba.show', $request->lomba_id);
         } catch (QueryException $e) {
             if ($e->errorInfo[1] == 1062) {
                 // Redirect ke rute 'daftarlomba.show' jika terjadi duplikasi

@@ -9,7 +9,7 @@
                         <div class="navbar-left" v-for="setting in settings" :key="setting.id">
                             <a href="/">
                                 <img :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
-                                    alt="Logo" style="width: 135px; margin-left: -15px;">
+                                    alt="Logo" style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>
@@ -33,14 +33,12 @@
         </header>
         <!--end header -->
         <!--start page wrapper -->
-        <div class="page-wrapper-new">
+        <div class="page-wrapper-new" >
             <div class="page-content">
-                <div class="card">
+                <div class="card" >
                     <div class="card-body">
                         <h4 class="mb-0">DETAIL TIM {{ team.name_team }}</h4>
-                        <a class="btn btn-primary crud-width-150 btn-petugas btn-verifikasi posisi-ver"
-                            :href="getRegLombaTeamUrl(reg_lombas.id, reg_lombas.team.id, reg_lombas.lomba.id)">Beri
-                            Nilai</a>
+                        <button class="btn btn-primary crud-width-150 btn-petugas btn-verifikasi posisi-ver" @click="checkStatusAndRedirect">Beri Nilai</button>
                         <hr />
                         <div class="row">
                             <div class="col-md-3 c-mb10" v-if="team">
@@ -73,8 +71,7 @@
                                     </div>
                                     <div class="col-md-3 label-left" v-if="submissions">
                                         <label class="jarak-teks05"><b>DOKUMEN</b></label>
-                                        <div class="data-tim"><a :href="`/submissionsurat/${submissions.id}`">Lihat
-                                                Dokumen</a></div>
+                                        <div class="data-tim"><a :href="`/submissionsurat/${submissions.id}`">Lihat Dokumen</a></div>
                                     </div>
                                     <div class="col-md-3 label-left" v-if="submissions">
                                         <label class="jarak-teks05"><b>FILE</b></label>
@@ -84,8 +81,7 @@
                                     </div>
                                     <div class="col-md-2 label-left" v-if="submissions">
                                         <label class="jarak-teks05"><b>LINK</b></label>
-                                        <div class="data-tim c-mb-70"><a :href="submissions.link" target="_blank">Buka
-                                                Link</a></div>
+                                        <div class="data-tim c-mb-70"><a :href="submissions.link" target="_blank">Buka Link</a></div>
                                     </div>
                                     <div class="label-left">
                                         <label class="jarak-teks05"><b>DESKRIPSI</b></label>
@@ -106,16 +102,19 @@ import { defineProps, ref, reactive } from 'vue';
 import Swal from 'sweetalert2';
 import { router } from '@inertiajs/vue3';
 
-const { userData, members, team, submissions, reg_lombas, lomba, settings, logo1 } = defineProps(['userData', 'members', 'team', 'submissions', 'reg_lombas', 'lomba', 'settings', 'logo1']);
+const { userData, members, team, submissions,reg_lombas, lomba, settings, logo1 } = defineProps(['userData', 'members', 'team', 'submissions', 'reg_lombas','lomba','settings', 'logo1']);
 
 
 const props = {
     settings: {
-        type: Object,
-        default: () => ({}),
+        type: Object, 
+        default: () => ({}), 
     },
     logo1: {
         type: String,
+    },
+    reg_lombas: {
+        type: Object,
     },
 };
 
@@ -132,11 +131,21 @@ const showPopup = () => {
 const hidePopup = () => {
     isPopupVisible.value = false;
 };
-const getRegLombaTeamUrl = (regLombaId, teamId, lombaId) => {
-    return route('value.create', { reg_lomba_id: regLombaId, team_id: teamId, lomba_id: lombaId });
-};
 
+const checkStatusAndRedirect = () => {
+    if (reg_lombas.status_kelulusan === 'terverifikasi') {
+        const url = route('value.create', { reg_lomba_id: reg_lombas.id, team_id: reg_lombas.team.id, lomba_id: reg_lombas.lomba.id });
+        window.location.href = url;
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Tidak dapat menilai',
+            text: 'Anda tidak dapat menilai tim yang belum terverifikasi atau telah dinilai sebelumnya',
+        });
+    }
+};
 </script>
+
 <style scoped>
 /* DAFTAR LOMBA EDIT */
 .crud-max-width260 {

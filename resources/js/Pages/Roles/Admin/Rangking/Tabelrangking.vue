@@ -136,8 +136,8 @@
                         <label class="jarak-filterstatus">Filter by Status</label>
                         <select v-model="filterStatus" class="form-select2">
                             <option value="Semua">Semua</option>
-                            <option value="Tidak Lolos">Tidak Lolos</option>
                             <option value="Lolos">Lolos</option>
+                            <option value="Tidak Lolos">Tidak Lolos</option>
                         </select>
                         <br><br>
                         <div class="table-responsive">
@@ -205,13 +205,13 @@ const filterStatus = ref('Semua');
 const filteredRegLombas = computed(() => {
     return props.reg_lombas.filter(reg_lomba => {
         if (filterStatus.value === 'Semua') {
-            return true;
+            return reg_lomba.status_kelulusan.toLowerCase() !== 'menunggu';
         }
         const statusLower = reg_lomba.status_kelulusan.toLowerCase();
         if (filterStatus.value === 'Lolos') {
             return statusLower === 'lolos';
         } else if (filterStatus.value === 'Tidak Lolos') {
-            return statusLower === 'tidak lolos';
+            return statusLower === 'tidak_lolos';
         }
         return false;
     });

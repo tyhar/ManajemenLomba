@@ -61,6 +61,7 @@
                     <input class="form-control" type="file" name="picture" @change="handlePictureUpload">
                     <p class="keterangan-foto f-italic">Max file size: 2MB (500 x 500 px)</p>
                     <p class="keterangan-foto f-italic">Format: .jpg, .png, .jpeg</p>
+                    <p v-if="errors.picture" class="text-danger">{{ errors.picture }}</p>
                   </div>
                   <br>
                   <div>
@@ -68,6 +69,7 @@
                     <input class="form-control" type="file" name="sertifikat" @change="handleSertifikatUpload">
                     <p class="keterangan-foto f-italic">Max file size: 2MB</p>
                     <p class="keterangan-foto f-italic">Format: .pdf</p>
+                    <p v-if="errors.sertifikat" class="text-danger">{{ errors.sertifikat }}</p>
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -148,12 +150,44 @@ const props = {
   },
 };
 
+const errors = reactive({
+  sertifikat: '',
+  picture: ''
+});
+
 const handleSertifikatUpload = (event) => {
-  form.sertifikat = event.target.files[0];
+  const file = event.target.files[0];
+  const fileType = file.type;
+  const fileSize = file.size;
+
+  if (fileType !== 'application/pdf') {
+    errors.sertifikat = 'File harus pdf!';
+    form.sertifikat = null;
+  } else if (fileSize > 2 * 1024 * 1024) { // 2MB in bytes
+    errors.sertifikat = 'Sertifikat max 2MB!';
+    form.sertifikat = null;
+  } else {
+    errors.sertifikat = '';
+    form.sertifikat = file;
+  }
 };
 
 const handlePictureUpload = (event) => {
-  form.picture = event.target.files[0];
+  const file = event.target.files[0];
+  const fileType = file.type;
+  const fileSize = file.size;
+  const validImageTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+
+  if (!validImageTypes.includes(fileType)) {
+    errors.picture = 'File harus jpg, png, dan jpeg!';
+    form.picture = null;
+  } else if (fileSize > 2 * 1024 * 1024) { // 2MB in bytes
+    errors.picture = 'Max file size: 2MB!';
+    form.picture = null;
+  } else {
+    errors.picture = '';
+    form.picture = file;
+  }
 };
 
 // Computed property to check if a kriteria is selected

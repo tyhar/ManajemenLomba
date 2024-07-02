@@ -7,6 +7,7 @@ use App\Models\Team;
 use App\Models\TeamMember;
 use App\Models\Setting;
 use App\Models\Notifikasi;
+use App\Models\UserStatus;
 use App\Models\Lomba;
 use App\Models\Reg_Lomba;
 use App\Models\Submission;
@@ -90,14 +91,40 @@ public function store(Request $request)
 
         // Save the reg_lomba instance
         $regLomba->save();
+        // $userStatus = new UserStatus([
+        //     'user_id' => $user->id,
+        //     'status_ketua_team' => 'sudah_submit',
+        //     'lomba_id' => $lomba->id,
+        // ]);
 
-
+        // // Simpan UserStatus
+        // $userStatus->save();
+   
         return Redirect::route('dashboard')->with('success', 'Successfully registered for competition.');
     } catch (\Exception $e) {
         // Handle any errors that occur during save
         return Redirect::route('dashboard')->with('success', 'Successfully registered for competition.');
     }
 }
+
+
+public function updateStatuskelulusan(Request $request)
+{
+    // Validate the incoming request data
+    $request->validate([
+        'team_id' => 'required|exists:reg_lombas,team_id',
+        'status' => 'required|in:lolos,tidak_lolos,menunggu,terverifikasi',
+    ]);
+
+    // Update the status_kelulusan for the specified reg_lomba
+    Reg_Lomba::where('team_id', $request->team_id)->update(['status_kelulusan' => $request->status]);
+
+    return response()->json(['message' => 'Status updated successfully.'], 200);
+}
+
+
+
+
 
     public function updateStatus(Request $request)
     {

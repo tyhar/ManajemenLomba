@@ -1,8 +1,8 @@
 <template>
     <div class="file-container">
-      <div class="btn-posisi">
+      <!-- <div class="btn-posisi">
         <button class="btn btn-danger btn-kembali" @click="goBack()">Kembali</button>
-      </div>
+      </div> -->
       <div v-if="isPdfFile" class="pdf-container">
         <iframe :src="getFileSrc()" class="full-screen"></iframe>
       </div>

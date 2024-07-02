@@ -18,18 +18,23 @@ class LombaJuriController extends Controller
         // Fetch lombas for the authenticated user
         $user = auth()->user();
         $lombas = $user ? $user->lomba : [];
-        $lombaId = JuriLomba::where('user_id', $user->id)->value('lomba_id');
-        $beluminilai = Reg_Lomba::where('status', 'sudah_dinilai')->where('lomba_id', $lombaId)->count();
-        $totalteam = Reg_Lomba::where('lomba_id', $lombaId)->count();
+    
+        // Calculate the number of entries already judged and total teams for each lomba
+        $lombas = $lombas->map(function ($lomba) {
+            $lombaId = $lomba->id;
+            $lomba->sudah_dinilai = Reg_Lomba::where('status', 'sudah_dinilai')->where('lomba_id', $lombaId)->count();
+            $lomba->totalteam = Reg_Lomba::where('lomba_id', $lombaId)
+                ->where('status_kelulusan', 'terverifikasi')
+                ->count();
+            return $lomba;
+        });
+    
+        // Fetch settings
         $settings = Setting::all();
-
     
         return inertia('Roles/Panelis/Lombajuri', [
             'lombas' => $lombas,
-            'beluminilai' => $beluminilai,
-            'totalteam' => $totalteam,
             'settings' => $settings,
-        
         ]);
     }
     

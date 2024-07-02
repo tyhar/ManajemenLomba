@@ -26,17 +26,12 @@ class ProfilePesertaController extends Controller
             'photo' => $user->photo,
         ]);
         
-        $team = $user->team()->with('user')->first();
-
-        // If the team exists, count the unread notifications for that team
         $notifCount = null;
-
-        // If the team exists, count the unread notifications for that team
-        if ($team) {
-            $notifCount = Notifikasi::where('status', 'belum_dibaca')
-                                    ->where('team_id', $team->id)
-                                    ->count();
-        }
+    if ($user) {
+        $notifCount = Notifikasi::where('status', 'belum_dibaca')
+            ->where('user_id', $user->id)
+            ->count();
+    }
 
         return Inertia::render('Roles/User/Profilpeserta', [
             'UserData' => $user,

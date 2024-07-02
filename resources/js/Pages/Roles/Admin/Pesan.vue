@@ -19,11 +19,11 @@ const props = defineProps({
     required: true,
   },
   settings: {
-    type: Object, // Menggunakan "type" untuk menentukan tipe data props
-    default: () => ({}), // Menggunakan "default" jika props tidak diberikan
+    type: Object,
+    default: () => ({}),
   },
   logo1: {
-    type: String, // Menentukan tipe data logo sebagai String
+    type: String,
   },
   unreadCount: {
     type: Object,
@@ -34,6 +34,11 @@ const props = defineProps({
 const selectedStatus = ref('Semua');
 
 const updateMessageStatus = async (id, currentStatus) => {
+  if (currentStatus === 'sudah_dibaca') {
+    // Do nothing if the status is already 'sudah_dibaca'
+    return;
+  }
+
   try {
     const newStatus = currentStatus === 'belum_dibaca' ? 'sudah_dibaca' : 'belum_dibaca';
 
@@ -122,7 +127,6 @@ const formattedMessages = computed(() => {
         <li>
           <a href="/pesan">
             <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i></div>
-            <!-- Menampilkan jumlah pesan yang belum dibaca -->
             <div class="menu-title">Pesan <span class="alert-count">{{ unreadCount }}</span></div>
           </a>
         </li>
@@ -218,9 +222,9 @@ const formattedMessages = computed(() => {
                     <td>{{ message.phone }}</td>
                     <td>{{ message.value }}</td>
                     <td>{{ message.status }}</td>
-                    <!-- <td>{{ message.status }}</td> -->
                     <td>
                       <input type="checkbox" :checked="message.status === 'Sudah Dibaca'"
+                        :disabled="message.status === 'Sudah Dibaca'"
                         @change="() => updateMessageStatus(message.id, message.status === 'Sudah Dibaca' ? 'sudah_dibaca' : 'belum_dibaca')" />
                     </td>
                   </tr>

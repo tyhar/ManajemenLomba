@@ -15,15 +15,15 @@
             </div>
             <!--navigation-->
             <ul class="metismenu" id="menu">
-                <li >
+                <li>
                     <a href="/lombajuri">
                         <div class="parent-icon"><i class="bx bx-award"></i>
                         </div>
                         <div class="menu-title">Lomba</div>
                     </a>
                 </li>
-                <li >
-                    <a :href="`/rangkingjuri/${ reg_lombas.length > 0 ? reg_lombas[0].lomba.id : '' }`">
+                <li>
+                    <a href="/rangkingjuri">
                         <div class="parent-icon"><i class="fadeIn animated bx bx-trophy"></i>
                         </div>
                         <div class="menu-title">Rangking</div>
@@ -97,8 +97,8 @@
                         <label class="jarak-filterstatus">Filter by Status</label>
                         <select class="form-select2" v-model="filterStatus">
                             <option value="Semua">Semua</option>
-                            <option value="Belum Dinilai">Belum Dinilai</option>
                             <option value="Sudah Dinilai">Sudah Dinilai</option>
+                            <option value="Belum Dinilai">Belum Dinilai</option>
                         </select>
                         <br><br>
                         <div class="table-responsive">
@@ -119,10 +119,12 @@
                                         <td>{{ reg_lomba?.submission?.title }}</td>
                                         <td>{{ reg_lomba?.status }}</td>
                                         <td class="btn-crud">
-                                            <a class="btn btn-secondary" :href="getRegLombaTeamUrl(reg_lomba.id, reg_lomba.team.id)">
+                                            <a class="btn btn-secondary"
+                                                :href="getRegLombaTeamUrl(reg_lomba.id, reg_lomba.team.id)">
                                                 <i class="bi bi-eye"></i>
                                             </a>
-                                            <a class="btn btn-primary" :href="getRegEditTeamUrl(reg_lomba.id, reg_lomba.lomba.id)">
+                                            <a v-if="reg_lomba.status.toLowerCase() === 'sudah_dinilai'" class="btn btn-primary"
+                                                :href="getRegEditTeamUrl(reg_lomba.id, reg_lomba.lomba.id)">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
                                         </td>
@@ -157,8 +159,8 @@ const props = defineProps({
         required: true,
     },
     settings: {
-        type: Object, 
-        default: () => ({}), 
+        type: Object,
+        default: () => ({}),
     },
     logo1: {
         type: String,
@@ -169,6 +171,11 @@ const filterStatus = ref('Semua');
 
 const filteredRegLombas = computed(() => {
     return props.reg_lombas.filter(reg_lomba => {
+        const isStatusValid = reg_lomba.status_kelulusan !== 'menunggu' && reg_lomba.status_kelulusan !== 'tidak_lolos';
+        const isTeamVerified = reg_lomba.team.status !== 'unverified';
+        if (!isStatusValid || !isTeamVerified) {
+            return false;
+        }
         if (filterStatus.value === 'Semua') {
             return true;
         }

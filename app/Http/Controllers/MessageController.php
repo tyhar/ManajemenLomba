@@ -93,7 +93,7 @@ class MessageController extends Controller
         $unreadCount = Message::where('status', 'belum_dibaca')->count();
 
         // If everything is successful, redirect to a specific route
-        return redirect()->route('welcome');
+        return redirect()->route('pesan.create');
     }
 
     /**

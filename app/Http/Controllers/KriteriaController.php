@@ -137,7 +137,6 @@ public function show($kriteria)
     {
 
         $kriteria = Kriteria::findOrFail($kriteria);
-        $kriteria->bobot()->detach();
         $kriteria->delete(); 
         
         return redirect()->route('kriteria.index');

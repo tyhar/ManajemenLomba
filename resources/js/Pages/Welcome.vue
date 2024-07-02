@@ -342,8 +342,8 @@ function handleImageError() {
     </div>
 </template>
 
-<!-- <style scoped>
-.card {
-    background-color: #E4EDF3;
+<style scoped>
+.lg-index {
+    width: 150px;
 }
-</style> -->
+</style>

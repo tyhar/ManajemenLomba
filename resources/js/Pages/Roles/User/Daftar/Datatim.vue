@@ -58,7 +58,7 @@
                                     <input class="form-control" type="file" name="payment"
                                         @change="e => form.payment = e.target.files[0]">
                                 </div>
-                                <p class="keterangan-foto f-italic">Max file size: 2MB (500 x 500 px)</p>
+                                <p class="keterangan-foto f-italic">Max file size: 2MB </p>
                                 <p class="keterangan-foto f-italic">Format: .jpg, .png, .jpeg</p>
                             </div>
                             <div class="btn-posisi">

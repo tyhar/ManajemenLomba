@@ -97,7 +97,7 @@
                         </ol>
                     </nav>
                 </div>
-                <div class="card" >
+                <div class="card">
                     <div class="card-body">
                         <h4 class="mb-0 jarak-top-kurang5">TABEL RANKING LOMBA {{ reg_lombas.length > 0 ? reg_lombas[0].lomba.name_lomba : '' }}</h4>
                         <hr class="c-mt10" />
@@ -121,17 +121,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="(reg_lomba, index) in reg_lombas" :key="reg_lomba.id">
-                                        <td>{{ index + 1  }}</td>
+                                    <tr v-for="(reg_lomba, index) in filteredLombas" :key="reg_lomba.id">
+                                        <td>{{ index + 1 }}</td>
                                         <td>{{ reg_lomba?.team?.name_team }}</td>
                                         <td>{{ reg_lomba?.submission?.title }}</td>
                                         <td>{{ reg_lomba?.team?.instansi }}</td>
                                         <td>{{ reg_lomba.value_total }}</td>
                                         <td>{{ reg_lomba.status_kelulusan }}</td>
                                         <td class="btn-crud">
-                                            <a class="btn btn-secondary"
-                                                :href="`/detailtimpetugas/${reg_lomba.id}`"><i
-                                                    class="bi bi-eye"></i></a>
+                                            <a class="btn btn-secondary" :href="`/detailtimpetugas/${reg_lomba.id}`"><i class="bi bi-eye"></i></a>
                                         </td>
                                         <td>
                                             <input type="checkbox" v-model="selectedLombas" :value="reg_lomba.id">
@@ -148,14 +146,13 @@
         <!--end page wrapper -->
     </div>
 </template>
-
 <script setup>
 import { Link } from '@inertiajs/vue3';
-import { defineProps, ref, onMounted } from 'vue';
+import { defineProps, ref, computed } from 'vue';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
-const { name, username, reg_lombas, settings, logo1, unreadCount } = defineProps(['name', 'username', 'reg_lombas','unreadCount', 'settings', 'logo1']);
+const { name, username, reg_lombas, settings, logo1, unreadCount } = defineProps(['name', 'username', 'reg_lombas', 'unreadCount', 'settings', 'logo1']);
 
 const selectedLombas = ref([]);
 const selectAll = ref(false);
@@ -233,4 +230,11 @@ const toggleSelectAll = () => {
         selectedLombas.value = [];
     }
 };
+
+// Filtered and sorted reg_lombas based on status_kelulusan and value_total
+const filteredLombas = computed(() => {
+    return reg_lombas
+        .filter(lomba => ['terverifikasi', 'lolos', 'tidak_lolos'].includes(lomba.status_kelulusan))
+        .sort((a, b) => b.value_total - a.value_total);
+});
 </script>

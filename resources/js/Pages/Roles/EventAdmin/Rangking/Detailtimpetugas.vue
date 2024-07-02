@@ -144,7 +144,7 @@ onMounted(() => {
     </div>
     <!--end page wrapper -->
 
-    <h5 class="c-ml-160 jarak-top-kurang18 jarak-bottom-kurang13">HASIL PENILAIAN OLINAS</h5>
+    <h5 class="c-ml-160 jarak-top-kurang18 jarak-bottom-kurang13">HASIL PENILAIAN </h5>
     <div class="page-wrapper-report" v-if="reg_lombas">
       <div class="page-content">
         <div class="card">

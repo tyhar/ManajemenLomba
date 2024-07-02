@@ -54,9 +54,13 @@ DetailLOMBA
                             <div class="col-md-6">
                                 <label class="c-mb5-black"><b>DESKRIPSI</b></label>
                                 <div class="col-12">
-                                    <div class="data-tim" id="description">{{ lomba && lomba.description ? lomba.description : 'Deskripsi tidak tersedia' }}
-				</div>
+                                    <span v-if="!showFullDescription">{{ truncatedDescription }}...</span>
+                                    <span v-if="showFullDescription" class="data-tim">{{ lomba && lomba.description ? lomba.description : 'Deskripsi tidak tersedia' }}</span>
+                                    <a @click="toggleDescription" class="btn-link">
+                                        {{ showFullDescription ? 'Sembunyikan' : 'Lihat semuanya' }}
+                                    </a>
                                 </div>
+                 
                                 <div class="col-md-6">
                                     <label class="c-mb5-black"><b>GAMBAR</b></label>
                                      <div class="col-12" id="picture">
@@ -105,6 +109,8 @@ DetailLOMBA
 
 <script setup>
 import { defineProps } from "vue";
+import { ref, computed } from 'vue';
+
 import { useForm, usePage } from '@inertiajs/vue3';
 
 // Mendefinisikan properti yang diterima oleh komponen
@@ -114,6 +120,22 @@ const props = defineProps({
     lomba: Object,
     settings: Object,
     logo1: Object,
+});
+
+const showFullDescription = ref(false);
+
+// Method to toggle full description visibility
+const toggleDescription = () => {
+    showFullDescription.value = !showFullDescription.value;
+};
+
+// Computed property for truncated description (first 30 words)
+const truncatedDescription = computed(() => {
+    if (props.lomba && props.lomba.description) {
+        const words = props.lomba.description.split(' ');
+        return words.slice(0, 30).join(' ');
+    }
+    return '';
 });
 
 // Menampilkan properti name dan username yang diterima

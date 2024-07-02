@@ -1,9 +1,8 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
-import { onMounted, ref, computed } from 'vue';
+import { ref, computed } from 'vue';
 import { router } from "@inertiajs/vue3";
 import { defineProps } from "vue";
-import axios from 'axios';
 
 const props = defineProps({
     messages: {
@@ -19,18 +18,17 @@ const props = defineProps({
         required: true,
     },
     settings: {
-        type: Object, // Menggunakan "type" untuk menentukan tipe data props
-        default: () => ({}), // Menggunakan "default" jika props tidak diberikan
+        type: Object,
+        default: () => ({}),
     },
     logo1: {
-        type: String, // Menentukan tipe data logo sebagai String
+        type: String,
     },
     unreadCount: {
         type: Object,
         required: true,
     },
 });
-
 
 const selectedStatus = ref('Semua');
 
@@ -47,9 +45,9 @@ const updateMessageStatus = async (id, currentStatus) => {
             message.status = newStatus;
 
             if (newStatus === 'sudah_dibaca') {
-                unreadCount.value -= 1;
+                props.unreadCount.value -= 1;
             } else {
-                unreadCount.value += 1;
+                props.unreadCount.value += 1;
             }
         }
     } catch (error) {
@@ -63,14 +61,8 @@ const filteredMessages = computed(() => {
     }
     return props.messages.filter(message => message.status === selectedStatus.value.toLowerCase());
 });
-
-const formattedMessages = computed(() => {
-    return filteredMessages.value.map(message => ({
-        ...message,
-        status: message.status === 'belum_dibaca' ? 'Belum Dibaca' : 'Sudah Dibaca'
-    }));
-});
 </script>
+
 <template>
     <!--wrapper-->
     <div class="wrapper">
@@ -113,7 +105,7 @@ const formattedMessages = computed(() => {
                     <a href="/pesanpetugas">
                         <div class="parent-icon"><i class="fadeIn animated bx bx-comment-detail"></i>
                         </div>
-                        <div class="menu-title">Pesan <span class="alert-count">{{ unreadCount }}</span></div>
+                        <div class="menu-title">Pesan <span class="alert-count">{{ unreadCount}}</span></div>
                     </a>
                 </li>
                 <li>
@@ -142,28 +134,23 @@ const formattedMessages = computed(() => {
         <header>
             <div class="topbar d-flex align-items-center">
                 <nav class="navbar navbar-expand">
-                    <div class="mobile-toggle-menu"><i class='bx bx-menu'></i>
-                    </div>
-                    <div class="search-bar flex-grow-1">
-                    </div>
+                    <div class="mobile-toggle-menu"><i class='bx bx-menu'></i></div>
+                    <div class="search-bar flex-grow-1"></div>
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
                                 <p class="user-name mb-0">{{ $page.props.userData.name }}</p>
                                 <p class="user-role">{{ $page.props.userData.username }}</p>
                             </div>
-                            <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
-                            </div>
+                            <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i></div>
                             <li class="nav-item dropdown dropdown-large">
                                 <div class="dropdown-menu dropdown-menu-end">
-                                    <div class="header-notifications-list">
-                                    </div>
+                                    <div class="header-notifications-list"></div>
                                 </div>
                             </li>
                             <li class="nav-item dropdown dropdown-large">
                                 <div class="dropdown-menu dropdown-menu-end">
-                                    <div class="header-message-list">
-                                    </div>
+                                    <div class="header-message-list"></div>
                                 </div>
                             </li>
                         </ul>
@@ -178,8 +165,7 @@ const formattedMessages = computed(() => {
                 <div class="ps-3">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb mb-0 p-0">
-                            <li class="breadcrumb-item">
-                            </li>
+                            <li class="breadcrumb-item"></li>
                         </ol>
                     </nav>
                 </div>
@@ -190,8 +176,8 @@ const formattedMessages = computed(() => {
                         <label class="jarak-filterstatus">Filter by Status</label>
                         <select class="form-select2" v-model="selectedStatus">
                             <option value="Semua" selected>Semua</option>
-                            <option value="belum_dibaca">Belum Dibaca</option>
                             <option value="sudah_dibaca">Sudah Dibaca</option>
+                            <option value="belum_dibaca">Belum Dibaca</option>
                         </select>
                         <br><br>
                         <div class="table-responsive">
@@ -208,7 +194,7 @@ const formattedMessages = computed(() => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="message in formattedMessages" :key="message.id">
+                                    <tr v-for="message in filteredMessages" :key="message.id">
                                         <td>{{ message.id }}</td>
                                         <td>{{ message.name }}</td>
                                         <td>{{ message.email }}</td>
@@ -217,6 +203,7 @@ const formattedMessages = computed(() => {
                                         <td>{{ message.status }}</td>
                                         <td>
                                             <input type="checkbox" :checked="message.status === 'sudah_dibaca'"
+                                                :disabled="message.status === 'sudah_dibaca'"
                                                 @change="() => updateMessageStatus(message.id, message.status)" />
                                         </td>
                                     </tr>

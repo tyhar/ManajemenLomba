@@ -173,3 +173,8 @@ const submit = () => {
         </footer>
     </div>
 </template>
+<style scoped>
+.lg-index {
+    width: 150px;
+}
+</style>

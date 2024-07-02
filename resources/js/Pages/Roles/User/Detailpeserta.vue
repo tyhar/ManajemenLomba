@@ -40,17 +40,18 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-7 label-left">
-                                    <h5 class="judul-detail c-ml-25 c-mt10"><b>Tema Lomba</b></h5>
-                                    <div class="judul-lomba-index c-ml-25 warna-hitam" id="name_lomba">{{
-                                        lombax.name_lomba }}
+                                    <h5 class="judul-detail c-ml-25 c-mt10"><b>{{
+                                        lombax.name_lomba }}</b></h5>
+                                    <div class="judul-lomba-index c-ml-25 warna-hitam" id="name_lomba">OLINAS
                                     </div>
                                 </div>
                                 <div>
                                     <div class="div-class">
-                                        <a class="btn btn-pink c-mtkc" href="#">BUKU
+                                        <a class="btn btn-pink c-mtkc"
+                                            href="https://drive.google.com/drive/folders/1IJhmIv8W5TI7-kUyZyUx-bw5Eq2CD7GG?usp=sharing">BUKU
                                             PANDUAN</a>
-                                        <a class="btn btn-success width200 c-mtk mg-t10 warna-hitam"
-                                            @click="handleLombaSaya(lombax.id)">DAFTAR LOMBA</a>
+                                        <!-- <a class="btn btn-success width200 c-mtk mg-t10 warna-hitam"
+                                            @click="handleLombaSaya(lombax.id)">DAFTAR LOMBA</a> -->
                                     </div>
                                 </div>
                             </div>
@@ -61,6 +62,20 @@
         </div>
         <div class="des-biru">
             <a v-html="lombax.description"></a>
+            <br><br>
+            <h5 class="deskripsil"><b>E. Informasi Tambahan</b></h5>
+            <a class="deskripsil deskripsil-detailnew">Penanggung Jawab: {{
+                lombax.pj }}
+            </a>
+            <br>
+            <a class="deskripsil deskripsil-detailnew">Biaya Pendaftaran: {{
+                lombax.biaya_pendaftaran }}
+            </a>
+            <br>
+            <a class="deskripsil deskripsil-detailnew">Tempat: {{
+                lombax.tempat }}
+            </a>
+            <br><br>
         </div>
         <!--end page wrapper -->
     </div>
