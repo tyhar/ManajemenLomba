@@ -47,8 +47,7 @@
                                 </div>
                                 <div>
                                     <div class="div-class">
-                                        <a class="btn btn-pink c-mtkc"
-                                            href="https://drive.google.com/drive/folders/1IJhmIv8W5TI7-kUyZyUx-bw5Eq2CD7GG?usp=sharing">BUKU
+                                        <a class="btn btn-pink c-mtkc" href="#">BUKU
                                             PANDUAN</a>
                                         <!-- <a class="btn btn-success width200 c-mtk mg-t10 warna-hitam"
                                             @click="handleLombaSaya(lombax.id)">DAFTAR LOMBA</a> -->
@@ -62,20 +61,6 @@
         </div>
         <div class="des-biru">
             <a v-html="lombax.description"></a>
-            <br><br>
-            <h5 class="deskripsil"><b>E. Informasi Tambahan</b></h5>
-            <a class="deskripsil deskripsil-detailnew">Penanggung Jawab: {{
-                lombax.pj }}
-            </a>
-            <br>
-            <a class="deskripsil deskripsil-detailnew">Biaya Pendaftaran: {{
-                lombax.biaya_pendaftaran }}
-            </a>
-            <br>
-            <a class="deskripsil deskripsil-detailnew">Tempat: {{
-                lombax.tempat }}
-            </a>
-            <br><br>
         </div>
         <!--end page wrapper -->
     </div>

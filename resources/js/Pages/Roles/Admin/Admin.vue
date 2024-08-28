@@ -141,8 +141,7 @@ if (!localStorage.getItem('reloaded')) {
       <div class="sidebar-header">
         <div v-for="setting in settings" :key="setting.id">
           <a href="/">
-            <img id="logo-img" :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'"
-              class="lg2">
+            <img id="logo-img" :src="setting.logo1 ? `/storage/${setting.logo1}` : '/bootstrap/images/logo1default.jpg'" class="lg2">
           </a>
         </div>
         <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
@@ -239,7 +238,7 @@ if (!localStorage.getItem('reloaded')) {
     <div class="page-wrapper">
       <div class="page-content">
         <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
-          <div class="col">
+          <div class="col mr-k10">
             <div class="card radius-10 border-start border-0 border-3 border-info">
               <div class="card-body">
                 <div class="d-flex align-items-center">
@@ -252,7 +251,7 @@ if (!localStorage.getItem('reloaded')) {
               </div>
             </div>
           </div>
-          <div class="col">
+          <div class="col mr-k10">
             <div class="card radius-10 border-start border-0 border-3 border-success">
               <div class="card-body">
                 <div class="d-flex align-items-center">
@@ -265,7 +264,7 @@ if (!localStorage.getItem('reloaded')) {
               </div>
             </div>
           </div>
-          <div class="col">
+          <div class="col mr-k10">
             <div class="card radius-10 border-start border-0 border-3 border-danger">
               <div class="card-body">
                 <div class="d-flex align-items-center">
@@ -278,12 +277,12 @@ if (!localStorage.getItem('reloaded')) {
               </div>
             </div>
           </div>
-          <div class="col">
+          <div class="col csize">
             <div class="card radius-10 border-start border-0 border-3 border-warning">
               <div class="card-body">
                 <div class="d-flex align-items-center">
                   <div>
-                    <h6 class="mb-0 cfs-15"><b>{{ useradminis }} Akun Administrator</b></h6>
+                    <h6 class="mb-0"><b>{{ useradminis }} Akun Administrator</b></h6>
                     <br>
                     <p class="mb-0 font-13">{{ useradmin }} Akun Admin</p>
                   </div>

@@ -136,8 +136,8 @@
                         <label class="jarak-filterstatus">Filter by Status</label>
                         <select v-model="filterStatus" class="form-select2">
                             <option value="Semua">Semua</option>
-                            <option value="Lolos">Lolos</option>
                             <option value="Tidak Lolos">Tidak Lolos</option>
+                            <option value="Lolos">Lolos</option>
                         </select>
                         <br><br>
                         <div class="table-responsive">

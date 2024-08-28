@@ -63,8 +63,7 @@
               </div>
               <div class="btn-posisi">
                 <button type="button" class="btn btn-danger button-left" @click="goBack">Batal</button>
-                <button type="submit" class="btn btn-primary button-right"
-                  :disabled="reg_lombas.status === 'sudah_dinilai'">Simpan</button>
+                <button type="submit" class="btn btn-primary button-right" :disabled="reg_lombas.status === 'sudah_dinilai'">Simpan</button>
               </div>
             </form>
           </div>
